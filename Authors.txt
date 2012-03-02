@@ -1,1 +1,5 @@
+The game:
 David Kamphausen <david.kamphausen@web.de>
+
+The dependencies:
+libGDX by the libGDX Team. Please have a look at LICENSE_gdx
