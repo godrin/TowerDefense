@@ -3,11 +3,12 @@ package com.cdm;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.GL10;
 import com.cdm.view.LevelScreen;
 import com.cdm.view.Screen;
 
-public class TowerGame implements ApplicationListener {
+public class TowerGame extends InputAdapter implements ApplicationListener {
 	private static final long serialVersionUID = 1L;
 
 	private boolean running = false;
@@ -18,6 +19,7 @@ public class TowerGame implements ApplicationListener {
 	public void create() {
 		running = true;
 		setScreen(new LevelScreen());
+		Gdx.input.setInputProcessor(this);
 	}
 
 	public void pause() {
@@ -56,4 +58,30 @@ public class TowerGame implements ApplicationListener {
 		// TODO Auto-generated method stub
 
 	}
+	public boolean touchDown (int x, int y, int pointer, int button) {
+		System.out.println("touchDown");
+		System.out.println(x);
+		return false;
+	}
+
+	public boolean touchUp (int x, int y, int pointer, int button) {
+		System.out.println("touchUp");
+		return false;
+	}
+
+	public boolean touchDragged (int x, int y, int pointer) {
+		System.out.println("touchDrag");
+		return false;
+	}
+
+	@Override public boolean touchMoved (int x, int y) {
+		System.out.println("touchmoved");
+		return false;
+	}
+
+	@Override public boolean scrolled (int amount) {
+		System.out.println("scroll");
+		return false;
+	}
+
 }
