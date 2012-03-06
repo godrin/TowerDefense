@@ -1,9 +1,10 @@
 package com.cdm.view;
 
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.InputAdapter;
 import com.cdm.TowerGame;
 
-public class Screen {
+public class Screen extends InputAdapter{
 
 	public void removed() {
 		// TODO Auto-generated method stub
@@ -20,7 +21,7 @@ public class Screen {
 		
 	}
 
-	public void render() {
+	public void render(float accum) {
 		// TODO Auto-generated method stub
 		
 	}

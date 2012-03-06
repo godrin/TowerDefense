@@ -6,7 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 
-public class SmallShip extends Unit implements Element {
+public class SmallShip extends EnemyUnit implements Element {
 
 	private List<Vector3> lines;
 	float angle = 0.0f;
@@ -24,7 +24,8 @@ public class SmallShip extends Unit implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		renderer.drawLines(x, y, lines, angle);
+		super.draw(renderer);
+		renderer.drawLines(x*CELL_WIDTH, y*CELL_WIDTH, lines, angle,CELL_WIDTH);
 	}
 
 	@Override

@@ -31,7 +31,7 @@ public class Cannon extends Unit implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		renderer.drawLines(x, y, lines, angle);
+		renderer.drawLines(x*CELL_WIDTH, y*CELL_WIDTH, lines, angle,CELL_WIDTH);
 	}
 
 	@Override
