@@ -3,12 +3,14 @@ package com.cdm.view.elements;
 import java.util.Arrays;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 
 public class Cannon extends Unit implements Element {
 
 	private List<Vector3> lines;
+	private List<Vector3> poly;
 	float angle = 0.0f;
 
 	public Cannon(int x, int y) {
@@ -23,15 +25,33 @@ public class Cannon extends Unit implements Element {
 		Vector3 g = new Vector3(-1, -0.25f, 0);
 		Vector3 h = new Vector3(-0.5f, -0.25f, 0);
 		Vector3 i = new Vector3(-0.5f, 0.25f, 0);
+		
+		//
+		//        b   c
+		//    a   i      d
+		//
+		//    g   h      d2
+		//        f   e
+		//
 
 		lines = Arrays.asList(new Vector3[] { a, b, b, c, c, d, d, d2, d2, e,
 				e, f, f, g, g, h, h, i, i, a });
+		poly = Arrays.asList(new Vector3[] { a, b,c,a,c,d,
+			i,d,h,d,h,d2,
+			g,f,d2,
+			f,d2,e
+		});
 
 	}
 
 	@Override
 	public void draw(IRenderer renderer) {
-		renderer.drawLines(x*CELL_WIDTH, y*CELL_WIDTH, lines, angle,CELL_WIDTH);
+		Color innerColor = new Color(0, 0, 0.6f, 1.0f);
+		renderer.drawPoly(x * CELL_WIDTH, y * CELL_WIDTH, poly, angle,
+				CELL_WIDTH, innerColor);
+		Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
+		renderer.drawLines(x * CELL_WIDTH, y * CELL_WIDTH, lines, angle,
+				CELL_WIDTH, outerColor);
 	}
 
 	@Override

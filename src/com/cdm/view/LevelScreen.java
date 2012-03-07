@@ -72,41 +72,6 @@ public class LevelScreen extends Screen {
 	}
 
 	static final int CIRCLE_VERTICES = 10;
-
-	private void drawMySprite(ImmediateModeRenderer renderer) {
-
-		Gdx.gl10.glPushMatrix();
-		Gdx.gl10.glTranslatef(40, 40, 0);
-		Vector3[] vs = new Vector3[] { new Vector3(-0.5f, -0.5f, 0.0f),
-				new Vector3(0.5f, -0.5f, 0.0f), new Vector3(0.5f, 0.5f, 0.0f),
-				new Vector3(-0.5f, 0.5f, 0.0f) };
-
-		Gdx.gl10.glScalef(10, 10, 10);
-
-		renderer.begin(GL10.GL_LINES);
-		for (int i = 0; i < 4; i++) {
-			Vector3 a = vs[i];
-			Vector3 b = vs[(i + 1) % 4];
-			renderer.color(1, 1, 1, 1);
-			renderer.vertex(a);
-			renderer.color(1, 1, 1, 1);
-			renderer.vertex(b);
-		}
-
-		renderer.end();
-		Gdx.gl10.glPopMatrix();
-
-		renderer.begin(GL10.GL_LINES);
-		renderer.color(1, 1, 1, 1);
-		// renderer.ver
-		renderer.vertex(40, 40, 0);
-		renderer.color(1, 1, 1, 1);
-		renderer.vertex(20, 20, 0);
-		renderer.end();
-
-		return;
-	}
-
 	private float mywait(float delta) {
 		if (true)
 			return 0.0f;

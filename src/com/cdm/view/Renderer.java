@@ -13,7 +13,7 @@ public class Renderer implements IRenderer {
 
 	@Override
 	public void drawLines(float x, float y, List<Vector3> lines, float angle,
-			float scale) {
+			float scale, Color color) {
 		Gdx.gl10.glPushMatrix();
 		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 		Gdx.gl10.glEnable(GL10.GL_BLEND);
@@ -24,7 +24,30 @@ public class Renderer implements IRenderer {
 
 		renderer.begin(GL10.GL_LINES);
 		for (Vector3 v : lines) {
-			renderer.color(1, 1, 1, 1);
+			renderer.color(color.r, color.g, color.b, color.a);
+			renderer.vertex(v);
+		}
+
+		renderer.end();
+
+		Gdx.gl10.glPopMatrix();
+
+	}
+
+	@Override
+	public void drawPoly(float x, float y, List<Vector3> lines, float angle,
+			float scale, Color color) {
+		Gdx.gl10.glPushMatrix();
+		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
+		Gdx.gl10.glEnable(GL10.GL_BLEND);
+		Gdx.gl10.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
+		Gdx.gl10.glTranslatef(x, y, 0);
+		Gdx.gl10.glScalef(scale, scale, scale);
+		Gdx.gl10.glRotatef(angle, 0, 0, 1);
+
+		renderer.begin(GL10.GL_TRIANGLES);
+		for (Vector3 v : lines) {
+			renderer.color(color.r, color.g, color.b, color.a);
 			renderer.vertex(v);
 		}
 
@@ -40,7 +63,7 @@ public class Renderer implements IRenderer {
 		Gdx.gl10.glEnable(GL10.GL_BLEND);
 		Gdx.gl10.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
 		renderer.begin(GL10.GL_LINE_LOOP);
-		
+
 		Vector3[] lines = new Vector3[] { new Vector3(x0, y0, 0),
 				new Vector3(x1, y0, 0), new Vector3(x1, y1, 0),
 				new Vector3(x0, y1, 0) };
@@ -54,19 +77,18 @@ public class Renderer implements IRenderer {
 	}
 
 	@Override
-	public void fillRect(float x0, float y0, float x1, float y1,Color c) {
+	public void fillRect(float x0, float y0, float x1, float y1, Color c) {
 		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 		Gdx.gl10.glEnable(GL10.GL_BLEND);
 		Gdx.gl10.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
 		renderer.begin(GL10.GL_TRIANGLES);
-		
+
 		Vector3[] lines = new Vector3[] { new Vector3(x0, y0, 0),
-				 new Vector3(x1, y1, 0),new Vector3(x1, y0, 0), 
-				new Vector3(x0, y0, 0),
-				new Vector3(x1, y1, 0),
+				new Vector3(x1, y1, 0), new Vector3(x1, y0, 0),
+				new Vector3(x0, y0, 0), new Vector3(x1, y1, 0),
 				new Vector3(x0, y1, 0) };
 		for (Vector3 v : lines) {
-			
+
 			renderer.color(c.r, c.g, c.b, c.a);
 			renderer.vertex(v);
 		}

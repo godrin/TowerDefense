@@ -3,9 +3,14 @@ package com.cdm.view.elements;
 import com.cdm.view.IRenderer;
 
 public abstract class Unit {
+
+	enum UnitType {
+		CANNON, ROCKET, STUNNER, PHAZER
+	};
+
 	float x, y;
-	
-	public static final int CELL_WIDTH=32;
+
+	public static final int CELL_WIDTH = 32;
 
 	public Unit(int px, int py) {
 		x = px;
