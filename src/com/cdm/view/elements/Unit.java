@@ -1,20 +1,18 @@
 package com.cdm.view.elements;
 
 import com.cdm.view.IRenderer;
+import com.cdm.view.Position;
 
 public abstract class Unit {
 
-	enum UnitType {
+	public enum UnitType {
 		CANNON, ROCKET, STUNNER, PHAZER
 	};
 
-	float x, y;
+	Position pos;
 
-	public static final int CELL_WIDTH = 32;
-
-	public Unit(int px, int py) {
-		x = px;
-		y = py;
+	public Unit(Position p) {
+		pos = p;
 	}
 
 	public abstract void move(float time);

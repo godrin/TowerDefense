@@ -7,18 +7,20 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer;
 import com.badlogic.gdx.math.Vector3;
+import com.cdm.Settings;
 
 public class Renderer implements IRenderer {
 	ImmediateModeRenderer renderer = new ImmediateModeRenderer();
 
 	@Override
-	public void drawLines(float x, float y, List<Vector3> lines, float angle,
-			float scale, Color color) {
+	public void drawLines(Position pos, List<Vector3> lines, float angle,
+			Color color) {
+		float scale = pos.getScale();
 		Gdx.gl10.glPushMatrix();
 		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 		Gdx.gl10.glEnable(GL10.GL_BLEND);
 		Gdx.gl10.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
-		Gdx.gl10.glTranslatef(x, y, 0);
+		Gdx.gl10.glTranslatef(pos.getX(), pos.getY(), 0);
 		Gdx.gl10.glScalef(scale, scale, scale);
 		Gdx.gl10.glRotatef(angle, 0, 0, 1);
 
@@ -35,13 +37,17 @@ public class Renderer implements IRenderer {
 	}
 
 	@Override
-	public void drawPoly(float x, float y, List<Vector3> lines, float angle,
-			float scale, Color color) {
+	public void drawPoly(Position pos, List<Vector3> lines, float angle,
+			Color color) {
+		float scale = 1;
+		if (pos.equals(Position.RefSystem.Level)) {
+			scale = Settings.CELL_WIDTH;
+		}
 		Gdx.gl10.glPushMatrix();
 		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 		Gdx.gl10.glEnable(GL10.GL_BLEND);
 		Gdx.gl10.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
-		Gdx.gl10.glTranslatef(x, y, 0);
+		Gdx.gl10.glTranslatef(pos.getX(), pos.getY(), 0);
 		Gdx.gl10.glScalef(scale, scale, scale);
 		Gdx.gl10.glRotatef(angle, 0, 0, 1);
 
