@@ -1,11 +1,18 @@
 package com.cdm.view;
 
+import java.util.Set;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.cdm.SString;
+import com.cdm.Settings;
+import com.cdm.gui.Button;
+import com.cdm.gui.IButtonPressed;
+import com.cdm.gui.IUnitTypeSelected;
 import com.cdm.gui.UnitTypeButton;
 import com.cdm.gui.WidgetContainer;
 import com.cdm.view.Position.RefSystem;
@@ -14,7 +21,8 @@ import com.cdm.view.elements.Level;
 import com.cdm.view.elements.Unit;
 import com.cdm.view.elements.Unit.UnitType;
 
-public class LevelScreen extends Screen implements UnitTypeSelected {
+public class LevelScreen extends Screen implements IUnitTypeSelected,
+		IButtonPressed {
 	public SpriteBatch spriteBatch = new SpriteBatch();
 	public static TextureRegion bg;
 	private Renderer renderer = new Renderer();
@@ -30,6 +38,11 @@ public class LevelScreen extends Screen implements UnitTypeSelected {
 				Unit.UnitType.CANNON);
 		tb.setListener(this);
 		gui.add(tb);
+
+		Button sizeButton = new Button(200, 400, 30);
+		sizeButton.setButtonName(SString.SIZE_BUTTON);
+		sizeButton.setPressedListener(this);
+		gui.add(sizeButton);
 	}
 
 	@Override
@@ -123,6 +136,11 @@ public class LevelScreen extends Screen implements UnitTypeSelected {
 	}
 
 	public boolean touchUp(int x, int y, int pointer, int button) {
+		if (gui.opaque(x, y)) {
+			System.out.println("MYYY TOUCHDOWN");
+			gui.touchUp(x, y, pointer, button);
+			return true;
+		}
 		System.out.println("touchUp");
 		stopDragging();
 		level.stopHover();
@@ -161,6 +179,13 @@ public class LevelScreen extends Screen implements UnitTypeSelected {
 	public void unitTypeSelected(UnitType type, Position screenPos) {
 		System.out.println("Unit Type selected");
 		dragElement = Elements.getElementBy(type, screenPos);
+	}
+
+	@Override
+	public void buttonPressed(SString buttonName) {
+		if (buttonName.equals(SString.SIZE_BUTTON)) {
+			Settings.CELL_WIDTH = 16;
+		}
 	}
 
 }

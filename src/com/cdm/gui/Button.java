@@ -3,16 +3,29 @@ package com.cdm.gui;
 import java.awt.Rectangle;
 
 import com.badlogic.gdx.graphics.Color;
+import com.cdm.SString;
 import com.cdm.view.IRenderer;
 
 public class Button extends Widget {
 	private int x, y, radius;
 
+	private IButtonPressed pressedListener;
+
+	private SString buttonName;
+
 	public Button(int px, int py, int pradius) {
 		x = px;
 		y = py;
 		radius = pradius;
-		setBBox(new Rectangle(x-radius, y-radius, radius*2, radius*2));
+		setBBox(new Rectangle(x - radius, y - radius, radius * 2, radius * 2));
+	}
+
+	public SString getButtonName() {
+		return buttonName;
+	}
+
+	public void setButtonName(SString buttonName) {
+		this.buttonName = buttonName;
 	}
 
 	@Override
@@ -29,8 +42,17 @@ public class Button extends Widget {
 		return r.contains(x, y);
 	}
 
-	public void touchDown(int x, int y, int pointer, int button) {
-		System.out.println("BUTTON TOUCH DOWN");
+	@Override
+	public void clicked(int x, int y, int pointer, int button) {
+		if (pressedListener != null)
+			pressedListener.buttonPressed(buttonName);
 	}
 
+	public IButtonPressed getPressedListener() {
+		return pressedListener;
+	}
+
+	public void setPressedListener(IButtonPressed pressedListener) {
+		this.pressedListener = pressedListener;
+	}
 }
