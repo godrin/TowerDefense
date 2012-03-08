@@ -15,7 +15,9 @@ public class Renderer implements IRenderer {
 	@Override
 	public void drawLines(Position pos, List<Vector3> lines, float angle,
 			Color color) {
-		float scale = pos.getScale();
+		float scale = 
+			Settings.CELL_WIDTH;
+			//pos.getScale();
 		Gdx.gl10.glPushMatrix();
 		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 		Gdx.gl10.glEnable(GL10.GL_BLEND);
@@ -40,9 +42,9 @@ public class Renderer implements IRenderer {
 	public void drawPoly(Position pos, List<Vector3> lines, float angle,
 			Color color) {
 		float scale = 1;
-		if (pos.equals(Position.RefSystem.Level)) {
+		//if (pos.equals(Position.RefSystem.Level)) {
 			scale = Settings.CELL_WIDTH;
-		}
+	//	}
 		Gdx.gl10.glPushMatrix();
 		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 		Gdx.gl10.glEnable(GL10.GL_BLEND);

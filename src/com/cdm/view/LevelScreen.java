@@ -6,11 +6,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.cdm.gui.Button;
 import com.cdm.gui.UnitTypeButton;
 import com.cdm.gui.WidgetContainer;
 import com.cdm.view.Position.RefSystem;
-import com.cdm.view.elements.Element;
 import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.Unit;
@@ -22,8 +20,9 @@ public class LevelScreen extends Screen implements UnitTypeSelected {
 	private Renderer renderer = new Renderer();
 	private Level level = new Level();
 	private WidgetContainer gui = new WidgetContainer();
-	private Element dragElement = null;
-	private Selector selector = new Selector();
+	private Unit dragElement = null;
+
+	// private Selector selector = new Selector();
 
 	public LevelScreen() {
 		bg = load("res/bg_stars.png", 64, 64);
@@ -72,7 +71,7 @@ public class LevelScreen extends Screen implements UnitTypeSelected {
 		if (dragElement != null) {
 			dragElement.draw(renderer);
 		}
-		selector.draw(renderer);
+		// selector.draw(renderer);
 
 	}
 
@@ -126,15 +125,23 @@ public class LevelScreen extends Screen implements UnitTypeSelected {
 	public boolean touchUp(int x, int y, int pointer, int button) {
 		System.out.println("touchUp");
 		stopDragging();
+		level.stopHover();
 		return false;
 	}
 
 	private void stopDragging() {
+		if (dragElement != null) {
+			level.add(dragElement);
+		}
 		dragElement = null;
 	}
 
 	public boolean touchDragged(int x, int y, int pointer) {
+		Position pos = new Position(x, y, RefSystem.Screen);
+		if (dragElement != null)
+			dragElement.setPosition(pos);
 		System.out.println("touchDrag");
+		level.hover(pos);
 		return false;
 	}
 
@@ -151,10 +158,9 @@ public class LevelScreen extends Screen implements UnitTypeSelected {
 	}
 
 	@Override
-	public void unitTypeSelected(UnitType type,Position screenPos) {
+	public void unitTypeSelected(UnitType type, Position screenPos) {
 		System.out.println("Unit Type selected");
-		dragElement = Elements.getElementBy(type, new Position(0, 0,
-				RefSystem.Screen));
+		dragElement = Elements.getElementBy(type, screenPos);
 	}
 
 }

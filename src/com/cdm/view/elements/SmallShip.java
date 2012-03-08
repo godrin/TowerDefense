@@ -39,4 +39,5 @@ public class SmallShip extends EnemyUnit implements Element {
 		pos.x += time * 0.3;
 	}
 
+
 }

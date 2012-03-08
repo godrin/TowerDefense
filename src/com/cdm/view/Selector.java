@@ -7,11 +7,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.Settings;
 import com.cdm.view.Position.RefSystem;
+import com.cdm.view.elements.Element;
 
-public class Selector {
+public class Selector implements Element {
+	private Position pos;
+
+	public Selector(Position p) {
+		pos = p;
+	}
+
 	public void draw(IRenderer renderer) {
-		float w = 1, pad = 3*1.0f/Settings.CELL_WIDTH;
-		Position p=new Position(3,3,RefSystem.Level);
+		float w = 1, pad = 3 * 1.0f / Settings.CELL_WIDTH;
 		List<Vector3> lines = new ArrayList<Vector3>();
 		// top left
 		lines.add(new Vector3(-w, -w, 0));
@@ -36,6 +42,11 @@ public class Selector {
 
 		float angle = 0;
 		float g = 0.8f;
-		renderer.drawLines(p, lines, angle, new Color(g, g, g, 1));
+		renderer.drawLines(pos, lines, angle, new Color(g, g, g, 1));
+	}
+
+	@Override
+	public void setPosition(Position p) {
+		pos = p;
 	}
 }

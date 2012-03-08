@@ -28,8 +28,23 @@ public class Position {
 	}
 
 	public float getScale() {
-		if (system.equals(RefSystem.Screen))
+		if (screenPos())
 			return 1;
 		return Settings.CELL_WIDTH;
+	}
+
+	public boolean screenPos() {
+		return system.equals(RefSystem.Screen);
+	}
+
+	public Position toLevelPos() {
+		if (!screenPos())
+			return this;
+		return new Position(x / Settings.CELL_WIDTH, y / Settings.CELL_WIDTH,
+				RefSystem.Level);
+	}
+
+	public Position alignToGrid() {
+		return new Position(Math.round(x), Math.round(y), system);
 	}
 }
