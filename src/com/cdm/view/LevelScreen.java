@@ -43,8 +43,17 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		gui.add(sizeButton);
 	}
 
+	private Long oldMillis = 0L;
+
 	@Override
 	public void render(float delta) {
+		//System.out.println(delta);
+		Long millis=System.currentTimeMillis();
+		if(oldMillis>0) {
+			delta=(millis-oldMillis)*0.001f;
+			//	System.out.println(millis-oldMillis);
+			}
+			oldMillis=millis;
 		delta += mywait(delta);
 		spriteBatch.begin();
 		for (int x = 0; x < 16; x++)

@@ -17,7 +17,7 @@ public class Selector implements Element {
 	}
 
 	public void draw(IRenderer renderer) {
-		float w = 1, pad = 3 * 1.0f / Settings.CELL_WIDTH;
+		float w = 1, pad = 16 * 1.0f / Settings.CELL_WIDTH;
 		List<Vector3> lines = new ArrayList<Vector3>();
 		// top left
 		lines.add(new Vector3(-w, -w, 0));
