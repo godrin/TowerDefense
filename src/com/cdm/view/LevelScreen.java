@@ -2,6 +2,8 @@ package com.cdm.view;
 
 import java.util.Set;
 
+import org.lwjgl.Sys;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -43,17 +45,19 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		gui.add(sizeButton);
 	}
 
-	private Long oldMillis = 0L;
+	private Long oldMicros = 0L;
 
 	@Override
 	public void render(float delta) {
-		//System.out.println(delta);
-		Long millis=System.currentTimeMillis();
-		if(oldMillis>0) {
-			delta=(millis-oldMillis)*0.001f;
-			//	System.out.println(millis-oldMillis);
-			}
-			oldMillis=millis;
+		// System.out.println(delta);
+		Long millis = System.currentTimeMillis();
+		Long micro=System.nanoTime()/1000+millis*1000;
+		if (oldMicros > 0) {
+			delta = (micro - oldMicros) * 0.000001f;
+			//System.out.println(delta);
+			// System.out.println(millis-oldMillis);
+		}
+		oldMicros = micro;
 		delta += mywait(delta);
 		spriteBatch.begin();
 		for (int x = 0; x < 16; x++)
