@@ -30,8 +30,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private WidgetContainer gui = new WidgetContainer();
 	private Unit dragElement = null;
 
-	// private Selector selector = new Selector();
-
 	public LevelScreen() {
 		bg = load("res/bg_stars.png", 64, 64);
 		UnitTypeButton tb = new UnitTypeButton(40, 400, 30,
@@ -61,7 +59,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private void drawLineBased(float delta) {
 		if (delta > 0) {
 			level.move(delta);
-			// System.out.println(t);
 		}
 		OrthographicCamera cam;
 		cam = new OrthographicCamera(Gdx.graphics.getWidth(),
@@ -84,8 +81,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (dragElement != null) {
 			dragElement.draw(renderer);
 		}
-		// selector.draw(renderer);
-
 	}
 
 	static final int CIRCLE_VERTICES = 10;
