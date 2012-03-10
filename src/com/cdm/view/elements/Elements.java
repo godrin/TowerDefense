@@ -8,6 +8,9 @@ public class Elements {
 		if (t == Unit.UnitType.CANNON) {
 			return new Cannon(p);
 		}
+		else if (t == Unit.UnitType.ROCKET) {
+			return new Rocket(p);
+		}
 		return null;
 	}
 }

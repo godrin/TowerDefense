@@ -14,7 +14,7 @@ public class Level {
 	private Selector selector = null;
 
 	public Level() {
-		units.add(new Cannon(new Position(3, 3, RefSystem.Level)));
+		units.add(new Rocket(new Position(3, 3, RefSystem.Level)));
 		units.add(new SmallShip(new Position(1, 1, RefSystem.Level)));
 	}
 
