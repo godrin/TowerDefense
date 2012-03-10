@@ -1,11 +1,11 @@
 package com.cdm.gui;
 
-import java.awt.Rectangle;
 import java.util.BitSet;
 
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.cdm.view.IRenderer;
+import com.cdm.view.Rectangle;
 
 public abstract class Widget {
 	private Rectangle bbox;

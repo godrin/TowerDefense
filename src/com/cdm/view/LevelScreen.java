@@ -51,14 +51,19 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public void render(float delta) {
 		// System.out.println(delta);
 		Long millis = System.currentTimeMillis();
-		Long micro=System.nanoTime()/1000+millis*1000;
+		Long micro = System.nanoTime() / 1000 + millis * 1000;
 		if (oldMicros > 0) {
 			delta = (micro - oldMicros) * 0.000001f;
-			//System.out.println(delta);
+			// System.out.println(delta);
 			// System.out.println(millis-oldMillis);
 		}
 		oldMicros = micro;
 		delta += mywait(delta);
+
+		if (false) {
+			System.out.print("FPS:");
+			System.out.println(1.0f / delta);
+		}
 		spriteBatch.begin();
 		for (int x = 0; x < 16; x++)
 			for (int y = 0; y < 16; y++)
@@ -99,18 +104,23 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	static final int CIRCLE_VERTICES = 10;
 
 	private float mywait(float delta) {
-		if (true)
+		if (false)
 			return 0.0f;
 		try {
 			Integer ms = (int) (delta * 1000);
 			// ~ 50 fps
 			// TODO: sleep shorter, if rendering does need more time
+			Long millis0 = System.currentTimeMillis();
+			Long micros0 = System.nanoTime() / 1000;
+
 			int wait = 15 - ms;
-			if (wait > 10) {
+			if (wait > 5) {
 				Thread.sleep(wait);
 				// System.out.println(wait);
 			}
-			return wait / 1000.0f;
+			Long millis1 = System.currentTimeMillis();
+			Long micros1 = System.nanoTime() / 1000;
+			return ((millis1 - millis0) * 1000 + (micros1 - micros0)) / 1000000.0f;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}

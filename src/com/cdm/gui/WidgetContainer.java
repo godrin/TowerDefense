@@ -18,7 +18,7 @@ public class WidgetContainer extends Widget {
 
 	public void add(Widget widget) {
 		if (widgets.size() == 0)
-			setBBox(widget.getBBox());
+			setBBox(widget.getBBox().copy());
 		else
 			getBBox().add(widget.getBBox());
 		widgets.add(widget);

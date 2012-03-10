@@ -1,10 +1,10 @@
 package com.cdm.gui;
 
-import java.awt.Rectangle;
 
 import com.badlogic.gdx.graphics.Color;
 import com.cdm.SString;
 import com.cdm.view.IRenderer;
+import com.cdm.view.Rectangle;
 
 public class Button extends Widget {
 	private int x, y, radius;
@@ -17,7 +17,7 @@ public class Button extends Widget {
 		x = px;
 		y = py;
 		radius = pradius;
-		setBBox(new Rectangle(x - radius, y - radius, radius * 2, radius * 2));
+		setBBox(new Rectangle(x - radius, y - radius, 2*radius, 2*radius));
 	}
 
 	public SString getButtonName() {

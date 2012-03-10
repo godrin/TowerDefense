@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
-import com.cdm.Settings;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 
@@ -17,14 +16,14 @@ public class Cannon extends Unit implements Element {
 
 	public Cannon(Position p) {
 		super(p);
-		Vector3 a = new Vector3(-1, 0.25f, 0);
+		Vector3 a = new Vector3(-0.95f, 0.25f, 0);
 		Vector3 b = new Vector3(-0.25f, 0.75f, 0);
 		Vector3 c = new Vector3(0.25f, 0.75f, 0);
 		Vector3 d = new Vector3(0.85f, 0.25f, 0);
 		Vector3 d2 = new Vector3(0.85f, -0.25f, 0);
 		Vector3 e = new Vector3(0.25f, -0.75f, 0);
 		Vector3 f = new Vector3(-0.25f, -0.75f, 0);
-		Vector3 g = new Vector3(-1, -0.25f, 0);
+		Vector3 g = new Vector3(-0.95f, -0.25f, 0);
 		Vector3 h = new Vector3(-0.5f, -0.25f, 0);
 		Vector3 i = new Vector3(-0.5f, 0.25f, 0);
 
