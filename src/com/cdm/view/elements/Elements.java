@@ -1,14 +1,12 @@
 package com.cdm.view.elements;
 
 import com.cdm.view.Position;
-import com.cdm.view.elements.Unit.UnitType;
 
 public class Elements {
 	public static Unit getElementBy(Unit.UnitType t, Position p) {
 		if (t == Unit.UnitType.CANNON) {
 			return new Cannon(p);
-		}
-		else if (t == Unit.UnitType.ROCKET) {
+		} else if (t == Unit.UnitType.ROCKET) {
 			return new Rocket(p);
 		}
 		return null;

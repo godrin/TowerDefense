@@ -2,7 +2,6 @@ package com.cdm;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.GL10;
 import com.cdm.view.LevelScreen;
 import com.cdm.view.Screen;

@@ -6,7 +6,6 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.Settings;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Element;
 
 public class Selector implements Element {
@@ -42,7 +41,7 @@ public class Selector implements Element {
 
 		float angle = 0;
 		float g = 0.8f;
-		renderer.drawLines(pos, lines, angle, new Color(g, g, g, 1));
+		renderer.drawLines(pos, lines, angle, new Color(g, g, g, 1),1.0f);
 	}
 
 	@Override

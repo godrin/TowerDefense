@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
-import com.cdm.Settings;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 
@@ -38,9 +37,9 @@ public class Cannon2 extends Unit implements Element {
 	@Override
 	public void draw(IRenderer renderer) {
 		Color innerColor = new Color(0, 0, 0.6f, 1.0f);
-		renderer.drawPoly(pos, poly, angle, innerColor);
+		renderer.drawPoly(pos, poly, angle, innerColor, size);
 		Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
-		renderer.drawLines(pos, lines, angle, outerColor);
+		renderer.drawLines(pos, lines, angle, outerColor, size);
 	}
 
 	@Override

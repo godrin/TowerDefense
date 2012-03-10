@@ -1,11 +1,6 @@
 package com.cdm.view;
 
-import java.util.Set;
-
-import org.lwjgl.Sys;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GLCommon;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -49,13 +44,10 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	@Override
 	public void render(float delta) {
-		// System.out.println(delta);
 		Long millis = System.currentTimeMillis();
 		Long micro = System.nanoTime() / 1000 + millis * 1000;
 		if (oldMicros > 0) {
 			delta = (micro - oldMicros) * 0.000001f;
-			// System.out.println(delta);
-			// System.out.println(millis-oldMillis);
 		}
 		oldMicros = micro;
 		delta += mywait(delta);
@@ -81,10 +73,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		OrthographicCamera cam;
 		cam = new OrthographicCamera(Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
-		GLCommon gl = Gdx.gl;
-
-		long startPhysics = System.nanoTime();
-
 		cam.position.set(Gdx.graphics.getWidth() / 2,
 				Gdx.graphics.getHeight() / 2, 0);
 		cam.update();
@@ -104,8 +92,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	static final int CIRCLE_VERTICES = 10;
 
 	private float mywait(float delta) {
-		if (false)
-			return 0.0f;
 		try {
 			Integer ms = (int) (delta * 1000);
 			// ~ 50 fps

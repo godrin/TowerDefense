@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
-import com.cdm.Settings;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 
@@ -32,15 +31,15 @@ public class Rocket extends Unit implements Element {
 				e, f, f, g, g, h, h, i, i, a });
 		poly = Arrays.asList(new Vector3[] { a, b, c, a, c, d, i, d, h, d, h,
 				d2, g, f, d2, f, d2, e });
-
+		setSize(1.0f / 1.5f);
 	}
 
 	@Override
 	public void draw(IRenderer renderer) {
 		Color innerColor = new Color(0, 1, 1, 1.0f);
-		renderer.drawPoly(pos, poly, angle, innerColor);
+		renderer.drawPoly(pos, poly, angle, innerColor, size);
 		Color outerColor = new Color(0, 0, 1, 1.0f);
-		renderer.drawLines(pos, lines, angle, outerColor);
+		renderer.drawLines(pos, lines, angle, outerColor, size);
 	}
 
 	@Override
