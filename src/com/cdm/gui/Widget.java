@@ -25,6 +25,10 @@ public abstract class Widget {
 
 	abstract public void draw(IRenderer renderer);
 
+	public void addTime(float t) {
+
+	}
+
 	abstract public boolean opaque(int x, int y);
 
 	public void touchDown(int x, int y, int pointer, int button) {

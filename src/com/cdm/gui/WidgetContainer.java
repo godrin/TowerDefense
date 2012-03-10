@@ -16,6 +16,14 @@ public class WidgetContainer extends Widget {
 
 	}
 
+	@Override
+	public void addTime(float t) {
+		super.addTime(t);
+		for (Widget w : widgets) {
+			w.addTime(t);
+		}
+	}
+
 	public void add(Widget widget) {
 		if (widgets.size() == 0)
 			setBBox(widget.getBBox().copy());
@@ -41,7 +49,6 @@ public class WidgetContainer extends Widget {
 			w.touchDown(x, y, pointer, button);
 		}
 	}
-
 
 	public void touchUp(int x, int y, int pointer, int button) {
 		for (Widget w : widgetsOf(x, y)) {

@@ -1,8 +1,11 @@
 package com.cdm.gui;
 
-
 import com.badlogic.gdx.graphics.Color;
 import com.cdm.SString;
+import com.cdm.gui.effects.AnimatedColor;
+import com.cdm.gui.effects.AnimatedRect;
+import com.cdm.gui.effects.AnimatorSin;
+import com.cdm.gui.effects.AnimatorStatic;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Rectangle;
 
@@ -11,13 +14,28 @@ public class Button extends Widget {
 
 	private IButtonPressed pressedListener;
 
+	private AnimatedRect rect;
+
 	private SString buttonName;
 
 	public Button(int px, int py, int pradius) {
 		x = px;
 		y = py;
 		radius = pradius;
-		setBBox(new Rectangle(x - radius, y - radius, 2*radius, 2*radius));
+		setBBox(new Rectangle(x - radius, y - radius, 2 * radius, 2 * radius));
+		AnimatedColor c = new AnimatedColor(new AnimatorStatic(0.9f),
+				new AnimatorStatic(0.9f), new AnimatorStatic(0), new AnimatorSin(
+						0.7f, 0.1f, 1.0f, 0.0f));
+
+		rect = new AnimatedRect(new AnimatorStatic(x), new AnimatorStatic(y),
+				new AnimatorSin(radius, radius * 0.1f, 1.4f, 0),
+				new AnimatorSin(radius, radius * 0.1f, 1.4f, 3.14f), c);
+	}
+
+	@Override
+	public void addTime(float t) {
+		super.addTime(t);
+		rect.addTime(t);
 	}
 
 	public SString getButtonName() {
@@ -30,8 +48,9 @@ public class Button extends Widget {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		Color c = new Color(1, 1, 0, 1);
+		Color c = new Color(1, 1, 0, 0.7f);
 		renderer.fillRect(x - radius, y - radius, x + radius, y + radius, c);
+		rect.draw(renderer);
 	}
 
 	@Override

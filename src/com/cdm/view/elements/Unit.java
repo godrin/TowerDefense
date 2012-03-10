@@ -6,7 +6,7 @@ import com.cdm.view.Position;
 public abstract class Unit implements Element {
 
 	public enum UnitType {
-		CANNON, ROCKET, STUNNER, PHAZER
+		CANNON, ROCKET_THROWER, STUNNER, PHAZER
 	};
 
 	Position pos;

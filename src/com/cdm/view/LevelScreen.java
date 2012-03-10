@@ -29,15 +29,29 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	public LevelScreen() {
 		bg = load("res/bg_stars.png", 64, 64);
-		UnitTypeButton tb = new UnitTypeButton(40, 400, 30,
-				Unit.UnitType.CANNON);
-		tb.setListener(this);
-		gui.add(tb);
+
+		UnitTypeButton tb;
+
+		createUnitButtons();
 
 		Button sizeButton = new Button(200, 400, 30);
 		sizeButton.setButtonName(SString.SIZE_BUTTON);
 		sizeButton.setPressedListener(this);
 		gui.add(sizeButton);
+	}
+
+	private void createUnitButtons() {
+		float pos = 40;
+		UnitTypeButton tb;
+		for (UnitType t : new UnitType[] { UnitType.CANNON,
+				UnitType.ROCKET_THROWER }) {
+			tb = new UnitTypeButton((int)pos, 400, 30, t);
+			tb.setListener(this);
+			gui.add(tb);
+
+			pos += 80;
+		}
+
 	}
 
 	private Long oldMicros = 0L;
@@ -82,6 +96,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		Gdx.gl10.glTranslatef(0, -Gdx.graphics.getHeight(), 0);
 
 		level.draw(renderer);
+		gui.addTime(delta);
 		gui.draw(renderer);
 
 		if (dragElement != null) {
