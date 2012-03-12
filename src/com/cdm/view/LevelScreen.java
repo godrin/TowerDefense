@@ -28,7 +28,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Unit dragElement = null;
 
 	public LevelScreen() {
-		bg = load("res/bg_stars.png", 64, 64);
+		bg = load("res/bg_stars2.png", 128, 128);
 
 		UnitTypeButton tb;
 
@@ -73,7 +73,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		spriteBatch.begin();
 		for (int x = 0; x < 16; x++)
 			for (int y = 0; y < 16; y++)
-				draw(bg, x * 64, y * 64);
+				draw(bg, x * 128, y * 128);
 
 		spriteBatch.end();
 		drawLineBased(delta);
