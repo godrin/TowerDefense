@@ -24,4 +24,15 @@ public class Grid {
 		}
 		return l;
 	}
+
+	public boolean passable(int x, int y) {
+		List<Element> l = get(x, y);
+		if (l == null)
+			return false;
+		for (Element e : l) {
+			if (!(e instanceof EnemyUnit))
+				return false;
+		}
+		return true;
+	}
 }

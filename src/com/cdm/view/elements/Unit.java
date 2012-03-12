@@ -51,6 +51,10 @@ public abstract class Unit implements Element {
 		level.addMeToGrid(pos, this);
 	}
 
+	public Level getLevel() {
+		return level;
+	}
+
 	public float getSize() {
 		return size;
 	}

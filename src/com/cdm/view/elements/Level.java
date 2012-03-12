@@ -8,7 +8,11 @@ import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
 import com.cdm.view.Selector;
 import com.cdm.view.elements.Unit.UnitType;
+import com.cdm.view.elements.paths.Path;
+import com.cdm.view.elements.paths.PathFinder;
+import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.enemy.EnemyPlayer;
+import com.cdm.view.enemy.SmallShip;
 
 public class Level {
 	private List<Unit> units = new ArrayList<Unit>();
@@ -40,8 +44,8 @@ public class Level {
 	}
 
 	public void move(float time) {
-		if(time>0.1f)
-			time=0.1f;
+		if (time > 0.1f)
+			time = 0.1f;
 		player.addTime(time);
 		for (Unit unit : units) {
 			unit.move(time);
@@ -59,7 +63,9 @@ public class Level {
 
 	public void add(Unit dragElement) {
 		Position lpos = dragElement.getPosition().toLevelPos().alignToGrid();
-		if (grid.get((int) lpos.x, (int) lpos.y).isEmpty() || dragElement instanceof EnemyUnit) {
+		List<Element> l = grid.get((int) lpos.x, (int) lpos.y);
+
+		if (l == null || l.isEmpty() || dragElement instanceof EnemyUnit) {
 
 			dragElement.setLevel(this);
 			dragElement.setPosition(lpos);
@@ -99,7 +105,24 @@ public class Level {
 	}
 
 	public Position getEnemyStartPosition() {
-		return new Position(0, 3, RefSystem.Level);
+		return new Position(-1, 3, RefSystem.Level);
 	}
 
+	public Position getEnemyEndPosition() {
+		return new Position(10, 3, RefSystem.Level);
+	}
+
+	public Position getNextPos(Position alignToGrid) {
+		// FIXME
+		// return new Position(alignToGrid.x + 1, alignToGrid.y,
+		// RefSystem.Level);
+		Position finish = getEnemyEndPosition();
+		PathPos from = new PathPos((int) alignToGrid.x, (int) alignToGrid.y);
+		PathPos to = new PathPos((int) finish.x, (int) finish.y);
+
+		Path p = PathFinder.findPath(grid, from, to);
+
+		PathPos pp = p.second();
+		return new Position(pp.x, pp.y, RefSystem.Level);
+	}
 }

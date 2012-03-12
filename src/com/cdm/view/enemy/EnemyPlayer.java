@@ -67,7 +67,8 @@ public class EnemyPlayer {
 		listIndex = 0;
 
 		defs.clear();
-		for (int i = 1; i < 5; i++)
+		defs.add(new EnemyDef(EnemyType.TANK, 1.0f ));
+		for (int i = 3; i < 5; i++)
 			defs.add(new EnemyDef(EnemyType.SMALL_SHIP, 1.0f * i));
 	}
 }

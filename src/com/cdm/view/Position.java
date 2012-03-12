@@ -1,5 +1,6 @@
 package com.cdm.view;
 
+import com.badlogic.gdx.math.Vector3;
 import com.cdm.Settings;
 
 public class Position {
@@ -67,5 +68,10 @@ public class Position {
 		y = pos.y;
 		system = pos.system;
 
+	}
+
+	public Vector3 to(Position nextStep) {
+
+		return new Vector3(nextStep.x - x, nextStep.y - y, 0);
 	}
 }

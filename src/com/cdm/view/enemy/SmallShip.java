@@ -1,4 +1,4 @@
-package com.cdm.view.elements;
+package com.cdm.view.enemy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
+import com.cdm.view.elements.Element;
+import com.cdm.view.elements.EnemyUnit;
 
 public class SmallShip extends EnemyUnit implements Element {
 
