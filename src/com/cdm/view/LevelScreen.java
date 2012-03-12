@@ -45,7 +45,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		UnitTypeButton tb;
 		for (UnitType t : new UnitType[] { UnitType.CANNON,
 				UnitType.ROCKET_THROWER }) {
-			tb = new UnitTypeButton((int)pos, 400, 30, t);
+			tb = new UnitTypeButton((int) pos, 400, 30, t);
 			tb.setListener(this);
 			gui.add(tb);
 
@@ -203,8 +203,10 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	@Override
 	public void buttonPressed(SString buttonName) {
 		if (buttonName.equals(SString.SIZE_BUTTON)) {
-			Settings.CELL_WIDTH = 16;
+			if (Settings.CELL_WIDTH == 32) {
+				Settings.CELL_WIDTH = 64;
+			} else
+				Settings.CELL_WIDTH = 32;
 		}
 	}
-
 }
