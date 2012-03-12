@@ -16,9 +16,10 @@ public abstract class EnemyUnit extends Unit {
 		int pad = 2;
 		int w = Settings.CELL_WIDTH, hw = w / 2;
 		int height = 10;
-		float x=pos.getX();
-		float y=pos.getY();
-		
+		Position pos = getPosition();
+		float x = pos.getX();
+		float y = pos.getY();
+
 		renderer.drawRect(x * w + pad - hw, y * w - w, x * w + w - pad - hw, y
 				* w + height - w);
 		Color c = new Color(1, 0, 0, 1);

@@ -37,9 +37,9 @@ public class Rocket extends Unit implements Element {
 	@Override
 	public void draw(IRenderer renderer) {
 		Color innerColor = new Color(0, 1, 1, 1.0f);
-		renderer.drawPoly(pos, poly, angle, innerColor, size);
+		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize());
 		Color outerColor = new Color(0, 0, 1, 1.0f);
-		renderer.drawLines(pos, lines, angle, outerColor, size);
+		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize());
 	}
 
 	@Override
