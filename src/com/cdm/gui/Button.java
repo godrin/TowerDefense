@@ -24,8 +24,8 @@ public class Button extends Widget {
 		radius = pradius;
 		setBBox(new Rectangle(x - radius, y - radius, 2 * radius, 2 * radius));
 		AnimatedColor c = new AnimatedColor(new AnimatorStatic(0.9f),
-				new AnimatorStatic(0.9f), new AnimatorStatic(0), new AnimatorSin(
-						0.7f, 0.1f, 1.0f, 0.0f));
+				new AnimatorStatic(0.9f), new AnimatorStatic(0),
+				new AnimatorSin(0.7f, 0.1f, 1.0f, 0.0f));
 
 		rect = new AnimatedRect(new AnimatorStatic(x), new AnimatorStatic(y),
 				new AnimatorSin(radius, radius * 0.1f, 1.4f, 0),
