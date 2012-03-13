@@ -32,8 +32,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		level=new Level(30,10);
 		bg = load("data/bg_stars.png", 64, 64);
 
-		UnitTypeButton tb;
-
 		createUnitButtons();
 
 		Button sizeButton = new Button(200, 400, 30);
@@ -82,6 +80,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 				draw(bg, x * 64, y * 64);
 
 		spriteBatch.end();
+		
+		
 
 		drawLineBased(delta);
 
@@ -109,6 +109,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (dragElement != null) {
 			dragElement.draw(renderer);
 		}
+		
+		
 	}
 
 	static final int CIRCLE_VERTICES = 10;
