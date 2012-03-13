@@ -16,12 +16,7 @@ public class PathFinder {
 
 		while (paths.size() > 0 && found == null) {
 			Path current = paths.first();
-			/*
-			System.out.println("ALL ");
-			for(Path p:paths) {
-				System.out.println("ALL "+p+" "+p.value());
-			}
-			*/
+
 			paths.remove(current);
 			for (PathPos pos : current.last().next()) {
 				if (pos.equals(to)) {
