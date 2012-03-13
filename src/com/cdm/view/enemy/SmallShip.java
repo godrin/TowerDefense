@@ -1,4 +1,4 @@
-package com.cdm.view.elements;
+package com.cdm.view.enemy;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
+import com.cdm.view.elements.Element;
+import com.cdm.view.elements.EnemyUnit;
 
 public class SmallShip extends EnemyUnit implements Element {
 
@@ -29,17 +31,23 @@ public class SmallShip extends EnemyUnit implements Element {
 	@Override
 	public void draw(IRenderer renderer) {
 		super.draw(renderer);
-		renderer.drawPoly(pos, poly, angle, new Color(0.0f, 0, 0, 1.0f), size);
-		renderer.drawLines(pos, lines, angle, new Color(0.9f, 0, 0, 1.0f), size);
+
+		renderer.drawPoly(getPosition(), poly, angle, new Color(0.5f, 0, 0,
+				1.0f), getSize());
+		renderer.drawLines(getPosition(), lines, angle, new Color(0.9f, 0, 0,
+				1.0f), getSize());
+
 	}
 
 	@Override
 	public void move(float time) {
+
+		Position pos = getPosition();
 		if (pos.x < 26) {
 			pos.x += time * 0.3;
 		} else
 			pos.x = -2;
+		setPosition(pos);
 
 	}
-
 }

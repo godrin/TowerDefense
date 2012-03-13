@@ -16,23 +16,22 @@ public class RocketThrower extends Unit implements Element {
 
 	public RocketThrower(Position p) {
 		super(p);
-		Vector3 c0=new Vector3(-1,-1,0); 
-		Vector3 c1=new Vector3(1,-1,0); 
-		Vector3 c2=new Vector3(1,1,0); 
-		Vector3 c3=new Vector3(-1,1,0); 
-		
-		lines = Arrays.asList(new Vector3[] { 
-				c0,c1,c1,c2,c2,c3,c3,c0 });
-		poly = Arrays.asList(new Vector3[] {c0,c1,c2,c0,c2,c3});
+		Vector3 c0 = new Vector3(-1, -1, 0);
+		Vector3 c1 = new Vector3(1, -1, 0);
+		Vector3 c2 = new Vector3(1, 1, 0);
+		Vector3 c3 = new Vector3(-1, 1, 0);
+
+		lines = Arrays.asList(new Vector3[] { c0, c1, c1, c2, c2, c3, c3, c0 });
+		poly = Arrays.asList(new Vector3[] { c0, c1, c2, c0, c2, c3 });
 
 	}
 
 	@Override
 	public void draw(IRenderer renderer) {
 		Color innerColor = new Color(0, 0, 0.6f, 1.0f);
-		renderer.drawPoly(pos, poly, angle, innerColor,size);
+		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize());
 		Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
-		renderer.drawLines(pos, lines, angle, outerColor,size);
+		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize());
 	}
 
 	@Override

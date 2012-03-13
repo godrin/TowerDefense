@@ -1,7 +1,7 @@
 package com.cdm.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -24,11 +24,13 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public SpriteBatch spriteBatch = new SpriteBatch();
 	public static TextureRegion bg;
 	private Renderer renderer = new Renderer();
-	private Level level = new Level();
+	private Level level;
 	private WidgetContainer gui = new WidgetContainer();
 	private Unit dragElement = null;
 
 	public LevelScreen() {
+
+		level = new Level(30, 10);
 		bg = load("res/bg_stars2.png", 128, 128);
 
 		UnitTypeButton tb;
@@ -59,6 +61,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	@Override
 	public void render(float delta) {
+
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		Long millis = System.currentTimeMillis();
 		Long micro = System.nanoTime() / 1000 + millis * 1000;
 		if (oldMicros > 0) {
@@ -71,12 +75,15 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 			System.out.print("FPS:");
 			System.out.println(1.0f / delta);
 		}
+
 		spriteBatch.begin();
+
 		for (int x = 0; x < 16; x++)
 			for (int y = 0; y < 16; y++)
 				draw(bg, x * 128, y * 128);
 
 		spriteBatch.end();
+
 		drawLineBased(delta);
 
 	}

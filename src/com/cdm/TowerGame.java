@@ -18,6 +18,11 @@ public class TowerGame implements ApplicationListener {
 		running = true;
 		setScreen(new LevelScreen());
 		Gdx.input.setInputProcessor(screen);
+		
+		startMusic();
+	}
+
+	private void startMusic() {
 	}
 
 	public void pause() {
