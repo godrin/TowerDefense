@@ -3,6 +3,7 @@ package com.cdm.gui;
 import java.util.BitSet;
 
 import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.Gdx;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Rectangle;
@@ -37,7 +38,7 @@ public abstract class Widget {
 	}
 
 	public void clicked(int x, int y, int pointer, int button) {
-
+		
 	}
 
 	public void touchUp(int x, int y, int pointer, int button) {

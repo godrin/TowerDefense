@@ -29,6 +29,7 @@ public class Level {
 		player.setLevel(this);
 		add(new Rocket(new Position(3, 3, RefSystem.Level)));
 		add(new SmallShip(new Position(1, 1, RefSystem.Level)));
+
 	}
 
 	public void add(Position pos, UnitType type) {

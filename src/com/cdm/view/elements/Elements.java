@@ -8,6 +8,8 @@ public class Elements {
 			return new Cannon(p);
 		} else if (t == Unit.UnitType.ROCKET_THROWER) {
 			return new RocketThrower(p);
+		} else if (t == Unit.UnitType.ROCKET) {
+			return new Rocket(p);
 		}
 		return null;
 	}

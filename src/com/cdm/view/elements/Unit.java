@@ -7,7 +7,7 @@ import com.cdm.view.Position.RefSystem;
 public abstract class Unit implements Element {
 
 	public enum UnitType {
-		CANNON, ROCKET_THROWER, STUNNER, PHAZER
+		CANNON, ROCKET_THROWER, STUNNER, PHAZER, ROCKET
 	};
 
 	private Position pos, oldpos = new Position(1, 1, RefSystem.Level);

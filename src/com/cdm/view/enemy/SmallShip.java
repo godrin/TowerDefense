@@ -31,17 +31,23 @@ public class SmallShip extends EnemyUnit implements Element {
 	@Override
 	public void draw(IRenderer renderer) {
 		super.draw(renderer);
+
 		renderer.drawPoly(getPosition(), poly, angle, new Color(0.5f, 0, 0,
 				1.0f), getSize());
 		renderer.drawLines(getPosition(), lines, angle, new Color(0.9f, 0, 0,
 				1.0f), getSize());
+
 	}
 
 	@Override
 	public void move(float time) {
-		Position pos = getPosition();
-		pos.x += time * 0.3;
-		setPosition(pos);
-	}
 
+		Position pos = getPosition();
+		if (pos.x < 26) {
+			pos.x += time * 0.3;
+		} else
+			pos.x = -2;
+		setPosition(pos);
+
+	}
 }
