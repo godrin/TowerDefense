@@ -2,7 +2,10 @@ package com.cdm;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
+import com.cdm.gui.SoundFX;
 import com.cdm.view.LevelScreen;
 import com.cdm.view.Screen;
 
@@ -18,11 +21,16 @@ public class TowerGame implements ApplicationListener {
 		running = true;
 		setScreen(new LevelScreen());
 		Gdx.input.setInputProcessor(screen);
-		
 		startMusic();
 	}
 
 	private void startMusic() {
+		Music music;
+		music = Gdx.audio.newMusic(Gdx.files.internal("data/level01.ogg"));
+		music.setVolume(0.5f);
+		music.setLooping(true);
+		music.play();
+		
 	}
 
 	public void pause() {

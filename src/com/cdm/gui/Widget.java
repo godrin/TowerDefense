@@ -3,7 +3,6 @@ package com.cdm.gui;
 import java.util.BitSet;
 
 import com.badlogic.gdx.Application.ApplicationType;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.Gdx;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Rectangle;
@@ -11,7 +10,7 @@ import com.cdm.view.Rectangle;
 public abstract class Widget {
 	private Rectangle bbox;
 	private BitSet touching = new BitSet(20); // too much ;)
-
+	
 	public void setBBox(Rectangle box) {
 		bbox = box;
 	}

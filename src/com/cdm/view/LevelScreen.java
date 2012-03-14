@@ -33,8 +33,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		level = new Level(30, 10);
 		bg = load("data/bg_stars2.png", 128, 128);
 
-		UnitTypeButton tb;
-
 		createUnitButtons();
 
 		Button sizeButton = new Button(200, 400, 30);
