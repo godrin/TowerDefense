@@ -27,4 +27,12 @@ public abstract class EnemyUnit extends Unit {
 				- 1 - hw, y * w + height - 1 - w, c);
 	}
 
+	@Override
+	public void setPosition(Position p) {
+		super.setPosition(p);
+		if (p.equals(getLevel().getEnemyEndPosition())) {
+			getLevel().enemyReachedEnd(this);
+		}
+	}
+
 }

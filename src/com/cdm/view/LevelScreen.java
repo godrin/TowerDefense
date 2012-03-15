@@ -61,7 +61,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Long oldMicros = 0L;
 
 	@Override
-	public void render(float delta) {
+	public synchronized void render(float delta) {
 
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		Long millis = System.currentTimeMillis();
@@ -84,6 +84,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 				draw(bg, x * 128, y * 128);
 
 		spriteBatch.end();
+		
+		
 
 		drawLineBased(delta);
 
@@ -111,6 +113,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (dragElement != null) {
 			dragElement.draw(renderer);
 		}
+		
+		
 	}
 
 	static final int CIRCLE_VERTICES = 10;

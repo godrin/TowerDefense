@@ -19,6 +19,9 @@ public class Level {
 	private Grid grid;
 	private Selector selector = null;
 	private EnemyPlayer player;
+	private float speedFactor = 2.0f;
+	private int health = 20;
+	private List<Unit> unitsToRemove = new ArrayList<Unit>();
 
 	public Level(int w, int h) {
 		grid = new Grid(w, h);
@@ -44,13 +47,19 @@ public class Level {
 		selector = null;
 	}
 
-	public void move(float time) {
+	public synchronized void move(float time) {
 		if (time > 0.1f)
 			time = 0.1f;
+		time *= speedFactor;
 		player.addTime(time);
 		for (Unit unit : units) {
 			unit.move(time);
 		}
+		for (Unit unit : unitsToRemove) {
+			System.out.println("REMOVIIIING " + unit);
+			units.remove(unit);
+		}
+		unitsToRemove.clear();
 	}
 
 	public void draw(IRenderer renderer) {
@@ -125,5 +134,12 @@ public class Level {
 
 		PathPos pp = p.second();
 		return new Position(pp.x, pp.y, RefSystem.Level);
+	}
+
+	public void enemyReachedEnd(EnemyUnit enemyUnit) {
+		System.out.println("REACHED " + enemyUnit);
+		health -= 1;
+		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
+		unitsToRemove.add(enemyUnit);
 	}
 }
