@@ -1,10 +1,13 @@
 package com.cdm.view.elements;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
@@ -15,7 +18,6 @@ import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
-import com.cdm.view.enemy.SmallShip;
 
 public class Level {
 	private List<Unit> units = new ArrayList<Unit>();
@@ -29,12 +31,12 @@ public class Level {
 	private List<AbstractShot> shots = new ArrayList<AbstractShot>();
 	private List<AbstractShot> shotsToRemove = new ArrayList<AbstractShot>();
 
-	public Level(int w, int h) {
-		grid = new Grid(w, h);
+	public Level(int w, int h, int endY) {
+		grid = new Grid(w, h, endY);
 		player = new EnemyPlayer();
 		player.setLevel(this);
-		 //add(new Rocket(new Position(3, 3, RefSystem.Level)));
-		 //add(new SmallShip(new Position(1, 1, RefSystem.Level)));
+		add(new Rocket(new Position(10, 3, RefSystem.Level)));
+		// add(new SmallShip(new Position(1, 1, RefSystem.Level)));
 
 	}
 
@@ -85,10 +87,41 @@ public class Level {
 		if (selector != null)
 			selector.draw(renderer);
 
+		drawBox(renderer);
+
+	}
+
+	private void drawBox(IRenderer renderer) {
+
+		float size = 2.0f;
+		Color color = new Color(0, 0, 1, 1);
+		Position pos = new Position(0, 0, RefSystem.Level);
+		Position start = getEnemyStartPosition();
+		Position end = getEnemyEndPosition();
+
+		// upper box
+		Vector3 a = new Vector3(0, start.y - 0.5f, 0);
+		Vector3 b = new Vector3(0, 0, 0);
+		Vector3 c = new Vector3(end.x - 0.5f, 0, 0);
+		Vector3 d = new Vector3(end.x - 0.5f, start.y - 0.5f, 0);
+		// lower box
+		Vector3 e = new Vector3(0, start.y + 0.5f, 0);
+		Vector3 f = new Vector3(0, grid.getH() - 0.5f, 0);
+		Vector3 g = new Vector3(end.x - 0.5f, grid.getH() - 0.5f, 0);
+		Vector3 h = new Vector3(end.x - 0.5f, start.y + 0.5f, 0);
+
+		List<Vector3> lines = Arrays.asList(new Vector3[] { a, b, b, c, c, d,
+				e, f, f, g, g, h });
+		float angle = 0.0f;
+		renderer.drawLines(pos, lines, angle, color, size);
 	}
 
 	public void add(Unit dragElement) {
 		Position lpos = dragElement.getPosition().toLevelPos().alignToGrid();
+		if (!(dragElement instanceof EnemyUnit)
+				&& (lpos.x < 0 || lpos.x > grid.getW() - 1 || lpos.y < 0 || lpos.y > grid
+						.getH()))
+			return;
 		List<Element> l = grid.get((int) lpos.x, (int) lpos.y);
 
 		if (l == null || l.isEmpty() || dragElement instanceof EnemyUnit) {
@@ -131,11 +164,11 @@ public class Level {
 	}
 
 	public Position getEnemyStartPosition() {
-		return new Position(-1, 3, RefSystem.Level);
+		return new Position(-1, grid.endY(), RefSystem.Level);
 	}
 
 	public Position getEnemyEndPosition() {
-		return new Position(10, 3, RefSystem.Level);
+		return new Position(grid.getW(), grid.endY(), RefSystem.Level);
 	}
 
 	public Position getNextPos(Position alignToGrid) {
