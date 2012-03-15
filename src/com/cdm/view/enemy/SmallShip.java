@@ -34,8 +34,8 @@ public class SmallShip extends EnemyUnit implements Element {
 	public void draw(IRenderer renderer) {
 		super.draw(renderer);
 
-		renderer.drawPoly(getPosition(), poly, angle, new Color(0.5f, 0, 0,
-				1.0f), getSize());
+		renderer.drawPoly(getPosition(), poly, angle, new Color(0, 0, 0,
+				0), getSize());
 		renderer.drawLines(getPosition(), lines, angle, new Color(0.9f, 0, 0,
 				1.0f), getSize());
 

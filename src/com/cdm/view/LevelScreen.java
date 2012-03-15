@@ -1,6 +1,7 @@
 package com.cdm.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -27,7 +28,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Level level;
 	private WidgetContainer gui = new WidgetContainer();
 	private Unit dragElement = null;
-
+	
+	Sound sound;
+	
 	public LevelScreen() {
 
 		level = new Level(30, 10);
@@ -213,6 +216,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	@Override
 	public void buttonPressed(SString buttonName) {
 		if (buttonName.equals(SString.SIZE_BUTTON)) {
+			sound = Gdx.audio.newSound(Gdx.files.internal("data/zoom.ogg"));
+			sound.play();
 			if (Settings.CELL_WIDTH == 32) {
 				Settings.CELL_WIDTH = 64;
 			} else
