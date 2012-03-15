@@ -47,7 +47,7 @@ public class Tank extends EnemyUnit {
 				time -= len / delta;
 				nextStep = null;
 			} else {
-				diff.mul(delta/diff.len());
+				diff.mul(delta / diff.len());
 				nuPos.x += diff.x;
 				nuPos.y += diff.y;
 				setPosition(nuPos);
@@ -63,6 +63,17 @@ public class Tank extends EnemyUnit {
 		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize());
 		Color outerColor = new Color(0.7f, 0.2f, 1.0f, 1.0f);
 		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize());
+	}
+
+	@Override
+	public float getSpeed() {
+		// TODO Auto-generated method stub
+		return speed;
+	}
+
+	@Override
+	public Vector3 getMovingDirection() {
+		return getPosition().to(nextStep).nor();
 	}
 
 }

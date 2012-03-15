@@ -22,6 +22,7 @@ public class EnemyPlayer {
 	private Float timeInWave = 0.0f;
 	private List<EnemyDef> defs = new ArrayList<EnemyDef>();
 	private int listIndex = 0;
+	private boolean alreadySent = false;
 
 	public Level getLevel() {
 		return level;
@@ -33,11 +34,13 @@ public class EnemyPlayer {
 
 	public void addTime(float t) {
 		if (mode.equals(Mode.ATTACK)) {
-			if (level.hasEnemies()) {
+			if (level.hasEnemies() || !alreadySent) {
 				timeToNextWave = WAITING_TIME;
 				timeInWave += t;
 				while (listIndex < defs.size()
 						&& defs.get(listIndex).time < timeInWave) {
+					System.out.println("CREATE");
+					alreadySent = true;
 					Position x = new Position(level.getEnemyStartPosition());
 					EnemyUnit e = EnemyUnits
 							.create(defs.get(listIndex).type, x);
@@ -64,11 +67,13 @@ public class EnemyPlayer {
 	private void startNewWave() {
 		timeInWave = 0.0f;
 		mode = Mode.ATTACK;
+		alreadySent = false;
 		listIndex = 0;
 
 		defs.clear();
-		defs.add(new EnemyDef(EnemyType.TANK, 1.0f ));
-		for (int i = 3; i < 5; i++)
-			defs.add(new EnemyDef(EnemyType.SMALL_SHIP, 1.0f * i));
+		defs.add(new EnemyDef(EnemyType.TANK, 1.0f));
+		if (false)
+			for (int i = 3; i < 5; i++)
+				defs.add(new EnemyDef(EnemyType.SMALL_SHIP, 1.0f * i));
 	}
 }

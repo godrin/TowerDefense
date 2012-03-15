@@ -1,6 +1,7 @@
 package com.cdm.view.elements;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector3;
 import com.cdm.Settings;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
@@ -34,5 +35,7 @@ public abstract class EnemyUnit extends Unit {
 			getLevel().enemyReachedEnd(this);
 		}
 	}
+	public abstract float getSpeed();
+	public abstract Vector3 getMovingDirection();
 
 }

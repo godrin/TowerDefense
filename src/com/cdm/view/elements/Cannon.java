@@ -4,15 +4,21 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
+import com.cdm.view.Position.RefSystem;
 
 public class Cannon extends Unit implements Element {
 
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 	float angle = 0.0f;
+	float targetAngle = angle;
+	float turningSpeed = 45.0f; // degrees per second
+	float shotFrequency = 1.0f;
+	float lastShot = 0.0f;
 
 	public Cannon(Position p) {
 		super(p);
@@ -44,7 +50,42 @@ public class Cannon extends Unit implements Element {
 
 	@Override
 	public void move(float time) {
-		angle += time * 10;
+
+		EnemyUnit enemy = getLevel().getNextEnemy(getPosition());
+		lastShot += time;
+		if (enemy != null) {
+			Vector3 delta = enemy.getPosition().to(getPosition());
+			targetAngle = MathTools.angle(delta);
+
+			if (lastShot > shotFrequency) {
+				lastShot = 0.0f;
+				getLevel().addShot(
+						new AbstractShot(getPosition(),
+								anticipatePosition(enemy), getLevel()));
+
+			}
+
+		}
+		float turnVec = targetAngle - angle;
+		float turnDir = Math.signum(turnVec);
+		float target = angle + turnDir * turningSpeed * time;
+		if (Math.signum(targetAngle - target) != turnDir) {
+			// reached
+			angle = targetAngle;
+		} else {
+			angle = target;
+		}
+
+		// angle += time * 10;
 	}
 
+	private Position anticipatePosition(EnemyUnit enemy) {
+		float enemyDistance = getPosition().to(enemy.getPosition()).len();
+		float enemyMoveDistance = (enemyDistance / AbstractShot.speed)
+				* enemy.getSpeed();
+
+		Vector3 result = enemy.getPosition().toVector()
+				.add(enemy.getMovingDirection().mul(enemyMoveDistance));
+		return new Position(result.x, result.y, RefSystem.Level);
+	}
 }

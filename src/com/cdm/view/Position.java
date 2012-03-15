@@ -74,4 +74,8 @@ public class Position {
 
 		return new Vector3(nextStep.x - x, nextStep.y - y, 0);
 	}
+
+	public Vector3 toVector() {
+		return new Vector3(x,y,0);
+	}
 }

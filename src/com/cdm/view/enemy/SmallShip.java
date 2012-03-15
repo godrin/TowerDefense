@@ -12,9 +12,11 @@ import com.cdm.view.elements.EnemyUnit;
 
 public class SmallShip extends EnemyUnit implements Element {
 
+	private static final Vector3 DIRECTION = new Vector3(1, 0, 0);
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 	float angle = 0.0f;
+	private float speed = 0.3f;
 
 	public SmallShip(Position position) {
 		super(position);
@@ -44,10 +46,20 @@ public class SmallShip extends EnemyUnit implements Element {
 
 		Position pos = getPosition();
 		if (pos.x < 26) {
-			pos.x += time * 0.3;
+			pos.x += time * speed;
 		} else
 			pos.x = -2;
 		setPosition(pos);
 
+	}
+
+	@Override
+	public float getSpeed() {
+		return speed;
+	}
+
+	@Override
+	public Vector3 getMovingDirection() {
+		return DIRECTION;
 	}
 }

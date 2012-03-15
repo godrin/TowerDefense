@@ -2,6 +2,8 @@ package com.cdm.view.elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
@@ -12,7 +14,6 @@ import com.cdm.view.elements.paths.Path;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.enemy.EnemyPlayer;
-import com.cdm.view.enemy.SmallShip;
 
 public class Level {
 	private List<Unit> units = new ArrayList<Unit>();
@@ -23,12 +24,15 @@ public class Level {
 	private int health = 20;
 	private List<Unit> unitsToRemove = new ArrayList<Unit>();
 
+	private List<AbstractShot> shots = new ArrayList<AbstractShot>();
+	private List<AbstractShot> shotsToRemove = new ArrayList<AbstractShot>();
+
 	public Level(int w, int h) {
 		grid = new Grid(w, h);
 		player = new EnemyPlayer();
 		player.setLevel(this);
-		add(new Rocket(new Position(3, 3, RefSystem.Level)));
-		add(new SmallShip(new Position(1, 1, RefSystem.Level)));
+		// add(new Rocket(new Position(3, 3, RefSystem.Level)));
+		// add(new SmallShip(new Position(1, 1, RefSystem.Level)));
 
 	}
 
@@ -55,16 +59,26 @@ public class Level {
 		for (Unit unit : units) {
 			unit.move(time);
 		}
+		for (AbstractShot shot : shots) {
+			shot.move(time);
+		}
 		for (Unit unit : unitsToRemove) {
 			System.out.println("REMOVIIIING " + unit);
 			units.remove(unit);
 		}
 		unitsToRemove.clear();
+		for (AbstractShot shot : shotsToRemove) {
+			shots.remove(shot);
+		}
+		shotsToRemove.clear();
 	}
 
 	public void draw(IRenderer renderer) {
 		for (Unit unit : units) {
 			unit.draw(renderer);
+		}
+		for (AbstractShot shot : shots) {
+			shot.draw(renderer);
 		}
 		if (selector != null)
 			selector.draw(renderer);
@@ -141,5 +155,28 @@ public class Level {
 		health -= 1;
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		unitsToRemove.add(enemyUnit);
+	}
+
+	public void removeShot(AbstractShot shot) {
+		shotsToRemove.add(shot);
+	}
+
+	public EnemyUnit getNextEnemy(Position position) {
+
+		SortedSet<EnemyUnit> s = new TreeSet<EnemyUnit>(new DistanceComparator(
+				position));
+		for (Unit u : units) {
+			if (u instanceof EnemyUnit) {
+				s.add((EnemyUnit) u);
+			}
+		}
+
+		if (s.size() > 0)
+			return s.first();
+		return null;
+	}
+
+	public void addShot(AbstractShot abstractShot) {
+		shots.add(abstractShot);
 	}
 }
