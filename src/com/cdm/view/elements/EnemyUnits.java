@@ -2,6 +2,7 @@ package com.cdm.view.elements;
 
 import com.cdm.view.Position;
 import com.cdm.view.enemy.EnemyType;
+import com.cdm.view.enemy.EnemyUnit;
 import com.cdm.view.enemy.SmallShip;
 import com.cdm.view.enemy.Tank;
 

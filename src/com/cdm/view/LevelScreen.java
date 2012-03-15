@@ -28,9 +28,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Level level;
 	private WidgetContainer gui = new WidgetContainer();
 	private Unit dragElement = null;
-	
+
 	Sound sound;
-	
+
 	public LevelScreen() {
 
 		level = new Level(30, 10);
@@ -84,8 +84,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 				draw(bg, x * 128, y * 128);
 
 		spriteBatch.end();
-		
-		
 
 		drawLineBased(delta);
 
@@ -113,13 +111,14 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (dragElement != null) {
 			dragElement.draw(renderer);
 		}
-		
-		
+
 	}
 
 	static final int CIRCLE_VERTICES = 10;
 
 	private float mywait(float delta) {
+		if (true)
+			return 0;
 		try {
 			Integer ms = (int) (delta * 1000);
 			// ~ 50 fps

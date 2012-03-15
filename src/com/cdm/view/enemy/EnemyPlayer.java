@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cdm.view.Position;
-import com.cdm.view.elements.EnemyUnit;
 import com.cdm.view.elements.EnemyUnits;
 import com.cdm.view.elements.Level;
 

@@ -3,6 +3,7 @@ package com.cdm.view.elements;
 import java.util.Comparator;
 
 import com.cdm.view.Position;
+import com.cdm.view.enemy.EnemyUnit;
 
 public class DistanceComparator implements Comparator<EnemyUnit> {
 

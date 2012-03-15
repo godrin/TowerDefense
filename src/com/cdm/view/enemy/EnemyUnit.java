@@ -1,10 +1,11 @@
-package com.cdm.view.elements;
+package com.cdm.view.enemy;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.Settings;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
+import com.cdm.view.elements.Unit;
 
 public abstract class EnemyUnit extends Unit {
 
@@ -14,18 +15,20 @@ public abstract class EnemyUnit extends Unit {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		int pad = 2;
-		int w = Settings.CELL_WIDTH, hw = w / 2;
-		int height = 10;
+		float pad = 0.05f;
+		float height = 0.2f;
 		Position pos = getPosition();
-		float x = pos.getX();
-		float y = pos.getY();
+		float x = pos.x;
+		float y = pos.y;
+		
+		float x0=x+pad-0.5f;
+		float y0=y-0.9f;
+		float y1=y-0.9f+height;
+		float x1=x-pad+0.5f;
 
-		renderer.drawRect(x * w + pad - hw, y * w - w, x * w + w - pad - hw, y
-				* w + height - w);
+		renderer.drawRect(x0,y0,x1,y1, Settings.CELL_WIDTH);
 		Color c = new Color(1, 0, 0, 1);
-		renderer.fillRect(x * w + pad + 1 - hw, y * w + 1 - w, x * w + w - pad
-				- 1 - hw, y * w + height - 1 - w, c);
+		renderer.fillRect(x0,y0,x1,y1, c, Settings.CELL_WIDTH);
 	}
 
 	@Override
@@ -35,7 +38,9 @@ public abstract class EnemyUnit extends Unit {
 			getLevel().enemyReachedEnd(this);
 		}
 	}
+
 	public abstract float getSpeed();
+
 	public abstract Vector3 getMovingDirection();
 
 }

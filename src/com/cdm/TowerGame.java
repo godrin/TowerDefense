@@ -23,6 +23,8 @@ public class TowerGame implements ApplicationListener {
 		setScreen(new LevelScreen());
 		Gdx.input.setInputProcessor(screen);
 		startMusic();
+		sound = Gdx.audio.newSound(Gdx.files.internal("data/klick01.ogg"));
+
 	}
 
 	private void startMusic() {
@@ -57,7 +59,6 @@ public class TowerGame implements ApplicationListener {
 		}
 		screen.render(accum);
 		if (Gdx.input.justTouched()) {
-			sound = Gdx.audio.newSound(Gdx.files.internal("data/klick01.ogg"));
 			sound.play();
 		}
 	}
@@ -70,7 +71,8 @@ public class TowerGame implements ApplicationListener {
 
 	@Override
 	public void dispose() {
-		sound.dispose();
+		if (sound != null)
+			sound.dispose();
 		music.dispose();
 
 	}

@@ -15,4 +15,8 @@ public interface IRenderer {
 
 	void drawPoly(Position pos, List<Vector3> lines, float angle, Color color,float size);
 
+	void drawRect(float f, float g, float h, float i, float j);
+
+	void fillRect(float f, float g, float h, float i, Color c, float j);
+
 }

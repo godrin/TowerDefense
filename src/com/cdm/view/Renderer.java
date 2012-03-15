@@ -67,9 +67,17 @@ public class Renderer implements IRenderer {
 
 	@Override
 	public void drawRect(float x0, float y0, float x1, float y1) {
+		drawRect(x0, y0, x1, y1, 1.0f);
+	}
+
+	@Override
+	public void drawRect(float x0, float y0, float x1, float y1, float scale) {
 		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 		Gdx.gl10.glEnable(GL10.GL_BLEND);
 		Gdx.gl10.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
+
+		Gdx.gl10.glPushMatrix();
+		Gdx.gl10.glScalef(scale, scale, scale);
 		renderer.begin(GL10.GL_LINE_LOOP);
 
 		Vector3[] lines = new Vector3[] { new Vector3(x0, y0, 0),
@@ -81,14 +89,25 @@ public class Renderer implements IRenderer {
 		}
 
 		renderer.end();
+		Gdx.gl10.glPopMatrix();
 
 	}
 
 	@Override
 	public void fillRect(float x0, float y0, float x1, float y1, Color c) {
+		fillRect(x0, y0, x1, y1, c, 1.0f);
+	}
+
+	@Override
+	public void fillRect(float x0, float y0, float x1, float y1, Color c,
+			float scale) {
 		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 		Gdx.gl10.glEnable(GL10.GL_BLEND);
 		Gdx.gl10.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
+		Gdx.gl10.glPushMatrix();
+		Gdx.gl10.glScalef(scale, scale, scale);
+
+		
 		renderer.begin(GL10.GL_TRIANGLES);
 
 		Vector3[] lines = new Vector3[] { new Vector3(x0, y0, 0),
@@ -102,6 +121,8 @@ public class Renderer implements IRenderer {
 		}
 
 		renderer.end();
+		Gdx.gl10.glPopMatrix();
+
 
 	}
 

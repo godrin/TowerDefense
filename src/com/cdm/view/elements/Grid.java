@@ -3,6 +3,8 @@ package com.cdm.view.elements;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cdm.view.enemy.EnemyUnit;
+
 public class Grid {
 	private List<Element>[] cells;
 	private int w, h;

@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
-import com.cdm.view.elements.EnemyUnit;
 
 public class SmallShip extends EnemyUnit implements Element {
 
