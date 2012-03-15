@@ -19,6 +19,7 @@ public class EnemyPlayer {
 	private Level level;
 	private Float timeToNextWave = WAITING_TIME;
 	private Float timeInWave = 0.0f;
+	// FIXME: use sorted set
 	private List<EnemyDef> defs = new ArrayList<EnemyDef>();
 	private int listIndex = 0;
 	private boolean alreadySent = false;
@@ -53,7 +54,6 @@ public class EnemyPlayer {
 				startNewWave();
 			} else {
 				timeToNextWave -= t;
-
 			}
 		}
 	}
@@ -70,9 +70,9 @@ public class EnemyPlayer {
 		listIndex = 0;
 
 		defs.clear();
+		// elements must be sorted !
 		defs.add(new EnemyDef(EnemyType.TANK, 1.0f));
-		if (false)
-			for (int i = 3; i < 5; i++)
-				defs.add(new EnemyDef(EnemyType.SMALL_SHIP, 1.0f * i));
+		for (int i = 3; i < 5; i++)
+			defs.add(new EnemyDef(EnemyType.SMALL_SHIP, 1.0f * i));
 	}
 }

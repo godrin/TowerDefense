@@ -24,6 +24,7 @@ public class TowerGame implements ApplicationListener {
 		Gdx.input.setInputProcessor(screen);
 		startMusic();
 		sound = Gdx.audio.newSound(Gdx.files.internal("data/klick01.ogg"));
+		
 
 	}
 

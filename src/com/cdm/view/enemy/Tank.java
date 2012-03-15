@@ -72,7 +72,9 @@ public class Tank extends EnemyUnit {
 
 	@Override
 	public Vector3 getMovingDirection() {
-		return getPosition().to(nextStep).nor();
+		if (nextStep != null)
+			return getPosition().to(nextStep).nor();
+		return new Vector3(1, 0, 0);
 	}
 
 }
