@@ -11,7 +11,7 @@ import com.cdm.view.Position;
 public class AbstractShot implements Element {
 
 	Position pos;
-	public static final float speed = 0.5f;
+	public static final float speed = 1.5f;
 	Position target;
 	private List<Vector3> lines;
 	private List<Vector3> poly;

@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
@@ -20,6 +19,9 @@ public class Cannon extends Unit implements Element {
 	float turningSpeed = 45.0f; // degrees per second
 	float shotFrequency = 1.0f;
 	float lastShot = 0.0f;
+	private float targetDist;
+	private float maxDist = 3.0f;
+	private double startingRadius = 0.4f;
 
 	public Cannon(Position p) {
 		super(p);
@@ -54,30 +56,48 @@ public class Cannon extends Unit implements Element {
 
 		EnemyUnit enemy = getLevel().getNextEnemy(getPosition());
 		lastShot += time;
+
 		if (enemy != null) {
 			Vector3 delta = enemy.getPosition().to(getPosition());
-			targetAngle = MathTools.angle(delta);
-
-			if (lastShot > shotFrequency) {
-				lastShot = 0.0f;
-				getLevel().addShot(
-						new AbstractShot(getPosition(),
-								anticipatePosition(enemy), getLevel()));
-
+			if (delta.len() < maxDist) {
+				targetAngle = MathTools.angle(delta);
+				targetDist = delta.len();
 			}
-
 		}
+
 		float turnVec = targetAngle - angle;
 		float turnDir = Math.signum(turnVec);
 		float target = angle + turnDir * turningSpeed * time;
 		if (Math.signum(targetAngle - target) != turnDir) {
 			// reached
 			angle = targetAngle;
+
+			shoot(enemy);
 		} else {
 			angle = target;
 		}
 
 		// angle += time * 10;
+	}
+
+	private void shoot(EnemyUnit enemy) {
+		if (enemy != null) {
+
+			if (lastShot > shotFrequency && targetDist < maxDist) {
+				lastShot = 0.0f;
+				Position startingPos = new Position(getPosition());
+				float angle = targetAngle;
+				startingPos.x -= Math.cos(angle * MathTools.M_PI / 180.0f)
+						* startingRadius;
+				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
+						* startingRadius;
+				getLevel().addShot(
+						new AbstractShot(startingPos,
+								anticipatePosition(enemy), getLevel()));
+
+			}
+
+		}
 	}
 
 	private Position anticipatePosition(EnemyUnit enemy) {

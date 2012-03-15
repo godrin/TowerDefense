@@ -3,7 +3,7 @@ package com.cdm.view.elements;
 import com.badlogic.gdx.math.Vector3;
 
 public class MathTools {
-	private static final float M_PI = 3.141592f;
+	public static final float M_PI = 3.141592f;
 
 	private static float getAngle(float x, float y) {
 		if (y == 0.0) {

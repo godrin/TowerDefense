@@ -66,7 +66,6 @@ public class Tank extends EnemyUnit {
 
 	@Override
 	public float getSpeed() {
-		// TODO Auto-generated method stub
 		return speed;
 	}
 

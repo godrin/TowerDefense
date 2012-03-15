@@ -72,6 +72,7 @@ public class EnemyPlayer {
 		defs.clear();
 		// elements must be sorted !
 		defs.add(new EnemyDef(EnemyType.TANK, 1.0f));
+		if(false)
 		for (int i = 3; i < 5; i++)
 			defs.add(new EnemyDef(EnemyType.SMALL_SHIP, 1.0f * i));
 	}
