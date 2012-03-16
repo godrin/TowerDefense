@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
+import com.cdm.gui.effects.SoundFX;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
@@ -85,6 +86,7 @@ public class RocketThrower extends Unit implements Element {
 				getLevel().addShot(
 						new AbstractShot(startingPos,
 								anticipatePosition(enemy), getLevel()));
+				SoundFX.shot.play();
 
 			}
 

@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
+import com.cdm.gui.effects.SoundFX;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 
@@ -62,6 +63,7 @@ public class AbstractShot implements Element {
 		float distance = time * speed;
 		if (distance > deltaV.len()) {
 			pos = target;
+			SoundFX.hit.play();
 			// FIXME: hit target
 			level.removeShot(this);
 		} else {
