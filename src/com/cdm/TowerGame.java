@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
+import com.cdm.gui.effects.SoundFX;
 import com.cdm.view.LevelScreen;
 import com.cdm.view.Screen;
 
@@ -15,7 +16,6 @@ public class TowerGame implements ApplicationListener {
 	private Screen screen;
 	private boolean started = false;
 	private float accum = 0;
-	Sound sound;
 	Music music;
 
 	public void create() {
@@ -23,7 +23,7 @@ public class TowerGame implements ApplicationListener {
 		setScreen(new LevelScreen());
 		Gdx.input.setInputProcessor(screen);
 		startMusic();
-		sound = Gdx.audio.newSound(Gdx.files.internal("data/klick01.ogg"));
+		
 		
 
 	}
@@ -33,6 +33,7 @@ public class TowerGame implements ApplicationListener {
 		music.setVolume(0.5f);
 		music.setLooping(true);
 		music.play();
+		SoundFX.Initialize();
 
 	}
 
@@ -60,7 +61,7 @@ public class TowerGame implements ApplicationListener {
 		}
 		screen.render(accum);
 		if (Gdx.input.justTouched()) {
-			sound.play();
+			SoundFX.klick.play();
 		}
 	}
 
@@ -72,8 +73,8 @@ public class TowerGame implements ApplicationListener {
 
 	@Override
 	public void dispose() {
-		if (sound != null)
-			sound.dispose();
+		if (SoundFX.klick != null)
+			SoundFX.klick.dispose();
 		music.dispose();
 
 	}

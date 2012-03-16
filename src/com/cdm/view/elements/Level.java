@@ -31,6 +31,9 @@ public class Level {
 	private List<AbstractShot> shots = new ArrayList<AbstractShot>();
 	private List<AbstractShot> shotsToRemove = new ArrayList<AbstractShot>();
 
+	private List<AbstractShot2> shots2 = new ArrayList<AbstractShot2>();
+	private List<AbstractShot2> shotsToRemove2 = new ArrayList<AbstractShot2>();
+	
 	public Level(int w, int h, int endY) {
 		grid = new Grid(w, h, endY);
 		player = new EnemyPlayer();
@@ -195,6 +198,10 @@ public class Level {
 	public void removeShot(AbstractShot shot) {
 		shotsToRemove.add(shot);
 	}
+	
+	public void removeShot2(AbstractShot2 shot2) {
+		shotsToRemove2.add(shot2);
+	}
 
 	public EnemyUnit getNextEnemy(Position position) {
 
@@ -213,5 +220,9 @@ public class Level {
 
 	public void addShot(AbstractShot abstractShot) {
 		shots.add(abstractShot);
+	}
+	
+	public void addShot2(AbstractShot2 abstractShot) {
+		shots2.add(abstractShot);
 	}
 }

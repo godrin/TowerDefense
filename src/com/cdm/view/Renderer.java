@@ -17,6 +17,9 @@ public class Renderer implements IRenderer {
 			Color color, float size) {
 		float scale = size * Settings.CELL_WIDTH / 2;
 		// pos.getScale();
+		if (Settings.CELL_WIDTH == 32)
+			Gdx.gl10.glLineWidth(2);
+		else Gdx.gl10.glLineWidth(3);
 		Gdx.gl10.glPushMatrix();
 		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 		Gdx.gl10.glEnable(GL10.GL_BLEND);
@@ -44,7 +47,9 @@ public class Renderer implements IRenderer {
 		// if (pos.equals(Position.RefSystem.Level)) {
 		scale = size * Settings.CELL_WIDTH / 2;
 		// }
-		Gdx.gl10.glLineWidth(3);
+		if (Settings.CELL_WIDTH == 32)
+			Gdx.gl10.glLineWidth(2);
+		else Gdx.gl10.glLineWidth(3);
 		Gdx.gl10.glPushMatrix();
 		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 		Gdx.gl10.glEnable(GL10.GL_BLEND);
