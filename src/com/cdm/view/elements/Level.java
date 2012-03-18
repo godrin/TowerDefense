@@ -37,7 +37,7 @@ public class Level {
 		grid = new Grid(w, h, endY);
 		player = new EnemyPlayer();
 		player.setLevel(this);
-		//add(new Rocket(new Position(10, 3, RefSystem.Level)));
+		// add(new Rocket(new Position(10, 3, RefSystem.Level)));
 		// add(new SmallShip(new Position(1, 1, RefSystem.Level)));
 
 	}
@@ -194,10 +194,16 @@ public class Level {
 		unitsToRemove.add(enemyUnit);
 	}
 
+	public void enemyDestroyed(EnemyUnit enemyUnit) {
+		// FIXME: add money
+		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
+		unitsToRemove.add(enemyUnit);
+
+	}
+
 	public void removeShot(AbstractShot shot) {
 		shotsToRemove.add(shot);
 	}
-
 
 	public EnemyUnit getNextEnemy(Position position) {
 
@@ -216,6 +222,19 @@ public class Level {
 
 	public void addShot(AbstractShot abstractShot) {
 		shots.add(abstractShot);
+	}
+
+	public EnemyUnit getEnemyAt(Position target) {
+		List<Element> l = grid.get((int) (target.x + 0.5f),
+				(int) (target.y + 0.5f));
+		if (l != null) {
+			for (Element e : l) {
+				if (e instanceof EnemyUnit) {
+					return (EnemyUnit) e;
+				}
+			}
+		}
+		return null;
 	}
 
 }

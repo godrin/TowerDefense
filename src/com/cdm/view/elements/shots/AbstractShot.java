@@ -1,17 +1,12 @@
 package com.cdm.view.elements.shots;
 
-import java.util.Arrays;
-import java.util.List;
-
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.gui.effects.SoundFX;
-import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.MathTools;
+import com.cdm.view.enemy.EnemyUnit;
 
 public abstract class AbstractShot implements Element {
 
@@ -27,9 +22,7 @@ public abstract class AbstractShot implements Element {
 
 		angle = MathTools.angle(from.to(to));
 
-
 	}
-
 
 	protected float getSize() {
 		return 0.3f;
@@ -53,6 +46,9 @@ public abstract class AbstractShot implements Element {
 			pos = target;
 			SoundFX.hit.play();
 			// FIXME: hit target
+			EnemyUnit unit = level.getEnemyAt(target);
+			if (unit != null)
+				unit.wasHitBy(this);
 			level.removeShot(this);
 		} else {
 
@@ -61,6 +57,10 @@ public abstract class AbstractShot implements Element {
 			pos.y += nu.y;
 		}
 
+	}
+
+	public float getLevel() {
+		return 1;
 	}
 
 }

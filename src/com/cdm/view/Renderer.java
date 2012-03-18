@@ -79,16 +79,16 @@ public class Renderer implements IRenderer {
 	}
 
 	@Override
-	public void drawRect(float x0, float y0, float x1, float y1) {
-		drawRect(x0, y0, x1, y1, RefSystem.Screen);
+	public void drawRect(float x0, float y0, float x1, float y1, Color c) {
+		drawRect(x0, y0, x1, y1, c, RefSystem.Screen);
 	}
 
 	@Override
-	public void drawRect(float x0, float y0, float x1, float y1,
+	public void drawRect(float x0, float y0, float x1, float y1, Color c,
 			RefSystem system) {
-		float scale=1.0f;
-		if(system.isLevel())
-			scale=Settings.getScale();
+		float scale = 1.0f;
+		if (system.isLevel())
+			scale = Settings.getScale();
 
 		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 		Gdx.gl10.glEnable(GL10.GL_BLEND);
@@ -102,7 +102,7 @@ public class Renderer implements IRenderer {
 				new Vector3(x1, y0, 0), new Vector3(x1, y1, 0),
 				new Vector3(x0, y1, 0) };
 		for (Vector3 v : lines) {
-			renderer.color(1, 1, 1, 1);
+			renderer.color(c.r, c.g, c.b, c.a);
 			renderer.vertex(v);
 		}
 

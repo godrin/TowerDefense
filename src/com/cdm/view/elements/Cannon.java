@@ -9,7 +9,6 @@ import com.cdm.gui.effects.SoundFX;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
-import com.cdm.view.elements.shots.AbstractShot;
 import com.cdm.view.elements.shots.SimpleShot;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -20,7 +19,7 @@ public class Cannon extends Unit implements Element {
 	float angle = 0.0f;
 	float targetAngle = angle;
 	float turningSpeed = 45.0f; // degrees per second
-	float shotFrequency = 1.0f;
+	float shotFrequency = 2.5f;
 	float lastShot = 0.0f;
 	private float targetDist;
 	private float maxDist = 3.0f;
