@@ -65,6 +65,7 @@ public class Tank extends EnemyUnit {
 		Color outerColor = new Color(0.7f, 0.2f, 1.0f, 1.0f);
 		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize(),
 				RefSystem.Level);
+		super.draw(renderer);
 	}
 
 	@Override

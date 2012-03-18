@@ -1,10 +1,7 @@
 package com.cdm.view.enemy;
 
-import java.sql.Ref;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
-import com.cdm.Settings;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
