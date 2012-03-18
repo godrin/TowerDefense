@@ -5,13 +5,14 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
+import com.cdm.gui.effects.SoundFX;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 
 public class AbstractShot2 implements Element {
 
 	Position pos;
-	public static final float speed2 = 1.5f;
+	public static final float speed2 = 0.7f;
 	Position target;
 	private List<Vector3> lines;
 	private List<Vector3> poly;
@@ -28,10 +29,11 @@ public class AbstractShot2 implements Element {
 		Vector3 a = new Vector3(-0.75f, 0.4f, 0);
 		Vector3 b = new Vector3(0.75f, 0.0f, 0);
 		Vector3 c = new Vector3(-0.75f, -0.4f, 0);
+		Vector3 d = new Vector3(2, 0, 0);
 		// Vector3 d = new Vector3(-0.25f, 0, 0);
 
-		lines = Arrays.asList(new Vector3[] { a, b, b, c, c, a });
-		poly = Arrays.asList(new Vector3[] { a, b, c });
+		lines = Arrays.asList(new Vector3[] { a, b, b, c, c, d, d, a });
+		poly = Arrays.asList(new Vector3[] { a, b, c , d});
 
 	}
 
@@ -64,6 +66,7 @@ public class AbstractShot2 implements Element {
 			pos = target;
 			// FIXME: hit target
 			level.removeShot2(this);
+			SoundFX.hit.play();
 		} else {
 
 			Vector3 nu = deltaV.nor().mul(distance);

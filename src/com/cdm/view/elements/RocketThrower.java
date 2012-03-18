@@ -83,8 +83,8 @@ public class RocketThrower extends Unit implements Element {
 						* startingRadius;
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
-				getLevel().addShot(
-						new AbstractShot(startingPos,
+				getLevel().addShot2(
+						new AbstractShot2(startingPos,
 								anticipatePosition(enemy), getLevel()));
 				SoundFX.shot.play();
 

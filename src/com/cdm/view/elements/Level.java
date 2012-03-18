@@ -69,6 +69,9 @@ public class Level {
 		for (AbstractShot shot : shots) {
 			shot.move(time);
 		}
+		for (AbstractShot2 shot2 : shots2) {
+			shot2.move(time);
+		}
 		for (Unit unit : unitsToRemove) {
 			System.out.println("REMOVIIIING " + unit);
 			units.remove(unit);
@@ -78,6 +81,11 @@ public class Level {
 			shots.remove(shot);
 		}
 		shotsToRemove.clear();
+		
+		for (AbstractShot2 shot2 : shotsToRemove2) {
+			shots2.remove(shot2);
+		}
+		shotsToRemove2.clear();
 	}
 
 	public void draw(IRenderer renderer) {
@@ -86,6 +94,9 @@ public class Level {
 		}
 		for (AbstractShot shot : shots) {
 			shot.draw(renderer);
+		}
+		for (AbstractShot2 shot2 : shots2) {
+			shot2.draw(renderer);
 		}
 		if (selector != null)
 			selector.draw(renderer);
