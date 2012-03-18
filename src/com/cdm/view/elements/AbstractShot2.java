@@ -26,14 +26,19 @@ public class AbstractShot2 implements Element {
 
 		angle = MathTools.angle(from.to(to));
 
-		Vector3 a = new Vector3(-0.75f, 0.4f, 0);
-		Vector3 b = new Vector3(0.75f, 0.0f, 0);
-		Vector3 c = new Vector3(-0.75f, -0.4f, 0);
-		Vector3 d = new Vector3(2, 0, 0);
-		// Vector3 d = new Vector3(-0.25f, 0, 0);
+		Vector3 a = new Vector3(0, -0.4f, 0);
+		Vector3 b = new Vector3(0.75f, 0, 0);
+		Vector3 c = new Vector3(0, 0.4f, 0);
+		Vector3 d = new Vector3(0, 0.2f, 0);
+		Vector3 e = new Vector3(-0.5f, 0.2f, 0);
+		Vector3 f = new Vector3(-0.75f, 0.5f, 0);
+		Vector3 g = new Vector3(-0.75f, -0.5f, 0);
+		Vector3 h = new Vector3(-0.5f, -0.2f, 0);
+		Vector3 i = new Vector3(0, -0.2f, 0);
 
-		lines = Arrays.asList(new Vector3[] { a, b, b, c, c, d, d, a });
-		poly = Arrays.asList(new Vector3[] { a, b, c , d});
+		lines = Arrays.asList(new Vector3[] { a, b, b, c, c, d, d, e, e, f, f,
+				g, g, h, h, i, i, a });
+		poly = Arrays.asList(new Vector3[] { a, b, c });
 
 	}
 
@@ -47,7 +52,7 @@ public class AbstractShot2 implements Element {
 	}
 
 	private float getSize() {
-		return 0.3f;
+		return 0.5f;
 	}
 
 	private Position getPosition() {

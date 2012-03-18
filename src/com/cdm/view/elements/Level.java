@@ -18,6 +18,7 @@ import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
+import com.cdm.view.enemy.SmallShip;
 
 public class Level {
 	private List<Unit> units = new ArrayList<Unit>();
@@ -38,8 +39,8 @@ public class Level {
 		grid = new Grid(w, h, endY);
 		player = new EnemyPlayer();
 		player.setLevel(this);
-		add(new Rocket(new Position(10, 3, RefSystem.Level)));
-		// add(new SmallShip(new Position(1, 1, RefSystem.Level)));
+		//add(new Rocket(new Position(9, 3, RefSystem.Level)));
+		//add(new SmallShip(new Position(0, 1, RefSystem.Level)));
 
 	}
 
