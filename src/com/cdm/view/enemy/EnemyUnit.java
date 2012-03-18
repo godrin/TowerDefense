@@ -1,10 +1,13 @@
 package com.cdm.view.enemy;
 
+import java.sql.Ref;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.Settings;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
+import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Unit;
 
 public abstract class EnemyUnit extends Unit {
@@ -20,15 +23,15 @@ public abstract class EnemyUnit extends Unit {
 		Position pos = getPosition();
 		float x = pos.x;
 		float y = pos.y;
-		
-		float x0=x+pad-0.5f;
-		float y0=y-0.9f;
-		float y1=y-0.9f+height;
-		float x1=x-pad+0.5f;
 
-		renderer.drawRect(x0,y0,x1,y1, Settings.CELL_WIDTH);
+		float x0 = x + pad - 0.5f;
+		float y0 = y - 0.9f;
+		float y1 = y - 0.9f + height;
+		float x1 = x - pad + 0.5f;
+
+		renderer.drawRect(x0, y0, x1, y1, RefSystem.Level);
 		Color c = new Color(1, 0, 0, 1);
-		renderer.fillRect(x0,y0,x1,y1, c, Settings.CELL_WIDTH);
+		renderer.fillRect(x0, y0, x1, y1, c, RefSystem.Level);
 	}
 
 	@Override

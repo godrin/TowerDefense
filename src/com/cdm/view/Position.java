@@ -5,7 +5,11 @@ import com.cdm.Settings;
 
 public class Position {
 	public enum RefSystem {
-		Screen, Level
+		Screen, Level;
+
+		public boolean isLevel() {
+			return Level.equals(this);
+		}
 	};
 
 	private RefSystem system;
@@ -41,7 +45,7 @@ public class Position {
 	public float getScale() {
 		if (screenPos())
 			return 1;
-		return Settings.CELL_WIDTH;
+		return Settings.getCellWidth();
 	}
 
 	public boolean screenPos() {
@@ -51,8 +55,9 @@ public class Position {
 	public Position toLevelPos() {
 		if (!screenPos())
 			return this;
-		return new Position(x / Settings.CELL_WIDTH, y / Settings.CELL_WIDTH,
-				RefSystem.Level);
+		Vector3 p = Settings.getPosition();
+		return new Position(x / Settings.getCellWidth() - p.x, y
+				/ Settings.getCellWidth() - p.y, RefSystem.Level);
 	}
 
 	public Position alignToGrid() {
@@ -76,6 +81,6 @@ public class Position {
 	}
 
 	public Vector3 toVector() {
-		return new Vector3(x,y,0);
+		return new Vector3(x, y, 0);
 	}
 }

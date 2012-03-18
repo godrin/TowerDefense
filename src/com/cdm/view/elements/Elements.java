@@ -1,6 +1,7 @@
 package com.cdm.view.elements;
 
 import com.cdm.view.Position;
+import com.cdm.view.elements.shots.Rocket;
 
 public class Elements {
 	public static Unit getElementBy(Unit.UnitType t, Position p) {
@@ -8,8 +9,8 @@ public class Elements {
 			return new Cannon(p);
 		} else if (t == Unit.UnitType.ROCKET_THROWER) {
 			return new RocketThrower(p);
-		} else if (t == Unit.UnitType.ROCKET) {
-			return new Rocket(p);
+		//} else if (t == Unit.UnitType.ROCKET) {
+	//		return new Rocket(p);
 		}
 		return null;
 	}

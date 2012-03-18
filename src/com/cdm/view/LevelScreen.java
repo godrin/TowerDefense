@@ -217,10 +217,10 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (buttonName.equals(SString.SIZE_BUTTON)) {
 			sound = Gdx.audio.newSound(Gdx.files.internal("data/zoom.ogg"));
 			sound.play();
-			if (Settings.CELL_WIDTH == 32) {
-				Settings.CELL_WIDTH = 64;
+			if (Settings.getCellWidth() == 32) {
+				Settings.setScale(64);
 			} else
-				Settings.CELL_WIDTH = 32;
+				Settings.setScale(32);
 		}
 	}
 }

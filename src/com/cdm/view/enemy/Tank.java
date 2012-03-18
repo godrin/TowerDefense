@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
+import com.cdm.view.Position.RefSystem;
 
 public class Tank extends EnemyUnit {
 
@@ -59,9 +60,11 @@ public class Tank extends EnemyUnit {
 	@Override
 	public void draw(IRenderer renderer) {
 		Color innerColor = new Color(0.7f, 0, 0.6f, 1.0f);
-		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize());
+		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize(),
+				RefSystem.Level);
 		Color outerColor = new Color(0.7f, 0.2f, 1.0f, 1.0f);
-		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize());
+		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize(),
+				RefSystem.Level);
 	}
 
 	@Override

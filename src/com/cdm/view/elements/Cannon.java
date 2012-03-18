@@ -9,6 +9,8 @@ import com.cdm.gui.effects.SoundFX;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
+import com.cdm.view.elements.shots.AbstractShot;
+import com.cdm.view.elements.shots.SimpleShot;
 import com.cdm.view.enemy.EnemyUnit;
 
 public class Cannon extends Unit implements Element {
@@ -47,9 +49,11 @@ public class Cannon extends Unit implements Element {
 	@Override
 	public void draw(IRenderer renderer) {
 		Color innerColor = new Color(0, 0, 0.6f, 1.0f);
-		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize());
+		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize(),
+				RefSystem.Level);
 		Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
-		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize());
+		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize(),
+				RefSystem.Level);
 	}
 
 	@Override
@@ -93,8 +97,8 @@ public class Cannon extends Unit implements Element {
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
 				getLevel().addShot(
-						new AbstractShot(startingPos,
-								anticipatePosition(enemy), getLevel()));
+						new SimpleShot(startingPos, anticipatePosition(enemy),
+								getLevel()));
 				SoundFX.shot2.play();
 
 			}
@@ -104,7 +108,7 @@ public class Cannon extends Unit implements Element {
 
 	private Position anticipatePosition(EnemyUnit enemy) {
 		float enemyDistance = getPosition().to(enemy.getPosition()).len();
-		float enemyMoveDistance = (enemyDistance / AbstractShot.speed)
+		float enemyMoveDistance = (enemyDistance / SimpleShot.speed)
 				* enemy.getSpeed();
 
 		Vector3 result = enemy.getPosition().toVector()

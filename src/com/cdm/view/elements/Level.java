@@ -16,6 +16,8 @@ import com.cdm.view.elements.Unit.UnitType;
 import com.cdm.view.elements.paths.Path;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
+import com.cdm.view.elements.shots.AbstractShot;
+import com.cdm.view.elements.shots.Rocket;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -31,14 +33,11 @@ public class Level {
 	private List<AbstractShot> shots = new ArrayList<AbstractShot>();
 	private List<AbstractShot> shotsToRemove = new ArrayList<AbstractShot>();
 
-	private List<AbstractShot2> shots2 = new ArrayList<AbstractShot2>();
-	private List<AbstractShot2> shotsToRemove2 = new ArrayList<AbstractShot2>();
-	
 	public Level(int w, int h, int endY) {
 		grid = new Grid(w, h, endY);
 		player = new EnemyPlayer();
 		player.setLevel(this);
-		add(new Rocket(new Position(10, 3, RefSystem.Level)));
+		//add(new Rocket(new Position(10, 3, RefSystem.Level)));
 		// add(new SmallShip(new Position(1, 1, RefSystem.Level)));
 
 	}
@@ -116,7 +115,7 @@ public class Level {
 		List<Vector3> lines = Arrays.asList(new Vector3[] { a, b, b, c, c, d,
 				e, f, f, g, g, h });
 		float angle = 0.0f;
-		renderer.drawLines(pos, lines, angle, color, size);
+		renderer.drawLines(pos, lines, angle, color, size, RefSystem.Level);
 	}
 
 	public void add(Unit dragElement) {
@@ -198,10 +197,7 @@ public class Level {
 	public void removeShot(AbstractShot shot) {
 		shotsToRemove.add(shot);
 	}
-	
-	public void removeShot2(AbstractShot2 shot2) {
-		shotsToRemove2.add(shot2);
-	}
+
 
 	public EnemyUnit getNextEnemy(Position position) {
 
@@ -221,8 +217,5 @@ public class Level {
 	public void addShot(AbstractShot abstractShot) {
 		shots.add(abstractShot);
 	}
-	
-	public void addShot2(AbstractShot2 abstractShot) {
-		shots2.add(abstractShot);
-	}
+
 }

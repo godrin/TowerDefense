@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.Settings;
+import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Element;
 
 public class Selector implements Element {
@@ -16,7 +17,7 @@ public class Selector implements Element {
 	}
 
 	public void draw(IRenderer renderer) {
-		float w = 1, pad = 16 * 1.0f / Settings.CELL_WIDTH;
+		float w = 1, pad = 16 * 1.0f / Settings.getCellWidth();
 		List<Vector3> lines = new ArrayList<Vector3>();
 		// top left
 		lines.add(new Vector3(-w, -w, 0));
@@ -41,7 +42,8 @@ public class Selector implements Element {
 
 		float angle = 0;
 		float g = 0.8f;
-		renderer.drawLines(pos, lines, angle, new Color(g, g, g, 1),1.0f);
+		renderer.drawLines(pos, lines, angle, new Color(g, g, g, 1), 1.0f,
+				RefSystem.Level);
 	}
 
 	@Override

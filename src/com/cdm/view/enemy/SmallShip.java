@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
+import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Element;
 
 public class SmallShip extends EnemyUnit implements Element {
@@ -33,10 +34,10 @@ public class SmallShip extends EnemyUnit implements Element {
 	public void draw(IRenderer renderer) {
 		super.draw(renderer);
 
-		renderer.drawPoly(getPosition(), poly, angle, new Color(0, 0, 0,
-				0), getSize());
+		renderer.drawPoly(getPosition(), poly, angle, new Color(0, 0, 0, 0),
+				getSize(), RefSystem.Level);
 		renderer.drawLines(getPosition(), lines, angle, new Color(0.9f, 0, 0,
-				1.0f), getSize());
+				1.0f), getSize(), RefSystem.Level);
 
 	}
 
