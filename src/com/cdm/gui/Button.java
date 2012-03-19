@@ -35,8 +35,10 @@ public class Button extends Widget {
 	}
 
 	public void setEnabled(boolean enabled) {
+		boolean changed = (enabled != this.enabled);
 		this.enabled = enabled;
-		initAnimation();
+		if (changed)
+			initAnimation();
 	}
 
 	private void initAnimation() {
