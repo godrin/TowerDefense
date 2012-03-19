@@ -13,6 +13,12 @@ import com.cdm.view.elements.Element;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.MathTools;
 
+/**
+ * FIXME: Die Klasse sollte raus - Abstract shot ist eine abstrakte Basisklasse für alle Shot-Arten
+ * @author david
+ *
+ */
+@Deprecated
 public class AbstractShot2 implements Element {
 
 	Position pos;
@@ -74,7 +80,7 @@ public class AbstractShot2 implements Element {
 		if (distance > deltaV.len()) {
 			pos = target;
 			// FIXME: hit target
-			level.removeShot2(this);
+			// DO NOT ANYMORE level.removeShot2(this);
 			SoundFX.hit.play();
 		} else {
 
