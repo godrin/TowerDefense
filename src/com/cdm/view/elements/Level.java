@@ -17,7 +17,6 @@ import com.cdm.view.elements.paths.Path;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.AbstractShot;
-import com.cdm.view.elements.shots.Rocket;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -28,6 +27,9 @@ public class Level {
 	private EnemyPlayer player;
 	private float speedFactor = 2.0f;
 	private int health = 20;
+	private int money = 15;
+	private int points = 0;
+	private int bonus = 0;
 	private List<Unit> unitsToRemove = new ArrayList<Unit>();
 
 	private List<AbstractShot> shots = new ArrayList<AbstractShot>();
@@ -119,6 +121,8 @@ public class Level {
 	}
 
 	public void add(Unit dragElement) {
+		//if(getMoney()>dragElement.getCost())
+		
 		Position lpos = dragElement.getPosition().toLevelPos().alignToGrid();
 		if (!(dragElement instanceof EnemyUnit)
 				&& (lpos.x < 0 || lpos.x > grid.getW() - 1 || lpos.y < 0 || lpos.y > grid
@@ -198,6 +202,9 @@ public class Level {
 		// FIXME: add money
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		unitsToRemove.add(enemyUnit);
+		money += enemyUnit.getMoney();
+		points += enemyUnit.getPoints();
+		bonus += enemyUnit.getBonus();
 
 	}
 
@@ -235,6 +242,22 @@ public class Level {
 			}
 		}
 		return null;
+	}
+
+	public int getMoney() {
+		return money;
+	}
+
+	public void setMoney(int money) {
+		this.money = money;
+	}
+
+	public int getBonus() {
+		return bonus;
+	}
+
+	public void setBonus(int bonus) {
+		this.bonus = bonus;
 	}
 
 }

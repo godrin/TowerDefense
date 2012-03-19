@@ -1,19 +1,35 @@
 package com.cdm.view;
 
-import java.sql.Ref;
 import java.util.List;
-import java.util.Set;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
+import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.Settings;
 import com.cdm.view.Position.RefSystem;
 
 public class Renderer implements IRenderer {
 	ImmediateModeRenderer renderer = new ImmediateModeRenderer();
+	BitmapFont font;
+	private final SpriteBatch spriteBatch;
+
+	public Renderer() {
+		font = new BitmapFont(Gdx.files.internal("data/font16.fnt"),
+				Gdx.files.internal("data/font16.png"), false);
+		spriteBatch = new SpriteBatch();
+
+	}
+
+	public void dispose() {
+		font.dispose();
+	}
 
 	@Override
 	public void drawLines(Position pos, List<Vector3> lines, float angle,
@@ -145,4 +161,32 @@ public class Renderer implements IRenderer {
 
 	}
 
+	private final Matrix4 viewMatrix = new Matrix4();
+	private final Matrix4 transformMatrix = new Matrix4();
+
+	@Override
+	public void drawText(int i, int j, String string, Color c) {
+		int h = Gdx.graphics.getHeight();
+/*
+		viewMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), h);
+		spriteBatch.setProjectionMatrix(viewMatrix);
+		spriteBatch.setTransformMatrix(transformMatrix);
+*/
+		spriteBatch.begin();
+		// String text = "It is the end my friend.\nTouch to continue!";
+		TextBounds bounds = font.getMultiLineBounds(string);
+		spriteBatch.setColor(c);
+		spriteBatch.setBlendFunction(GL10.GL_ONE, GL10.GL_ONE_MINUS_SRC_ALPHA);
+
+		font.drawMultiLine(spriteBatch, string, i, j,
+		// 160 + bounds.height / 2,
+				bounds.width, HAlignment.CENTER);
+		spriteBatch.end();
+
+	}
+
+	@Override
+	public void drawText(Position position, String money, Color moneyColor) {
+		drawText((int)position.getX(), (int)position.getY(), money, moneyColor);
+	}
 }

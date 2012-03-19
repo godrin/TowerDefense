@@ -69,4 +69,19 @@ public class SmallShip extends EnemyUnit implements Element {
 			float shotLevel) {
 		return shotLevel / 3.0f;
 	}
+
+	@Override
+	public int getMoney() {
+		return 3;
+	}
+
+	@Override
+	public int getPoints() {
+		return 10;
+	}
+
+	@Override
+	public int getBonus() {
+		return 1;
+	}
 }

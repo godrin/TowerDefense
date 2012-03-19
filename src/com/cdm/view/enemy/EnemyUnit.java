@@ -16,6 +16,10 @@ public abstract class EnemyUnit extends Unit {
 		super(pos);
 		energy = 1.0f;
 	}
+	
+	public abstract int getMoney();
+	public abstract int getPoints();
+	public abstract int getBonus();
 
 	@Override
 	public void draw(IRenderer renderer) {
