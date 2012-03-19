@@ -16,6 +16,9 @@ import com.cdm.view.elements.Unit.UnitType;
 import com.cdm.view.elements.paths.Path;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
+import com.cdm.view.elements.shots.AbstractShot;
+import com.cdm.view.elements.shots.AbstractShot2;
+import com.cdm.view.elements.shots.Rocket;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 import com.cdm.view.enemy.SmallShip;
@@ -39,8 +42,10 @@ public class Level {
 		grid = new Grid(w, h, endY);
 		player = new EnemyPlayer();
 		player.setLevel(this);
-		//add(new Rocket(new Position(9, 3, RefSystem.Level)));
-		//add(new SmallShip(new Position(0, 1, RefSystem.Level)));
+
+		// add(new Rocket(new Position(10, 3, RefSystem.Level)));
+		// add(new SmallShip(new Position(1, 1, RefSystem.Level)));
+
 
 	}
 
@@ -128,7 +133,7 @@ public class Level {
 		List<Vector3> lines = Arrays.asList(new Vector3[] { a, b, b, c, c, d,
 				e, f, f, g, g, h });
 		float angle = 0.0f;
-		renderer.drawLines(pos, lines, angle, color, size);
+		renderer.drawLines(pos, lines, angle, color, size, RefSystem.Level);
 	}
 
 	public void add(Unit dragElement) {
@@ -207,6 +212,13 @@ public class Level {
 		unitsToRemove.add(enemyUnit);
 	}
 
+	public void enemyDestroyed(EnemyUnit enemyUnit) {
+		// FIXME: add money
+		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
+		unitsToRemove.add(enemyUnit);
+
+	}
+
 	public void removeShot(AbstractShot shot) {
 		shotsToRemove.add(shot);
 	}
@@ -234,7 +246,21 @@ public class Level {
 		shots.add(abstractShot);
 	}
 	
-	public void addShot2(AbstractShot2 abstractShot) {
-		shots2.add(abstractShot);
+	public void addShot2(AbstractShot2 abstractShot2) {
+		shots2.add(abstractShot2);
 	}
+
+	public EnemyUnit getEnemyAt(Position target) {
+		List<Element> l = grid.get((int) (target.x + 0.5f),
+				(int) (target.y + 0.5f));
+		if (l != null) {
+			for (Element e : l) {
+				if (e instanceof EnemyUnit) {
+					return (EnemyUnit) e;
+				}
+			}
+		}
+		return null;
+	}
+
 }

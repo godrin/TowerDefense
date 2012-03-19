@@ -1,4 +1,4 @@
-package com.cdm.view.elements;
+package com.cdm.view.elements.shots;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,15 +7,17 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
+import com.cdm.view.Position.RefSystem;
+import com.cdm.view.elements.Level;
 
-public class Rocket extends Unit implements Element {
+public class Rocket extends AbstractShot {
 
+	public static float speed = 0.7f;
 	private List<Vector3> lines;
 	private List<Vector3> poly;
-	float angle = 0.0f;
 
-	public Rocket(Position p) {
-		super(p);
+	public Rocket(Position from, Position to, Level plevel) {
+		super(from, to, plevel);
 		Vector3 a = new Vector3(-1.5f, 0.25f, 0);
 		Vector3 b = new Vector3(-0.75f, 0.75f, 0);
 		Vector3 c = new Vector3(0.75f, 0.75f, 0);
@@ -31,20 +33,22 @@ public class Rocket extends Unit implements Element {
 				e, f, f, g, g, h, h, i, i, a });
 		poly = Arrays.asList(new Vector3[] { a, b, c, a, c, d, i, d, h, d, h,
 				d2, g, f, d2, f, d2, e });
-		setSize(1.0f / 1.5f);
+		// setSize(1.0f / 1.5f);
 	}
 
 	@Override
 	public void draw(IRenderer renderer) {
 		Color innerColor = new Color(0, 0, 0, 0);
-		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize());
+		renderer.drawPoly(getPosition(), poly, 180 + angle, innerColor,
+				getSize(), RefSystem.Level);
 		Color outerColor = new Color(0, 0, 1, 1.0f);
-		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize());
+		renderer.drawLines(getPosition(), lines, 180 + angle, outerColor,
+				getSize(), RefSystem.Level);
 	}
 
 	@Override
-	public void move(float time) {
-		angle += time * 20;
+	public float getSpeed() {
+		return speed;
 	}
 
 }
