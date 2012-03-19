@@ -38,7 +38,7 @@ public class Level {
 
 	private List<AbstractShot2> shots2 = new ArrayList<AbstractShot2>();
 	private List<AbstractShot2> shotsToRemove2 = new ArrayList<AbstractShot2>();
-	
+
 	public Level(int w, int h, int endY) {
 		grid = new Grid(w, h, endY);
 		player = new EnemyPlayer();
@@ -46,7 +46,6 @@ public class Level {
 
 		// add(new Rocket(new Position(10, 3, RefSystem.Level)));
 		// add(new SmallShip(new Position(1, 1, RefSystem.Level)));
-
 
 	}
 
@@ -88,7 +87,7 @@ public class Level {
 			shots.remove(shot);
 		}
 		shotsToRemove.clear();
-		
+
 		for (AbstractShot2 shot2 : shotsToRemove2) {
 			shots2.remove(shot2);
 		}
@@ -138,8 +137,13 @@ public class Level {
 	}
 
 	public void add(Unit dragElement) {
-		//if(getMoney()>dragElement.getCost())
-		
+		if (getMoney() > dragElement.getCost()) {
+			setMoney(getMoney() - dragElement.getCost());
+
+		} else {
+			return;
+		}
+
 		Position lpos = dragElement.getPosition().toLevelPos().alignToGrid();
 		if (!(dragElement instanceof EnemyUnit)
 				&& (lpos.x < 0 || lpos.x > grid.getW() - 1 || lpos.y < 0 || lpos.y > grid
@@ -228,7 +232,7 @@ public class Level {
 	public void removeShot(AbstractShot shot) {
 		shotsToRemove.add(shot);
 	}
-	
+
 	public void removeShot2(AbstractShot2 shot2) {
 		shotsToRemove2.add(shot2);
 	}
@@ -251,7 +255,7 @@ public class Level {
 	public void addShot(AbstractShot abstractShot) {
 		shots.add(abstractShot);
 	}
-	
+
 	public void addShot2(AbstractShot2 abstractShot2) {
 		shots2.add(abstractShot2);
 	}

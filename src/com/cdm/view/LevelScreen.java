@@ -218,9 +218,11 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	@Override
-	public void unitTypeSelected(UnitType type, Position screenPos) {
+	public void unitTypeSelected(UnitType type, Position screenPos, int cost) {
 		System.out.println("Unit Type selected");
 		dragElement = Elements.getElementBy(type, screenPos);
+		dragElement.setCost(cost);
+
 	}
 
 	@Override

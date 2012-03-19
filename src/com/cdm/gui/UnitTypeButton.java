@@ -39,7 +39,7 @@ public class UnitTypeButton extends Button {
 		super.touchDown(x, y, pointer, button);
 		if (listener != null)
 			listener.unitTypeSelected(type,
-					new Position(x, y, RefSystem.Screen));
+					new Position(x, y, RefSystem.Screen), cost);
 	}
 
 	public IUnitTypeSelected getListener() {

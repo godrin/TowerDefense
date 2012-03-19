@@ -13,6 +13,7 @@ public abstract class Unit implements Element {
 	private Position pos, oldpos = new Position(1, 1, RefSystem.Level);
 	private float size;
 	private Level level;
+	private int cost;
 
 	public Unit(Position p) {
 		pos = p;
@@ -58,5 +59,14 @@ public abstract class Unit implements Element {
 	public float getSize() {
 		return size;
 	}
+
+	public int getCost() {
+		return cost;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
+	
 
 }
