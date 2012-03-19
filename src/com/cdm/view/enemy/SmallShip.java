@@ -13,10 +13,12 @@ import com.cdm.view.elements.shots.AbstractShot;
 
 public class SmallShip extends EnemyUnit implements Element {
 
+	public Position nextStep = null;
 	private static final Vector3 DIRECTION = new Vector3(1, 0, 0);
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 	float angle = 0.0f;
+	
 	private float speed = 0.3f;
 
 	public SmallShip(Position position) {
@@ -44,14 +46,29 @@ public class SmallShip extends EnemyUnit implements Element {
 
 	@Override
 	public void move(float time) {
+		while (time > 0) {
+			if (nextStep == null) {
+				nextStep = getLevel().getNextPos(getPosition().alignToGrid());
+			}
+			Position nuPos = new Position(getPosition());
 
-		Position pos = getPosition();
-		if (pos.x < 26) {
-			pos.x += time * speed;
-		} else
-			pos.x = -2;
-		setPosition(pos);
+			Vector3 diff = getPosition().to(nextStep);
+			float len = diff.len();
+			float delta = time * speed;
 
+			if (delta >= len) {
+				setPosition(nextStep);
+				time -= len / delta;
+				nextStep = null;
+			} else {
+				diff.mul(delta / diff.len());
+				nuPos.x += diff.x;
+				nuPos.y += diff.y;
+				setPosition(nuPos);
+				time = 0;
+			}
+
+		}
 	}
 
 	@Override

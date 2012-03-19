@@ -9,6 +9,7 @@ import com.cdm.gui.effects.SoundFX;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
+import com.cdm.view.elements.shots.AbstractShot2;
 import com.cdm.view.elements.shots.Rocket;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -87,9 +88,14 @@ public class RocketThrower extends Unit implements Element {
 						* startingRadius;
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
-				getLevel().addShot(
+
+				getLevel().addShot2(
+						new AbstractShot2(startingPos,
+								anticipatePosition(enemy), getLevel()));
+
+				/*getLevel().addShot(
 						new Rocket(startingPos, anticipatePosition(enemy),
-								getLevel()));
+								getLevel()));*/
 				SoundFX.shot.play();
 
 			}

@@ -17,6 +17,7 @@ import com.cdm.view.elements.paths.Path;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.AbstractShot;
+import com.cdm.view.elements.shots.AbstractShot2;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -35,12 +36,17 @@ public class Level {
 	private List<AbstractShot> shots = new ArrayList<AbstractShot>();
 	private List<AbstractShot> shotsToRemove = new ArrayList<AbstractShot>();
 
+	private List<AbstractShot2> shots2 = new ArrayList<AbstractShot2>();
+	private List<AbstractShot2> shotsToRemove2 = new ArrayList<AbstractShot2>();
+	
 	public Level(int w, int h, int endY) {
 		grid = new Grid(w, h, endY);
 		player = new EnemyPlayer();
 		player.setLevel(this);
+
 		// add(new Rocket(new Position(10, 3, RefSystem.Level)));
 		// add(new SmallShip(new Position(1, 1, RefSystem.Level)));
+
 
 	}
 
@@ -70,6 +76,9 @@ public class Level {
 		for (AbstractShot shot : shots) {
 			shot.move(time);
 		}
+		for (AbstractShot2 shot2 : shots2) {
+			shot2.move(time);
+		}
 		for (Unit unit : unitsToRemove) {
 			System.out.println("REMOVIIIING " + unit);
 			units.remove(unit);
@@ -79,6 +88,11 @@ public class Level {
 			shots.remove(shot);
 		}
 		shotsToRemove.clear();
+		
+		for (AbstractShot2 shot2 : shotsToRemove2) {
+			shots2.remove(shot2);
+		}
+		shotsToRemove2.clear();
 	}
 
 	public void draw(IRenderer renderer) {
@@ -87,6 +101,9 @@ public class Level {
 		}
 		for (AbstractShot shot : shots) {
 			shot.draw(renderer);
+		}
+		for (AbstractShot2 shot2 : shots2) {
+			shot2.draw(renderer);
 		}
 		if (selector != null)
 			selector.draw(renderer);
@@ -211,6 +228,10 @@ public class Level {
 	public void removeShot(AbstractShot shot) {
 		shotsToRemove.add(shot);
 	}
+	
+	public void removeShot2(AbstractShot2 shot2) {
+		shotsToRemove2.add(shot2);
+	}
 
 	public EnemyUnit getNextEnemy(Position position) {
 
@@ -229,6 +250,10 @@ public class Level {
 
 	public void addShot(AbstractShot abstractShot) {
 		shots.add(abstractShot);
+	}
+	
+	public void addShot2(AbstractShot2 abstractShot2) {
+		shots2.add(abstractShot2);
 	}
 
 	public EnemyUnit getEnemyAt(Position target) {
