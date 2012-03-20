@@ -28,6 +28,10 @@ public class EnemyPlayer {
 		return level;
 	}
 
+	public int getLevelNo() {
+		return levelNo;
+	}
+
 	public void setLevel(Level level) {
 		this.level = level;
 	}
@@ -57,8 +61,10 @@ public class EnemyPlayer {
 			}
 		}
 	}
+	
 
 	private void startWait() {
+		levelNo += 1;
 		mode = Mode.WAIT;
 		timeToNextWave = WAITING_TIME;
 	}
@@ -72,7 +78,7 @@ public class EnemyPlayer {
 		defs.clear();
 		// elements must be sorted !
 		defs.add(new EnemyDef(EnemyType.TANK, 1.0f));
-		//if(false)
+		// if(false)
 		for (int i = 3; i < 5; i++)
 			defs.add(new EnemyDef(EnemyType.SMALL_SHIP, 1.0f * i));
 	}

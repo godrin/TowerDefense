@@ -18,7 +18,6 @@ import com.cdm.view.elements.paths.Path;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.AbstractShot;
-import com.cdm.view.elements.shots.AbstractShot2;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -45,6 +44,10 @@ public class Level {
 
 	public void add(Position pos, UnitType type) {
 		units.add(Elements.getElementBy(type, pos));
+	}
+
+	public EnemyPlayer getPlayer() {
+		return player;
 	}
 
 	public void hover(Position pos) {

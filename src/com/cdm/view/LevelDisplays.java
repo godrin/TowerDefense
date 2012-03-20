@@ -6,13 +6,11 @@ import com.cdm.view.elements.Level;
 
 public class LevelDisplays {
 	private Level level;
-	private Color moneyColor=new Color(0.7f,0.7f,1.0f,1.0f);
+	private Color moneyColor = new Color(0.7f, 0.7f, 1.0f, 1.0f);
 
 	public LevelDisplays() {
 
 	}
-	
-
 
 	public Level getLevel() {
 		return level;
@@ -23,6 +21,10 @@ public class LevelDisplays {
 	}
 
 	void draw(IRenderer renderer) {
-		renderer.drawText(0, Gdx.graphics.getHeight(), "$"+Integer.toString(level.getMoney()),moneyColor);
+		renderer.drawText(0, Gdx.graphics.getHeight(),
+				"$" + Integer.toString(level.getMoney()), moneyColor);
+		renderer.drawText(Gdx.graphics.getWidth()-120, Gdx.graphics.getHeight(),
+				"Level " + Integer.toString(level.getPlayer().getLevelNo()),
+				moneyColor);
 	}
 }
