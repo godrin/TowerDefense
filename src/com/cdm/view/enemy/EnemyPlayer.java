@@ -43,7 +43,6 @@ public class EnemyPlayer {
 				while (defs.size() > 0 && defs.first().time < timeInWave) {
 					EnemyDef def = defs.first();
 					defs.remove(def);
-					System.out.println("CREATE");
 					alreadySent = true;
 					Position x = new Position(level.getEnemyStartPosition());
 					EnemyUnit e = EnemyUnits.create(def.type, x);
@@ -70,11 +69,12 @@ public class EnemyPlayer {
 		timeInWave = 0.0f;
 		mode = Mode.ATTACK;
 		alreadySent = false;
-		enemyStrength+=1.5f;
 
 		defs.clear();
 
 		if (true) {
+			// strength-based randomized enemy creation
+			enemyStrength+=1.5f;
 			Float currentStrength = enemyStrength;
 			Float lastTime = 0.0f;
 
