@@ -68,7 +68,7 @@ public class Level {
 		time *= speedFactor;
 		if (!gameover)
 			player.addTime(time);
-		
+
 		for (Unit unit : units) {
 			unit.move(time);
 		}
@@ -126,6 +126,8 @@ public class Level {
 	}
 
 	public boolean add(Unit dragElement) {
+		if (dragElement == null)
+			return false;
 		if (getMoney() < dragElement.getCost()) {
 			return false;
 		}
