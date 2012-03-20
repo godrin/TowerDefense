@@ -3,6 +3,7 @@ package com.cdm.view.elements;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -20,7 +21,6 @@ import com.cdm.view.elements.shots.AbstractShot;
 import com.cdm.view.elements.shots.Rocket;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
-import com.cdm.view.enemy.SmallShip;
 
 public class Level {
 	private List<Unit> units = new ArrayList<Unit>();
@@ -29,6 +29,9 @@ public class Level {
 	private EnemyPlayer player;
 	private float speedFactor = 2.0f;
 	private int health = 20;
+	private int money = 15;
+	private int points = 0;
+	private int bonus = 0;
 	private List<Unit> unitsToRemove = new ArrayList<Unit>();
 
 	private List<AbstractShot> shots = new ArrayList<AbstractShot>();
@@ -39,14 +42,14 @@ public class Level {
 		player = new EnemyPlayer();
 		player.setLevel(this);
 
-		//add(new Rocket(new Position(9, 3, RefSystem.Level)));
-		// add(new SmallShip(new Position(1, 1, RefSystem.Level)));
-
-
 	}
 
 	public void add(Position pos, UnitType type) {
 		units.add(Elements.getElementBy(type, pos));
+	}
+
+	public EnemyPlayer getPlayer() {
+		return player;
 	}
 
 	public void hover(Position pos) {
@@ -121,12 +124,20 @@ public class Level {
 		renderer.drawLines(pos, lines, angle, color, size, RefSystem.Level);
 	}
 
-	public void add(Unit dragElement) {
+	public boolean add(Unit dragElement) {
+		if (getMoney() < dragElement.getCost()) {
+			return false;
+		}
+
 		Position lpos = dragElement.getPosition().toLevelPos().alignToGrid();
 		if (!(dragElement instanceof EnemyUnit)
 				&& (lpos.x < 0 || lpos.x > grid.getW() - 1 || lpos.y < 0 || lpos.y > grid
 						.getH()))
-			return;
+			return false;
+
+		if (!isFreeForNewUnit(lpos))
+			return false;
+
 		List<Element> l = grid.get((int) lpos.x, (int) lpos.y);
 
 		if (l == null || l.isEmpty() || dragElement instanceof EnemyUnit) {
@@ -134,9 +145,13 @@ public class Level {
 			dragElement.setLevel(this);
 			dragElement.setPosition(lpos);
 			units.add(dragElement);
+			setMoney(getMoney() - dragElement.getCost());
+
+			return true;
 		} else {
 			System.out.println("NOT EMPTY!");
 		}
+		return false;
 	}
 
 	public void removeMeFromGrid(Position p, Unit unit) {
@@ -176,13 +191,22 @@ public class Level {
 		return new Position(grid.getW(), grid.endY(), RefSystem.Level);
 	}
 
+	public boolean isFreeForNewUnit(Position pos) {
+		PathPos from = new PathPos(getEnemyStartPosition());
+		PathPos to = new PathPos(getEnemyEndPosition());
+
+		Set<PathPos> ignore = new TreeSet<PathPos>();
+		ignore.add(new PathPos(pos));
+		return PathFinder.widthSearch(grid, from, to, ignore);
+	}
+
 	public Position getNextPos(Position alignToGrid) {
 		// FIXME
 		// return new Position(alignToGrid.x + 1, alignToGrid.y,
 		// RefSystem.Level);
 		Position finish = getEnemyEndPosition();
-		PathPos from = new PathPos((int) alignToGrid.x, (int) alignToGrid.y);
-		PathPos to = new PathPos((int) finish.x, (int) finish.y);
+		PathPos from = new PathPos(alignToGrid);
+		PathPos to = new PathPos(finish);
 
 		Path p = PathFinder.findPath(grid, from, to);
 
@@ -198,16 +222,17 @@ public class Level {
 	}
 
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
-		// FIXME: add money
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		unitsToRemove.add(enemyUnit);
-
+		money += enemyUnit.getMoney();
+		points += enemyUnit.getPoints();
+		bonus += enemyUnit.getBonus();
 	}
 
 	public void removeShot(AbstractShot shot) {
 		shotsToRemove.add(shot);
 	}
-	
+
 	public EnemyUnit getNextEnemy(Position position) {
 
 		SortedSet<EnemyUnit> s = new TreeSet<EnemyUnit>(new DistanceComparator(
@@ -226,7 +251,7 @@ public class Level {
 	public void addShot(AbstractShot abstractShot) {
 		shots.add(abstractShot);
 	}
-	
+
 	public EnemyUnit getEnemyAt(Position target) {
 		List<Element> l = grid.get((int) (target.x + 0.5f),
 				(int) (target.y + 0.5f));
@@ -238,6 +263,22 @@ public class Level {
 			}
 		}
 		return null;
+	}
+
+	public int getMoney() {
+		return money;
+	}
+
+	public void setMoney(int money) {
+		this.money = money;
+	}
+
+	public int getBonus() {
+		return bonus;
+	}
+
+	public void setBonus(int bonus) {
+		this.bonus = bonus;
 	}
 
 }

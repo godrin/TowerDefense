@@ -28,12 +28,14 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Level level;
 	private WidgetContainer gui = new WidgetContainer();
 	private Unit dragElement = null;
+	private LevelDisplays display = new LevelDisplays();
 
 	Sound sound;
 
 	public LevelScreen() {
 
 		level = new Level(10, 6, 3);
+		display.setLevel(level);
 		bg = load("data/bg_stars2.png", 128, 128);
 
 		createUnitButtons();
@@ -44,18 +46,22 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		gui.add(sizeButton);
 	}
 
+	public void dispose() {
+		renderer.dispose();
+	}
+
 	private void createUnitButtons() {
 		float pos = 40;
 		UnitTypeButton tb;
 		for (UnitType t : new UnitType[] { UnitType.CANNON,
 				UnitType.ROCKET_THROWER }) {
-			tb = new UnitTypeButton((int) pos, 400, 30, t);
+			tb = new UnitTypeButton((int) pos, 400, 30, t, level);
 			tb.setListener(this);
+			tb.setCost(t.getCost());
 			gui.add(tb);
 
 			pos += 80;
 		}
-
 	}
 
 	private Long oldMicros = 0L;
@@ -86,6 +92,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		spriteBatch.end();
 
 		drawLineBased(delta);
+		display.draw(renderer);
 
 	}
 
@@ -101,8 +108,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		cam.update();
 		cam.apply(Gdx.gl10);
 
-		Gdx.gl10.glScalef(1, -1, 0);
-		Gdx.gl10.glTranslatef(0, -Gdx.graphics.getHeight(), 0);
+		// Gdx.gl10.glScalef(1, -1, 0);
+		// Gdx.gl10.glTranslatef(0, -Gdx.graphics.getHeight(), 0);
 
 		level.draw(renderer);
 		gui.addTime(delta);
@@ -155,24 +162,20 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchDown(int x, int y, int pointer, int button) {
+		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
-			System.out.println("MYYY TOUCHDOWN");
 			gui.touchDown(x, y, pointer, button);
 			return true;
 		}
-		System.out.println("touchDown");
-		System.out.println(x);
-		System.out.println(y);
 		return false;
 	}
 
 	public boolean touchUp(int x, int y, int pointer, int button) {
+		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
-			System.out.println("MYYY TOUCHDOWN");
 			gui.touchUp(x, y, pointer, button);
 			return true;
 		}
-		System.out.println("touchUp");
 		stopDragging();
 		level.stopHover();
 		return false;
@@ -186,30 +189,31 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchDragged(int x, int y, int pointer) {
+		y = Gdx.graphics.getHeight() - y;
 		Position pos = new Position(x, y, RefSystem.Screen);
 		if (dragElement != null)
 			dragElement.setPosition(pos);
-		System.out.println("touchDrag");
 		level.hover(pos);
 		return false;
 	}
 
 	@Override
 	public boolean touchMoved(int x, int y) {
+		y = Gdx.graphics.getHeight() - y;
 		// System.out.println("touchmoved");
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
-		System.out.println("scroll");
 		return false;
 	}
 
 	@Override
-	public void unitTypeSelected(UnitType type, Position screenPos) {
-		System.out.println("Unit Type selected");
+	public void unitTypeSelected(UnitType type, Position screenPos, int cost) {
 		dragElement = Elements.getElementBy(type, screenPos);
+		dragElement.setCost(cost);
+
 	}
 
 	@Override

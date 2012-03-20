@@ -7,7 +7,9 @@ import com.cdm.gui.effects.AnimatedRect;
 import com.cdm.gui.effects.AnimatorSin;
 import com.cdm.gui.effects.AnimatorStatic;
 import com.cdm.view.IRenderer;
+import com.cdm.view.Position;
 import com.cdm.view.Rectangle;
+import com.cdm.view.Position.RefSystem;
 
 public class Button extends Widget {
 	private int x, y, radius;
@@ -18,14 +20,38 @@ public class Button extends Widget {
 
 	private SString buttonName;
 
+	private boolean enabled = true;
+
 	public Button(int px, int py, int pradius) {
 		x = px;
 		y = py;
 		radius = pradius;
 		setBBox(new Rectangle(x - radius, y - radius, 2 * radius, 2 * radius));
-		AnimatedColor c = new AnimatedColor(new AnimatorStatic(0.9f),
-				new AnimatorStatic(0.9f), new AnimatorStatic(0),
-				new AnimatorSin(0.7f, 0.1f, 1.0f, 0.0f));
+		initAnimation();
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		boolean changed = (enabled != this.enabled);
+		this.enabled = enabled;
+		if (changed)
+			initAnimation();
+	}
+
+	private void initAnimation() {
+
+		AnimatedColor c;
+		if (enabled)
+			c = new AnimatedColor(new AnimatorStatic(0.9f), new AnimatorStatic(
+					0.9f), new AnimatorStatic(0), new AnimatorSin(0.7f, 0.1f,
+					1.0f, 0.0f));
+		else
+			c = new AnimatedColor(new AnimatorStatic(0.8f), new AnimatorStatic(
+					0.8f), new AnimatorStatic(0.8f), new AnimatorSin(0.7f,
+					0.1f, 1.0f, 0.0f));
 
 		rect = new AnimatedRect(new AnimatorStatic(x), new AnimatorStatic(y),
 				new AnimatorSin(radius, radius * 0.1f, 1.4f, 0),
@@ -73,5 +99,9 @@ public class Button extends Widget {
 
 	public void setPressedListener(IButtonPressed pressedListener) {
 		this.pressedListener = pressedListener;
+	}
+
+	public Position getPosition() {
+		return new Position(x, y, RefSystem.Screen);
 	}
 }

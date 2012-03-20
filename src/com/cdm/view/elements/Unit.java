@@ -7,12 +7,27 @@ import com.cdm.view.Position.RefSystem;
 public abstract class Unit implements Element {
 
 	public enum UnitType {
-		CANNON, ROCKET_THROWER, STUNNER, PHAZER, ROCKET
+		CANNON, ROCKET_THROWER, STUNNER, PHAZER, ROCKET;
+
+		public int getCost() {
+			switch (this) {
+			case CANNON:
+				return 5;
+			case ROCKET_THROWER:
+				return 20;
+			case STUNNER:
+				return 10;
+			case PHAZER:
+				return 120;
+			}
+			return 0;
+		}
 	};
 
 	private Position pos, oldpos = new Position(1, 1, RefSystem.Level);
 	private float size;
 	private Level level;
+	private int cost;
 
 	public Unit(Position p) {
 		pos = p;
@@ -57,6 +72,14 @@ public abstract class Unit implements Element {
 
 	public float getSize() {
 		return size;
+	}
+
+	public int getCost() {
+		return cost;
+	}
+
+	public void setCost(int cost) {
+		this.cost = cost;
 	}
 
 }

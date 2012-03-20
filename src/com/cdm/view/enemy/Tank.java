@@ -87,4 +87,19 @@ public class Tank extends EnemyUnit {
 		return 0.1f;
 	}
 
+	@Override
+	public int getMoney() {
+		return 2;
+	}
+
+	@Override
+	public int getPoints() {
+		return 5;
+	}
+
+	@Override
+	public int getBonus() {
+		return 1;
+	}
+
 }

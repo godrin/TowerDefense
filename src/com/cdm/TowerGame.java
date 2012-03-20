@@ -23,8 +23,6 @@ public class TowerGame implements ApplicationListener {
 		setScreen(new LevelScreen());
 		Gdx.input.setInputProcessor(screen);
 		startMusic();
-		
-		
 
 	}
 
@@ -76,6 +74,8 @@ public class TowerGame implements ApplicationListener {
 		if (SoundFX.klick != null)
 			SoundFX.klick.dispose();
 		music.dispose();
+		if (screen != null)
+			screen.dispose();
 
 	}
 }

@@ -8,6 +8,11 @@ import com.cdm.view.elements.Level;
 import com.cdm.view.elements.MathTools;
 import com.cdm.view.enemy.EnemyUnit;
 
+/**
+ * @author godrin
+ *
+ * abstract base class of all shots
+ */
 public abstract class AbstractShot implements Element {
 
 	Position pos;
@@ -25,7 +30,7 @@ public abstract class AbstractShot implements Element {
 	}
 
 	protected float getSize() {
-		return 0.7f;
+		return 0.3f;
 	}
 
 	protected Position getPosition() {

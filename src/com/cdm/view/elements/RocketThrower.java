@@ -11,6 +11,7 @@ import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.shots.Rocket;
 import com.cdm.view.elements.shots.Rocket2;
+import com.cdm.view.elements.shots.SomeShot;
 import com.cdm.view.enemy.EnemyUnit;
 
 public class RocketThrower extends Unit implements Element {
@@ -88,14 +89,21 @@ public class RocketThrower extends Unit implements Element {
 						* startingRadius;
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
-
 				/*getLevel().addShot2(
 						new AbstractShot2(startingPos,
 								anticipatePosition(enemy), getLevel()));
 				*/
-				getLevel().addShot(
+				/*getLevel().addShot(
 						new Rocket2(startingPos, anticipatePosition(enemy),
 								getLevel()));
+=======*/
+				getLevel().addShot(
+						new SomeShot(startingPos, anticipatePosition(enemy),
+								getLevel()));
+				if (true)
+					getLevel().addShot(
+							new Rocket(startingPos, anticipatePosition(enemy),
+									getLevel()));
 				SoundFX.shot.play();
 
 			}
