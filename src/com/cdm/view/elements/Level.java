@@ -39,7 +39,7 @@ public class Level {
 		player = new EnemyPlayer();
 		player.setLevel(this);
 
-		// add(new Rocket(new Position(10, 3, RefSystem.Level)));
+		//add(new Rocket(new Position(9, 3, RefSystem.Level)));
 		// add(new SmallShip(new Position(1, 1, RefSystem.Level)));
 
 

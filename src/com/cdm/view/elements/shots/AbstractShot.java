@@ -25,7 +25,7 @@ public abstract class AbstractShot implements Element {
 	}
 
 	protected float getSize() {
-		return 0.3f;
+		return 0.7f;
 	}
 
 	protected Position getPosition() {
