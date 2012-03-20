@@ -18,6 +18,7 @@ import com.cdm.view.elements.paths.Path;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.AbstractShot;
+import com.cdm.view.elements.shots.MovingShot;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -232,7 +233,7 @@ public class Level {
 		bonus += enemyUnit.getBonus();
 	}
 
-	public void removeShot(AbstractShot shot) {
+	public void removeShot(MovingShot shot) {
 		shotsToRemove.add(shot);
 	}
 
@@ -251,7 +252,7 @@ public class Level {
 		return null;
 	}
 
-	public void addShot(AbstractShot abstractShot) {
+	public void addShot(MovingShot abstractShot) {
 		shots.add(abstractShot);
 	}
 

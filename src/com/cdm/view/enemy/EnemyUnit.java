@@ -6,7 +6,7 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Unit;
-import com.cdm.view.elements.shots.AbstractShot;
+import com.cdm.view.elements.shots.MovingShot;
 
 public abstract class EnemyUnit extends Unit {
 
@@ -57,8 +57,8 @@ public abstract class EnemyUnit extends Unit {
 		}
 	}
 
-	public void wasHitBy(AbstractShot shot) {
-		Class<? extends AbstractShot> type = shot.getClass();
+	public void wasHitBy(MovingShot shot) {
+		Class<? extends MovingShot> type = shot.getClass();
 		float impact = getImpact(type, shot.getLevel());
 		// FIXME: randomize impact
 		energy -= impact;
@@ -95,7 +95,7 @@ public abstract class EnemyUnit extends Unit {
 
 	public abstract Vector3 getMovingDirection();
 
-	public abstract float getImpact(Class<? extends AbstractShot> shotType,
+	public abstract float getImpact(Class<? extends MovingShot> shotType,
 			float shotLevel);
 
 }

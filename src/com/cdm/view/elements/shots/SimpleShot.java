@@ -10,7 +10,7 @@ import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Level;
 
-public class SimpleShot extends AbstractShot {
+public class SimpleShot extends MovingShot {
 	public static final float speed = 1.5f;
 	private List<Vector3> lines;
 	private List<Vector3> poly;

@@ -12,17 +12,13 @@ import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.shots.SimpleShot;
 import com.cdm.view.enemy.EnemyUnit;
 
-public class Stunner extends Unit implements Element {
+public class Stunner extends RotatingUnit implements Element {
 
 	private List<Vector3> lines;
 	private List<Vector3> poly;
-	float angle = 0.0f;
-	float targetAngle = angle;
-	float turningSpeed = 45.0f; // degrees per second
 	float shotFrequency = 2.5f;
 	float lastShot = 0.0f;
-	private float targetDist;
-	private float maxDist = 3.0f;
+	float maxDist = 3.0f;
 	private double startingRadius = 0.4f;
 
 	public Stunner(Position p) {
@@ -55,39 +51,10 @@ public class Stunner extends Unit implements Element {
 				RefSystem.Level);
 	}
 
-	@Override
-	public void move(float time) {
-
-		EnemyUnit enemy = getLevel().getNextEnemy(getPosition());
-		lastShot += time;
-
-		if (enemy != null) {
-			Vector3 delta = enemy.getPosition().to(getPosition());
-			if (delta.len() < maxDist) {
-				targetAngle = MathTools.angle(delta);
-				targetDist = delta.len();
-			}
-		}
-
-		float turnVec = targetAngle - angle;
-		float turnDir = Math.signum(turnVec);
-		float target = angle + turnDir * turningSpeed * time;
-		if (Math.signum(targetAngle - target) != turnDir) {
-			// reached
-			angle = targetAngle;
-
-			shoot(enemy);
-		} else {
-			angle = target;
-		}
-
-		// angle += time * 10;
-	}
-
-	private void shoot(EnemyUnit enemy) {
+	void shoot(EnemyUnit enemy) {
 		if (enemy != null) {
 
-			if (lastShot > shotFrequency && targetDist < maxDist) {
+			if (lastShot > shotFrequency) {
 				lastShot = 0.0f;
 				Position startingPos = new Position(getPosition());
 				float angle = targetAngle;
@@ -114,4 +81,28 @@ public class Stunner extends Unit implements Element {
 				.add(enemy.getMovingDirection().mul(enemyMoveDistance));
 		return new Position(result.x, result.y, RefSystem.Level);
 	}
+
+	@Override
+	protected EnemyUnit getEnemy() {
+		EnemyUnit u=getLevel().getNextEnemy(getPosition());
+		if(u==null)
+			return null;
+		if(getPosition().to(u.getPosition()).len()>maxDist)
+			return null;
+		return u;
+	}
+
+	@Override
+	public void move(float time) {
+		super.move(time);
+		EnemyUnit enemy = getLevel().getNextEnemy(getPosition());
+		lastShot += time;
+		if(ableToShoot)
+			shoot(enemy);
+	}
+
+	protected float getMaxDist() {
+		return maxDist;
+	}
+
 }

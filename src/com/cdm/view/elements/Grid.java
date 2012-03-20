@@ -30,7 +30,6 @@ public class Grid {
 		return endy;
 	}
 
-	@SuppressWarnings("unchecked")
 	public List<Element> get(int x, int y) {
 		List<Element> l = null;
 		if (x >= 0 && x < w && y >= 0 && y < h) {
