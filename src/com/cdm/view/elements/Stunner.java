@@ -10,6 +10,7 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.shots.SimpleShot;
+import com.cdm.view.elements.shots.StunRay;
 import com.cdm.view.enemy.EnemyUnit;
 
 public class Stunner extends RotatingUnit implements Element {
@@ -19,7 +20,7 @@ public class Stunner extends RotatingUnit implements Element {
 	float shotFrequency = 2.5f;
 	float lastShot = 0.0f;
 	float maxDist = 3.0f;
-	private double startingRadius = 0.4f;
+	private double startingRadius = 0.3f;
 
 	public Stunner(Position p) {
 		super(p);
@@ -63,8 +64,8 @@ public class Stunner extends RotatingUnit implements Element {
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
 				getLevel().addShot(
-						new SimpleShot(startingPos, anticipatePosition(enemy),
-								getLevel()));
+						new StunRay(1.0f, startingPos,
+								anticipatePosition(enemy), getLevel()));
 				SoundFX.shot2.play();
 
 			}
@@ -84,10 +85,10 @@ public class Stunner extends RotatingUnit implements Element {
 
 	@Override
 	protected EnemyUnit getEnemy() {
-		EnemyUnit u=getLevel().getNextEnemy(getPosition());
-		if(u==null)
+		EnemyUnit u = getLevel().getNextEnemy(getPosition());
+		if (u == null)
 			return null;
-		if(getPosition().to(u.getPosition()).len()>maxDist)
+		if (getPosition().to(u.getPosition()).len() > maxDist)
 			return null;
 		return u;
 	}
@@ -97,7 +98,7 @@ public class Stunner extends RotatingUnit implements Element {
 		super.move(time);
 		EnemyUnit enemy = getLevel().getNextEnemy(getPosition());
 		lastShot += time;
-		if(ableToShoot)
+		if (ableToShoot)
 			shoot(enemy);
 	}
 

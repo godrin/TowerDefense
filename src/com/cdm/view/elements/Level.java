@@ -234,7 +234,7 @@ public class Level {
 		bonus += enemyUnit.getBonus();
 	}
 
-	public void removeShot(MovingShot shot) {
+	public void removeShot(AbstractShot shot) {
 		shotsToRemove.add(shot);
 	}
 
@@ -253,7 +253,7 @@ public class Level {
 		return null;
 	}
 
-	public void addShot(MovingShot abstractShot) {
+	public void addShot(AbstractShot abstractShot) {
 		shots.add(abstractShot);
 	}
 
