@@ -41,6 +41,7 @@ public class Level {
 		grid = new Grid(w, h, endY);
 		player = new EnemyPlayer();
 		player.setLevel(this);
+
 	}
 
 	public void add(Position pos, UnitType type) {
