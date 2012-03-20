@@ -1,7 +1,7 @@
 package com.cdm.view.enemy;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import com.cdm.view.Position;
 import com.cdm.view.elements.EnemyUnits;
@@ -16,12 +16,11 @@ public class EnemyPlayer {
 
 	private Mode mode = Mode.WAIT;
 	private int levelNo = 1;
+	private float enemyStrength = 3.0f;
 	private Level level;
 	private Float timeToNextWave = WAITING_TIME;
 	private Float timeInWave = 0.0f;
-	// FIXME: use sorted set
-	private List<EnemyDef> defs = new ArrayList<EnemyDef>();
-	private int listIndex = 0;
+	private SortedSet<EnemyDef> defs = new TreeSet<EnemyDef>();
 	private boolean alreadySent = false;
 
 	public Level getLevel() {
@@ -41,15 +40,13 @@ public class EnemyPlayer {
 			if (level.hasEnemies() || !alreadySent) {
 				timeToNextWave = WAITING_TIME;
 				timeInWave += t;
-				while (listIndex < defs.size()
-						&& defs.get(listIndex).time < timeInWave) {
-					System.out.println("CREATE");
+				while (defs.size() > 0 && defs.first().time < timeInWave) {
+					EnemyDef def = defs.first();
+					defs.remove(def);
 					alreadySent = true;
 					Position x = new Position(level.getEnemyStartPosition());
-					EnemyUnit e = EnemyUnits
-							.create(defs.get(listIndex).type, x);
+					EnemyUnit e = EnemyUnits.create(def.type, x);
 					level.add(e);
-					listIndex += 1;
 				}
 			} else
 				startWait();
@@ -61,7 +58,6 @@ public class EnemyPlayer {
 			}
 		}
 	}
-	
 
 	private void startWait() {
 		levelNo += 1;
@@ -73,13 +69,32 @@ public class EnemyPlayer {
 		timeInWave = 0.0f;
 		mode = Mode.ATTACK;
 		alreadySent = false;
-		listIndex = 0;
 
 		defs.clear();
-		// elements must be sorted !
-		defs.add(new EnemyDef(EnemyType.TANK, 1.0f));
-		// if(false)
-		for (int i = 3; i < 5; i++)
-			defs.add(new EnemyDef(EnemyType.SMALL_SHIP, 1.0f * i));
+
+		if (true) {
+			// strength-based randomized enemy creation
+			enemyStrength+=1.5f;
+			Float currentStrength = enemyStrength;
+			Float lastTime = 0.0f;
+
+			while (currentStrength > 0) {
+				EnemyType t = EnemyType.random();
+				if (t.getStrength() < currentStrength
+						+ EnemyType.STRENGTH_THRESHOLD) {
+					currentStrength -= t.getStrength();
+					lastTime += (float) Math.random()*5.0f + 0.6f;
+					System.out.println("ADD " + t + " " + lastTime);
+					defs.add(new EnemyDef(t, lastTime));
+				}
+			}
+		} else {
+
+			// elements must be sorted !
+			defs.add(new EnemyDef(EnemyType.TANK, 1.0f));
+			// if(false)
+			for (int i = 3; i < 5; i++)
+				defs.add(new EnemyDef(EnemyType.SMALL_SHIP, 1.0f * i));
+		}
 	}
 }

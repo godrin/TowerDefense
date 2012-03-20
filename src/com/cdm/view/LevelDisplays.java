@@ -23,8 +23,14 @@ public class LevelDisplays {
 	void draw(IRenderer renderer) {
 		renderer.drawText(0, Gdx.graphics.getHeight(),
 				"$" + Integer.toString(level.getMoney()), moneyColor);
-		renderer.drawText(Gdx.graphics.getWidth()-120, Gdx.graphics.getHeight(),
+		renderer.drawText(Gdx.graphics.getWidth() - 120,
+				Gdx.graphics.getHeight(),
 				"Level " + Integer.toString(level.getPlayer().getLevelNo()),
 				moneyColor);
+		renderer.drawText(Gdx.graphics.getWidth() - 140,
+				Gdx.graphics.getHeight() - 30,
+				"Energy " + Integer.toString(level.getHealth()), moneyColor);
+		if (level.gameover())
+			renderer.drawText(200, 200, "Game Over", moneyColor);
 	}
 }

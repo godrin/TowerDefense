@@ -28,7 +28,7 @@ public class Level {
 	private Selector selector = null;
 	private EnemyPlayer player;
 	private float speedFactor = 2.0f;
-	private int health = 20;
+	private int health = 3;
 	private int money = 15;
 	private int points = 0;
 	private int bonus = 0;
@@ -64,10 +64,13 @@ public class Level {
 	}
 
 	public synchronized void move(float time) {
+		boolean gameover = gameover();
 		if (time > 0.1f)
 			time = 0.1f;
 		time *= speedFactor;
-		player.addTime(time);
+		if (!gameover)
+			player.addTime(time);
+
 		for (Unit unit : units) {
 			unit.move(time);
 		}
@@ -125,6 +128,8 @@ public class Level {
 	}
 
 	public boolean add(Unit dragElement) {
+		if (dragElement == null)
+			return false;
 		if (getMoney() < dragElement.getCost()) {
 			return false;
 		}
@@ -279,6 +284,14 @@ public class Level {
 
 	public void setBonus(int bonus) {
 		this.bonus = bonus;
+	}
+
+	public int getHealth() {
+		return health;
+	}
+
+	public boolean gameover() {
+		return health < 1;
 	}
 
 }
