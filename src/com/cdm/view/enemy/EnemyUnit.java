@@ -10,15 +10,20 @@ import com.cdm.view.elements.shots.AbstractShot;
 
 public abstract class EnemyUnit extends Unit {
 
+	private static final float FREEZE_FACTOR = 0.5f;
 	private float energy;
+	private float frozenTime = 0.0f;
+	private Float speed = null;
 
 	public EnemyUnit(Position pos) {
 		super(pos);
 		energy = 1.0f;
 	}
-	
+
 	public abstract int getMoney();
+
 	public abstract int getPoints();
+
 	public abstract int getBonus();
 
 	@Override
@@ -28,7 +33,7 @@ public abstract class EnemyUnit extends Unit {
 		Position pos = getPosition();
 		float x = pos.x;
 		float y = pos.y;
-		float start=0.5f;
+		float start = 0.5f;
 
 		float x0 = x + pad - 0.5f;
 		float y0 = y - start;
@@ -40,7 +45,7 @@ public abstract class EnemyUnit extends Unit {
 
 		Color c0 = new Color(1, 0, 0, 0.8f);
 		Color c1 = new Color(1, 0, 0, 0.7f);
-		renderer.drawRect(x0, y0, x1, y1, c0,RefSystem.Level);
+		renderer.drawRect(x0, y0, x1, y1, c0, RefSystem.Level);
 		renderer.fillRect(x0, y0, nx1, y1, c1, RefSystem.Level);
 	}
 
@@ -62,7 +67,31 @@ public abstract class EnemyUnit extends Unit {
 		}
 	}
 
-	public abstract float getSpeed();
+	public void freeze(float time) {
+		if (frozenTime < time)
+			frozenTime = time;
+	}
+
+	@Override
+	public void move(float time) {
+		if (frozenTime > 0.0f) {
+			setSpeed(getOriginalSpeed() * FREEZE_FACTOR);
+			frozenTime -= time;
+		} else
+			setSpeed(getOriginalSpeed());
+	}
+
+	public final float getSpeed() {
+		if (speed == null)
+			speed = getOriginalSpeed();
+		return speed;
+	}
+
+	public final void setSpeed(float s) {
+		speed = s;
+	}
+
+	public abstract float getOriginalSpeed();
 
 	public abstract Vector3 getMovingDirection();
 

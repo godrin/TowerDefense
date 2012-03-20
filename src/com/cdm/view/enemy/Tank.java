@@ -70,7 +70,7 @@ public class Tank extends EnemyUnit {
 	}
 
 	@Override
-	public float getSpeed() {
+	public float getOriginalSpeed() {
 		return speed;
 	}
 

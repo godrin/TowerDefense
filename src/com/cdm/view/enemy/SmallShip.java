@@ -18,7 +18,7 @@ public class SmallShip extends EnemyUnit implements Element {
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 	float angle = 0.0f;
-	
+
 	private float speed = 0.3f;
 
 	public SmallShip(Position position) {
@@ -30,6 +30,7 @@ public class SmallShip extends EnemyUnit implements Element {
 
 		lines = Arrays.asList(new Vector3[] { a, b, b, c, c, d, d, a, });
 		poly = Arrays.asList(new Vector3[] { a, b, d, b, c, d });
+		setSize(0.5f);
 
 	}
 
@@ -72,7 +73,7 @@ public class SmallShip extends EnemyUnit implements Element {
 	}
 
 	@Override
-	public float getSpeed() {
+	public float getOriginalSpeed() {
 		return speed;
 	}
 

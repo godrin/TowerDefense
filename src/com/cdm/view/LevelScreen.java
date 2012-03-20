@@ -40,7 +40,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 		createUnitButtons();
 
-		Button sizeButton = new Button(200, 400, 30);
+		Button sizeButton = new Button(300, 400, 30);
 		sizeButton.setButtonName(SString.SIZE_BUTTON);
 		sizeButton.setPressedListener(this);
 		gui.add(sizeButton);
@@ -53,7 +53,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private void createUnitButtons() {
 		float pos = 40;
 		UnitTypeButton tb;
-		for (UnitType t : new UnitType[] { UnitType.CANNON,
+		for (UnitType t : new UnitType[] { UnitType.CANNON,UnitType.STUNNER,
 				UnitType.ROCKET_THROWER }) {
 			tb = new UnitTypeButton((int) pos, 400, 30, t, level);
 			tb.setListener(this);
