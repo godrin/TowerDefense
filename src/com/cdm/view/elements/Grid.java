@@ -41,10 +41,15 @@ public class Grid {
 		return l;
 	}
 
+	public boolean isEndPlace(int x, int y) {
+		return (x == w - 1 && y == endy);
+	}
+
 	public boolean passable(int x, int y) {
+		/*
 		if (x == w - 1) {
 			return (y == endy);
-		}
+		}*/
 		List<Element> l = get(x, y);
 		if (l == null)
 			return false;

@@ -57,11 +57,11 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 				UnitType.ROCKET_THROWER }) {
 			tb = new UnitTypeButton((int) pos, 400, 30, t, level);
 			tb.setListener(this);
+			tb.setCost(t.getCost());
 			gui.add(tb);
 
 			pos += 80;
 		}
-
 	}
 
 	private Long oldMicros = 0L;
@@ -164,24 +164,18 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public boolean touchDown(int x, int y, int pointer, int button) {
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
-			System.out.println("MYYY TOUCHDOWN");
 			gui.touchDown(x, y, pointer, button);
 			return true;
 		}
-		System.out.println("touchDown");
-		System.out.println(x);
-		System.out.println(y);
 		return false;
 	}
 
 	public boolean touchUp(int x, int y, int pointer, int button) {
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
-			System.out.println("MYYY TOUCHDOWN");
 			gui.touchUp(x, y, pointer, button);
 			return true;
 		}
-		System.out.println("touchUp");
 		stopDragging();
 		level.stopHover();
 		return false;
@@ -199,7 +193,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		Position pos = new Position(x, y, RefSystem.Screen);
 		if (dragElement != null)
 			dragElement.setPosition(pos);
-		System.out.println("touchDrag");
 		level.hover(pos);
 		return false;
 	}
@@ -213,13 +206,11 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	@Override
 	public boolean scrolled(int amount) {
-		System.out.println("scroll");
 		return false;
 	}
 
 	@Override
 	public void unitTypeSelected(UnitType type, Position screenPos, int cost) {
-		System.out.println("Unit Type selected");
 		dragElement = Elements.getElementBy(type, screenPos);
 		dragElement.setCost(cost);
 

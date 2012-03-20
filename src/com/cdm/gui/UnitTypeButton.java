@@ -37,7 +37,7 @@ public class UnitTypeButton extends Button {
 
 	public void touchDown(int x, int y, int pointer, int button) {
 		super.touchDown(x, y, pointer, button);
-		if (listener != null)
+		if (listener != null && isEnabled())
 			listener.unitTypeSelected(type,
 					new Position(x, y, RefSystem.Screen), cost);
 	}
