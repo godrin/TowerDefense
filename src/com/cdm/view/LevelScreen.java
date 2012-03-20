@@ -162,6 +162,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchDown(int x, int y, int pointer, int button) {
+		if(level.gameover())
+			return false;
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
 			gui.touchDown(x, y, pointer, button);
@@ -171,6 +173,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchUp(int x, int y, int pointer, int button) {
+		if(level.gameover())
+			return false;
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
 			gui.touchUp(x, y, pointer, button);
@@ -182,6 +186,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	private void stopDragging() {
+		if(level.gameover())
+			return;
 		if (dragElement != null) {
 			level.add(dragElement);
 		}
@@ -189,6 +195,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchDragged(int x, int y, int pointer) {
+		if(level.gameover())
+			return false;
 		y = Gdx.graphics.getHeight() - y;
 		Position pos = new Position(x, y, RefSystem.Screen);
 		if (dragElement != null)
