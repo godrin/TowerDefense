@@ -30,6 +30,8 @@ public class PathPos implements Comparable<PathPos> {
 	}
 
 	public boolean equals(PathPos p) {
+		if(p==null)
+			return false;
 		return x == p.x && y == p.y;
 	}
 

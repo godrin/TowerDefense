@@ -10,6 +10,7 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
 import com.cdm.view.Selector;
+import com.cdm.view.elements.Grid.GridElement;
 import com.cdm.view.elements.Unit.UnitType;
 import com.cdm.view.elements.paths.Path;
 import com.cdm.view.elements.paths.PathFinder;
@@ -119,9 +120,10 @@ public class Level {
 			return false;
 
 		// check if way is still free then
-		if (!(dragElement instanceof EnemyUnit))
+		if (!(dragElement instanceof EnemyUnit)) {
 			if (!isFreeForNewUnit(lpos))
 				return false;
+		}
 
 		List<Element> l = grid.get((int) lpos.x, (int) lpos.y);
 
@@ -131,6 +133,10 @@ public class Level {
 			dragElement.setPosition(lpos);
 			units.add(dragElement);
 			setMoney(getMoney() - dragElement.getCost());
+
+			PathFinder.breadthSearch(grid, getEnemyStartPositionPlusOne(),
+					new PathPos(getEnemyEndPosition()), null, false);
+			grid.print();
 
 			return true;
 		} else {
@@ -172,13 +178,16 @@ public class Level {
 		return new Position(-1, grid.endY(), RefSystem.Level);
 	}
 
+	public PathPos getEnemyStartPositionPlusOne() {
+		return new PathPos(0, grid.endY(), -1);
+	}
+
 	public Position getEnemyEndPosition() {
 		return new Position(grid.getW(), grid.endY(), RefSystem.Level);
 	}
 
 	public boolean isFreeForNewUnit(Position pos) {
-		PathPos from = new PathPos(getEnemyStartPosition());
-		from.x++;
+		PathPos from = getEnemyStartPositionPlusOne();
 		PathPos to = new PathPos(getEnemyEndPosition());
 
 		PathPos ignore = new PathPos(pos);
@@ -186,11 +195,26 @@ public class Level {
 	}
 
 	public Position getNextPos(Position alignToGrid) {
-		// FIXME
-		// return new Position(alignToGrid.x + 1, alignToGrid.y,
-		// RefSystem.Level);
 		Position finish = getEnemyEndPosition();
 		PathPos from = new PathPos(alignToGrid);
+		PathPos finishPos = new PathPos(finish);
+
+		if (true) {
+			int curVal = 1000;
+			GridElement ge = grid.getElement(from.x, from.y);
+			if (ge != null)
+				curVal = ge.getDistToEnd();
+			for (PathPos p : from.next()) {
+				if (finishPos.equals(p))
+					return new Position(p.x, p.y, RefSystem.Level);
+				GridElement nge = grid.getElement(p.x, p.y);
+				if (nge != null)
+					if (nge.getDistToEnd() < curVal && nge.getDistToEnd() >= 0)
+						return new Position(p.x, p.y, RefSystem.Level);
+
+			}
+		}
+
 		PathPos to = new PathPos(finish);
 
 		Path p = PathFinder.findPath(grid, from, to);

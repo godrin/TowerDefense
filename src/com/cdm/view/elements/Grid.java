@@ -9,6 +9,7 @@ public class Grid {
 	public class GridElement {
 		private List<Element> e;
 		private int distToEnd;
+		private int tempValue;
 
 		public GridElement() {
 			e = new ArrayList<Element>();
@@ -17,6 +18,16 @@ public class Grid {
 
 		public List<Element> getList() {
 			return e;
+		}
+		
+		
+
+		public int getTempValue() {
+			return tempValue;
+		}
+
+		public void setTempValue(int tempValue) {
+			this.tempValue = tempValue;
 		}
 
 		public int getDistToEnd() {
@@ -84,5 +95,16 @@ public class Grid {
 				return false;
 		}
 		return true;
+	}
+
+	public void print() {
+		for(int y=0;y<h;y++) {
+			for(int x=0;x<w;x++) {
+				System.out.print(" "+getElement(x, y).getDistToEnd());
+			}
+			System.out.println();
+		}
+		// TODO Auto-generated method stub
+		
 	}
 }
