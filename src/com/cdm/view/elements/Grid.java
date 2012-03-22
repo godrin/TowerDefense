@@ -56,10 +56,16 @@ public class Grid {
 	public int endY() {
 		return endy;
 	}
+	public GridElement getElement(int x, int y) {
+		if (x >= 0 && y >= 0 && x < w && y < h)
+			return cells[x + y * w];
+		return null;
+	}
 
 	public List<Element> get(int x, int y) {
-		if (x >= 0 && y >= 0 && x < w && y < h)
-			return cells[x + y * w].getList();
+		GridElement ge=getElement(x, y);
+		if(ge!=null)
+			return ge.getList();
 		return null;
 	}
 

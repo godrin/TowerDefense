@@ -21,6 +21,10 @@ public class PathPos implements Comparable<PathPos> {
 		value = _v;
 	}
 
+	public PathPos() {
+		x = y = value = -1;
+	}
+
 	public String toString() {
 		return "[" + x + "," + y + "]";
 	}
@@ -38,13 +42,13 @@ public class PathPos implements Comparable<PathPos> {
 
 	@Override
 	public int compareTo(PathPos o) {
-		if(x<o.x)
+		if (x < o.x)
 			return -1;
-		if(x>o.x)
+		if (x > o.x)
 			return 1;
-		if(y<o.y)
+		if (y < o.y)
 			return -1;
-		if(y>o.y)
+		if (y > o.y)
 			return 1;
 		return 0;
 	}

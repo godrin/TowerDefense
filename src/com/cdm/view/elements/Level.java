@@ -178,6 +178,7 @@ public class Level {
 
 	public boolean isFreeForNewUnit(Position pos) {
 		PathPos from = new PathPos(getEnemyStartPosition());
+		from.x++;
 		PathPos to = new PathPos(getEnemyEndPosition());
 
 		PathPos ignore = new PathPos(pos);
