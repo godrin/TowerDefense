@@ -52,7 +52,6 @@ public class Cannon extends RotatingUnit implements Element {
 	}
 
 	void shoot(EnemyUnit enemy) {
-		System.out.println("MOD");
 		if (enemy != null) {
 
 			if (lastShot > shotFrequency) {
