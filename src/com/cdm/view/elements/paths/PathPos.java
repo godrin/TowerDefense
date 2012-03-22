@@ -60,4 +60,11 @@ public class PathPos implements Comparable<PathPos> {
 		return val;
 	}
 
+	public void assign(PathPos t) {
+		x = t.x;
+		y = t.y;
+		value = t.value;
+
+	}
+
 }

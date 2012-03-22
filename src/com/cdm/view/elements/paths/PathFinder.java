@@ -9,22 +9,19 @@ import com.cdm.view.elements.Grid;
 import com.cdm.view.elements.Grid.GridElement;
 
 public class PathFinder {
-	private static PathPos[] todoBuffer;
+	private static RoundQueue todoBuffer=null;
+	
 
 	public static boolean widthSearch(Grid grid, PathPos from, PathPos to,
 			PathPos ignoreThis, boolean fastOut) {
 		checkTodoBuffer(grid);
 		cleanGrid(grid);
-
-		// Set<PathPos> stored = new TreeSet<PathPos>();
-		List<PathPos> todo = new LinkedList<PathPos>();
 		boolean found = false;
-		todo.add(to);
-		// grid.getElement(to.x, to.y).setDistToEnd(0);
-		while (todo.size() > 0) {
-			PathPos current = todo.get(0);
+		todoBuffer.add(to);
+		while (todoBuffer.size() > 0) {
+			PathPos current = todoBuffer. first();
 			System.out.println(current);
-			todo.remove(0);
+			todoBuffer.removeFirst();
 			if (current.equals(from)) {
 				found = true;
 				if (fastOut)
@@ -46,10 +43,8 @@ public class PathFinder {
 				GridElement ge = grid.getElement(next.x, next.y);
 				if (ge != null)
 					if (ge.getDistToEnd() < 0) {
-						// if (!stored.contains(next)) {
-						// stored.add(next);
 						ge.setDistToEnd(currentValue);
-						todo.add(next);
+						todoBuffer.add(next);
 					}
 			}
 		}
@@ -65,12 +60,10 @@ public class PathFinder {
 
 	private static void checkTodoBuffer(Grid grid) {
 		int size = grid.getH() * grid.getW();
-		if (todoBuffer == null || todoBuffer.length < size) {
-			todoBuffer = new PathPos[size];
-			int i;
-			for (i = 0; i < size; i++) {
-				todoBuffer[i] = new PathPos();
-			}
+		if (todoBuffer == null || todoBuffer.capacity() < size) {
+			todoBuffer = new RoundQueue(size);
+		} else {
+			todoBuffer.cleanup();
 		}
 
 	}
