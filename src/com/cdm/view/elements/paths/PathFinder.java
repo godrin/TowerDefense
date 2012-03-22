@@ -1,7 +1,5 @@
 package com.cdm.view.elements.paths;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -20,7 +18,6 @@ public class PathFinder {
 		todoBuffer.add(to);
 		while (todoBuffer.size() > 0) {
 			PathPos current = todoBuffer. first();
-			System.out.println(current);
 			todoBuffer.removeFirst();
 			if (current.equals(from)) {
 				found = true;

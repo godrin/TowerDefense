@@ -19,12 +19,10 @@ public class RocketThrower extends RotatingUnit implements Element {
 	private List<Vector3> poly;
 	float shotFrequency = 5.0f;
 	float lastShot = 0.0f;
-	private float targetDist;
 	private float maxDist = 3.5f;
 	private double startingRadius = 0.4f;
 	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
 	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
-
 
 	public RocketThrower(Position p) {
 		super(p);
@@ -45,12 +43,13 @@ public class RocketThrower extends RotatingUnit implements Element {
 		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize(),
 				RefSystem.Level);
 	}
+
 	@Override
 	protected EnemyUnit getEnemy() {
-		EnemyUnit u=getLevel().getNextEnemy(getPosition());
-		if(u==null)
+		EnemyUnit u = getLevel().getNextEnemy(getPosition());
+		if (u == null)
 			return null;
-		if(getPosition().to(u.getPosition()).len()>maxDist)
+		if (getPosition().to(u.getPosition()).len() > maxDist)
 			return null;
 		return u;
 	}
@@ -60,7 +59,7 @@ public class RocketThrower extends RotatingUnit implements Element {
 		super.move(time);
 		EnemyUnit enemy = getEnemy();
 		lastShot += time;
-		if(ableToShoot)
+		if (ableToShoot)
 			shoot(enemy);
 	}
 
@@ -71,7 +70,7 @@ public class RocketThrower extends RotatingUnit implements Element {
 	private void shoot(EnemyUnit enemy) {
 		if (enemy != null) {
 
-			if (lastShot > shotFrequency && targetDist < maxDist) {
+			if (lastShot > shotFrequency) {
 				lastShot = 0.0f;
 				Position startingPos = new Position(getPosition());
 				float angle = targetAngle;

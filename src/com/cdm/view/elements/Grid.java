@@ -33,7 +33,6 @@ public class Grid {
 	private int w, h;
 	private int endy;
 
-	@SuppressWarnings("unchecked")
 	public Grid(int pw, int ph, int pendy) {
 		w = pw;
 		h = ph;
