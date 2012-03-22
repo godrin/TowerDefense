@@ -214,13 +214,7 @@ public class Level {
 
 			}
 		}
-
-		PathPos to = new PathPos(finish);
-
-		Path p = PathFinder.findPath(grid, from, to);
-
-		PathPos pp = p.second();
-		return new Position(pp.x, pp.y, RefSystem.Level);
+		return null; // something went wrong
 	}
 
 	public void enemyReachedEnd(EnemyUnit enemyUnit) {
