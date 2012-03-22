@@ -36,7 +36,7 @@ public class Tank extends EnemyUnit {
 		super.move(time);
 		while (time > 0) {
 			if (nextStep == null) {
-				nextStep = getLevel().getNextPos(getPosition().alignToGrid());
+				nextStep = getLevel().getNextPos(getPosition().alignedToGrid());
 			}
 			Position nuPos = new Position(getPosition());
 

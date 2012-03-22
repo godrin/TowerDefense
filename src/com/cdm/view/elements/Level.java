@@ -13,7 +13,6 @@ import com.cdm.view.Position.RefSystem;
 import com.cdm.view.Selector;
 import com.cdm.view.elements.Grid.GridElement;
 import com.cdm.view.elements.Unit.UnitType;
-import com.cdm.view.elements.paths.Path;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.AbstractShot;
@@ -27,7 +26,7 @@ public class Level {
 	private EnemyPlayer player;
 	private float speedFactor = 2.0f;
 	private int health = 3;
-	private int money = 15;
+	private int money = 25;
 	private int points = 0;
 	private int bonus = 0;
 	private List<Unit> unitsToRemove = new ArrayList<Unit>();
@@ -55,7 +54,7 @@ public class Level {
 
 	public void hover(Position pos) {
 		if (pos.screenPos()) {
-			pos = pos.toLevelPos().alignToGrid();
+			pos = pos.toLevelPos().alignedToGrid();
 		}
 		selector = new Selector(pos);
 	}
@@ -114,7 +113,7 @@ public class Level {
 			return false;
 		}
 
-		Position lpos = dragElement.getPosition().toLevelPos().alignToGrid();
+		Position lpos = dragElement.getPosition().toLevelPos().alignedToGrid();
 		if (!(dragElement instanceof EnemyUnit)
 				&& (lpos.x < 0 || lpos.x > grid.getW() - 1 || lpos.y < 0 || lpos.y > grid
 						.getH()))

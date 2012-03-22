@@ -60,7 +60,7 @@ public class Position {
 				/ Settings.getCellWidth() - p.y, RefSystem.Level);
 	}
 
-	public Position alignToGrid() {
+	public Position alignedToGrid() {
 		return new Position(Math.round(x), Math.round(y), system);
 	}
 

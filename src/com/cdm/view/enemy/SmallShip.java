@@ -19,7 +19,7 @@ public class SmallShip extends EnemyUnit implements Element {
 	private List<Vector3> poly;
 	float angle = 0.0f;
 
-	private float speed = 0.3f;
+	private static final float SPEED= 0.3f;
 
 	public SmallShip(Position position) {
 		super(position);
@@ -47,15 +47,16 @@ public class SmallShip extends EnemyUnit implements Element {
 
 	@Override
 	public void move(float time) {
+		super.move(time);
 		while (time > 0) {
 			if (nextStep == null) {
-				nextStep = getLevel().getNextPos(getPosition().alignToGrid());
+				nextStep = getLevel().getNextPos(getPosition().alignedToGrid());
 			}
 			Position nuPos = new Position(getPosition());
 
 			Vector3 diff = getPosition().to(nextStep);
 			float len = diff.len();
-			float delta = time * speed;
+			float delta = time * getSpeed();
 
 			if (delta >= len) {
 				setPosition(nextStep);
@@ -74,7 +75,7 @@ public class SmallShip extends EnemyUnit implements Element {
 
 	@Override
 	public float getOriginalSpeed() {
-		return speed;
+		return SPEED;
 	}
 
 	@Override
