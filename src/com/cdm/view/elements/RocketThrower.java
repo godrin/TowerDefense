@@ -24,7 +24,7 @@ public class RocketThrower extends Unit implements Element {
 	float lastShot = 0.0f;
 	float turningSpeed = 90.0f;
 	private float targetDist;
-	private float maxDist = 3.0f;
+	private float maxDist = 3.5f;
 	private double startingRadius = 0.4f;
 
 	public RocketThrower(Position p) {
@@ -89,18 +89,10 @@ public class RocketThrower extends Unit implements Element {
 						* startingRadius;
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
-				/*getLevel().addShot2(
-						new AbstractShot2(startingPos,
-								anticipatePosition(enemy), getLevel()));
-				*/
-				/*getLevel().addShot(
-						new Rocket2(startingPos, anticipatePosition(enemy),
-								getLevel()));
-=======*/
 				getLevel().addShot(
 						new SomeShot(startingPos, anticipatePosition(enemy),
 								getLevel()));
-				if (true)
+				if (false)
 					getLevel().addShot(
 							new Rocket(startingPos, anticipatePosition(enemy),
 									getLevel()));

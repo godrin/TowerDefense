@@ -6,6 +6,7 @@ import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.MathTools;
+import com.cdm.view.elements.Unit;
 import com.cdm.view.enemy.EnemyUnit;
 
 /**
@@ -49,7 +50,7 @@ public abstract class AbstractShot implements Element {
 		float distance = time * getSpeed();
 		if (distance > deltaV.len()) {
 			pos = target;
-			SoundFX.hit.play();
+			
 			// FIXME: hit target
 			EnemyUnit unit = level.getEnemyAt(target);
 			if (unit != null)

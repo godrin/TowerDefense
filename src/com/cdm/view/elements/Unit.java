@@ -24,7 +24,8 @@ public abstract class Unit implements Element {
 		}
 	};
 
-	private Position pos, oldpos = new Position(1, 1, RefSystem.Level);
+	private Position pos;
+	protected Position oldpos = new Position(1, 1, RefSystem.Level);
 	private float size;
 	private Level level;
 	private int cost;

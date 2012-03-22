@@ -1,5 +1,7 @@
 package com.cdm.view.enemy;
 
+import java.util.Random;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
@@ -64,7 +66,7 @@ public abstract class EnemyUnit extends Unit {
 		energy -= impact;
 		if (energy <= 0.0f) {
 			getLevel().enemyDestroyed(this);
-		}
+			}
 	}
 
 	public void freeze(float time) {
