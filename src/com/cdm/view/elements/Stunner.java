@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.gui.effects.SoundFX;
+import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
@@ -23,7 +24,6 @@ public class Stunner extends RotatingUnit implements Element {
 	AbstractShot currentShot = null;
 	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
 	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
-
 
 	public Stunner(Position p) {
 		super(p);
@@ -63,7 +63,7 @@ public class Stunner extends RotatingUnit implements Element {
 				getLevel().addShot(
 						currentShot = new StunRay(1.5f, startingPos,
 								getLevel(), enemy));
-				SoundFX.shot2.play();
+				SoundFX.play(Type.SHOT2);
 
 			}
 

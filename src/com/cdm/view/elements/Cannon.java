@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.gui.effects.SoundFX;
+import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
@@ -65,7 +66,7 @@ public class Cannon extends RotatingUnit implements Element {
 				getLevel().addShot(
 						new SimpleShot(startingPos, anticipatePosition(enemy),
 								getLevel()));
-				SoundFX.shot2.play();
+				SoundFX.play(Type.SHOT2);
 
 			}
 
