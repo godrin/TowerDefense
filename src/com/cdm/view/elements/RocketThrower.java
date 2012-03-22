@@ -10,7 +10,6 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.shots.Rocket;
-import com.cdm.view.elements.shots.Rocket2;
 import com.cdm.view.elements.shots.SomeShot;
 import com.cdm.view.enemy.EnemyUnit;
 

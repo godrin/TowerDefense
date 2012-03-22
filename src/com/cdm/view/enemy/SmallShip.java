@@ -9,7 +9,7 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Element;
-import com.cdm.view.elements.shots.AbstractShot;
+import com.cdm.view.elements.shots.MovingShot;
 
 public class SmallShip extends EnemyUnit implements Element {
 
@@ -83,7 +83,7 @@ public class SmallShip extends EnemyUnit implements Element {
 	}
 
 	@Override
-	public float getImpact(Class<? extends AbstractShot> shotType,
+	public float getImpact(Class<? extends MovingShot> shotType,
 			float shotLevel) {
 		return shotLevel / 3.0f;
 	}

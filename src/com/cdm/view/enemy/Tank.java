@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
-import com.cdm.view.elements.shots.AbstractShot;
+import com.cdm.view.elements.shots.MovingShot;
 
 public class Tank extends EnemyUnit {
 
@@ -82,7 +82,7 @@ public class Tank extends EnemyUnit {
 	}
 
 	@Override
-	public float getImpact(Class<? extends AbstractShot> shotType,
+	public float getImpact(Class<? extends MovingShot> shotType,
 			float shotLevel) {
 		return 0.1f;
 	}

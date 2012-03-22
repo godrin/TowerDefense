@@ -10,7 +10,7 @@ import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Level;
 
-public class Rocket extends AbstractShot {
+public class Rocket extends MovingShot {
 
 	public static float speed = 0.7f;
 	private List<Vector3> lines;
