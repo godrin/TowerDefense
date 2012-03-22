@@ -73,15 +73,6 @@ public class Cannon extends RotatingUnit implements Element {
 		}
 	}
 
-	private Position anticipatePosition(EnemyUnit enemy) {
-		float enemyDistance = getPosition().to(enemy.getPosition()).len();
-		float enemyMoveDistance = (enemyDistance / SimpleShot.speed)
-				* enemy.getSpeed();
-
-		Vector3 result = enemy.getPosition().toVector()
-				.add(enemy.getMovingDirection().mul(enemyMoveDistance));
-		return new Position(result.x, result.y, RefSystem.Level);
-	}
 
 	@Override
 	protected EnemyUnit getEnemy() {

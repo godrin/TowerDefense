@@ -13,18 +13,18 @@ import com.cdm.view.elements.shots.Rocket;
 import com.cdm.view.elements.shots.SomeShot;
 import com.cdm.view.enemy.EnemyUnit;
 
-public class RocketThrower extends Unit implements Element {
+public class RocketThrower extends RotatingUnit implements Element {
 
 	private List<Vector3> lines;
 	private List<Vector3> poly;
-	float angle = 0.0f;
-	float targetAngle = angle;
 	float shotFrequency = 5.0f;
 	float lastShot = 0.0f;
-	float turningSpeed = 90.0f;
 	private float targetDist;
 	private float maxDist = 3.5f;
 	private double startingRadius = 0.4f;
+	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
+	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
+
 
 	public RocketThrower(Position p) {
 		super(p);
@@ -40,41 +40,32 @@ public class RocketThrower extends Unit implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		Color innerColor = new Color(0, 0, 0.6f, 1.0f);
 		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize(),
 				RefSystem.Level);
-		Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
 		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize(),
 				RefSystem.Level);
+	}
+	@Override
+	protected EnemyUnit getEnemy() {
+		EnemyUnit u=getLevel().getNextEnemy(getPosition());
+		if(u==null)
+			return null;
+		if(getPosition().to(u.getPosition()).len()>maxDist)
+			return null;
+		return u;
 	}
 
 	@Override
 	public void move(float time) {
-
-		EnemyUnit enemy = getLevel().getNextEnemy(getPosition());
+		super.move(time);
+		EnemyUnit enemy = getEnemy();
 		lastShot += time;
-
-		if (enemy != null) {
-			Vector3 delta = enemy.getPosition().to(getPosition());
-			if (delta.len() < maxDist) {
-				targetAngle = MathTools.angle(delta);
-				targetDist = delta.len();
-			}
-		}
-
-		float turnVec = targetAngle - angle;
-		float turnDir = Math.signum(turnVec);
-		float target = angle + turnDir * turningSpeed * time;
-		if (Math.signum(targetAngle - target) != turnDir) {
-			// reached
-			angle = targetAngle;
-
+		if(ableToShoot)
 			shoot(enemy);
-		} else {
-			angle = target;
-		}
+	}
 
-		// angle += time * 10;
+	protected float getMaxDist() {
+		return maxDist;
 	}
 
 	private void shoot(EnemyUnit enemy) {
@@ -101,15 +92,4 @@ public class RocketThrower extends Unit implements Element {
 
 		}
 	}
-
-	private Position anticipatePosition(EnemyUnit enemy) {
-		float enemyDistance = getPosition().to(enemy.getPosition()).len();
-		float enemyMoveDistance = (enemyDistance / Rocket.speed)
-				* enemy.getSpeed();
-
-		Vector3 result = enemy.getPosition().toVector()
-				.add(enemy.getMovingDirection().mul(enemyMoveDistance));
-		return new Position(result.x, result.y, RefSystem.Level);
-	}
-
 }

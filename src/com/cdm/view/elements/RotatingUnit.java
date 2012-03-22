@@ -2,6 +2,8 @@ package com.cdm.view.elements;
 
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.Position;
+import com.cdm.view.Position.RefSystem;
+import com.cdm.view.elements.shots.SimpleShot;
 import com.cdm.view.enemy.EnemyUnit;
 
 public abstract class RotatingUnit extends Unit {
@@ -57,7 +59,16 @@ public abstract class RotatingUnit extends Unit {
 	public void setTurningSpeed(float turningSpeed) {
 		this.turningSpeed = turningSpeed;
 	}
-	
+	protected Position anticipatePosition(EnemyUnit enemy) {
+		float enemyDistance = getPosition().to(enemy.getPosition()).len();
+		float enemyMoveDistance = (enemyDistance / SimpleShot.speed)
+				* enemy.getSpeed();
+
+		Vector3 result = enemy.getPosition().toVector()
+				.add(enemy.getMovingDirection().mul(enemyMoveDistance));
+		return new Position(result.x, result.y, RefSystem.Level);
+	}
+
 	
 
 }

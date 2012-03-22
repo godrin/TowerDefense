@@ -12,7 +12,7 @@ public class PathFinder {
 	private static RoundQueue todoBuffer=null;
 	
 
-	public static boolean widthSearch(Grid grid, PathPos from, PathPos to,
+	public static boolean breadthSearch(Grid grid, PathPos from, PathPos to,
 			PathPos ignoreThis, boolean fastOut) {
 		checkTodoBuffer(grid);
 		cleanGrid(grid);

@@ -182,7 +182,7 @@ public class Level {
 		PathPos to = new PathPos(getEnemyEndPosition());
 
 		PathPos ignore = new PathPos(pos);
-		return PathFinder.widthSearch(grid, from, to, ignore, true);
+		return PathFinder.breadthSearch(grid, from, to, ignore, true);
 	}
 
 	public Position getNextPos(Position alignToGrid) {
