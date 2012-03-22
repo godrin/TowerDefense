@@ -13,7 +13,7 @@ import com.cdm.view.elements.shots.MovingShot;
 public class Tank extends EnemyUnit {
 
 	public Position nextStep = null;
-	private float speed = 0.2f;
+	public static final float SPEED = 0.2f;
 
 	private List<Vector3> lines;
 	private List<Vector3> poly;
@@ -33,6 +33,7 @@ public class Tank extends EnemyUnit {
 
 	@Override
 	public void move(float time) {
+		super.move(time);
 		while (time > 0) {
 			if (nextStep == null) {
 				nextStep = getLevel().getNextPos(getPosition().alignToGrid());
@@ -41,7 +42,7 @@ public class Tank extends EnemyUnit {
 
 			Vector3 diff = getPosition().to(nextStep);
 			float len = diff.len();
-			float delta = time * speed;
+			float delta = time * getSpeed();
 
 			if (delta >= len) {
 				setPosition(nextStep);
@@ -71,7 +72,7 @@ public class Tank extends EnemyUnit {
 
 	@Override
 	public float getOriginalSpeed() {
-		return speed;
+		return SPEED;
 	}
 
 	@Override

@@ -114,13 +114,14 @@ public class Renderer implements IRenderer {
 		Gdx.gl10.glScalef(scale, scale, scale);
 		renderer.begin(GL10.GL_LINE_LOOP);
 
-		Vector3[] lines = new Vector3[] { new Vector3(x0, y0, 0),
-				new Vector3(x1, y0, 0), new Vector3(x1, y1, 0),
-				new Vector3(x0, y1, 0) };
-		for (Vector3 v : lines) {
-			renderer.color(c.r, c.g, c.b, c.a);
-			renderer.vertex(v);
-		}
+		renderer.color(c.r, c.g, c.b, c.a);
+		renderer.vertex(x0, y0, 0);
+		renderer.color(c.r, c.g, c.b, c.a);
+		renderer.vertex(x1, y0, 0);
+		renderer.color(c.r, c.g, c.b, c.a);
+		renderer.vertex(x1, y1, 0);
+		renderer.color(c.r, c.g, c.b, c.a);
+		renderer.vertex(x0, y1, 0);
 
 		renderer.end();
 		Gdx.gl10.glPopMatrix();
@@ -146,15 +147,18 @@ public class Renderer implements IRenderer {
 
 		renderer.begin(GL10.GL_TRIANGLES);
 
-		Vector3[] lines = new Vector3[] { new Vector3(x0, y0, 0),
-				new Vector3(x1, y1, 0), new Vector3(x1, y0, 0),
-				new Vector3(x0, y0, 0), new Vector3(x1, y1, 0),
-				new Vector3(x0, y1, 0) };
-		for (Vector3 v : lines) {
-
-			renderer.color(c.r, c.g, c.b, c.a);
-			renderer.vertex(v);
-		}
+		renderer.color(c.r, c.g, c.b, c.a);
+		renderer.vertex(x0, y0, 0);
+		renderer.color(c.r, c.g, c.b, c.a);
+		renderer.vertex(x1, y1, 0);
+		renderer.color(c.r, c.g, c.b, c.a);
+		renderer.vertex(x1, y0, 0);
+		renderer.color(c.r, c.g, c.b, c.a);
+		renderer.vertex(x0, y0, 0);
+		renderer.color(c.r, c.g, c.b, c.a);
+		renderer.vertex(x1, y1, 0);
+		renderer.color(c.r, c.g, c.b, c.a);
+		renderer.vertex(x0, y1, 0);
 
 		renderer.end();
 		Gdx.gl10.glPopMatrix();
@@ -167,11 +171,11 @@ public class Renderer implements IRenderer {
 	@Override
 	public void drawText(int i, int j, String string, Color c) {
 		int h = Gdx.graphics.getHeight();
-/*
-		viewMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), h);
-		spriteBatch.setProjectionMatrix(viewMatrix);
-		spriteBatch.setTransformMatrix(transformMatrix);
-*/
+		/*
+		 * viewMatrix.setToOrtho2D(0, 0, Gdx.graphics.getWidth(), h);
+		 * spriteBatch.setProjectionMatrix(viewMatrix);
+		 * spriteBatch.setTransformMatrix(transformMatrix);
+		 */
 		spriteBatch.begin();
 		// String text = "It is the end my friend.\nTouch to continue!";
 		TextBounds bounds = font.getMultiLineBounds(string);
@@ -187,6 +191,7 @@ public class Renderer implements IRenderer {
 
 	@Override
 	public void drawText(Position position, String money, Color moneyColor) {
-		drawText((int)position.getX(), (int)position.getY(), money, moneyColor);
+		drawText((int) position.getX(), (int) position.getY(), money,
+				moneyColor);
 	}
 }

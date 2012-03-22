@@ -89,14 +89,6 @@ public class RocketThrower extends Unit implements Element {
 						* startingRadius;
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
-				/*getLevel().addShot2(
-						new AbstractShot2(startingPos,
-								anticipatePosition(enemy), getLevel()));
-				*/
-				/*getLevel().addShot(
-						new Rocket2(startingPos, anticipatePosition(enemy),
-								getLevel()));
-=======*/
 				getLevel().addShot(
 						new SomeShot(startingPos, anticipatePosition(enemy),
 								getLevel()));

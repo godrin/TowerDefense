@@ -38,11 +38,15 @@ public class PathPos implements Comparable<PathPos> {
 
 	@Override
 	public int compareTo(PathPos o) {
-		Integer c = new Integer(x).compareTo(o.x);
-		if (c != 0)
-			return c;
-		c = new Integer(y).compareTo(o.y);
-		return c;
+		if(x<o.x)
+			return -1;
+		if(x>o.x)
+			return 1;
+		if(y<o.y)
+			return -1;
+		if(y>o.y)
+			return 1;
+		return 0;
 	}
 
 	public int distanceTo(PathPos target) {

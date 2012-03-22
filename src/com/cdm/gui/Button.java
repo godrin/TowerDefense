@@ -13,6 +13,7 @@ import com.cdm.view.Position.RefSystem;
 
 public class Button extends Widget {
 	private int x, y, radius;
+	private Position position;
 
 	private IButtonPressed pressedListener;
 
@@ -21,10 +22,12 @@ public class Button extends Widget {
 	private SString buttonName;
 
 	private boolean enabled = true;
+	private Color currentColor = new Color(1, 1, 0, 0.7f);
 
 	public Button(int px, int py, int pradius) {
 		x = px;
 		y = py;
+		position = new Position(x, y, RefSystem.Screen);
 		radius = pradius;
 		setBBox(new Rectangle(x - radius, y - radius, 2 * radius, 2 * radius));
 		initAnimation();
@@ -74,8 +77,8 @@ public class Button extends Widget {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		Color c = new Color(1, 1, 0, 0.7f);
-		renderer.fillRect(x - radius, y - radius, x + radius, y + radius, c);
+		renderer.fillRect(x - radius, y - radius, x + radius, y + radius,
+				currentColor);
 		rect.draw(renderer);
 	}
 
@@ -102,6 +105,6 @@ public class Button extends Widget {
 	}
 
 	public Position getPosition() {
-		return new Position(x, y, RefSystem.Screen);
+		return position;
 	}
 }

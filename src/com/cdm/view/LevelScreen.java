@@ -29,6 +29,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private WidgetContainer gui = new WidgetContainer();
 	private Unit dragElement = null;
 	private LevelDisplays display = new LevelDisplays();
+	private boolean rendering = false;
+	private OrthographicCamera cam;
 
 	Sound sound;
 
@@ -44,6 +46,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		sizeButton.setButtonName(SString.SIZE_BUTTON);
 		sizeButton.setPressedListener(this);
 		gui.add(sizeButton);
+		createCam();
 	}
 
 	public void dispose() {
@@ -53,7 +56,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private void createUnitButtons() {
 		float pos = 40;
 		UnitTypeButton tb;
-		for (UnitType t : new UnitType[] { UnitType.CANNON,UnitType.STUNNER,
+		for (UnitType t : new UnitType[] { UnitType.CANNON, UnitType.STUNNER,
 				UnitType.ROCKET_THROWER }) {
 			tb = new UnitTypeButton((int) pos, 400, 30, t, level);
 			tb.setListener(this);
@@ -68,10 +71,12 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	@Override
 	public synchronized void render(float delta) {
-
+		if (rendering)
+			return;
+		rendering = true;
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		Long millis = System.currentTimeMillis();
-		Long micro = System.nanoTime() / 1000 + millis * 1000;
+		long millis = System.currentTimeMillis();
+		long micro = System.nanoTime() / 1000 + millis * 1000;
 		if (oldMicros > 0) {
 			delta = (micro - oldMicros) * 0.000001f;
 		}
@@ -93,6 +98,16 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 		drawLineBased(delta);
 		display.draw(renderer);
+		rendering = false;
+
+	}
+
+	private void createCam() {
+		cam = new OrthographicCamera(Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight());
+		cam.position.set(Gdx.graphics.getWidth() / 2,
+				Gdx.graphics.getHeight() / 2, 0);
+		cam.update();
 
 	}
 
@@ -100,12 +115,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (delta > 0) {
 			level.move(delta);
 		}
-		OrthographicCamera cam;
-		cam = new OrthographicCamera(Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight());
-		cam.position.set(Gdx.graphics.getWidth() / 2,
-				Gdx.graphics.getHeight() / 2, 0);
-		cam.update();
 		cam.apply(Gdx.gl10);
 
 		// Gdx.gl10.glScalef(1, -1, 0);
@@ -162,7 +171,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		if(level.gameover())
+		if (level.gameover())
 			return false;
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
@@ -173,7 +182,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchUp(int x, int y, int pointer, int button) {
-		if(level.gameover())
+		if (level.gameover())
 			return false;
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
@@ -186,7 +195,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	private void stopDragging() {
-		if(level.gameover())
+		if (level.gameover())
 			return;
 		if (dragElement != null) {
 			level.add(dragElement);
@@ -195,7 +204,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchDragged(int x, int y, int pointer) {
-		if(level.gameover())
+		if (level.gameover())
 			return false;
 		y = Gdx.graphics.getHeight() - y;
 		Position pos = new Position(x, y, RefSystem.Screen);

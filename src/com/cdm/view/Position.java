@@ -83,4 +83,8 @@ public class Position {
 	public Vector3 toVector() {
 		return new Vector3(x, y, 0);
 	}
+
+	public RefSystem getSystem() {
+		return system;
+	}
 }

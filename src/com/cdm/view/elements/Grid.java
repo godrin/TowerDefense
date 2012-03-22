@@ -6,7 +6,30 @@ import java.util.List;
 import com.cdm.view.enemy.EnemyUnit;
 
 public class Grid {
-	private List<Element>[] cells;
+	public class GridElement {
+		private List<Element> e;
+		private int distToEnd;
+
+		public GridElement() {
+			e = new ArrayList<Element>();
+			distToEnd = -1;
+		}
+
+		public List<Element> getList() {
+			return e;
+		}
+
+		public int getDistToEnd() {
+			return distToEnd;
+		}
+
+		public void setDistToEnd(int distToEnd) {
+			this.distToEnd = distToEnd;
+		}
+
+	}
+
+	private GridElement[] cells;
 	private int w, h;
 	private int endy;
 
@@ -14,7 +37,11 @@ public class Grid {
 	public Grid(int pw, int ph, int pendy) {
 		w = pw;
 		h = ph;
-		cells = new List[w * h];
+		cells = new GridElement[w * h];
+		int x, y;
+		for (x = 0; x < w; x++)
+			for (y = 0; y < h; y++)
+				cells[x + y * w] = new GridElement();
 		endy = pendy;
 	}
 
@@ -31,13 +58,9 @@ public class Grid {
 	}
 
 	public List<Element> get(int x, int y) {
-		List<Element> l = null;
-		if (x >= 0 && x < w && y >= 0 && y < h) {
-			if ((l = cells[x + y * w]) == null) {
-				l = cells[x + y * w] = new ArrayList<Element>();
-			}
-		}
-		return l;
+		if (x >= 0 && y >= 0 && x < w && y < h)
+			return cells[x + y * w].getList();
+		return null;
 	}
 
 	public boolean isEndPlace(int x, int y) {
@@ -46,9 +69,8 @@ public class Grid {
 
 	public boolean passable(int x, int y) {
 		/*
-		if (x == w - 1) {
-			return (y == endy);
-		}*/
+		 * if (x == w - 1) { return (y == endy); }
+		 */
 		List<Element> l = get(x, y);
 		if (l == null)
 			return false;

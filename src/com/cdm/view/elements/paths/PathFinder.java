@@ -9,23 +9,30 @@ import java.util.TreeSet;
 import com.cdm.view.elements.Grid;
 
 public class PathFinder {
+	
+	
+
 	public static boolean widthSearch(Grid grid, PathPos from, PathPos to,
-			Set<PathPos> ignoreThese) {
+			PathPos ignoreThis, boolean fastOut) {
 		Set<PathPos> stored = new TreeSet<PathPos>();
 		List<PathPos> todo = new LinkedList<PathPos>();
-		todo.add(from);
+		boolean found = false;
+		todo.add(to);
 		while (todo.size() > 0) {
 			PathPos current = todo.get(0);
 			todo.remove(0);
-			if (current.equals(to))
-				return true;
-			if (!current.equals(from))
+			if (current.equals(from)) {
+				found = true;
+				if (fastOut)
+					return found;
+			}
+			if (!current.equals(to))
 				if (!grid.passable(current.x, current.y)) {
 					continue;
 				}
 
 			for (PathPos next : current.next()) {
-				if (ignoreThese.contains(next))
+				if (next.equals(ignoreThis))
 					continue;
 				if (!stored.contains(next)) {
 					stored.add(next);
@@ -33,7 +40,7 @@ public class PathFinder {
 				}
 			}
 		}
-		return false;
+		return found;
 	}
 
 	public static Path findPath(Grid grid, PathPos from, PathPos to) {

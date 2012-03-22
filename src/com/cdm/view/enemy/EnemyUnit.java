@@ -13,7 +13,7 @@ public abstract class EnemyUnit extends Unit {
 	private static final float FREEZE_FACTOR = 0.5f;
 	private float energy;
 	private float frozenTime = 0.0f;
-	private Float speed = null;
+	private float speed = -10.0f;
 
 	public EnemyUnit(Position pos) {
 		super(pos);
@@ -82,7 +82,7 @@ public abstract class EnemyUnit extends Unit {
 	}
 
 	public final float getSpeed() {
-		if (speed == null)
+		if (speed<0)
 			speed = getOriginalSpeed();
 		return speed;
 	}

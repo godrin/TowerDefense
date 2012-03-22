@@ -24,7 +24,7 @@ public abstract class Unit implements Element {
 		}
 	};
 
-	private Position pos, oldpos = new Position(1, 1, RefSystem.Level);
+	private Position pos=new Position(0,0,RefSystem.Level), oldpos = new Position(1, 1, RefSystem.Level);
 	private float size;
 	private Level level;
 	private int cost;
@@ -45,7 +45,7 @@ public abstract class Unit implements Element {
 		if (modified && level != null) {
 			level.removeMeFromGrid(oldpos, this);
 		}
-		pos = p;
+		pos.assignFrom(p);
 		if (modified && level != null) {
 			level.addMeToGrid(p, this);
 		}

@@ -20,6 +20,8 @@ public class Cannon extends RotatingUnit implements Element {
 	float lastShot = 0.0f;
 	float maxDist = 3.0f;
 	private double startingRadius = 0.4f;
+	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
+	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
 
 	public Cannon(Position p) {
 		super(p);
@@ -43,15 +45,14 @@ public class Cannon extends RotatingUnit implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		Color innerColor = new Color(0, 0, 0.6f, 1.0f);
 		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize(),
 				RefSystem.Level);
-		Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
 		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize(),
 				RefSystem.Level);
 	}
 
 	void shoot(EnemyUnit enemy) {
+		System.out.println("MOD");
 		if (enemy != null) {
 
 			if (lastShot > shotFrequency) {
@@ -95,7 +96,7 @@ public class Cannon extends RotatingUnit implements Element {
 	@Override
 	public void move(float time) {
 		super.move(time);
-		EnemyUnit enemy = getLevel().getNextEnemy(getPosition());
+		EnemyUnit enemy = getEnemy();
 		lastShot += time;
 		if(ableToShoot)
 			shoot(enemy);

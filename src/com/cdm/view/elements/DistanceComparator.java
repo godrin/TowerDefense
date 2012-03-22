@@ -17,9 +17,27 @@ public class DistanceComparator implements Comparator<EnemyUnit> {
 	public int compare(EnemyUnit arg0, EnemyUnit arg1) {
 		Position a = arg0.getPosition();
 		Position b = arg1.getPosition();
-		Float distA = a.to(base).len();
-		Float distB = b.to(base).len();
-		return distA.compareTo(distB);
+		if (a.getSystem().equals(b.getSystem())
+				&& base.getSystem().equals(a.getSystem())) {
+			// faster - less memory use
+			float dx = (a.x - base.x);
+			float dy = (a.y - base.y);
+			float d0 = (float) Math.sqrt(dx * dx + dy * dy);
+			dx = (b.x - base.x);
+			dy = (b.y - base.y);
+			float d1 = (float) Math.sqrt(dx * dx + dy * dy);
+			if (d0 < d1)
+				return -1;
+			if (d0 > d1)
+				return 1;
+			return 0;
+		}
+		float distA = a.to(base).len();
+		float distB = b.to(base).len();
+		if (distA < distB)
+			return -1;
+		if (distA > distB)
+			return 1;
+		return 0;
 	}
-
 }

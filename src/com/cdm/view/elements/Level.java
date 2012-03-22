@@ -1,14 +1,11 @@
 package com.cdm.view.elements;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
@@ -18,7 +15,6 @@ import com.cdm.view.elements.paths.Path;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.AbstractShot;
-import com.cdm.view.elements.shots.MovingShot;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -36,11 +32,14 @@ public class Level {
 
 	private List<AbstractShot> shots = new ArrayList<AbstractShot>();
 	private List<AbstractShot> shotsToRemove = new ArrayList<AbstractShot>();
+	private BoxDrawing boxDrawer;
 
 	public Level(int w, int h, int endY) {
 		grid = new Grid(w, h, endY);
 		player = new EnemyPlayer();
 		player.setLevel(this);
+		boxDrawer = new BoxDrawing(getEnemyStartPosition(),
+				getEnemyEndPosition(), grid.getH());
 
 	}
 
@@ -103,28 +102,7 @@ public class Level {
 	}
 
 	private void drawBox(IRenderer renderer) {
-
-		float size = 2.0f;
-		Color color = new Color(0, 0, 1, 1);
-		Position pos = new Position(0, 0, RefSystem.Level);
-		Position start = getEnemyStartPosition();
-		Position end = getEnemyEndPosition();
-
-		// upper box
-		Vector3 a = new Vector3(0, start.y - 0.5f, 0);
-		Vector3 b = new Vector3(0, 0, 0);
-		Vector3 c = new Vector3(end.x - 0.5f, 0, 0);
-		Vector3 d = new Vector3(end.x - 0.5f, start.y - 0.5f, 0);
-		// lower box
-		Vector3 e = new Vector3(0, start.y + 0.5f, 0);
-		Vector3 f = new Vector3(0, grid.getH() - 0.5f, 0);
-		Vector3 g = new Vector3(end.x - 0.5f, grid.getH() - 0.5f, 0);
-		Vector3 h = new Vector3(end.x - 0.5f, start.y + 0.5f, 0);
-
-		List<Vector3> lines = Arrays.asList(new Vector3[] { a, b, b, c, c, d,
-				e, f, f, g, g, h });
-		float angle = 0.0f;
-		renderer.drawLines(pos, lines, angle, color, size, RefSystem.Level);
+		boxDrawer.draw(renderer);
 	}
 
 	public boolean add(Unit dragElement) {
@@ -140,8 +118,10 @@ public class Level {
 						.getH()))
 			return false;
 
-		if (!isFreeForNewUnit(lpos))
-			return false;
+		// check if way is still free then
+		if (!(dragElement instanceof EnemyUnit))
+			if (!isFreeForNewUnit(lpos))
+				return false;
 
 		List<Element> l = grid.get((int) lpos.x, (int) lpos.y);
 
@@ -200,9 +180,8 @@ public class Level {
 		PathPos from = new PathPos(getEnemyStartPosition());
 		PathPos to = new PathPos(getEnemyEndPosition());
 
-		Set<PathPos> ignore = new TreeSet<PathPos>();
-		ignore.add(new PathPos(pos));
-		return PathFinder.widthSearch(grid, from, to, ignore);
+		PathPos ignore = new PathPos(pos);
+		return PathFinder.widthSearch(grid, from, to, ignore, true);
 	}
 
 	public Position getNextPos(Position alignToGrid) {

@@ -32,15 +32,20 @@ public class TowerGame implements ApplicationListener {
 		music.setLooping(true);
 		music.play();
 		SoundFX.Initialize();
+	}
 
+	private void stopMusic() {
+		music.stop();
 	}
 
 	public void pause() {
 		running = false;
+		stopMusic();
 	}
 
 	public void resume() {
 		running = true;
+		startMusic();
 	}
 
 	public void setScreen(Screen newScreen) {

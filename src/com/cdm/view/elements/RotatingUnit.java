@@ -28,6 +28,11 @@ public abstract class RotatingUnit extends Unit {
 			Vector3 delta = enemy.getPosition().to(getPosition());
 			if (delta.len() < getMaxDist()) {
 				targetAngle = MathTools.angle(delta);
+				
+				if(targetAngle-180>angle)
+					targetAngle-=360;
+				if(targetAngle+180<angle)
+					targetAngle+=360;
 			}
 		}
 
@@ -43,8 +48,16 @@ public abstract class RotatingUnit extends Unit {
 			angle = target;
 			ableToShoot = false;
 		}
-
-		// angle += time * 10;
 	}
+
+	public float getTurningSpeed() {
+		return turningSpeed;
+	}
+
+	public void setTurningSpeed(float turningSpeed) {
+		this.turningSpeed = turningSpeed;
+	}
+	
+	
 
 }

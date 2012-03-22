@@ -18,8 +18,8 @@ public class EnemyPlayer {
 	private int levelNo = 1;
 	private float enemyStrength = 3.0f;
 	private Level level;
-	private Float timeToNextWave = WAITING_TIME;
-	private Float timeInWave = 0.0f;
+	private float timeToNextWave = WAITING_TIME;
+	private float timeInWave = 0.0f;
 	private SortedSet<EnemyDef> defs = new TreeSet<EnemyDef>();
 	private boolean alreadySent = false;
 
