@@ -10,7 +10,6 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.shots.Rocket;
-import com.cdm.view.elements.shots.Rocket2;
 import com.cdm.view.elements.shots.SomeShot;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -24,7 +23,7 @@ public class RocketThrower extends Unit implements Element {
 	float lastShot = 0.0f;
 	float turningSpeed = 90.0f;
 	private float targetDist;
-	private float maxDist = 3.0f;
+	private float maxDist = 3.5f;
 	private double startingRadius = 0.4f;
 
 	public RocketThrower(Position p) {
@@ -92,7 +91,7 @@ public class RocketThrower extends Unit implements Element {
 				getLevel().addShot(
 						new SomeShot(startingPos, anticipatePosition(enemy),
 								getLevel()));
-				if (true)
+				if (false)
 					getLevel().addShot(
 							new Rocket(startingPos, anticipatePosition(enemy),
 									getLevel()));

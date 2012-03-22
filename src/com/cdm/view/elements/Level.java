@@ -2,10 +2,10 @@ package com.cdm.view.elements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.cdm.gui.effects.SoundFX;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
@@ -208,6 +208,7 @@ public class Level {
 
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
+		SoundFX.hit.play();
 		unitsToRemove.add(enemyUnit);
 		money += enemyUnit.getMoney();
 		points += enemyUnit.getPoints();

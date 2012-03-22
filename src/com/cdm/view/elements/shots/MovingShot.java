@@ -49,7 +49,6 @@ public abstract class MovingShot implements Element,AbstractShot {
 		float distance = time * getSpeed();
 		if (distance > deltaV.len()) {
 			pos = target;
-			SoundFX.hit.play();
 			EnemyUnit unit = level.getEnemyAt(target);
 			if (unit != null)
 				unit.wasHitBy(this);

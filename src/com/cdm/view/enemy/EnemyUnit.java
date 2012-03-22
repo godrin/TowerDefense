@@ -64,7 +64,7 @@ public abstract class EnemyUnit extends Unit {
 		energy -= impact;
 		if (energy <= 0.0f) {
 			getLevel().enemyDestroyed(this);
-		}
+			}
 	}
 
 	public void freeze(float time) {
