@@ -12,6 +12,8 @@ public abstract class RotatingUnit extends Unit {
 	protected float angle = 0.0f;
 	protected float targetAngle = angle;
 	protected boolean ableToShoot = false;
+	private Vector3 delta = new Vector3();
+	private Vector3 result = new Vector3();
 
 	public RotatingUnit(Position p) {
 		super(p);
@@ -27,7 +29,7 @@ public abstract class RotatingUnit extends Unit {
 		EnemyUnit enemy = getEnemy();
 
 		if (enemy != null) {
-			Vector3 delta = enemy.getPosition().to(getPosition());
+			delta.set(enemy.getPosition().to(getPosition()));
 			if (delta.len() < getMaxDist()) {
 				targetAngle = MathTools.angle(delta);
 
@@ -62,12 +64,12 @@ public abstract class RotatingUnit extends Unit {
 	}
 
 	protected Position anticipatePosition(EnemyUnit enemy) {
-		float enemyDistance = getPosition().to(enemy.getPosition()).len();
+		float enemyDistance = getPosition().distance(enemy.getPosition());
 		float enemyMoveDistance = (enemyDistance / SimpleShot.speed)
 				* enemy.getSpeed();
 
-		Vector3 result = enemy.getPosition().toVector()
-				.add(enemy.getMovingDirection().mul(enemyMoveDistance));
+		result.set(enemy.getPosition().toVector());
+		result.add(enemy.getMovingDirection().mul(enemyMoveDistance));
 		return new Position(result.x, result.y, RefSystem.Level);
 	}
 

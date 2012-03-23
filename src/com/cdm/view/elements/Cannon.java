@@ -73,13 +73,12 @@ public class Cannon extends RotatingUnit implements Element {
 		}
 	}
 
-
 	@Override
 	protected EnemyUnit getEnemy() {
-		EnemyUnit u=getLevel().getNextEnemy(getPosition());
-		if(u==null)
+		EnemyUnit u = getLevel().getNextEnemy(getPosition());
+		if (u == null)
 			return null;
-		if(getPosition().to(u.getPosition()).len()>maxDist)
+		if (getPosition().distance(u.getPosition()) > maxDist)
 			return null;
 		return u;
 	}
@@ -89,7 +88,7 @@ public class Cannon extends RotatingUnit implements Element {
 		super.move(time);
 		EnemyUnit enemy = getEnemy();
 		lastShot += time;
-		if(ableToShoot)
+		if (ableToShoot)
 			shoot(enemy);
 	}
 

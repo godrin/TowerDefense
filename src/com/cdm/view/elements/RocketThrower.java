@@ -50,7 +50,7 @@ public class RocketThrower extends RotatingUnit implements Element {
 		EnemyUnit u = getLevel().getNextEnemy(getPosition());
 		if (u == null)
 			return null;
-		if (getPosition().to(u.getPosition()).len() > maxDist)
+		if (getPosition().distance(u.getPosition()) > maxDist)
 			return null;
 		return u;
 	}

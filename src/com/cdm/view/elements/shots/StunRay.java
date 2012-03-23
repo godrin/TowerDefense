@@ -20,18 +20,23 @@ public class StunRay implements AbstractShot {
 	private Level level;
 	private float phase = 0.0f;
 	private EnemyUnit enemyUnit;
+	private Vector3 f = new Vector3();
+	private Vector3 t = new Vector3();
+	private Vector3 delta = new Vector3();
+	private Vector3 dir = new Vector3();
+	private Vector3 normal= new Vector3();
 
 	public StunRay(float pTime, Position from, Level plevel, EnemyUnit enemy) {
 		time = pTime;
 		fromPos = from;
 		level = plevel;
 		enemy.freeze(pTime);
-		enemyUnit=enemy;
+		enemyUnit = enemy;
 	}
 
 	@Override
 	public void move(float ptime) {
-		
+
 		time -= ptime;
 		if (time < 0) {
 			level.removeShot(this);
@@ -43,14 +48,14 @@ public class StunRay implements AbstractShot {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		Vector3 f = fromPos.toVector();
-		Vector3 t = enemyUnit.getPosition().toVector();
+		f.set(fromPos.toVector());
+		 t.set( enemyUnit.getPosition().toVector());
 
-		Vector3 delta = new Vector3(t);
+		delta.set(t);
 		delta.sub(f);
-		Vector3 dir = new Vector3(delta);
+		dir.set(delta);
 		dir.nor();
-		Vector3 normal = new Vector3(dir);
+		normal.set(dir);
 		normal.crs(new Vector3(0, 0, 1));
 		float len = delta.len();
 		float wavelen = 0.6f;
@@ -66,20 +71,20 @@ public class StunRay implements AbstractShot {
 
 			float factor = len / count;
 			for (int i = 0; i < count; i++) {
-				float radFactor=1.0f;
-				if(i<5)
-					radFactor=i/5.0f;
-				else if(i>count-5)
-					radFactor=(i-count+5)*0.7f;
-				
+				float radFactor = 1.0f;
+				if (i < 5)
+					radFactor = i / 5.0f;
+				else if (i > count - 5)
+					radFactor = (i - count + 5) * 0.7f;
+
 				Vector3 p0 = new Vector3(dir).mul(i * len / count);
 				Vector3 p1 = new Vector3(normal).mul((float) Math.sin(i
 						/ wavelen / samplesPerWave * 2.0f * M_PI + curPhase)
-						* RADIUS*radFactor);
-				if(i>count-5) {
-					p0.add(new Vector3(dir).mul((float)Math.sin(radFactor)*0.05f));
+						* RADIUS * radFactor);
+				if (i > count - 5) {
+					p0.add(new Vector3(dir).mul((float) Math.sin(radFactor) * 0.05f));
 				}
-				
+
 				Vector3 nv = p0.add(p1);
 				vs.add(nv);
 				if (i > 0 && i < count - 1)

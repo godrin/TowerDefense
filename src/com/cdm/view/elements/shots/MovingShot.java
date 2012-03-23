@@ -10,15 +10,16 @@ import com.cdm.view.enemy.EnemyUnit;
 
 /**
  * @author godrin
- *
- * abstract base class of all shots
+ * 
+ *         abstract base class of all shots
  */
-public abstract class MovingShot implements Element,AbstractShot {
+public abstract class MovingShot implements Element, AbstractShot {
 
 	Position pos;
 	Position target;
 	float angle;
 	private Level level;
+	private Vector3 deltaV = new Vector3();
 
 	public MovingShot(Position from, Position to, Level plevel) {
 		pos = new Position(from);
@@ -45,7 +46,7 @@ public abstract class MovingShot implements Element,AbstractShot {
 	public abstract float getSpeed();
 
 	public void move(float time) {
-		Vector3 deltaV = pos.to(target);
+		deltaV.set(pos.to(target));
 		float distance = time * getSpeed();
 		if (distance > deltaV.len()) {
 			pos = target;

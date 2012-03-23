@@ -29,7 +29,9 @@ public class Tank extends EnemyUnit {
 	private static final Color outerColor = new Color(0.7f, 0.2f, 1.0f, 1.0f);
 	private static final Vector3 DEFAULT_DIRECTION = new Vector3(1, 0, 0);
 
-	float angle = 0.0f;
+	private float angle = 0.0f;
+	private Vector3 diff = new Vector3();
+	private Vector3 movingDir = new Vector3();
 
 	public Tank(Position pos) {
 		super(pos);
@@ -45,7 +47,7 @@ public class Tank extends EnemyUnit {
 			}
 			Position nuPos = new Position(getPosition());
 
-			Vector3 diff = getPosition().to(nextStep);
+			diff.set(getPosition().to(nextStep));
 			float len = diff.len();
 			float delta = time * getSpeed();
 
@@ -81,7 +83,7 @@ public class Tank extends EnemyUnit {
 	@Override
 	public Vector3 getMovingDirection() {
 		if (nextStep != null)
-			return getPosition().to(nextStep).nor();
+			return movingDir.set(getPosition().to(nextStep).nor());
 		return DEFAULT_DIRECTION;
 	}
 

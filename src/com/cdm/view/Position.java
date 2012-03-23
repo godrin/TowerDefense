@@ -17,6 +17,7 @@ public class Position {
 	public float x;
 
 	public float y;
+	public static Vector3 tmpVector = new Vector3();
 
 	public Position(Position p) {
 		x = p.x;
@@ -76,12 +77,18 @@ public class Position {
 	}
 
 	public Vector3 to(Position nextStep) {
+		return tmpVector.set(nextStep.x - x, nextStep.y - y, 0);
+	}
 
-		return new Vector3(nextStep.x - x, nextStep.y - y, 0);
+	public float distance(Position nextStep) {
+		float dx = nextStep.x - x;
+		float dy = nextStep.y - y;
+
+		return (float)Math.sqrt(dx * dx + dy * dy);
 	}
 
 	public Vector3 toVector() {
-		return new Vector3(x, y, 0);
+		return tmpVector.set(x, y, 0);
 	}
 
 	public RefSystem getSystem() {
