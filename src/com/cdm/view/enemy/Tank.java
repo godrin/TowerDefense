@@ -15,19 +15,24 @@ public class Tank extends EnemyUnit {
 	public Position nextStep = null;
 	public static final float SPEED = 0.2f;
 
-	private List<Vector3> lines;
-	private List<Vector3> poly;
+	private static final Vector3 c0 = new Vector3(-1, -1, 0);
+	private static final Vector3 c1 = new Vector3(1, -1, 0);
+	private static final Vector3 c2 = new Vector3(1, 1, 0);
+	private static final Vector3 c3 = new Vector3(-1, 1, 0);
+
+	private static final List<Vector3> lines = Arrays.asList(new Vector3[] {
+			c0, c1, c1, c2, c2, c3, c3, c0 });
+	private static final List<Vector3> poly = Arrays.asList(new Vector3[] { c0,
+			c1, c2, c0, c2, c3 });
+
+	private static final Color innerColor = new Color(0.7f, 0, 0.6f, 1.0f);
+	private static final Color outerColor = new Color(0.7f, 0.2f, 1.0f, 1.0f);
+	private static final Vector3 DEFAULT_DIRECTION = new Vector3(1, 0, 0);
+
 	float angle = 0.0f;
 
 	public Tank(Position pos) {
 		super(pos);
-		Vector3 c0 = new Vector3(-1, -1, 0);
-		Vector3 c1 = new Vector3(1, -1, 0);
-		Vector3 c2 = new Vector3(1, 1, 0);
-		Vector3 c3 = new Vector3(-1, 1, 0);
-
-		lines = Arrays.asList(new Vector3[] { c0, c1, c1, c2, c2, c3, c3, c0 });
-		poly = Arrays.asList(new Vector3[] { c0, c1, c2, c0, c2, c3 });
 
 	}
 
@@ -61,10 +66,8 @@ public class Tank extends EnemyUnit {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		Color innerColor = new Color(0.7f, 0, 0.6f, 1.0f);
 		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize(),
 				RefSystem.Level);
-		Color outerColor = new Color(0.7f, 0.2f, 1.0f, 1.0f);
 		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize(),
 				RefSystem.Level);
 		super.draw(renderer);
@@ -79,12 +82,11 @@ public class Tank extends EnemyUnit {
 	public Vector3 getMovingDirection() {
 		if (nextStep != null)
 			return getPosition().to(nextStep).nor();
-		return new Vector3(1, 0, 0);
+		return DEFAULT_DIRECTION;
 	}
 
 	@Override
-	public float getImpact(Class<? extends MovingShot> shotType,
-			float shotLevel) {
+	public float getImpact(Class<? extends MovingShot> shotType, float shotLevel) {
 		return 0.1f;
 	}
 

@@ -11,6 +11,10 @@ import com.cdm.view.elements.shots.MovingShot;
 public abstract class EnemyUnit extends Unit {
 
 	private static final float FREEZE_FACTOR = 0.5f;
+	private static final Color BORDER_COLOR = new Color(1, 0, 0, 0.8f);
+	private static final Color FILL_COLOR = new Color(1, 0, 0, 0.7f);
+
+	
 	private float energy;
 	private float frozenTime = 0.0f;
 	private float speed = -10.0f;
@@ -43,10 +47,8 @@ public abstract class EnemyUnit extends Unit {
 
 		float nx1 = x0 + (x1 - x0) * energy;
 
-		Color c0 = new Color(1, 0, 0, 0.8f);
-		Color c1 = new Color(1, 0, 0, 0.7f);
-		renderer.drawRect(x0, y0, x1, y1, c0, RefSystem.Level);
-		renderer.fillRect(x0, y0, nx1, y1, c1, RefSystem.Level);
+		renderer.drawRect(x0, y0, x1, y1, BORDER_COLOR, RefSystem.Level);
+		renderer.fillRect(x0, y0, nx1, y1, FILL_COLOR, RefSystem.Level);
 	}
 
 	@Override
