@@ -9,11 +9,9 @@ import com.badlogic.gdx.audio.Sound;
 public class SoundFX {
 
 	public enum Type {
-		KLICK, SHOT, SHOT2, HIT
+		KLICK, SHOT, SHOT2, HIT, HURT,STUNRAY
 	};
 
-	private static Sound klick;
-	private static Sound shot, shot2, hit;
 	private static Map<Type, Sound> sounds = new TreeMap<Type, Sound>();
 
 	public static void Initialize() {

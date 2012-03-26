@@ -63,7 +63,7 @@ public class Stunner extends RotatingUnit implements Element {
 				getLevel().addShot(
 						currentShot = new StunRay(1.5f, startingPos,
 								getLevel(), enemy));
-				SoundFX.play(Type.SHOT2);
+				SoundFX.play(Type.STUNRAY);
 
 			}
 

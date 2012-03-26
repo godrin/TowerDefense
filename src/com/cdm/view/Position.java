@@ -2,6 +2,7 @@ package com.cdm.view;
 
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.Settings;
+import com.cdm.view.Position.RefSystem;
 
 public class Position {
 	public enum RefSystem {
@@ -84,7 +85,7 @@ public class Position {
 		float dx = nextStep.x - x;
 		float dy = nextStep.y - y;
 
-		return (float)Math.sqrt(dx * dx + dy * dy);
+		return (float) Math.sqrt(dx * dx + dy * dy);
 	}
 
 	public Vector3 toVector() {
@@ -93,5 +94,12 @@ public class Position {
 
 	public RefSystem getSystem() {
 		return system;
+	}
+
+	public void set(int x2, int y2, RefSystem system) {
+		this.x = x2;
+		this.y = y2;
+		this.system = system;
+
 	}
 }

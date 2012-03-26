@@ -71,6 +71,7 @@ public class Level {
 		if (!gameover)
 			player.addTime(time);
 
+		// fixme - don't iterators, but indexes (?)
 		for (Unit unit : units) {
 			unit.move(time);
 		}
@@ -78,7 +79,6 @@ public class Level {
 			shot.move(time);
 		}
 		for (Unit unit : unitsToRemove) {
-			System.out.println("REMOVIIIING " + unit);
 			units.remove(unit);
 		}
 		unitsToRemove.clear();
@@ -218,7 +218,7 @@ public class Level {
 	}
 
 	public void enemyReachedEnd(EnemyUnit enemyUnit) {
-		System.out.println("REACHED " + enemyUnit);
+		SoundFX.play(Type.HURT);
 		health -= 1;
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		unitsToRemove.add(enemyUnit);

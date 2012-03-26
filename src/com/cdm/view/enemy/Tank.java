@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
+import com.cdm.view.elements.MathTools;
 import com.cdm.view.elements.shots.MovingShot;
 
 public class Tank extends EnemyUnit {
@@ -19,9 +20,22 @@ public class Tank extends EnemyUnit {
 	private static final Vector3 c1 = new Vector3(1, -1, 0);
 	private static final Vector3 c2 = new Vector3(1, 1, 0);
 	private static final Vector3 c3 = new Vector3(-1, 1, 0);
+	private static final Vector3 d0 = new Vector3(-0.5f, -0.5f, 0);
+	private static final Vector3 d1 = new Vector3(-0.5f, 0.5f, 0);
+	private static final Vector3 d2 = new Vector3(0.5f, 0, 0);
+	private static final Vector3 k0 = new Vector3(-0.7f, -1.5f, 0);
+	private static final Vector3 k1 = new Vector3(0.9f, -1.5f, 0);
+	private static final Vector3 k2 = new Vector3(0.9f, -1.1f, 0);
+	private static final Vector3 k3 = new Vector3(-0.7f, -1.1f, 0);
+	private static final Vector3 x0 = new Vector3(-0.7f, 1.5f, 0);
+	private static final Vector3 x1 = new Vector3(0.9f, 1.5f, 0);
+	private static final Vector3 x2 = new Vector3(0.9f, 1.1f, 0);
+	private static final Vector3 x3 = new Vector3(-0.7f, 1.1f, 0);
 
 	private static final List<Vector3> lines = Arrays.asList(new Vector3[] {
-			c0, c1, c1, c2, c2, c3, c3, c0 });
+			c0, c1, c1, c2, c2, c3, c3, c0, d0, d1, d1, d2, d2, d0, k0, k1, k1,
+			k2, k2, k3, k3, k0, x0, x1, x1, x2, x2, x3, x3, x0 });
+
 	private static final List<Vector3> poly = Arrays.asList(new Vector3[] { c0,
 			c1, c2, c0, c2, c3 });
 
@@ -30,11 +44,13 @@ public class Tank extends EnemyUnit {
 	private static final Vector3 DEFAULT_DIRECTION = new Vector3(1, 0, 0);
 
 	private float angle = 0.0f;
+	private static final float ANGULAR_SPEED=90.0f;
 	private Vector3 diff = new Vector3();
 	private Vector3 movingDir = new Vector3();
 
 	public Tank(Position pos) {
 		super(pos);
+		setSize(0.4f);
 
 	}
 
@@ -48,6 +64,14 @@ public class Tank extends EnemyUnit {
 			Position nuPos = new Position(getPosition());
 
 			diff.set(getPosition().to(nextStep));
+
+			float targetAngle = MathTools.angle(diff);
+			angle = targetAngle;
+			
+			if(Math.abs(targetAngle-angle)>2.0) {
+				
+			}
+
 			float len = diff.len();
 			float delta = time * getSpeed();
 

@@ -9,7 +9,6 @@ import com.cdm.view.enemy.Tank;
 
 public class EnemyUnits {
 	public static EnemyUnit create(EnemyType t, Position position) {
-		System.out.println("CREATE..");
 		if (EnemyType.BIG_SHIP.equals(t)) {
 			return new BigShip(position);
 		}
