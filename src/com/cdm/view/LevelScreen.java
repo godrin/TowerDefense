@@ -1,5 +1,7 @@
 package com.cdm.view;
 
+import java.util.Set;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
@@ -7,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.cdm.SString;
 import com.cdm.Settings;
 import com.cdm.gui.Button;
@@ -28,7 +31,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Level level;
 	private WidgetContainer gui = new WidgetContainer();
 	private Unit dragElement = null;
-	private LevelDisplays display = new LevelDisplays();
+	private LevelDisplays hud = new LevelDisplays();
 	private boolean rendering = false;
 	private OrthographicCamera cam;
 	private OrthographicCamera guicam;
@@ -39,7 +42,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public LevelScreen() {
 
 		level = new Level(10, 6, 3);
-		display.setLevel(level);
+		hud.setLevel(level);
 		bg = load("data/bg_stars2.png", 128, 128);
 
 		createUnitButtons();
@@ -77,19 +80,22 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 			return;
 		rendering = true;
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		long millis = System.currentTimeMillis();
-		long micro = System.nanoTime() / 1000 + millis * 1000;
-		if (oldMicros > 0) {
-			delta = (micro - oldMicros) * 0.000001f;
-		}
-		oldMicros = micro;
-		mywait(delta);
 
-		if (false) {
-			System.out.print("FPS:");
-			System.out.println(1.0f / delta);
-		}
+		delta = move(delta);
 
+		draw(delta);
+		rendering = false;
+
+	}
+
+	private void draw(float delta) {
+		drawBackground();
+
+		drawLineBased(delta);
+		hud.draw(renderer);
+	}
+
+	private void drawBackground() {
 		spriteBatch.begin();
 
 		for (int x = 0; x < 16; x++)
@@ -97,17 +103,23 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 				draw(bg, x * 128, y * 128);
 
 		spriteBatch.end();
+	}
 
-		drawLineBased(delta);
-		display.draw(renderer);
-		rendering = false;
-
+	private float move(float delta) {
+		long millis = System.currentTimeMillis();
+		long micro = System.nanoTime() / 1000 + millis * 1000;
+		if (oldMicros > 0) {
+			delta = (micro - oldMicros) * 0.000001f;
+		}
+		oldMicros = micro;
+		mywait(delta);
+		return delta;
 	}
 
 	private void createCam() {
 		cam = new OrthographicCamera(Gdx.graphics.getWidth(),
 				Gdx.graphics.getHeight());
-		cam.position.set(Gdx.graphics.getWidth() / 2-56,
+		cam.position.set(Gdx.graphics.getWidth() / 2,
 				Gdx.graphics.getHeight() / 2, 0);
 		cam.update();
 		guicam = new OrthographicCamera(Gdx.graphics.getWidth(),
@@ -117,10 +129,12 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		guicam.update();
 
 	}
-	
+
 	private void modCam(int dx, int dy) {
-		cam.position.x+=dx;
-		cam.position.y+=dy;
+		cam.position.x += dx;
+		cam.position.y += dy;
+		Settings.getPosition().x -= dx / Settings.getCellWidth();
+		Settings.getPosition().y -= dy / Settings.getCellWidth();
 		cam.update();
 	}
 
@@ -131,9 +145,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		cam.apply(Gdx.gl10);
 
 		level.draw(renderer);
-		
+
 		guicam.apply(Gdx.gl10);
-		
+
 		gui.addTime(delta);
 		gui.draw(renderer);
 
@@ -175,11 +189,17 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public boolean touchDown(int x, int y, int pointer, int button) {
 		if (level.gameover())
 			return false;
+		int oy = y;
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
 			gui.touchDown(x, y, pointer, button);
 			return true;
 		} else {
+			Vector3 tmp = new Vector3();
+			cam.unproject(tmp, x, oy, Gdx.graphics.getWidth(),
+					Gdx.graphics.getHeight());
+			System.out.println(tmp);
+
 			dragPosition.set(x, y, RefSystem.Screen);
 			oldDragPosition.set(x, y, RefSystem.Screen);
 		}
@@ -218,8 +238,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 			dragElement.setPosition(dragPosition);
 			level.hover(dragPosition);
 		} else {
-			int dx = (int)(dragPosition.x - oldDragPosition.x);
-			int dy = (int)(dragPosition.y - oldDragPosition.y);
+			int dx = (int) (dragPosition.x - oldDragPosition.x);
+			int dy = (int) (dragPosition.y - oldDragPosition.y);
 			System.out.println("DX " + dx + " DY" + dy);
 			oldDragPosition.set(dragPosition);
 			modCam(-dx, -dy);
@@ -235,6 +255,11 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	@Override
 	public boolean scrolled(int amount) {
+		int nu = (int) (Settings.getScale() + amount);
+		if (nu >= 32 && nu <= 128)
+			Settings.setScale(nu);
+
+		System.out.println("SCROLL " + amount + " " + Settings.getScale());
 		return false;
 	}
 
