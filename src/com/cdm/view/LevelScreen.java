@@ -83,7 +83,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 			delta = (micro - oldMicros) * 0.000001f;
 		}
 		oldMicros = micro;
-		delta += mywait(delta);
+		mywait(delta);
 
 		if (false) {
 			System.out.print("FPS:");
@@ -117,15 +117,18 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		guicam.update();
 
 	}
+	
+	private void modCam(int dx, int dy) {
+		cam.position.x+=dx;
+		cam.position.y+=dy;
+		cam.update();
+	}
 
 	private void drawLineBased(float delta) {
 		if (delta > 0) {
 			level.move(delta);
 		}
 		cam.apply(Gdx.gl10);
-
-		// Gdx.gl10.glScalef(1, -1, 0);
-		// Gdx.gl10.glTranslatef(0, -Gdx.graphics.getHeight(), 0);
 
 		level.draw(renderer);
 		
@@ -142,28 +145,17 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	static final int CIRCLE_VERTICES = 10;
 
-	private float mywait(float delta) {
-		if (true)
-			return 0;
+	private void mywait(float delta) {
 		try {
 			Integer ms = (int) (delta * 1000);
-			// ~ 50 fps
-			// TODO: sleep shorter, if rendering does need more time
-			Long millis0 = System.currentTimeMillis();
-			Long micros0 = System.nanoTime() / 1000;
 
 			int wait = 15 - ms;
 			if (wait > 5) {
 				Thread.sleep(wait);
-				// System.out.println(wait);
 			}
-			Long millis1 = System.currentTimeMillis();
-			Long micros1 = System.nanoTime() / 1000;
-			return ((millis1 - millis0) * 1000 + (micros1 - micros0)) / 1000000.0f;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return 0;
 	}
 
 	public void draw(TextureRegion region, int x, int y) {
@@ -230,6 +222,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 			int dy = (int)(dragPosition.y - oldDragPosition.y);
 			System.out.println("DX " + dx + " DY" + dy);
 			oldDragPosition.set(dragPosition);
+			modCam(-dx, -dy);
 		}
 		return false;
 	}
