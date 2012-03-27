@@ -13,7 +13,8 @@ public class SoundFX {
 	};
 
 	private static Sound klick;
-	private static Sound shot, shot2, hit;
+	private static Sound shot, shot2;
+	public static Sound hit;
 	private static Map<Type, Sound> sounds = new TreeMap<Type, Sound>();
 
 	public static void Initialize() {

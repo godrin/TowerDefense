@@ -7,7 +7,7 @@ import com.cdm.view.Position.RefSystem;
 public abstract class Unit implements Element {
 
 	public enum UnitType {
-		CANNON, ROCKET_THROWER, STUNNER, PHAZER, ROCKET;
+		CANNON, ROCKET_THROWER, STUNNER, PHAZER, ROCKET, EXPLOSION;
 
 		public int getCost() {
 			switch (this) {
@@ -41,7 +41,7 @@ public abstract class Unit implements Element {
 
 	@Override
 	public void setPosition(Position p) {
-		boolean modified = (!oldpos.alignToGrid().equals(p.alignToGrid()));
+		boolean modified = (!oldpos.alignedToGrid().equals(p.alignedToGrid()));
 		if (modified && level != null) {
 			level.removeMeFromGrid(oldpos, this);
 		}

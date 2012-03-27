@@ -28,14 +28,16 @@ public class TowerGame implements ApplicationListener {
 
 	private void startMusic() {
 		music = Gdx.audio.newMusic(Gdx.files.internal("data/level01.ogg"));
-		music.setVolume(0.5f);
+		music.setVolume(0.7f);
 		music.setLooping(true);
-		music.play();
+		//music.play();
 		SoundFX.Initialize();
 	}
 
 	private void stopMusic() {
-		music.stop();
+		if (music != null) {
+			music.pause();
+		}
 	}
 
 	public void pause() {
@@ -66,6 +68,14 @@ public class TowerGame implements ApplicationListener {
 		if (Gdx.input.justTouched()) {
 			SoundFX.play(Type.KLICK);
 		}
+		if (Gdx.input.isKeyPressed(41)) {
+			if (!music.isPlaying())
+				music.play();
+		}
+
+		if (Gdx.input.isKeyPressed(42)) {
+			stopMusic();
+		}
 	}
 
 	@Override
@@ -77,7 +87,8 @@ public class TowerGame implements ApplicationListener {
 	@Override
 	public void dispose() {
 		SoundFX.dispose();
-		music.dispose();
+		if (music != null)
+			music.dispose();
 		if (screen != null)
 			screen.dispose();
 

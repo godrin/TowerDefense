@@ -13,10 +13,11 @@ import com.cdm.view.Position.RefSystem;
 import com.cdm.view.Selector;
 import com.cdm.view.elements.Grid.GridElement;
 import com.cdm.view.elements.Unit.UnitType;
-import com.cdm.view.elements.paths.Path;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.AbstractShot;
+import com.cdm.view.elements.shots.Explosion;
+import com.cdm.view.elements.shots.Rocket;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -27,9 +28,10 @@ public class Level {
 	private EnemyPlayer player;
 	private float speedFactor = 2.0f;
 	private int health = 3;
-	private int money = 15;
+	private int money = 25;
 	private int points = 0;
 	private int bonus = 0;
+	private Explosion explosion;
 	private List<Unit> unitsToRemove = new ArrayList<Unit>();
 
 	private List<AbstractShot> shots = new ArrayList<AbstractShot>();
@@ -55,7 +57,7 @@ public class Level {
 
 	public void hover(Position pos) {
 		if (pos.screenPos()) {
-			pos = pos.toLevelPos().alignToGrid();
+			pos = pos.toLevelPos().alignedToGrid();
 		}
 		selector = new Selector(pos);
 	}
@@ -114,7 +116,7 @@ public class Level {
 			return false;
 		}
 
-		Position lpos = dragElement.getPosition().toLevelPos().alignToGrid();
+		Position lpos = dragElement.getPosition().toLevelPos().alignedToGrid();
 		if (!(dragElement instanceof EnemyUnit)
 				&& (lpos.x < 0 || lpos.x > grid.getW() - 1 || lpos.y < 0 || lpos.y > grid
 						.getH()))
@@ -229,6 +231,7 @@ public class Level {
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		SoundFX.play(Type.HIT);
 		unitsToRemove.add(enemyUnit);
+		this.add(enemyUnit.getPosition(), UnitType.EXPLOSION);
 		money += enemyUnit.getMoney();
 		points += enemyUnit.getPoints();
 		bonus += enemyUnit.getBonus();
