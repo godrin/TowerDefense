@@ -2,6 +2,7 @@ package com.cdm.view;
 
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.Settings;
+import com.cdm.view.Position.RefSystem;
 
 public class Position {
 	public enum RefSystem {
@@ -17,6 +18,7 @@ public class Position {
 	public float x;
 
 	public float y;
+	public static Vector3 tmpVector = new Vector3();
 
 	public Position(Position p) {
 		x = p.x;
@@ -60,7 +62,7 @@ public class Position {
 				/ Settings.getCellWidth() - p.y, RefSystem.Level);
 	}
 
-	public Position alignToGrid() {
+	public Position alignedToGrid() {
 		return new Position(Math.round(x), Math.round(y), system);
 	}
 
@@ -76,15 +78,28 @@ public class Position {
 	}
 
 	public Vector3 to(Position nextStep) {
+		return tmpVector.set(nextStep.x - x, nextStep.y - y, 0);
+	}
 
-		return new Vector3(nextStep.x - x, nextStep.y - y, 0);
+	public float distance(Position nextStep) {
+		float dx = nextStep.x - x;
+		float dy = nextStep.y - y;
+
+		return (float) Math.sqrt(dx * dx + dy * dy);
 	}
 
 	public Vector3 toVector() {
-		return new Vector3(x, y, 0);
+		return tmpVector.set(x, y, 0);
 	}
 
 	public RefSystem getSystem() {
 		return system;
+	}
+
+	public void set(int x2, int y2, RefSystem system) {
+		this.x = x2;
+		this.y = y2;
+		this.system = system;
+
 	}
 }

@@ -1,7 +1,6 @@
 package com.cdm.view.elements.shots;
 
 import com.badlogic.gdx.math.Vector3;
-import com.cdm.gui.effects.SoundFX;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.Level;
