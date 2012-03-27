@@ -31,7 +31,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private LevelDisplays display = new LevelDisplays();
 	private boolean rendering = false;
 	private OrthographicCamera cam;
-	Position dragPosition = new Position(0,0, RefSystem.Screen);
+	Position dragPosition = new Position(0, 0, RefSystem.Screen);
+	Position oldDragPosition = new Position(0, 0, RefSystem.Screen);
 	Sound sound;
 
 	public LevelScreen() {
@@ -177,6 +178,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (gui.opaque(x, y)) {
 			gui.touchDown(x, y, pointer, button);
 			return true;
+		} else {
+			dragPosition.set(x, y, RefSystem.Screen);
+			oldDragPosition.set(x, y, RefSystem.Screen);
 		}
 		return false;
 	}
@@ -207,11 +211,17 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (level.gameover())
 			return false;
 		y = Gdx.graphics.getHeight() - y;
-		
-		dragPosition.set(x,y,RefSystem.Screen);
-		if (dragElement != null)
+
+		dragPosition.set(x, y, RefSystem.Screen);
+		if (dragElement != null) {
 			dragElement.setPosition(dragPosition);
-		level.hover(dragPosition);
+			level.hover(dragPosition);
+		} else {
+			int dx = (int)(dragPosition.x - oldDragPosition.x);
+			int dy = (int)(dragPosition.y - oldDragPosition.y);
+			System.out.println("DX " + dx + " DY" + dy);
+			oldDragPosition.set(dragPosition);
+		}
 		return false;
 	}
 

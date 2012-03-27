@@ -35,11 +35,8 @@ public class Renderer implements IRenderer {
 	public void drawLines(Position pos, List<Vector3> lines, float angle,
 			Color color, float size, RefSystem level) {
 		float scale = size * Settings.getCellWidth() / 2;
-		// pos.getScale();
-		if (Settings.getCellWidth() == 32)
-			Gdx.gl10.glLineWidth(2);
-		else
-			Gdx.gl10.glLineWidth(3);
+		Gdx.gl10.glLineWidth(Settings.getCellWidth() * 0.04f);
+
 		Gdx.gl10.glPushMatrix();
 		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 		Gdx.gl10.glEnable(GL10.GL_BLEND);

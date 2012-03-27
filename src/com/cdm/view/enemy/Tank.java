@@ -68,9 +68,9 @@ public class Tank extends EnemyUnit {
 			float targetAngle = MathTools.angle(diff);
 			rotation.setTargetAngle(targetAngle);
 
-			boolean okToMoveOn = rotation.move(time);
+			time-=rotation.move(time);
 
-			if (!okToMoveOn)
+			if (time<0.00001f)
 				return;
 
 			float len = diff.len();

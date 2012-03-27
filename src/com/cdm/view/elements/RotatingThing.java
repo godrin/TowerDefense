@@ -29,7 +29,7 @@ public class RotatingThing {
 		this.turningSpeed = turningSpeed;
 	}
 
-	public boolean move(float time) {
+	public float move(float time) {
 		if (targetAngle - 180 > currentAngle)
 			targetAngle -= 360;
 		if (targetAngle + 180 < currentAngle)
@@ -41,13 +41,15 @@ public class RotatingThing {
 		if (Math.signum(targetAngle - target) != turnDir
 				|| Math.abs(targetAngle - target) < 0.5f) {
 			// reached
+			
 			currentAngle = targetAngle;
-
+			float timediff= Math.abs(turnVec)/turningSpeed;
+			return timediff;
 		} else {
 			currentAngle = target;
+			// all used up
+			return time;
 		}
-		// less than 2 degrees
-		return Math.abs(targetAngle - currentAngle) < 2.0f; 
 
 	}
 

@@ -102,4 +102,11 @@ public class Position {
 		this.system = system;
 
 	}
+
+	public void set(Position dragPosition) {
+		x = dragPosition.x;
+		y = dragPosition.y;
+		system = dragPosition.system;
+
+	}
 }
