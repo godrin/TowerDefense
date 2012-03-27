@@ -33,7 +33,7 @@ public abstract class RotatingUnit extends Unit {
 			}
 		}
 
-		ableToShoot = rotation.move(time)>0;
+		ableToShoot = rotation.move(time)<time;
 	}
 
 	public float getAngle() {
