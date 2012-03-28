@@ -31,7 +31,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private LevelDisplays display = new LevelDisplays();
 	private boolean rendering = false;
 	private OrthographicCamera cam;
-
+	Position dragPosition = new Position(0,0, RefSystem.Screen);
 	Sound sound;
 
 	public LevelScreen() {
@@ -207,17 +207,17 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (level.gameover())
 			return false;
 		y = Gdx.graphics.getHeight() - y;
-		Position pos = new Position(x, y, RefSystem.Screen);
+		
+		dragPosition.set(x,y,RefSystem.Screen);
 		if (dragElement != null)
-			dragElement.setPosition(pos);
-		level.hover(pos);
+			dragElement.setPosition(dragPosition);
+		level.hover(dragPosition);
 		return false;
 	}
 
 	@Override
 	public boolean touchMoved(int x, int y) {
 		y = Gdx.graphics.getHeight() - y;
-		// System.out.println("touchmoved");
 		return false;
 	}
 

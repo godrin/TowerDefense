@@ -32,8 +32,8 @@ public class DistanceComparator implements Comparator<EnemyUnit> {
 				return 1;
 			return 0;
 		}
-		float distA = a.to(base).len();
-		float distB = b.to(base).len();
+		float distA = a.distance(base);
+		float distB = b.distance(base);
 		if (distA < distB)
 			return -1;
 		if (distA > distB)

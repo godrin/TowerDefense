@@ -1,51 +1,3 @@
-/*package com.cdm.view.elements.shots;
-
-import java.util.Arrays;
-import java.util.List;
-
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector3;
-import com.cdm.view.IRenderer;
-import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
-import com.cdm.view.elements.Element;
-import com.cdm.view.elements.Level;
-
-public class Explosion extends MovingShot {
-
-public static float speed = 1;
-private List<Vector3> lines;
-private List<Vector3> poly;
-
-public Explosion(Position from, Position to, Level plevel) {
-	super(from, to, plevel);
-	Vector3 a = new Vector3(-1, -1, 0);
-	Vector3 b = new Vector3(1, -1, 0);
-	Vector3 c = new Vector3(1, 1, 0);
-	Vector3 d = new Vector3(-1, 1, 0);
-
-	lines = Arrays.asList(new Vector3[] { a, b, b, c, c, d, d, a});
-	poly = Arrays.asList(new Vector3[] { a, b, c, a, c, d });
-
-}
-
-@Override
-public void draw(IRenderer renderer) {
-	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
-	renderer.drawPoly(getPosition(), poly, 0.0f, innerColor, 0.5f,
-			RefSystem.Level);
-	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
-	renderer.drawLines(getPosition(), lines, 0.0f, outerColor, 0.5f,
-			RefSystem.Level);
-}
-
-@Override
-public float getSpeed() {
-	return speed;
-}
-
-}
-######################*/
 package com.cdm.view.elements.shots;
 
 import java.util.Arrays;
@@ -61,7 +13,8 @@ import com.cdm.view.elements.Unit;
 
 public class Explosion extends Unit implements Element {
 
-	// private Position pos;
+	@SuppressWarnings("unused")
+	private Position pos;
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 	private float size = getSize() + 1.0f;
@@ -77,7 +30,7 @@ public class Explosion extends Unit implements Element {
 	}
 
 	public void draw(IRenderer renderer) {
-		while (size >= 0.0f) {
+		while (size >= 0.01f) {
 			Color innerColor = new Color(0.7f, 0, 0, 0);
 			renderer.drawPoly(getPosition(), poly, 180, innerColor,
 					size, RefSystem.Level);
@@ -101,7 +54,7 @@ public class Explosion extends Unit implements Element {
 	}
 
 	public float shrink(float size) {
-		size -= 0.001;
+		size -= 0.01;
 		return size;
 	}
 

@@ -10,9 +10,7 @@ import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
-import com.cdm.view.elements.shots.Explosion;
 import com.cdm.view.elements.shots.Rocket;
-import com.cdm.view.elements.shots.Rocket2;
 import com.cdm.view.elements.shots.SomeShot;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -52,7 +50,7 @@ public class RocketThrower extends RotatingUnit implements Element {
 		EnemyUnit u = getLevel().getNextEnemy(getPosition());
 		if (u == null)
 			return null;
-		if (getPosition().to(u.getPosition()).len() > maxDist)
+		if (getPosition().distance(u.getPosition()) > maxDist)
 			return null;
 		return u;
 	}
@@ -82,7 +80,7 @@ public class RocketThrower extends RotatingUnit implements Element {
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
 				getLevel().addShot(
-						new Rocket2(startingPos, anticipatePosition(enemy),
+						new SomeShot(startingPos, anticipatePosition(enemy),
 								getLevel()));
 				if (false)
 					getLevel().addShot(

@@ -16,8 +16,6 @@ import com.cdm.view.elements.Unit.UnitType;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.AbstractShot;
-import com.cdm.view.elements.shots.Explosion;
-import com.cdm.view.elements.shots.Rocket;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -31,7 +29,6 @@ public class Level {
 	private int money = 25;
 	private int points = 0;
 	private int bonus = 0;
-	private Explosion explosion;
 	private List<Unit> unitsToRemove = new ArrayList<Unit>();
 
 	private List<AbstractShot> shots = new ArrayList<AbstractShot>();
@@ -74,6 +71,7 @@ public class Level {
 		if (!gameover)
 			player.addTime(time);
 
+		// fixme - don't iterators, but indexes (?)
 		for (Unit unit : units) {
 			unit.move(time);
 		}
@@ -81,7 +79,6 @@ public class Level {
 			shot.move(time);
 		}
 		for (Unit unit : unitsToRemove) {
-			System.out.println("REMOVIIIING " + unit);
 			units.remove(unit);
 		}
 		unitsToRemove.clear();
@@ -221,7 +218,7 @@ public class Level {
 	}
 
 	public void enemyReachedEnd(EnemyUnit enemyUnit) {
-		System.out.println("REACHED " + enemyUnit);
+		SoundFX.play(Type.HURT);
 		health -= 1;
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		unitsToRemove.add(enemyUnit);
@@ -231,7 +228,7 @@ public class Level {
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		SoundFX.play(Type.HIT);
 		unitsToRemove.add(enemyUnit);
-		this.add(enemyUnit.getPosition(), UnitType.EXPLOSION);
+		//add(enemyUnit.getPosition(), UnitType.EXPLOSION);
 		money += enemyUnit.getMoney();
 		points += enemyUnit.getPoints();
 		bonus += enemyUnit.getBonus();
