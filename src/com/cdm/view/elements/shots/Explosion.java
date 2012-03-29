@@ -13,11 +13,11 @@ import com.cdm.view.elements.Unit;
 
 public class Explosion extends Unit implements Element {
 
-	@SuppressWarnings("unused")
-	private Position pos;
+	// private Position pos;
 	private List<Vector3> lines;
 	private List<Vector3> poly;
-	private float size = getSize() + 1.0f;
+	private float size = getSize() + 1;
+
 	public Explosion(Position pos) {
 		super(pos);
 		Vector3 a = new Vector3(-1, -1, 0);
@@ -30,13 +30,13 @@ public class Explosion extends Unit implements Element {
 	}
 
 	public void draw(IRenderer renderer) {
-		while (size >= 0.01f) {
-			Color innerColor = new Color(0.7f, 0, 0, 0);
-			renderer.drawPoly(getPosition(), poly, 180, innerColor,
-					size, RefSystem.Level);
-			Color outerColor = new Color(1, 0, 0, 1.0f);
-			renderer.drawLines(getPosition(), lines, 180, outerColor,
-					size, RefSystem.Level);
+		while (size >= 0.0f) {
+			/*Color innerColor = new Color(0.4f, 0, 0, 0);
+			renderer.drawPoly(getPosition(), poly, 180, innerColor, size,
+					RefSystem.Level);*/
+			Color outerColor = new Color(1.7f, 0, 0, 1.0f);
+			renderer.drawLines(getPosition(), lines, 180, outerColor, size,
+					RefSystem.Level);
 			size = shrink(size);
 		}
 	}
