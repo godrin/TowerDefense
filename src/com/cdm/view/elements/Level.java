@@ -16,6 +16,7 @@ import com.cdm.view.elements.Unit.UnitType;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.AbstractShot;
+import com.cdm.view.elements.shots.Explosion;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -94,6 +95,7 @@ public class Level {
 
 	public void draw(IRenderer renderer) {
 		for (Unit unit : units) {
+			if (unit != null)
 			unit.draw(renderer);
 		}
 		for (AbstractShot shot : shots) {
@@ -232,6 +234,7 @@ public class Level {
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		SoundFX.play(Type.HIT);
+		this.add(enemyUnit.getPosition(), UnitType.EXPLOSION);
 		unitsToRemove.add(enemyUnit);
 		money += enemyUnit.getMoney();
 		points += enemyUnit.getPoints();

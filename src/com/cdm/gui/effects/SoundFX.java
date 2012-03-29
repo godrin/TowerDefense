@@ -23,6 +23,8 @@ public class SoundFX {
 				Gdx.audio.newSound(Gdx.files.internal("data/shot03.ogg")));
 		sounds.put(Type.HIT,
 				Gdx.audio.newSound(Gdx.files.internal("data/shot04.ogg")));
+		sounds.put(Type.STUNRAY,
+				Gdx.audio.newSound(Gdx.files.internal("data/stunray01.ogg")));
 	}
 
 	public static void dispose() {
@@ -35,6 +37,6 @@ public class SoundFX {
 	public static void play(Type type) {
 		Sound s = sounds.get(type);
 		if (s != null)
-			s.play();
+			s.play(0.5f);
 	}
 }

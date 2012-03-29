@@ -7,7 +7,7 @@ import com.cdm.view.Position.RefSystem;
 public abstract class Unit implements Element {
 
 	public enum UnitType {
-		CANNON, ROCKET_THROWER, STUNNER, PHAZER, ROCKET;
+		CANNON, ROCKET_THROWER, STUNNER, PHAZER, ROCKET, EXPLOSION;
 
 		public int getCost() {
 			switch (this) {
