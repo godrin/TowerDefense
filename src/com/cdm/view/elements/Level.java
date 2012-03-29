@@ -74,7 +74,6 @@ public class Level {
 
 		// fixme - don't iterators, but indexes (?)
 		for (Unit unit : units) {
-			if (unit != null)
 			unit.move(time);
 		}
 		for (AbstractShot shot : shots) {

@@ -8,15 +8,16 @@ import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.LevelScreen;
 import com.cdm.view.Screen;
+import com.cdm.view.enemy.EnemyPlayer;
 
-public class TowerGame implements ApplicationListener {
+public class TowerGame extends EnemyPlayer implements ApplicationListener {
 	private static final long serialVersionUID = 1L;
 
 	private boolean running = false;
 	private Screen screen;
 	private boolean started = false;
 	private float accum = 0;
-	Music music;
+	public Music music;
 
 	public void create() {
 		running = true;
@@ -75,6 +76,7 @@ public class TowerGame implements ApplicationListener {
 		if (Gdx.input.isKeyPressed(42)) {
 			stopMusic();
 		}
+		
 	}
 
 	@Override

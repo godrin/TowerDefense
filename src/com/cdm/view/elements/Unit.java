@@ -19,8 +19,6 @@ public abstract class Unit implements Element {
 				return 10;
 			case PHAZER:
 				return 120;
-			case EXPLOSION:
-				return 0;
 			}
 			return 0;
 		}
