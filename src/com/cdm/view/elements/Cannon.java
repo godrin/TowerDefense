@@ -46,10 +46,10 @@ public class Cannon extends RotatingUnit implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize(),
-				RefSystem.Level);
-		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize(),
-				RefSystem.Level);
+		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
+				getSize(), RefSystem.Level);
+		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
+				getSize(), RefSystem.Level);
 	}
 
 	void shoot(EnemyUnit enemy) {
@@ -58,7 +58,7 @@ public class Cannon extends RotatingUnit implements Element {
 			if (lastShot > shotFrequency) {
 				lastShot = 0.0f;
 				Position startingPos = new Position(getPosition());
-				float angle = targetAngle;
+				float angle = getAngle();
 				startingPos.x -= Math.cos(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
@@ -88,8 +88,10 @@ public class Cannon extends RotatingUnit implements Element {
 		super.move(time);
 		EnemyUnit enemy = getEnemy();
 		lastShot += time;
-		if (ableToShoot)
+
+		if (ableToShoot) {
 			shoot(enemy);
+		}
 	}
 
 	protected float getMaxDist() {

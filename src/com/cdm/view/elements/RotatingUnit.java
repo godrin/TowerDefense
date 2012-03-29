@@ -7,10 +7,8 @@ import com.cdm.view.elements.shots.SimpleShot;
 import com.cdm.view.enemy.EnemyUnit;
 
 public abstract class RotatingUnit extends Unit {
-	float turningSpeed = 45.0f; // degrees per second
 
-	protected float angle = 0.0f;
-	protected float targetAngle = angle;
+	private RotatingThing rotation = new RotatingThing();
 	protected boolean ableToShoot = false;
 	private Vector3 delta = new Vector3();
 	private Vector3 result = new Vector3();
@@ -31,36 +29,19 @@ public abstract class RotatingUnit extends Unit {
 		if (enemy != null) {
 			delta.set(enemy.getPosition().to(getPosition()));
 			if (delta.len() < getMaxDist()) {
-				targetAngle = MathTools.angle(delta);
-
-				if (targetAngle - 180 > angle)
-					targetAngle -= 360;
-				if (targetAngle + 180 < angle)
-					targetAngle += 360;
+				rotation.setTargetAngle(MathTools.angle(delta));
 			}
 		}
 
-		float turnVec = targetAngle - angle;
-		float turnDir = Math.signum(turnVec);
-		float target = angle + turnDir * turningSpeed * time;
-		if (Math.signum(targetAngle - target) != turnDir
-				|| Math.abs(targetAngle - target) < 0.5f) {
-			// reached
-			angle = targetAngle;
-			ableToShoot = true;
-
-		} else {
-			angle = target;
-			ableToShoot = false;
-		}
+		ableToShoot = rotation.move(time)<time;
 	}
 
-	public float getTurningSpeed() {
-		return turningSpeed;
+	public float getAngle() {
+		return rotation.getCurrentAngle();
 	}
 
-	public void setTurningSpeed(float turningSpeed) {
-		this.turningSpeed = turningSpeed;
+	public void setTurningSpeed(float s) {
+		rotation.setTurningSpeed(s);
 	}
 
 	protected Position anticipatePosition(EnemyUnit enemy) {

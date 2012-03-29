@@ -9,6 +9,8 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.MathTools;
+import com.cdm.view.elements.RotatingThing;
+
 import com.cdm.view.elements.shots.MovingShot;
 
 public class Tank extends EnemyUnit {
@@ -43,10 +45,11 @@ public class Tank extends EnemyUnit {
 	private static final Color outerColor = new Color(0.7f, 0.2f, 1.0f, 1.0f);
 	private static final Vector3 DEFAULT_DIRECTION = new Vector3(1, 0, 0);
 
-	private float angle = 0.0f;
-	private static final float ANGULAR_SPEED=90.0f;
+
 	private Vector3 diff = new Vector3();
 	private Vector3 movingDir = new Vector3();
+	private RotatingThing rotation = new RotatingThing();
+
 
 	public Tank(Position pos) {
 		super(pos);
@@ -66,11 +69,13 @@ public class Tank extends EnemyUnit {
 			diff.set(getPosition().to(nextStep));
 
 			float targetAngle = MathTools.angle(diff);
-			angle = targetAngle;
-			
-			if(Math.abs(targetAngle-angle)>2.0) {
-				
-			}
+
+			rotation.setTargetAngle(targetAngle);
+
+			time-=rotation.move(time);
+
+			if (time<0.00001f)
+				return;
 
 			float len = diff.len();
 			float delta = time * getSpeed();
@@ -92,11 +97,16 @@ public class Tank extends EnemyUnit {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize(),
-				RefSystem.Level);
-		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize(),
-				RefSystem.Level);
+
+		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
+				getSize(), RefSystem.Level);
+		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
+				getSize(), RefSystem.Level);
 		super.draw(renderer);
+	}
+
+	private float getAngle() {
+		return rotation.getCurrentAngle();
 	}
 
 	@Override

@@ -39,9 +39,9 @@ public class RocketThrower extends RotatingUnit implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize(),
+		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor, getSize(),
 				RefSystem.Level);
-		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize(),
+		renderer.drawLines(getPosition(), lines, getAngle(), outerColor, getSize(),
 				RefSystem.Level);
 	}
 
@@ -74,7 +74,7 @@ public class RocketThrower extends RotatingUnit implements Element {
 			if (lastShot > shotFrequency) {
 				lastShot = 0.0f;
 				Position startingPos = new Position(getPosition());
-				float angle = targetAngle;
+				float angle = getAngle();
 				startingPos.x -= Math.cos(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)

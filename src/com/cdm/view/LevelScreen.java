@@ -1,5 +1,7 @@
 package com.cdm.view;
 
+import java.util.Set;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
@@ -7,6 +9,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.cdm.SString;
 import com.cdm.Settings;
 import com.cdm.gui.Button;
@@ -28,16 +31,20 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Level level;
 	private WidgetContainer gui = new WidgetContainer();
 	private Unit dragElement = null;
-	private LevelDisplays display = new LevelDisplays();
+	private LevelDisplays hud = new LevelDisplays();
 	private boolean rendering = false;
 	private OrthographicCamera cam;
-	Position dragPosition = new Position(0,0, RefSystem.Screen);
+
+	private OrthographicCamera guicam;
+	Position dragPosition = new Position(0, 0, RefSystem.Screen);
+	Position oldDragPosition = new Position(0, 0, RefSystem.Screen);
+
 	Sound sound;
 
 	public LevelScreen() {
 
 		level = new Level(10, 6, 3);
-		display.setLevel(level);
+		hud.setLevel(level);
 		bg = load("data/bg_stars2.png", 128, 128);
 
 		createUnitButtons();
@@ -75,19 +82,22 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 			return;
 		rendering = true;
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		long millis = System.currentTimeMillis();
-		long micro = System.nanoTime() / 1000 + millis * 1000;
-		if (oldMicros > 0) {
-			delta = (micro - oldMicros) * 0.000001f;
-		}
-		oldMicros = micro;
-		delta += mywait(delta);
 
-		if (false) {
-			System.out.print("FPS:");
-			System.out.println(1.0f / delta);
-		}
+		delta = move(delta);
 
+		draw(delta);
+		rendering = false;
+
+	}
+
+	private void draw(float delta) {
+		drawBackground();
+
+		drawLineBased(delta);
+		hud.draw(renderer);
+	}
+
+	private void drawBackground() {
 		spriteBatch.begin();
 
 		for (int x = 0; x < 16; x++)
@@ -95,11 +105,17 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 				draw(bg, x * 128, y * 128);
 
 		spriteBatch.end();
+	}
 
-		drawLineBased(delta);
-		display.draw(renderer);
-		rendering = false;
-
+	private float move(float delta) {
+		long millis = System.currentTimeMillis();
+		long micro = System.nanoTime() / 1000 + millis * 1000;
+		if (oldMicros > 0) {
+			delta = (micro - oldMicros) * 0.000001f;
+		}
+		oldMicros = micro;
+		mywait(delta);
+		return delta;
 	}
 
 	private void createCam() {
@@ -108,7 +124,20 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		cam.position.set(Gdx.graphics.getWidth() / 2,
 				Gdx.graphics.getHeight() / 2, 0);
 		cam.update();
+		guicam = new OrthographicCamera(Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight());
+		guicam.position.set(Gdx.graphics.getWidth() / 2,
+				Gdx.graphics.getHeight() / 2, 0);
+		guicam.update();
 
+	}
+
+	private void modCam(int dx, int dy) {
+		cam.position.x += dx;
+		cam.position.y += dy;
+		Settings.getPosition().x -= dx / Settings.getCellWidth();
+		Settings.getPosition().y -= dy / Settings.getCellWidth();
+		cam.update();
 	}
 
 	private void drawLineBased(float delta) {
@@ -117,10 +146,10 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		}
 		cam.apply(Gdx.gl10);
 
-		// Gdx.gl10.glScalef(1, -1, 0);
-		// Gdx.gl10.glTranslatef(0, -Gdx.graphics.getHeight(), 0);
-
 		level.draw(renderer);
+
+		guicam.apply(Gdx.gl10);
+
 		gui.addTime(delta);
 		gui.draw(renderer);
 
@@ -132,28 +161,17 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	static final int CIRCLE_VERTICES = 10;
 
-	private float mywait(float delta) {
-		if (true)
-			return 0;
+	private void mywait(float delta) {
 		try {
 			Integer ms = (int) (delta * 1000);
-			// ~ 50 fps
-			// TODO: sleep shorter, if rendering does need more time
-			Long millis0 = System.currentTimeMillis();
-			Long micros0 = System.nanoTime() / 1000;
 
 			int wait = 15 - ms;
 			if (wait > 5) {
 				Thread.sleep(wait);
-				// System.out.println(wait);
 			}
-			Long millis1 = System.currentTimeMillis();
-			Long micros1 = System.nanoTime() / 1000;
-			return ((millis1 - millis0) * 1000 + (micros1 - micros0)) / 1000000.0f;
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
-		return 0;
 	}
 
 	public void draw(TextureRegion region, int x, int y) {
@@ -173,10 +191,19 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public boolean touchDown(int x, int y, int pointer, int button) {
 		if (level.gameover())
 			return false;
+		int oy = y;
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
 			gui.touchDown(x, y, pointer, button);
 			return true;
+		} else {
+			Vector3 tmp = new Vector3();
+			cam.unproject(tmp, x, oy, Gdx.graphics.getWidth(),
+					Gdx.graphics.getHeight());
+			System.out.println(tmp);
+
+			dragPosition.set(x, y, RefSystem.Screen);
+			oldDragPosition.set(x, y, RefSystem.Screen);
 		}
 		return false;
 	}
@@ -207,11 +234,20 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (level.gameover())
 			return false;
 		y = Gdx.graphics.getHeight() - y;
-		
-		dragPosition.set(x,y,RefSystem.Screen);
-		if (dragElement != null)
+
+
+		dragPosition.set(x, y, RefSystem.Screen);
+		if (dragElement != null) {
 			dragElement.setPosition(dragPosition);
-		level.hover(dragPosition);
+			level.hover(dragPosition);
+		} else {
+			int dx = (int) (dragPosition.x - oldDragPosition.x);
+			int dy = (int) (dragPosition.y - oldDragPosition.y);
+			System.out.println("DX " + dx + " DY" + dy);
+			oldDragPosition.set(dragPosition);
+			modCam(-dx, -dy);
+		}
+
 		return false;
 	}
 
@@ -223,6 +259,11 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	@Override
 	public boolean scrolled(int amount) {
+		int nu = (int) (Settings.getScale() + amount);
+		if (nu >= 32 && nu <= 128)
+			Settings.setScale(nu);
+
+		System.out.println("SCROLL " + amount + " " + Settings.getScale());
 		return false;
 	}
 
