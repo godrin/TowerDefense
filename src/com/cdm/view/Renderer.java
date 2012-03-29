@@ -67,10 +67,6 @@ public class Renderer implements IRenderer {
 		// if (pos.equals(Position.RefSystem.Level)) {
 		scale = size * Settings.getCellWidth() / 2;
 		// }
-		if (Settings.getCellWidth() == 32)
-			Gdx.gl10.glLineWidth(2);
-		else
-			Gdx.gl10.glLineWidth(3);
 		Gdx.gl10.glPushMatrix();
 		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 		Gdx.gl10.glEnable(GL10.GL_BLEND);
