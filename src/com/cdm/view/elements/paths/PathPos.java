@@ -26,11 +26,12 @@ public class PathPos implements Comparable<PathPos> {
 	}
 
 	public String toString() {
-		return "[" + x + "," + y + "]";
+		return "[" + value + "]";
+		//return "[" + x + "," + y + ";" + value + "]";
 	}
 
 	public boolean equals(PathPos p) {
-		if(p==null)
+		if (p == null)
 			return false;
 		return x == p.x && y == p.y;
 	}

@@ -41,6 +41,10 @@ public class Level {
 		player.setLevel(this);
 		boxDrawer = new BoxDrawing(getEnemyStartPosition(),
 				getEnemyEndPosition(), grid.getH());
+		
+		PathFinder.breadthSearch(grid, getEnemyStartPositionPlusOne(),
+				new PathPos(getEnemyEndPosition()), null, false);
+
 
 	}
 
@@ -134,8 +138,9 @@ public class Level {
 			units.add(dragElement);
 			setMoney(getMoney() - dragElement.getCost());
 
-			PathFinder.breadthSearch(grid, getEnemyStartPositionPlusOne(),
-					new PathPos(getEnemyEndPosition()), null, false);
+			if (!(dragElement instanceof EnemyUnit))
+				PathFinder.breadthSearch(grid, getEnemyStartPositionPlusOne(),
+						new PathPos(getEnemyEndPosition()), null, false);
 			grid.print();
 
 			return true;

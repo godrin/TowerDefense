@@ -1,8 +1,5 @@
 package com.cdm.view.elements.paths;
 
-import java.util.SortedSet;
-import java.util.TreeSet;
-
 import com.cdm.view.elements.Grid;
 import com.cdm.view.elements.Grid.GridElement;
 
@@ -19,6 +16,7 @@ public class PathFinder {
 		while (todoBuffer.size() > 0) {
 			PathPos current = todoBuffer.first();
 			todoBuffer.removeFirst();
+			
 			if (current.equals(from)) {
 				found = true;
 				if (fastOut)
