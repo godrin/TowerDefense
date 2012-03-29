@@ -41,7 +41,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	public LevelScreen() {
 
-		level = new Level(10, 6, 3);
+		level = new Level(20, 10, 5);
 		hud.setLevel(level);
 		bg = load("data/bg_stars2.png", 128, 128);
 

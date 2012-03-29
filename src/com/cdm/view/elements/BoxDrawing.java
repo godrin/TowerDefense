@@ -15,7 +15,7 @@ public class BoxDrawing {
 			makeBox(x, -1);
 			makeBox(x, gh + 1);
 		}
-		for (int y = -1; y <= gh; y++) {
+		for (int y = 0; y <= gh; y++) {
 			if (y == (int) start.y)
 				continue;
 			makeBox(-1, y);
