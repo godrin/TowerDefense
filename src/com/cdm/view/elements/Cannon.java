@@ -88,7 +88,6 @@ public class Cannon extends RotatingUnit implements Element {
 		super.move(time);
 		EnemyUnit enemy = getEnemy();
 		lastShot += time;
-
 		if (ableToShoot) {
 			shoot(enemy);
 		}

@@ -109,5 +109,4 @@ public class Position {
 		system = dragPosition.system;
 
 	}
-
 }
