@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.math.Vector3;
 import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.LevelScreen;
@@ -17,27 +18,31 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener {
 	private Screen screen;
 	private boolean started = false;
 	private float accum = 0;
-	public Music music;
+	public Music music, music0, music1;
 
+	
 	public void create() {
 		running = true;
 		setScreen(new LevelScreen());
 		Gdx.input.setInputProcessor(screen);
-		startMusic();
-
+		music = Gdx.audio.newMusic(Gdx.files.internal("data/level01.ogg"));
+		//startMusic();
+		SoundFX.Initialize();
+		
+		
+		
 	}
 
 	private void startMusic() {
-		music = Gdx.audio.newMusic(Gdx.files.internal("data/level01.ogg"));
 		music.setVolume(0.75f);
 		music.setLooping(true);
-		// music.play();
-		SoundFX.Initialize();
+		music.play();
+		//SoundFX.Initialize();
 	}
 
 	private void stopMusic() {
 		if (music != null) {
-			music.pause();
+			music.stop();
 		}
 	}
 
@@ -71,12 +76,12 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener {
 		}
 		if (Gdx.input.isKeyPressed(41)) {
 			if (!music.isPlaying())
-				music.play();
+				startMusic();
 		}
+
 		if (Gdx.input.isKeyPressed(42)) {
 			stopMusic();
 		}
-		
 	}
 
 	@Override
