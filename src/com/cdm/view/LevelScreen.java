@@ -38,13 +38,12 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	Position dragPosition = new Position(0, 0, RefSystem.Screen);
 	Position oldDragPosition = new Position(0, 0, RefSystem.Screen);
 	Sound sound;
-
+	
 	public LevelScreen() {
 
 		level = new Level(10, 6, 3);
 		hud.setLevel(level);
 		bg = load("data/bg_stars2.png", 128, 128);
-
 		createUnitButtons();
 
 		Button sizeButton = new Button(300, 400, 30);
