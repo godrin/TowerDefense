@@ -23,6 +23,8 @@ public class Explosion extends Unit implements Element {
 	private Position npos = new Position(getPosition());
 	private Position spos = new Position(getPosition());
 	private Position tpos = new Position(getPosition());
+	private Position upos = new Position(getPosition());
+	private Position vpos = new Position(getPosition());
 
 	public Explosion(Position pos) {
 		super(pos);
@@ -49,21 +51,26 @@ public class Explosion extends Unit implements Element {
 
 	public void draw(IRenderer renderer) {
 		if (size >= 0.0f) {
-			Color outerColor = new Color(0.5f, 0.5f, 0, 1.0f);
+			Color outerColor = new Color(0.5f, 0.5f, 0, 0.7f);
 			renderer.drawLines(getPosition(), lines, 0, outerColor, size,
 					RefSystem.Level);
-			Color innerColor = new Color(1, 0, 0, 1);
+			Color innerColor = new Color(1, 0, 0, 0.6f);
+			Color innerColor2 = new Color(0.75f, 0, 0.1f, 1);
 			renderer.drawLines(getPosition(), lines, 180 - 45, innerColor,
 					size, RefSystem.Level);
-			renderer.drawPoly(getPosition(), poly, 180 - 45, outerColor, size,
+			renderer.drawPoly(getPosition(), poly, 180 , outerColor,
+			size,RefSystem.Level);
+			renderer.drawPoly(mpos, poly2, angle, innerColor, size,
 					RefSystem.Level);
-			renderer.drawPoly(mpos, poly2, angle, innerColor, getSize(),
+			renderer.drawPoly(spos, poly2, angle + 180, innerColor, size,
 					RefSystem.Level);
-			renderer.drawPoly(spos, poly2, angle + 180, innerColor, getSize(),
+			renderer.drawPoly(npos, poly2, angle + 270, innerColor2, size+0.24f,
 					RefSystem.Level);
-			renderer.drawPoly(npos, poly2, angle + 270, innerColor, getSize(),
+			renderer.drawPoly(tpos, poly2, angle, innerColor, size+0.3f,
 					RefSystem.Level);
-			renderer.drawPoly(tpos, poly2, angle, innerColor, getSize(),
+			renderer.drawPoly(upos, poly2, angle, innerColor2, size+0.25f,
+					RefSystem.Level);
+			renderer.drawPoly(vpos, poly2, angle + 180, innerColor2, size+0.2f,
 					RefSystem.Level);
 			this.move(10f);
 			size = shrink(size);
@@ -77,14 +84,16 @@ public class Explosion extends Unit implements Element {
 	@Override
 	public void move(float time) {
 		angle -= time;
-		mpos.x += 0.03f;
-		mpos.y -= 0.03f;
-		spos.x -= 0.03f;
-		spos.y += 0.03f;
-		npos.x += 0.025f;
-		npos.y += 0.025f;
-		tpos.x -= 0.02f;
-		tpos.y -= 0.02f;
+		mpos.x += 0.02f;
+		mpos.y -= 0.02f;
+		spos.x -= 0.02f;
+		spos.y += 0.02f;
+		npos.x += 0.015f;
+		npos.y += 0.015f;
+		tpos.x -= 0.01f;
+		tpos.y -= 0.01f;
+		upos.y += 0.02f;
+		vpos.y -= 0.015f;
 	}
 
 	public float shrink(float size) {
