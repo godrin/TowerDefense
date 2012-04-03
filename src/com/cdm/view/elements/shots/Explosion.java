@@ -19,6 +19,7 @@ public class Explosion extends Unit implements Element {
 	private List<Vector3> poly2;
 	private float angle = 0;
 	private float size = getSize();
+	private float size2 = getSize();
 	private Position mpos = new Position(getPosition());
 	private Position npos = new Position(getPosition());
 	private Position spos = new Position(getPosition());
@@ -51,29 +52,35 @@ public class Explosion extends Unit implements Element {
 
 	public void draw(IRenderer renderer) {
 		if (size >= 0.0f) {
-			Color outerColor = new Color(0.5f, 0.5f, 0, 0.7f);
+			Color outerColor = new Color(0.5f, 0.5f, 0, 1);
 			renderer.drawLines(getPosition(), lines, 0, outerColor, size,
 					RefSystem.Level);
-			Color innerColor = new Color(1, 0, 0, 0.6f);
-			Color innerColor2 = new Color(0.75f, 0, 0.1f, 1);
+			Color innerColor = new Color(1, 0, 0, 1);
 			renderer.drawLines(getPosition(), lines, 180 - 45, innerColor,
 					size, RefSystem.Level);
-			renderer.drawPoly(getPosition(), poly, 180 , outerColor,
-			size,RefSystem.Level);
-			renderer.drawPoly(mpos, poly2, angle, innerColor, size,
+			renderer.drawPoly(getPosition(), poly, 180, outerColor, size,
 					RefSystem.Level);
-			renderer.drawPoly(spos, poly2, angle + 180, innerColor, size,
-					RefSystem.Level);
-			renderer.drawPoly(npos, poly2, angle + 270, innerColor2, size+0.24f,
-					RefSystem.Level);
-			renderer.drawPoly(tpos, poly2, angle, innerColor, size+0.3f,
-					RefSystem.Level);
-			renderer.drawPoly(upos, poly2, angle, innerColor2, size+0.25f,
-					RefSystem.Level);
-			renderer.drawPoly(vpos, poly2, angle + 180, innerColor2, size+0.2f,
-					RefSystem.Level);
-			this.move(10f);
 			size = shrink(size);
+			//System.out.println("Positions: " + mpos + " " + spos + " " + npos + " "
+				//	+ tpos + " " + upos + " " + vpos);
+		}
+		if (size2 >= 0){
+			Color innerColor = new Color(1, 0, 0, 1);
+			Color innerColor2 = new Color(0.75f, 0.5f, 0.1f, 1);
+		renderer.drawPoly(mpos, poly2, angle, innerColor, size2,
+				RefSystem.Level);
+		renderer.drawPoly(spos, poly2, angle + 180, innerColor, size2,
+				RefSystem.Level);
+		renderer.drawPoly(npos, poly2, angle + 270, innerColor2,
+				size2 + 0.24f, RefSystem.Level);
+		renderer.drawPoly(tpos, poly2, angle, innerColor, size2 + 0.3f,
+				RefSystem.Level);
+		renderer.drawPoly(upos, poly2, angle, innerColor2, size2 + 0.25f,
+				RefSystem.Level);
+		renderer.drawPoly(vpos, poly2, angle + 180, innerColor2,
+				size2 + 0.2f, RefSystem.Level);
+		this.move(10f);
+		size2 -= 0.03f;
 		}
 	}
 
@@ -84,21 +91,26 @@ public class Explosion extends Unit implements Element {
 	@Override
 	public void move(float time) {
 		angle -= time;
-		mpos.x += 0.02f;
-		mpos.y -= 0.02f;
-		spos.x -= 0.02f;
-		spos.y += 0.02f;
-		npos.x += 0.015f;
-		npos.y += 0.015f;
-		tpos.x -= 0.01f;
-		tpos.y -= 0.01f;
-		upos.y += 0.02f;
-		vpos.y -= 0.015f;
+		mpos.x += Explosion.random();
+		mpos.y -= Explosion.random();
+		spos.x -= Explosion.random();
+		spos.y += Explosion.random();
+		npos.x += Explosion.random();
+		npos.y += Explosion.random();
+		tpos.x -= Explosion.random();
+		tpos.y -= Explosion.random();
+		upos.y += Explosion.random();
+		vpos.y -= Explosion.random();
 	}
 
 	public float shrink(float size) {
 		size -= 0.05;
 		return size;
+	}
+
+	public static float random() {
+		double i = Math.random() / 33;
+		return (float) i;
 	}
 
 }
