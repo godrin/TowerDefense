@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Level;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -101,7 +100,7 @@ public class StunRay implements AbstractShot {
 				c = new Color(0.7f, 1.0f, 0, opacity);
 
 			}
-			renderer.drawLines(fromPos, vs, 0, c, 2.0f, RefSystem.Level);
+			renderer.drawLines(fromPos, vs, 0, c, 1.0f);
 
 		}
 	}

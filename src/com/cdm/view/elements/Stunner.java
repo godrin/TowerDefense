@@ -9,7 +9,6 @@ import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.shots.AbstractShot;
 import com.cdm.view.elements.shots.StunRay;
 import com.cdm.view.enemy.EnemyUnit;
@@ -47,10 +46,10 @@ public class Stunner extends RotatingUnit implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor, getSize(),
-				RefSystem.Level);
-		renderer.drawLines(getPosition(), lines, getAngle(), outerColor, getSize(),
-				RefSystem.Level);
+		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
+				getSize());
+		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
+				getSize());
 	}
 
 	void shoot(EnemyUnit enemy) {

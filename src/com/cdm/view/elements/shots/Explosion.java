@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.Unit;
 
@@ -47,11 +46,9 @@ public class Explosion extends Unit implements Element {
 	public void draw(IRenderer renderer) {
 		while (size >= 0.0f) {
 			Color outerColor = new Color(0.5f, 0.5f, 0, 1.0f);
-			renderer.drawLines(getPosition(), lines, 180, outerColor, size,
-					RefSystem.Level);
+			renderer.drawLines(getPosition(), lines, 180, outerColor, size);
 			Color innerColor = new Color(1, 0, 0, 1);
-			renderer.drawLines(getPosition(), lines2, 180, innerColor, size,
-					RefSystem.Level);
+			renderer.drawLines(getPosition(), lines2, 180, innerColor, size);
 			size = shrink(size);
 		}
 	}

@@ -9,7 +9,6 @@ import com.cdm.gui.effects.AnimatorStatic;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Rectangle;
-import com.cdm.view.Position.RefSystem;
 
 public class Button extends Widget {
 	private int x, y, radius;
@@ -27,7 +26,7 @@ public class Button extends Widget {
 	public Button(int px, int py, int pradius) {
 		x = px;
 		y = py;
-		position = new Position(x, y, RefSystem.Screen);
+		position = new Position(x, y, Position.SCREEN_REF);
 		radius = pradius;
 		setBBox(new Rectangle(x - radius, y - radius, 2 * radius, 2 * radius));
 		initAnimation();
@@ -106,5 +105,9 @@ public class Button extends Widget {
 
 	public Position getPosition() {
 		return position;
+	}
+
+	public int getRadius() {
+		return radius;
 	}
 }

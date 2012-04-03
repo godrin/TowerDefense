@@ -5,12 +5,14 @@ import java.util.List;
 
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 
 public class BoxDrawing {
 	List<SingleBox> boxes = new ArrayList<SingleBox>();
 
 	public BoxDrawing(Position start, Position end, int gh) {
+		//makeBox(0,0);
+		if(false)
+			return;
 		for (int x = (int) start.x; x <= (int) end.x; x++) {
 			makeBox(x, -1);
 			makeBox(x, gh + 1);
@@ -26,7 +28,7 @@ public class BoxDrawing {
 	private void makeBox(int x, int y) {
 		SingleBox box;
 		box = new SingleBox();
-		box.setPos(new Position(x - 1, y - 1, RefSystem.Level));
+		box.setPos(new Position(x - 1, y - 1, Position.LEVEL_REF));
 		boxes.add(box);
 	}
 

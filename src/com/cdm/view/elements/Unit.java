@@ -2,7 +2,6 @@ package com.cdm.view.elements;
 
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 
 public abstract class Unit implements Element {
 
@@ -24,14 +23,15 @@ public abstract class Unit implements Element {
 		}
 	};
 
-	private Position pos=new Position(0,0,RefSystem.Level), oldpos = new Position(1, 1, RefSystem.Level);
+	private Position pos = new Position(0, 0, Position.LEVEL_REF),
+			oldpos = new Position(1, 1, Position.LEVEL_REF);
 	private float size;
 	private Level level;
 	private int cost;
 
 	public Unit(Position p) {
 		pos = p;
-		size = 0.75f;
+		size = 0.4f;
 		level = null;
 	}
 
@@ -57,7 +57,7 @@ public abstract class Unit implements Element {
 		return pos;
 	}
 
-	public void setSize(float f) {
+	protected void setSize(float f) {
 		size = f;
 	}
 

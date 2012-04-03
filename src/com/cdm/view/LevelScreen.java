@@ -1,23 +1,17 @@
 package com.cdm.view;
 
-import java.util.Set;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Vector3;
 import com.cdm.SString;
-import com.cdm.Settings;
 import com.cdm.gui.Button;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.IUnitTypeSelected;
 import com.cdm.gui.UnitTypeButton;
 import com.cdm.gui.WidgetContainer;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.Unit;
@@ -28,16 +22,15 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public SpriteBatch spriteBatch = new SpriteBatch();
 	public static TextureRegion bg;
 	private Renderer renderer = new Renderer();
+	private UnitRenderer unitRenderer = new UnitRenderer(renderer);
 	private Level level;
 	private WidgetContainer gui = new WidgetContainer();
 	private Unit dragElement = null;
 	private LevelDisplays hud = new LevelDisplays();
 	private boolean rendering = false;
-	private OrthographicCamera cam;
-	private OrthographicCamera guicam;
-	Position dragPosition = new Position(0, 0, RefSystem.Screen);
-	Position oldDragPosition = new Position(0, 0, RefSystem.Screen);
-	Sound sound;
+	private Position dragPosition = new Position(0, 0, Position.SCREEN_REF);
+	private Position oldDragPosition = new Position(0, 0, Position.SCREEN_REF);
+	private Sound sound;
 
 	public LevelScreen() {
 
@@ -51,7 +44,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		sizeButton.setButtonName(SString.SIZE_BUTTON);
 		sizeButton.setPressedListener(this);
 		gui.add(sizeButton);
-		createCam();
 	}
 
 	public void dispose() {
@@ -59,7 +51,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	private void createUnitButtons() {
-		float pos = 40;
+		float pos = 35;
 		UnitTypeButton tb;
 		for (UnitType t : new UnitType[] { UnitType.CANNON, UnitType.STUNNER,
 				UnitType.ROCKET_THROWER }) {
@@ -70,6 +62,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 			pos += 80;
 		}
+		System.out.println(gui);
 	}
 
 	private Long oldMicros = 0L;
@@ -78,6 +71,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public synchronized void render(float delta) {
 		if (rendering)
 			return;
+		renderer.initGlSettings();
 		rendering = true;
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
@@ -96,6 +90,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	private void drawBackground() {
+
 		spriteBatch.begin();
 
 		for (int x = 0; x < 16; x++)
@@ -116,44 +111,29 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		return delta;
 	}
 
-	private void createCam() {
-		cam = new OrthographicCamera(Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight());
-		cam.position.set(Gdx.graphics.getWidth() / 2,
-				Gdx.graphics.getHeight() / 2, 0);
-		cam.update();
-		guicam = new OrthographicCamera(Gdx.graphics.getWidth(),
-				Gdx.graphics.getHeight());
-		guicam.position.set(Gdx.graphics.getWidth() / 2,
-				Gdx.graphics.getHeight() / 2, 0);
-		guicam.update();
-
-	}
-
 	private void modCam(int dx, int dy) {
-		cam.position.x += dx;
-		cam.position.y += dy;
-		Settings.getPosition().x -= dx / Settings.getCellWidth();
-		Settings.getPosition().y -= dy / Settings.getCellWidth();
-		cam.update();
+		Position.LEVEL_REF.moveBy(dx, dy);
 	}
 
 	private void drawLineBased(float delta) {
 		if (delta > 0) {
 			level.move(delta);
 		}
-		cam.apply(Gdx.gl10);
+		Gdx.gl10.glPushMatrix();
+		Position.LEVEL_REF.apply();
 
-		level.draw(renderer);
+		level.draw(unitRenderer);
+		if (dragElement != null) {
+			dragElement.draw(unitRenderer);
+		}
+		Gdx.gl10.glPopMatrix();
+		Gdx.gl10.glPushMatrix();
 
-		guicam.apply(Gdx.gl10);
+		Position.SCREEN_REF.apply();
 
 		gui.addTime(delta);
-		gui.draw(renderer);
-
-		if (dragElement != null) {
-			dragElement.draw(renderer);
-		}
+		gui.draw(unitRenderer);
+		Gdx.gl10.glPopMatrix();
 
 	}
 
@@ -195,13 +175,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 			gui.touchDown(x, y, pointer, button);
 			return true;
 		} else {
-			Vector3 tmp = new Vector3();
-			cam.unproject(tmp, x, oy, Gdx.graphics.getWidth(),
-					Gdx.graphics.getHeight());
-			System.out.println(tmp);
 
-			dragPosition.set(x, y, RefSystem.Screen);
-			oldDragPosition.set(x, y, RefSystem.Screen);
+			dragPosition.set(x, y, Position.SCREEN_REF);
+			oldDragPosition.set(x, y, Position.SCREEN_REF);
 		}
 		return false;
 	}
@@ -233,8 +209,10 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 			return false;
 		y = Gdx.graphics.getHeight() - y;
 
-		dragPosition.set(x, y, RefSystem.Screen);
+		dragPosition.set(x, y, Position.SCREEN_REF);
 		if (dragElement != null) {
+			dragPosition = dragPosition.to(Position.LEVEL_REF).alignedToGrid();
+
 			dragElement.setPosition(dragPosition);
 			level.hover(dragPosition);
 		} else {
@@ -242,7 +220,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 			int dy = (int) (dragPosition.y - oldDragPosition.y);
 			System.out.println("DX " + dx + " DY" + dy);
 			oldDragPosition.set(dragPosition);
-			modCam(-dx, -dy);
+			modCam(dx, dy);
 		}
 		return false;
 	}
@@ -255,17 +233,19 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	@Override
 	public boolean scrolled(int amount) {
-		int nu = (int) (Settings.getScale() + amount);
+		int nu = (int) (Position.LEVEL_REF.getScale() + amount);
 		if (nu >= 32 && nu <= 128)
-			Settings.setScale(nu);
+			Position.LEVEL_REF.setScale(nu);
 
-		System.out.println("SCROLL " + amount + " " + Settings.getScale());
+		System.out.println("SCROLL " + amount + " "
+				+ Position.LEVEL_REF.getScale());
 		return false;
 	}
 
 	@Override
 	public void unitTypeSelected(UnitType type, Position screenPos, int cost) {
-		dragElement = Elements.getElementBy(type, screenPos);
+		dragElement = Elements.getElementBy(type,
+				screenPos.to(Position.LEVEL_REF).alignedToGrid());
 		dragElement.setCost(cost);
 
 	}
@@ -275,10 +255,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (buttonName.equals(SString.SIZE_BUTTON)) {
 			sound = Gdx.audio.newSound(Gdx.files.internal("data/zoom.ogg"));
 			sound.play();
-			if (Settings.getCellWidth() == 32) {
-				Settings.setScale(64);
-			} else
-				Settings.setScale(32);
+			// FIXME
 		}
 	}
 }

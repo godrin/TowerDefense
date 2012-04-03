@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.MathTools;
 import com.cdm.view.elements.RotatingThing;
 import com.cdm.view.elements.shots.MovingShot;
@@ -50,7 +49,7 @@ public class Tank extends EnemyUnit {
 
 	public Tank(Position pos) {
 		super(pos);
-		setSize(0.4f);
+		setSize(0.2f);
 
 	}
 
@@ -68,9 +67,9 @@ public class Tank extends EnemyUnit {
 			float targetAngle = MathTools.angle(diff);
 			rotation.setTargetAngle(targetAngle);
 
-			time-=rotation.move(time);
+			time -= rotation.move(time);
 
-			if (time<0.00001f)
+			if (time < 0.00001f)
 				return;
 
 			float len = diff.len();
@@ -94,9 +93,9 @@ public class Tank extends EnemyUnit {
 	@Override
 	public void draw(IRenderer renderer) {
 		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
-				getSize(), RefSystem.Level);
+				getSize());
 		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
-				getSize(), RefSystem.Level);
+				getSize());
 		super.draw(renderer);
 	}
 

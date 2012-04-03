@@ -9,14 +9,12 @@ import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.Selector;
 import com.cdm.view.elements.Grid.GridElement;
 import com.cdm.view.elements.Unit.UnitType;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.AbstractShot;
-import com.cdm.view.elements.shots.Explosion;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -42,15 +40,15 @@ public class Level {
 		player.setLevel(this);
 		boxDrawer = new BoxDrawing(getEnemyStartPosition(),
 				getEnemyEndPosition(), grid.getH());
-		
+
 		PathFinder.breadthSearch(grid, getEnemyStartPositionPlusOne(),
 				new PathPos(getEnemyEndPosition()), null, false);
-
 
 	}
 
 	public void add(Position pos, UnitType type) {
-		units.add(Elements.getElementBy(type, pos));
+		units.add(Elements.getElementBy(type, pos.to(Position.LEVEL_REF)
+				.alignedToGrid()));
 	}
 
 	public EnemyPlayer getPlayer() {
@@ -59,7 +57,7 @@ public class Level {
 
 	public void hover(Position pos) {
 		if (pos.screenPos()) {
-			pos = pos.toLevelPos().alignedToGrid();
+			pos = pos.to(Position.LEVEL_REF).alignedToGrid();
 		}
 		selector = new Selector(pos);
 	}
@@ -96,7 +94,7 @@ public class Level {
 	public void draw(IRenderer renderer) {
 		for (Unit unit : units) {
 			if (unit != null)
-			unit.draw(renderer);
+				unit.draw(renderer);
 		}
 		for (AbstractShot shot : shots) {
 			shot.draw(renderer);
@@ -119,7 +117,9 @@ public class Level {
 			return false;
 		}
 
-		Position lpos = dragElement.getPosition().toLevelPos().alignedToGrid();
+		Position lpos = dragElement.getPosition().to(Position.LEVEL_REF)
+				.alignedToGrid();
+		//dragElement.setSize(0.3f); // FIXME
 		if (!(dragElement instanceof EnemyUnit)
 				&& (lpos.x < 0 || lpos.x > grid.getW() - 1 || lpos.y < 0 || lpos.y > grid
 						.getH()))
@@ -182,7 +182,7 @@ public class Level {
 	}
 
 	public Position getEnemyStartPosition() {
-		return new Position(-1, grid.endY(), RefSystem.Level);
+		return new Position(-1, grid.endY(), Position.LEVEL_REF);
 	}
 
 	public PathPos getEnemyStartPositionPlusOne() {
@@ -190,7 +190,7 @@ public class Level {
 	}
 
 	public Position getEnemyEndPosition() {
-		return new Position(grid.getW(), grid.endY(), RefSystem.Level);
+		return new Position(grid.getW(), grid.endY(), Position.LEVEL_REF);
 	}
 
 	public boolean isFreeForNewUnit(Position pos) {
@@ -213,11 +213,11 @@ public class Level {
 				curVal = ge.getDistToEnd();
 			for (PathPos p : from.next()) {
 				if (finishPos.equals(p))
-					return new Position(p.x, p.y, RefSystem.Level);
+					return new Position(p.x, p.y, Position.LEVEL_REF);
 				GridElement nge = grid.getElement(p.x, p.y);
 				if (nge != null)
 					if (nge.getDistToEnd() < curVal && nge.getDistToEnd() >= 0)
-						return new Position(p.x, p.y, RefSystem.Level);
+						return new Position(p.x, p.y, Position.LEVEL_REF);
 
 			}
 		}

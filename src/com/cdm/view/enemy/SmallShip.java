@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.shots.MovingShot;
 
@@ -15,15 +14,16 @@ public class SmallShip extends EnemyUnit implements Element {
 
 	public Position nextStep = null;
 	private static final Vector3 DIRECTION = new Vector3(1, 0, 0);
-	
+
 	private static final Vector3 a = new Vector3(-0.75f, 0.4f, 0);
 	private static final Vector3 b = new Vector3(0.75f, 0.0f, 0);
 	private static final Vector3 c = new Vector3(-0.75f, -0.4f, 0);
 	private static final Vector3 d = new Vector3(-0.25f, 0, 0);
 
-	
-	private static List<Vector3> lines=Arrays.asList(new Vector3[] { a, b, b, c, c, d, d, a, });
-	private static List<Vector3> poly= Arrays.asList(new Vector3[] { a, b, d, b, c, d });
+	private static List<Vector3> lines = Arrays.asList(new Vector3[] { a, b, b,
+			c, c, d, d, a, });
+	private static List<Vector3> poly = Arrays.asList(new Vector3[] { a, b, d,
+			b, c, d });
 	float angle = 0.0f;
 
 	private static final float SPEED = 0.3f;
@@ -31,7 +31,7 @@ public class SmallShip extends EnemyUnit implements Element {
 
 	public SmallShip(Position position) {
 		super(position);
-		
+
 		setSize(0.5f);
 
 	}
@@ -40,10 +40,8 @@ public class SmallShip extends EnemyUnit implements Element {
 	public void draw(IRenderer renderer) {
 		super.draw(renderer);
 
-		renderer.drawPoly(getPosition(), poly, angle, Color.BLACK, getSize(),
-				RefSystem.Level);
-		renderer.drawLines(getPosition(), lines, angle, lineColor, getSize(),
-				RefSystem.Level);
+		renderer.drawPoly(getPosition(), poly, angle, Color.BLACK, getSize());
+		renderer.drawLines(getPosition(), lines, angle, lineColor, getSize());
 
 	}
 
