@@ -13,7 +13,7 @@ import com.badlogic.gdx.graphics.glutils.ImmediateModeRenderer;
 import com.badlogic.gdx.math.Vector3;
 
 public class Renderer implements IRenderer {
-	ImmediateModeRenderer renderer = new ImmediateModeRenderer();
+	ImmediateModeRenderer renderer = null;
 	BitmapFont font;
 	private final SpriteBatch spriteBatch;
 
@@ -22,6 +22,8 @@ public class Renderer implements IRenderer {
 				Gdx.files.internal("data/font16.png"), false);
 		spriteBatch = new SpriteBatch();
 
+		if (Gdx.gl20 == null)
+			renderer = new ImmediateModeRenderer();
 	}
 
 	public void dispose() {
@@ -31,30 +33,41 @@ public class Renderer implements IRenderer {
 	@Override
 	public void drawLines(Position pos, List<Vector3> lines, float angle,
 			Color color, float size) {
-		Gdx.gl10.glPushMatrix();
-		initGlSettings();
-		Gdx.gl10.glTranslatef(pos.x, pos.y, 0);
-		Gdx.gl10.glRotatef(angle, 0, 0, 1);
+		if (Gdx.gl10 != null) {
 
-		Gdx.gl10.glScalef(size, size, size);
+			Gdx.gl10.glPushMatrix();
+			initGlSettings();
+			Gdx.gl10.glTranslatef(pos.x, pos.y, 0);
+			Gdx.gl10.glRotatef(angle, 0, 0, 1);
 
-		renderer.begin(GL10.GL_LINES);
-		for (Vector3 v : lines) {
-			renderer.color(color.r, color.g, color.b, color.a);
-			renderer.vertex(v);
+			Gdx.gl10.glScalef(size, size, size);
+
+			renderer.begin(GL10.GL_LINES);
+			for (Vector3 v : lines) {
+				renderer.color(color.r, color.g, color.b, color.a);
+				renderer.vertex(v);
+			}
+
+			renderer.end();
+
+			Gdx.gl10.glPopMatrix();
+		} else {
+
+		
 		}
-
-		renderer.end();
-
-		Gdx.gl10.glPopMatrix();
-
 	}
 
 	public void initGlSettings() {
-		Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
-		Gdx.gl10.glEnable(GL10.GL_BLEND);
-		Gdx.gl10.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
+		if (Gdx.gl10 != null) {
+			Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
+			Gdx.gl10.glEnable(GL10.GL_BLEND);
+			Gdx.gl10.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
+		} else if (Gdx.gl20 != null) {
+			Gdx.gl20.glEnable(GL10.GL_LINE_SMOOTH);
+			Gdx.gl20.glEnable(GL10.GL_BLEND);
+			Gdx.gl20.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
 
+		}
 	}
 
 	@Override

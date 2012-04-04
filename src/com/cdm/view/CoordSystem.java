@@ -14,9 +14,13 @@ public class CoordSystem {
 	}
 
 	public void apply() {
-		MGL.gl.glScalef(scale, scale, scale);
-		MGL.gl.glTranslatef(x, y, 0);
-		Gdx.gl10.glLineWidth(scale* 0.04f);
+		if (Gdx.gl10 != null) {
+			Gdx.gl10.glScalef(scale, scale, scale);
+			Gdx.gl10.glTranslatef(x, y, 0);
+			Gdx.gl10.glLineWidth(scale * 0.04f);
+		} else {
+			Gdx.gl20.glLineWidth(scale * 0.04f);
+		}
 	}
 
 	public void setScale(float s) {

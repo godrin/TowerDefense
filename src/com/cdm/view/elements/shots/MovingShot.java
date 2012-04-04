@@ -31,7 +31,7 @@ public abstract class MovingShot implements Element, AbstractShot {
 	}
 
 	protected float getSize() {
-		return 0.3f;
+		return 0.15f;
 	}
 
 	protected Position getPosition() {

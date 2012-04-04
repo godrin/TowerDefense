@@ -118,21 +118,25 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (delta > 0) {
 			level.move(delta);
 		}
-		Gdx.gl10.glPushMatrix();
+		if (Gdx.gl10 != null)
+			Gdx.gl10.glPushMatrix();
 		Position.LEVEL_REF.apply();
 
 		level.draw(unitRenderer);
 		if (dragElement != null) {
 			dragElement.draw(unitRenderer);
 		}
-		Gdx.gl10.glPopMatrix();
-		Gdx.gl10.glPushMatrix();
-
+		if (Gdx.gl10 != null) {
+			Gdx.gl10.glPopMatrix();
+			Gdx.gl10.glPushMatrix();
+		}
 		Position.SCREEN_REF.apply();
 
 		gui.addTime(delta);
 		gui.draw(unitRenderer);
-		Gdx.gl10.glPopMatrix();
+		if (Gdx.gl10 != null)
+
+			Gdx.gl10.glPopMatrix();
 
 	}
 
