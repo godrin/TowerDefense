@@ -115,8 +115,6 @@ public class Tank extends EnemyUnit {
 
 		drawChain(renderer);
 
-		// renderer.drawLines(pos, lines, angle, color, size);
-
 		super.draw(renderer);
 	}
 

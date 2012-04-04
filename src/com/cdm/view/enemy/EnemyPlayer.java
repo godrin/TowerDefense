@@ -3,7 +3,6 @@ package com.cdm.view.enemy;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import com.cdm.TowerGame;
 import com.cdm.view.Position;
 import com.cdm.view.elements.EnemyUnits;
 import com.cdm.view.elements.Level;
