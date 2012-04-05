@@ -14,11 +14,21 @@ import com.cdm.view.enemy.EnemyUnit;
 
 public class Cannon extends RotatingUnit implements Element {
 
+	private static final float COOLING_SPEED = 0.2f;
+	private static final float HOT_PER_SHOT = 0.4f;
+	private static final float TOO_HOT = 1.0f;
 	private List<Vector3> lines;
 	private List<Vector3> poly;
-	float shotFrequency = 2.5f;
-	float lastShot = 0.0f;
-	float maxDist = 3.0f;
+	private float shotFrequency = 0.5f;
+	private float hot = 0.0f;
+
+	private enum Mode {
+		SHOOTING, COOLING
+	};
+
+	private Mode mode = Mode.SHOOTING;
+	private float lastShot = 0.0f;
+	private float maxDist = 3.0f;
 	private double startingRadius = 0.4f;
 	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
 	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
@@ -45,6 +55,7 @@ public class Cannon extends RotatingUnit implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
+		innerColor.a=1-hot;
 		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
 				getSize());
 		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
@@ -54,7 +65,8 @@ public class Cannon extends RotatingUnit implements Element {
 	void shoot(EnemyUnit enemy) {
 		if (enemy != null) {
 
-			if (lastShot > shotFrequency) {
+			if (lastShot > shotFrequency && mode.equals(Mode.SHOOTING)) {
+
 				lastShot = 0.0f;
 				Position startingPos = new Position(getPosition());
 				float angle = getAngle();
@@ -66,7 +78,9 @@ public class Cannon extends RotatingUnit implements Element {
 						new SimpleShot(startingPos, anticipatePosition(enemy),
 								getLevel()));
 				SoundFX.play(Type.SHOT2);
-
+				hot += HOT_PER_SHOT;
+				if (hot > TOO_HOT)
+					mode = Mode.COOLING;
 			}
 
 		}
@@ -85,6 +99,12 @@ public class Cannon extends RotatingUnit implements Element {
 	@Override
 	public void move(float time) {
 		super.move(time);
+		hot -= time * COOLING_SPEED;
+		if (hot < 0) {
+			hot = 0;
+			mode = Mode.SHOOTING;
+		}
+
 		EnemyUnit enemy = getEnemy();
 		lastShot += time;
 		if (ableToShoot) {

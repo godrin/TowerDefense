@@ -26,17 +26,8 @@ public class Explosion extends Unit implements Element {
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 	private List<Vector3> splinterPoly;
-	private float angle = 0;
 	private float size = getSize();
-	private float size2 = getSize();
 	private List<Splinter> splinters = new ArrayList<Splinter>();
-
-	private Position mpos = new Position(getPosition());
-	private Position npos = new Position(getPosition());
-	private Position spos = new Position(getPosition());
-	private Position tpos = new Position(getPosition());
-	private Position upos = new Position(getPosition());
-	private Position vpos = new Position(getPosition());
 
 	public Explosion(Position pos) {
 		super(pos);
@@ -88,43 +79,12 @@ public class Explosion extends Unit implements Element {
 			Color innerColor = new Color(1, 0, 0, 1);
 			renderer.drawLines(getPosition(), lines, 180 - 45, innerColor, size);
 			renderer.drawPoly(getPosition(), poly, 180, outerColor, size);
-			//size = shrink(size);
-			// System.out.println("Positions: " + mpos + " " + spos + " " + npos
-			// + " "
-			// + tpos + " " + upos + " " + vpos);
 		}
 
 		for (Splinter splinter : splinters) {
 			if (splinter.size > 0)
 				renderer.drawPoly(splinter.currentPosition, splinterPoly,
 						splinter.currentAngle, splinter.color, splinter.size);
-
-		}
-
-		if (size2 >= -10) {
-			if (true)
-				return;
-			Color innerColor = new Color(1, 0, 0, 1);
-			Color innerColor2 = new Color(0.75f, 0.5f, 0.1f, 1);
-			renderer.drawPoly(mpos, splinterPoly, angle, innerColor, size2);
-			renderer.drawPoly(spos, splinterPoly, angle + 180, innerColor,
-					size2);
-			renderer.drawPoly(npos, splinterPoly, angle + 270, innerColor2,
-					size2 + 0.24f);
-			renderer.drawPoly(tpos, splinterPoly, angle, innerColor,
-					size2 + 0.3f);
-			renderer.drawPoly(upos, splinterPoly, angle, innerColor2,
-					size2 + 0.25f);
-			renderer.drawPoly(vpos, splinterPoly, angle + 180, innerColor2,
-					size2 + 0.2f);
-			// this.move(10f);
-			size2 -= 0.03f;
-
-			renderer.drawLines(getPosition(), lines, 180 - 45, innerColor, size);
-			renderer.drawPoly(getPosition(), poly, 180 - 45, innerColor2, size);
-
-			// @undermink - moved to move()
-			// size = shrink(size);
 
 		}
 	}
@@ -139,35 +99,13 @@ public class Explosion extends Unit implements Element {
 			splinter.size -= time * 0.3f;
 
 		}
-		angle -= 10;
-		mpos.x += Explosion.random();
-		mpos.y -= Explosion.random();
-		spos.x -= Explosion.random();
-		spos.y += Explosion.random();
-		npos.x += Explosion.random();
-		npos.y += Explosion.random();
-		tpos.x -= Explosion.random();
-		tpos.y -= Explosion.random();
-		upos.y += Explosion.random();
-		vpos.y -= Explosion.random();
 
 		// shrink
-		 size -= time * 0.2f;
+		size -= time * 0.2f;
 		if (size < 0) {
-			// remove from level
+			// FIXME: remove from level
 		}
 
-	}
-
-	@Deprecated
-	public float shrink(float size) {
-		size -= 0.05;
-		return size;
-	}
-
-	public static float random() {
-		double i = Math.random() / 33;
-		return (float) i;
 	}
 
 }

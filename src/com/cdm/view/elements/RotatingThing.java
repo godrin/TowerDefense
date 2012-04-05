@@ -3,7 +3,7 @@ package com.cdm.view.elements;
 public class RotatingThing {
 	private float currentAngle = 0.0f;
 	private float targetAngle = 0.0f;
-	private float turningSpeed = 90.0f;
+	private float turningSpeed = 45.0f;
 
 	public float getCurrentAngle() {
 		return currentAngle;
