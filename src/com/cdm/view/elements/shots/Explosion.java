@@ -50,9 +50,9 @@ public class Explosion extends Unit implements Element {
 		Vector3 d1 = new Vector3(-0.5f, 0, 0);
 		Vector3 e = new Vector3(-0.5f, 0, 0);
 
-		Vector3 s1 = new Vector3(-0.5f, -0.75f, 0);
-		Vector3 s2 = new Vector3(-0.75f, -0.55f, 0);
-		Vector3 s3 = new Vector3(-0, -0.25f, 0);
+		Vector3 s1 = new Vector3(0, 0.5f, 0);
+		Vector3 s2 = new Vector3(-0.25f, -0.25f, 0);
+		Vector3 s3 = new Vector3(0.25f, -0.25f, 0);
 
 		lines = Arrays.asList(new Vector3[] { a, a1, a1, b, b, b1, b1, c, c,
 				c1, c1, d, d, d1, d1, e, e, a });
@@ -60,14 +60,15 @@ public class Explosion extends Unit implements Element {
 
 		splinterPoly = Arrays.asList(new Vector3[] { s1, s2, s3 });
 
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 12; i++) {
 			Splinter splinter = new Splinter();
 			splinter.currentPosition = new Position(getPosition());
 			splinter.currentAngle = (float) Math.random() * 180.0f;
 			splinter.angleSpeed = (float) Math.random() * 180.0f - 90.0f;
 			splinter.color = new Color(1, 0, 0, 1);
-			splinter.size = getSize()*2.0f;
-			float maxSpeed = 1.0f;
+			splinter.size = getSize() * 0.5f + (float) Math.random() * 0.5f
+					+ getSize();
+			float maxSpeed = 2.0f;
 			splinter.speed = new Vector3((float) Math.random() * maxSpeed
 					- maxSpeed * 0.5f, (float) Math.random() * maxSpeed
 					- maxSpeed * 0.5f, 0);
@@ -87,16 +88,16 @@ public class Explosion extends Unit implements Element {
 			Color innerColor = new Color(1, 0, 0, 1);
 			renderer.drawLines(getPosition(), lines, 180 - 45, innerColor, size);
 			renderer.drawPoly(getPosition(), poly, 180, outerColor, size);
-			size = shrink(size);
+			//size = shrink(size);
 			// System.out.println("Positions: " + mpos + " " + spos + " " + npos
 			// + " "
 			// + tpos + " " + upos + " " + vpos);
 		}
 
 		for (Splinter splinter : splinters) {
-			if(splinter.size>0)
-			renderer.drawPoly(splinter.currentPosition, splinterPoly,
-					splinter.currentAngle, splinter.color, splinter.size);
+			if (splinter.size > 0)
+				renderer.drawPoly(splinter.currentPosition, splinterPoly,
+						splinter.currentAngle, splinter.color, splinter.size);
 
 		}
 
@@ -130,13 +131,13 @@ public class Explosion extends Unit implements Element {
 
 	public void move(float time) {
 		for (Splinter splinter : splinters) {
-			
+
 			splinter.currentPosition.x += splinter.speed.x * time;
 			splinter.currentPosition.y += splinter.speed.y * time;
-			
+
 			splinter.currentAngle += splinter.angleSpeed * time;
-			splinter.size-=time*0.1f;
-			
+			splinter.size -= time * 0.3f;
+
 		}
 		angle -= 10;
 		mpos.x += Explosion.random();
@@ -151,7 +152,7 @@ public class Explosion extends Unit implements Element {
 		vpos.y -= Explosion.random();
 
 		// shrink
-		// size -= time * 0.2f;
+		 size -= time * 0.2f;
 		if (size < 0) {
 			// remove from level
 		}
