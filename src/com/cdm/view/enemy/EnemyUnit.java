@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Unit;
 import com.cdm.view.elements.shots.MovingShot;
 
@@ -14,7 +13,6 @@ public abstract class EnemyUnit extends Unit {
 	private static final Color BORDER_COLOR = new Color(1, 0, 0, 0.8f);
 	private static final Color FILL_COLOR = new Color(1, 0, 0, 0.7f);
 
-	
 	private float energy;
 	private float frozenTime = 0.0f;
 	private float speed = -10.0f;
@@ -47,15 +45,15 @@ public abstract class EnemyUnit extends Unit {
 
 		float nx1 = x0 + (x1 - x0) * energy;
 
-		renderer.drawRect(x0, y0, x1, y1, BORDER_COLOR, RefSystem.Level);
-		renderer.fillRect(x0, y0, nx1, y1, FILL_COLOR, RefSystem.Level);
+		renderer.drawRect(x0, y0, x1, y1, BORDER_COLOR);
+		renderer.fillRect(x0, y0, nx1, y1, FILL_COLOR);
 	}
 
 	@Override
 	public void setPosition(Position p) {
 		super.setPosition(p);
-		Position endPos=getLevel().getEnemyEndPosition();
-		if (p.equals(endPos) || p.x>endPos.x) {
+		Position endPos = getLevel().getEnemyEndPosition();
+		if (p.equals(endPos) || p.x > endPos.x) {
 			getLevel().enemyReachedEnd(this);
 		}
 	}
@@ -67,7 +65,7 @@ public abstract class EnemyUnit extends Unit {
 		energy -= impact;
 		if (energy <= 0.0f) {
 			getLevel().enemyDestroyed(this);
-			}
+		}
 	}
 
 	public void freeze(float time) {
@@ -85,7 +83,7 @@ public abstract class EnemyUnit extends Unit {
 	}
 
 	public final float getSpeed() {
-		if (speed<0)
+		if (speed < 0)
 			speed = getOriginalSpeed();
 		return speed;
 	}

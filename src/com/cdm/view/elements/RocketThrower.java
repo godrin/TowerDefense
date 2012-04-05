@@ -9,7 +9,6 @@ import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.shots.Rocket;
 import com.cdm.view.elements.shots.SomeShot;
 import com.cdm.view.enemy.EnemyUnit;
@@ -39,10 +38,10 @@ public class RocketThrower extends RotatingUnit implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor, getSize(),
-				RefSystem.Level);
-		renderer.drawLines(getPosition(), lines, getAngle(), outerColor, getSize(),
-				RefSystem.Level);
+		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
+				getSize());
+		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
+				getSize());
 	}
 
 	@Override

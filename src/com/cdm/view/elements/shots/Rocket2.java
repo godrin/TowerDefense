@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Level;
 
 public class Rocket2 extends MovingShot {
@@ -38,10 +37,10 @@ public class Rocket2 extends MovingShot {
 	public void draw(IRenderer renderer) {
 		Color innerColor = new Color(0, 0, 0, 0);
 		renderer.drawPoly(getPosition(), poly, angle, innerColor,
-				getSize(), RefSystem.Level);
+				getSize());
 		Color outerColor = new Color(0, 0, 1, 1.0f);
 		renderer.drawLines(getPosition(), lines, angle, outerColor,
-				getSize(), RefSystem.Level);
+				getSize());
 	}
 
 	@Override

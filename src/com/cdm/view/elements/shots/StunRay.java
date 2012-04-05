@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Level;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -25,6 +24,7 @@ public class StunRay implements AbstractShot {
 	private Vector3 delta = new Vector3();
 	private Vector3 dir = new Vector3();
 	private Vector3 normal= new Vector3();
+	private Color color=new Color();
 
 	public StunRay(float pTime, Position from, Level plevel, EnemyUnit enemy) {
 		time = pTime;
@@ -69,7 +69,6 @@ public class StunRay implements AbstractShot {
 			List<Vector3> vs = new ArrayList<Vector3>();
 			float curPhase = phase * (ph + 1) + ph * M_PI / 2;
 
-			float factor = len / count;
 			for (int i = 0; i < count; i++) {
 				float radFactor = 1.0f;
 				if (i < 5)
@@ -90,18 +89,18 @@ public class StunRay implements AbstractShot {
 				if (i > 0 && i < count - 1)
 					vs.add(nv);
 			}
-			Color c = new Color(1, 0.7f, 0.7f, opacity);
+			color.set(1, 0.7f, 0.7f, opacity);
 
 			switch (ph) {
 			case 0:
-				c = new Color(1, 0.7f, 0.7f, opacity);
+				color.set(1, 0.7f, 0.7f, opacity);
 			case 1:
-				c = new Color(1, 0.8f, 0, opacity);
+				color.set(1, 0.8f, 0, opacity);
 			case 2:
-				c = new Color(0.7f, 1.0f, 0, opacity);
+				color.set(0.7f, 1.0f, 0, opacity);
 
 			}
-			renderer.drawLines(fromPos, vs, 0, c, 2.0f, RefSystem.Level);
+			renderer.drawLines(fromPos, vs, 0, color, 1.0f);
 
 		}
 	}

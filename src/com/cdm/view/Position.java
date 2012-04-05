@@ -1,24 +1,20 @@
 package com.cdm.view;
 
 import com.badlogic.gdx.math.Vector3;
-import com.cdm.Settings;
-import com.cdm.view.Position.RefSystem;
 
 public class Position {
-	public enum RefSystem {
-		Screen, Level;
 
-		public boolean isLevel() {
-			return Level.equals(this);
-		}
-	};
+	private CoordSystem system;
 
-	private RefSystem system;
+	public static CoordSystem SCREEN_REF = new CoordSystem(0, 0, 1);
+	public static CoordSystem BUTTON_REF = new CoordSystem(0, 0, 1);
+	public static CoordSystem LEVEL_REF = new CoordSystem(0, 0, 32);
 
 	public float x;
 
 	public float y;
 	public static Vector3 tmpVector = new Vector3();
+	public static Position tmpPos = new Position(0, 0, null);
 
 	public Position(Position p) {
 		x = p.x;
@@ -26,7 +22,7 @@ public class Position {
 		system = p.system;
 	}
 
-	public Position(float px, float py, RefSystem s) {
+	public Position(float px, float py, CoordSystem s) {
 		x = px;
 		y = py;
 		system = s;
@@ -36,30 +32,8 @@ public class Position {
 		return Math.abs(x - o.x) < 0.01f && Math.abs(y - o.y) < 0.01f;
 	}
 
-	public float getX() {
-		return x * getScale();
-	}
-
-	public float getY() {
-		return y * getScale();
-	}
-
-	public float getScale() {
-		if (screenPos())
-			return 1;
-		return Settings.getCellWidth();
-	}
-
 	public boolean screenPos() {
-		return system.equals(RefSystem.Screen);
-	}
-
-	public Position toLevelPos() {
-		if (!screenPos())
-			return this;
-		Vector3 p = Settings.getPosition();
-		return new Position(x / Settings.getCellWidth() - p.x, y
-				/ Settings.getCellWidth() - p.y, RefSystem.Level);
+		return system.equals(SCREEN_REF);
 	}
 
 	public Position alignedToGrid() {
@@ -92,21 +66,38 @@ public class Position {
 		return tmpVector.set(x, y, 0);
 	}
 
-	public RefSystem getSystem() {
+	public CoordSystem getSystem() {
 		return system;
 	}
 
-	public void set(int x2, int y2, RefSystem system) {
+	public Position set(float x2, float y2, CoordSystem system) {
 		this.x = x2;
 		this.y = y2;
 		this.system = system;
-
+		return this;
 	}
 
-	public void set(Position dragPosition) {
+	public Position set(Position dragPosition) {
 		x = dragPosition.x;
 		y = dragPosition.y;
 		system = dragPosition.system;
+		return this;
+	}
 
+	public Position to(CoordSystem s) {
+		if (s.equals(system)) {
+
+			return tmpPos.set(this);
+		} else {
+			return tmpPos.set(
+					((x + system.getX()) * system.getScale()) / s.getScale()
+							- s.getX(),
+					((y + system.getY()) * system.getScale()) / s.getScale()
+							- s.getY(), s);
+		}
+	}
+
+	public boolean buttonPos() {
+		return system.equals(BUTTON_REF);
 	}
 }

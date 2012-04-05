@@ -2,7 +2,6 @@ package com.cdm.view.elements;
 
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.shots.SimpleShot;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -51,7 +50,7 @@ public abstract class RotatingUnit extends Unit {
 
 		result.set(enemy.getPosition().toVector());
 		result.add(enemy.getMovingDirection().mul(enemyMoveDistance));
-		return new Position(result.x, result.y, RefSystem.Level);
+		return new Position(result.x, result.y, Position.LEVEL_REF);
 	}
 
 }

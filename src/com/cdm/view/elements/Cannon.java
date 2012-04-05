@@ -9,7 +9,6 @@ import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.shots.SimpleShot;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -47,9 +46,9 @@ public class Cannon extends RotatingUnit implements Element {
 	@Override
 	public void draw(IRenderer renderer) {
 		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
-				getSize(), RefSystem.Level);
+				getSize());
 		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
-				getSize(), RefSystem.Level);
+				getSize());
 	}
 
 	void shoot(EnemyUnit enemy) {

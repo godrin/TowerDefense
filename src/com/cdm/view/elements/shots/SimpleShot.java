@@ -7,7 +7,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.Position.RefSystem;
 import com.cdm.view.elements.Level;
 
 public class SimpleShot extends MovingShot {
@@ -34,9 +33,9 @@ public class SimpleShot extends MovingShot {
 	@Override
 	public void draw(IRenderer renderer) {
 		renderer.drawPoly(getPosition(), poly, angle, new Color(0.5f, 0, 0,
-				1.0f), getSize(), RefSystem.Level);
+				1.0f), getSize());
 		renderer.drawLines(getPosition(), lines, angle, new Color(0.9f, 0, 0,
-				1.0f), getSize(), RefSystem.Level);
+				1.0f), getSize());
 
 	}
 
