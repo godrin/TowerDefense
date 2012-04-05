@@ -14,12 +14,12 @@ import com.cdm.view.elements.Grid.GridElement;
 import com.cdm.view.elements.Unit.UnitType;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
-import com.cdm.view.elements.shots.AbstractShot;
+import com.cdm.view.elements.shots.DisplayEffect;
+import com.cdm.view.elements.shots.Explosion;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 
 public class Level {
-	private List<Unit> units = new ArrayList<Unit>();
 	private Grid grid;
 	private Selector selector = null;
 	private EnemyPlayer player;
@@ -28,10 +28,12 @@ public class Level {
 	private int money = 25;
 	private int points = 0;
 	private int bonus = 0;
+	private List<Unit> units = new ArrayList<Unit>();
 	private List<Unit> unitsToRemove = new ArrayList<Unit>();
 
-	private List<AbstractShot> shots = new ArrayList<AbstractShot>();
-	private List<AbstractShot> shotsToRemove = new ArrayList<AbstractShot>();
+	private List<DisplayEffect> displayEffects = new ArrayList<DisplayEffect>();
+	private List<DisplayEffect> displayEffectsToRemove = new ArrayList<DisplayEffect>();
+	private List<DisplayEffect> displayEffectsToAdd = new ArrayList<DisplayEffect>();
 	private BoxDrawing boxDrawer;
 
 	public Level(int w, int h, int endY) {
@@ -78,17 +80,19 @@ public class Level {
 		for (Unit unit : units) {
 			unit.move(time);
 		}
-		for (AbstractShot shot : shots) {
+		for (DisplayEffect shot : displayEffects) {
 			shot.move(time);
 		}
 		for (Unit unit : unitsToRemove) {
 			units.remove(unit);
 		}
 		unitsToRemove.clear();
-		for (AbstractShot shot : shotsToRemove) {
-			shots.remove(shot);
+		for (DisplayEffect shot : displayEffectsToRemove) {
+			displayEffects.remove(shot);
 		}
-		shotsToRemove.clear();
+		displayEffectsToRemove.clear();
+		displayEffects.addAll(displayEffectsToAdd);
+		displayEffectsToAdd.clear();
 	}
 
 	public void draw(IRenderer renderer) {
@@ -96,7 +100,7 @@ public class Level {
 			if (unit != null)
 				unit.draw(renderer);
 		}
-		for (AbstractShot shot : shots) {
+		for (DisplayEffect shot : displayEffects) {
 			shot.draw(renderer);
 		}
 		if (selector != null)
@@ -119,7 +123,6 @@ public class Level {
 
 		Position lpos = dragElement.getPosition().to(Position.LEVEL_REF)
 				.alignedToGrid();
-		//dragElement.setSize(0.3f); // FIXME
 		if (!(dragElement instanceof EnemyUnit)
 				&& (lpos.x < 0 || lpos.x > grid.getW() - 1 || lpos.y < 0 || lpos.y > grid
 						.getH()))
@@ -234,15 +237,19 @@ public class Level {
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		SoundFX.play(Type.HIT);
-		this.add(enemyUnit.getPosition(), UnitType.EXPLOSION);
+		if (false)
+			this.add(enemyUnit.getPosition(), UnitType.EXPLOSION);
+		else
+			displayEffectsToAdd.add(new Explosion(enemyUnit.getPosition(), enemyUnit
+					.getSize(),this));
 		unitsToRemove.add(enemyUnit);
 		money += enemyUnit.getMoney();
 		points += enemyUnit.getPoints();
 		bonus += enemyUnit.getBonus();
 	}
 
-	public void removeShot(AbstractShot shot) {
-		shotsToRemove.add(shot);
+	public void removeShot(DisplayEffect shot) {
+		displayEffectsToRemove.add(shot);
 	}
 
 	public EnemyUnit getNextEnemy(Position position) {
@@ -260,8 +267,8 @@ public class Level {
 		return null;
 	}
 
-	public void addShot(AbstractShot abstractShot) {
-		shots.add(abstractShot);
+	public void addShot(DisplayEffect abstractShot) {
+		displayEffects.add(abstractShot);
 	}
 
 	public EnemyUnit getEnemyAt(Position target) {

@@ -9,7 +9,7 @@ import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.elements.shots.AbstractShot;
+import com.cdm.view.elements.shots.DisplayEffect;
 import com.cdm.view.elements.shots.StunRay;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -20,7 +20,7 @@ public class Stunner extends RotatingUnit implements Element {
 	float shotFrequency = 2.5f;
 	float lastShot = 0.0f;
 	float maxDist = 3.0f;
-	AbstractShot currentShot = null;
+	DisplayEffect currentShot = null;
 	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
 	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
 

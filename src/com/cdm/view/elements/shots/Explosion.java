@@ -8,10 +8,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.elements.Element;
-import com.cdm.view.elements.Unit;
+import com.cdm.view.elements.Level;
 
-public class Explosion extends Unit implements Element {
+public class Explosion implements DisplayEffect {
 
 	public static class Splinter {
 		Position currentPosition;
@@ -26,11 +25,16 @@ public class Explosion extends Unit implements Element {
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 	private List<Vector3> splinterPoly;
-	private float size = getSize();
+	private float size;
+	private Position pos;
 	private List<Splinter> splinters = new ArrayList<Splinter>();
+	private Level level;
 
-	public Explosion(Position pos) {
-		super(pos);
+	public Explosion(Position pos, float pSize, Level level) {
+		this.pos = new Position(pos);
+		this.size = pSize;
+		this.level = level;
+
 		Vector3 a = new Vector3(-1, -1, 0);
 		Vector3 a1 = new Vector3(0, -0.5f, 0);
 		Vector3 b = new Vector3(1, -1, 0);
@@ -68,6 +72,10 @@ public class Explosion extends Unit implements Element {
 
 	}
 
+	private float getSize() {
+		return size;
+	}
+
 	public void draw(IRenderer renderer) {
 		if (size >= 0.0f) {
 
@@ -89,6 +97,10 @@ public class Explosion extends Unit implements Element {
 		}
 	}
 
+	private Position getPosition() {
+		return pos;
+	}
+
 	public void move(float time) {
 		for (Splinter splinter : splinters) {
 
@@ -104,8 +116,8 @@ public class Explosion extends Unit implements Element {
 		size -= time * 0.2f;
 		if (size < 0) {
 			// FIXME: remove from level
+			level.removeShot(this);
 		}
 
 	}
-
 }

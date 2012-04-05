@@ -25,14 +25,19 @@ public abstract class RotatingUnit extends Unit {
 
 		EnemyUnit enemy = getEnemy();
 
+		ableToShoot=false;
 		if (enemy != null) {
 			delta.set(enemy.getPosition().to(getPosition()));
-			if (delta.len() < getMaxDist()) {
+			if (delta.len() < getMaxDist() && delta.len()>getMinDist()) {
 				rotation.setTargetAngle(MathTools.angle(delta));
+				ableToShoot = rotation.move(time)<time;
 			}
 		}
 
-		ableToShoot = rotation.move(time)<time;
+	}
+
+	private float getMinDist() {
+		return 1;
 	}
 
 	public float getAngle() {

@@ -10,7 +10,7 @@ import com.cdm.view.Position;
 import com.cdm.view.elements.Level;
 import com.cdm.view.enemy.EnemyUnit;
 
-public class StunRay implements AbstractShot {
+public class StunRay implements DisplayEffect {
 
 	private static final float M_PI = 3.1415f;
 	private static final float RADIUS = 0.06f;

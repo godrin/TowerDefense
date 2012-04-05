@@ -11,9 +11,7 @@ public class Elements {
 			return new RocketThrower(p);
 		} else if (t == Unit.UnitType.STUNNER) {
 			return new Stunner(p);
-		} else if (t == Unit.UnitType.EXPLOSION) {
-			return new Explosion(p);
-		}
+		} 
 		return null;
 	}
 }

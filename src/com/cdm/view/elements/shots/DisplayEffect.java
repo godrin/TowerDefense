@@ -2,7 +2,7 @@ package com.cdm.view.elements.shots;
 
 import com.cdm.view.IRenderer;
 
-public interface AbstractShot {
+public interface DisplayEffect {
 
 	void move(float time);
 

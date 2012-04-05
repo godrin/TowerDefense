@@ -12,7 +12,7 @@ import com.cdm.view.enemy.EnemyUnit;
  * 
  *         abstract base class of all shots
  */
-public abstract class MovingShot implements Element, AbstractShot {
+public abstract class MovingShot implements Element, DisplayEffect {
 
 	Position pos;
 	Position target;
