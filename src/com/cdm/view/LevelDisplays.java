@@ -21,6 +21,7 @@ public class LevelDisplays {
 	}
 
 	void draw(IRenderer renderer) {
+		Gdx.graphics.setIcon(null);
 		renderer.drawText(0, Gdx.graphics.getHeight(),
 				"$" + Integer.toString(level.getMoney()), moneyColor);
 		renderer.drawText(Gdx.graphics.getWidth() - 120,

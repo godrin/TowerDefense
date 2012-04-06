@@ -77,6 +77,8 @@ public class Explosion implements DisplayEffect {
 	}
 
 	public void draw(IRenderer renderer) {
+		if (size >=0.8f)
+			size = 0.7f;
 		if (size >= 0.0f) {
 
 			Color outerColor = new Color(0.5f, 0.5f, 0, 1.0f);
@@ -113,8 +115,8 @@ public class Explosion implements DisplayEffect {
 		}
 
 		// shrink
-		size -= time * 0.2f;
-		if (size < 0) {
+		size -= time * 0.4f;
+		if (splinters.size() < 0) {
 			// FIXME: remove from level
 			level.removeShot(this);
 		}

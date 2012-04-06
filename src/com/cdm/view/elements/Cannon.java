@@ -14,9 +14,9 @@ import com.cdm.view.enemy.EnemyUnit;
 
 public class Cannon extends RotatingUnit implements Element {
 
-	private static final float COOLING_SPEED = 0.2f;
+	private static final float COOLING_SPEED = 0.3f;
 	private static final float HOT_PER_SHOT = 0.4f;
-	private static final float TOO_HOT = 1.0f;
+	private static final float TOO_HOT = 0.6f;
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 	private float shotFrequency = 0.5f;
@@ -55,7 +55,7 @@ public class Cannon extends RotatingUnit implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		innerColor.a=1-hot;
+		innerColor.b = 0.6f - hot;
 		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
 				getSize());
 		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,

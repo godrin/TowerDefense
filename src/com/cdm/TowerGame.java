@@ -18,25 +18,27 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener {
 	private boolean started = false;
 	private float accum = 0;
 	public Music music, music0, music1;
+	boolean stop = false;
 
-	
 	public void create() {
 		running = true;
 		setScreen(new LevelScreen());
 		Gdx.input.setInputProcessor(screen);
-		music = Gdx.audio.newMusic(Gdx.files.internal("data/level01.ogg"));
-		//startMusic();
+		music0 = Gdx.audio.newMusic(Gdx.files.internal("data/level01.ogg"));
+		music1 = Gdx.audio.newMusic(Gdx.files.internal("data/level02.ogg"));
+		music = music1;
+		// startMusic();
 		SoundFX.Initialize();
-		
-		
-		
+
 	}
 
 	private void startMusic() {
-		music.setVolume(0.75f);
-		music.setLooping(true);
-		music.play();
-		//SoundFX.Initialize();
+		if (music != null) {
+			music.setVolume(0.75f);
+			music.setLooping(true);
+			music.play();
+			// SoundFX.Initialize();
+		}
 	}
 
 	private void stopMusic() {
@@ -70,15 +72,30 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener {
 			accum -= 1.0f / 60.0f;
 		}
 		screen.render(accum);
-		if (Gdx.input.justTouched()) {
-			SoundFX.play(Type.KLICK);
-		}
+		/*
+		 * if (Gdx.input.justTouched()) { SoundFX.play(Type.KLICK); }
+		 */
 		if (Gdx.input.isKeyPressed(41)) {
+			stop = false;
 			if (!music.isPlaying())
 				startMusic();
 		}
 
 		if (Gdx.input.isKeyPressed(42)) {
+			if (!music.isPlaying()) {
+				if (music == music1) {
+					if (stop != true) {
+						music = music0;
+						stop = true;
+					}
+				}
+				else if (music == music0) {
+					if (stop != true) {
+						music = music1;
+						stop = true;
+					}
+				}
+			}
 			stopMusic();
 		}
 	}
