@@ -77,8 +77,8 @@ public class Explosion implements DisplayEffect {
 	}
 
 	public void draw(IRenderer renderer) {
-		if (size >=0.8f)
-			size = 0.7f;
+		if (size >=0.9f)
+			size = 0.8f;
 		if (size >= 0.0f) {
 
 			Color outerColor = new Color(0.5f, 0.5f, 0, 1.0f);
@@ -92,6 +92,8 @@ public class Explosion implements DisplayEffect {
 		}
 
 		for (Splinter splinter : splinters) {
+			if (splinter.size >= 1.0f)
+				splinter.size = 0.95f;
 			if (splinter.size > 0)
 				renderer.drawPoly(splinter.currentPosition, splinterPoly,
 						splinter.currentAngle, splinter.color, splinter.size);
