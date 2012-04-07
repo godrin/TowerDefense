@@ -74,7 +74,7 @@ public class EnemyPlayer {
 
 		if (true) {
 			// strength-based randomized enemy creation
-			enemyStrength+=1.5f;
+			enemyStrength += 1.5f * (float)getLevelNo();
 			Float currentStrength = enemyStrength;
 			Float lastTime = 0.0f;
 
@@ -83,7 +83,7 @@ public class EnemyPlayer {
 				if (t.getStrength() < currentStrength
 						+ EnemyType.STRENGTH_THRESHOLD) {
 					currentStrength -= t.getStrength();
-					lastTime += (float) Math.random()*5.0f + 0.6f;
+					lastTime += (float) Math.random() * 5.0f + 0.6f;
 					System.out.println("ADD " + t + " " + lastTime);
 					defs.add(new EnemyDef(t, lastTime));
 				}

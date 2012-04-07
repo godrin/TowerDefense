@@ -4,6 +4,7 @@ import com.cdm.view.Position;
 import com.cdm.view.enemy.BigShip;
 import com.cdm.view.enemy.EnemyType;
 import com.cdm.view.enemy.EnemyUnit;
+import com.cdm.view.enemy.Rocket;
 import com.cdm.view.enemy.SmallShip;
 import com.cdm.view.enemy.Tank;
 
@@ -17,6 +18,9 @@ public class EnemyUnits {
 		}
 		if (EnemyType.TANK.equals(t)) {
 			return new Tank(position);
+		}
+		if (EnemyType.ROCKET.equals(t)) {
+			return new Rocket(position);
 		}
 		return null;
 	}

@@ -301,6 +301,8 @@ public class Level {
 	}
 
 	public int getHealth() {
+		if (health<= 0)
+			health = 0;
 		return health;
 	}
 
