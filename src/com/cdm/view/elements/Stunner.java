@@ -1,5 +1,6 @@
 package com.cdm.view.elements;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -15,8 +16,8 @@ import com.cdm.view.enemy.EnemyUnit;
 
 public class Stunner extends RotatingUnit implements Element {
 
-	private List<Vector3> lines;
-	private List<Vector3> poly;
+	private static List<Vector3> lines = null;
+	private static List<Vector3> poly = null;
 	float shotFrequency = 2.5f;
 	float lastShot = 0.0f;
 	float maxDist = 3.0f;
@@ -26,21 +27,42 @@ public class Stunner extends RotatingUnit implements Element {
 
 	public Stunner(Position p) {
 		super(p);
-		Vector3 a = new Vector3(-0.95f, 0.25f, 0);
-		Vector3 b = new Vector3(-0.25f, 0.75f, 0);
-		Vector3 c = new Vector3(0.25f, 0.75f, 0);
-		Vector3 d = new Vector3(0.85f, 0.25f, 0);
-		Vector3 d2 = new Vector3(0.85f, -0.25f, 0);
-		Vector3 e = new Vector3(0.25f, -0.75f, 0);
-		Vector3 f = new Vector3(-0.25f, -0.75f, 0);
-		Vector3 g = new Vector3(-0.95f, -0.25f, 0);
-		Vector3 h = new Vector3(-0.5f, -0.25f, 0);
-		Vector3 i = new Vector3(-0.5f, 0.25f, 0);
 
-		lines = Arrays.asList(new Vector3[] { a, b, b, c, c, d, d, d2, d2, e,
-				e, f, f, g, g, h, h, i, i, a });
-		poly = Arrays.asList(new Vector3[] { a, b, c, a, c, d, i, d, h, d, h,
-				d2, g, f, d2, f, d2, e });
+		if (lines == null) {
+			float r = 0.9f;
+			float ir = 0.8f;
+			Vector3 q0 = new Vector3(-r, -r, 0);
+			Vector3 q1 = new Vector3(r, -r, 0);
+			Vector3 q2 = new Vector3(r, r, 0);
+			Vector3 q3 = new Vector3(-r, r, 0);
+
+			int l = 20;
+			Vector3 circle[] = new Vector3[l];
+			for (int i = 0; i < l; i++) {
+				float phase = 3.1415f * 2 * i / l;
+				circle[i] = new Vector3((float) Math.sin(phase) * ir,
+						(float) Math.cos(phase) * ir, 0);
+			}
+
+			lines = new ArrayList<Vector3>();
+			
+			lines.add(q0);
+			lines.add(q1);
+			lines.add(q1);
+			lines.add(q2);
+			lines.add(q2);
+			lines.add(q3);
+			lines.add(q3);
+			lines.add(q0);
+			poly = new ArrayList<Vector3>();
+			for (int index = 0; index < l; index++) {
+				lines.add(circle[index]);
+				lines.add(circle[(index + 1) % l]);
+				poly.add(circle[index]);
+				poly.add(circle[(index + 1) % l]);
+				poly.add(new Vector3(0, 0, 0));
+			}
+		}
 		setTurningSpeed(15.0f);
 	}
 
