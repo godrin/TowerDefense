@@ -41,6 +41,7 @@ public class Renderer implements IRenderer {
 			Gdx.gl10.glRotatef(angle, 0, 0, 1);
 
 			Gdx.gl10.glScalef(size, size, size);
+			Gdx.gl10.glLineWidth(pos.getSystem().getScale() * 0.04f);
 
 			renderer.begin(GL10.GL_LINES);
 			for (Vector3 v : lines) {
@@ -53,7 +54,6 @@ public class Renderer implements IRenderer {
 			Gdx.gl10.glPopMatrix();
 		} else {
 
-		
 		}
 	}
 
