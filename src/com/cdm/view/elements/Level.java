@@ -237,9 +237,6 @@ public class Level {
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		SoundFX.play(Type.HIT);
-		if (false)
-			this.add(enemyUnit.getPosition(), UnitType.EXPLOSION);
-		else
 			displayEffectsToAdd.add(new Explosion(enemyUnit.getPosition(), enemyUnit
 					.getSize(),this));
 		unitsToRemove.add(enemyUnit);

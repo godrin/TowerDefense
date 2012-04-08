@@ -25,15 +25,22 @@ public class Rocket extends EnemyUnit implements Element {
 	public static final Vector3 g = new Vector3(-1.25f, -0.25f, 0);
 	public static final Vector3 h = new Vector3(-0.6f, -0.25f, 0);
 	public static final Vector3 i = new Vector3(-0.6f, 0.25f, 0);
+	public static final Vector3 j = new Vector3(-0.6f, 0, 0);
+	public static final Vector3 k = new Vector3(-1.35f, 0, 0);
+	public static final Vector3 l = new Vector3(0.65f, 0.5f, 0);
+	public static final Vector3 m = new Vector3(1.0f, 0.5f, 0);
+	public static final Vector3 n = new Vector3(0.65f, -0.5f, 0);
+	public static final Vector3 o = new Vector3(1.0f, -0.5f, 0);
 
 	private static List<Vector3> lines = Arrays.asList(new Vector3[] { a, b, b,
-			c, c, d, d, d2, d2, e, e, f, f, g, g, h, h, i, i, a });
+			c, c, d, d, d2, d2, e, e, f, f, g, g, h, h, i, i, a, j, k, l, m, n,
+			o });
 	private static List<Vector3> poly = Arrays.asList(new Vector3[] { i, b, c,
 			a, i, b, i, c, d, h, g, f, f, h, e, h, d2, e, d2, d, h, h, i, d });
 	// setSize(1.0f / 1.5f);
 	private static final float SPEED = 0.5f;
 	private static final Color outerColor = new Color(0, 0, 1, 1.0f);
-	private static final Color innerColor = new Color(0, 0, 0.5f, 0.5f);
+	private static final Color innerColor = new Color(0, 0, 0.5f, 1f);
 	float angle = 180;
 
 	public Rocket(Position position) {
@@ -49,6 +56,13 @@ public class Rocket extends EnemyUnit implements Element {
 
 		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize());
 		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize());
+		if (innerColor.b >= 0) {
+			innerColor.b -= 0.0025f;
+			innerColor.r += 0.0025f;
+		} else {
+			innerColor.b = 0.5f;
+			innerColor.r = 0;
+		}
 	}
 
 	@Override
@@ -71,7 +85,7 @@ public class Rocket extends EnemyUnit implements Element {
 
 	@Override
 	public float getImpact(Class<? extends MovingShot> shotType, float shotLevel) {
-		return shotLevel / 10.0f;
+		return shotLevel / 10f;
 	}
 
 	@Override

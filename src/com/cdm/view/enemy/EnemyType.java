@@ -7,7 +7,7 @@ public enum EnemyType {
 
 	public static EnemyType random() {
 		double r = Math.random();
-		if (r < 0.4)
+		if (r < 0.2)
 			return ROCKET;
 		else if (r < 0.5)
 			return TANK;
@@ -26,7 +26,7 @@ public enum EnemyType {
 		case BIG_SHIP:
 			return 2.5f;
 		case ROCKET:
-			return 3.5f;
+			return 1.5f;
 		}
 		return 0.0f;
 	}
