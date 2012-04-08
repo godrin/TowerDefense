@@ -11,7 +11,7 @@ import com.cdm.view.elements.Level;
 
 public class SomeShot extends MovingShot {
 
-	public static float speed = 0.8f;
+	public static float speed = 1f;
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 
@@ -52,6 +52,10 @@ public class SomeShot extends MovingShot {
 	@Override
 	public float getSpeed() {
 		return speed;
+	}
+	
+	public static float getImpact() {
+		return 10;
 	}
 
 }

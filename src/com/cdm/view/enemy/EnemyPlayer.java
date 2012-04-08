@@ -15,7 +15,7 @@ public class EnemyPlayer {
 	};
 
 	private Mode mode = Mode.WAIT;
-	private int levelNo = 1;
+	private static int levelNo = 1;
 	private float enemyStrength = 3.0f;
 	private Level level;
 	private float timeToNextWave = WAITING_TIME;
@@ -27,7 +27,7 @@ public class EnemyPlayer {
 		return level;
 	}
 
-	public int getLevelNo() {
+	public static int getLevelNo() {
 		return levelNo;
 	}
 

@@ -161,7 +161,7 @@ public class Tank extends EnemyUnit {
 
 	@Override
 	public float getImpact(Class<? extends MovingShot> shotType, float shotLevel) {
-		return 0.1f;
+		return 0.1f / EnemyPlayer.getLevelNo();
 	}
 
 	@Override

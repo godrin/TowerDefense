@@ -65,7 +65,7 @@ public class SmallShip extends EnemyUnit implements Element {
 
 	@Override
 	public float getImpact(Class<? extends MovingShot> shotType, float shotLevel) {
-		return shotLevel / 3.0f;
+		return shotLevel / EnemyPlayer.getLevelNo();
 	}
 
 	@Override
