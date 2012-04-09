@@ -74,7 +74,7 @@ public class EnemyPlayer {
 
 		if (true) {
 			// strength-based randomized enemy creation
-			enemyStrength += 1.5f * (float)getLevelNo();
+			enemyStrength += (1.5f * (float)getLevelNo());
 			Float currentStrength = enemyStrength;
 			Float lastTime = 0.0f;
 

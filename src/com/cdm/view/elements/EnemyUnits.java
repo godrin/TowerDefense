@@ -7,6 +7,7 @@ import com.cdm.view.enemy.EnemyUnit;
 import com.cdm.view.enemy.Rocket;
 import com.cdm.view.enemy.SmallShip;
 import com.cdm.view.enemy.Tank;
+import com.cdm.view.enemy.Truck;
 
 public class EnemyUnits {
 	public static EnemyUnit create(EnemyType t, Position position) {
@@ -21,6 +22,9 @@ public class EnemyUnits {
 		}
 		if (EnemyType.ROCKET.equals(t)) {
 			return new Rocket(position);
+		}
+		if (EnemyType.TRUCK.equals(t)) {
+			return new Truck(position);
 		}
 		return null;
 	}
