@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cdm.SString;
+import com.cdm.gui.BigButton;
 import com.cdm.gui.Button;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.IUnitTypeSelected;
@@ -31,6 +32,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Position dragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Position oldDragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Sound sound;
+	private BigButton bigButton=new BigButton(200,100,160,50,"Start game");
 
 	public LevelScreen() {
 
@@ -43,6 +45,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		sizeButton.setButtonName(SString.SIZE_BUTTON);
 		sizeButton.setPressedListener(this);
 		gui.add(sizeButton);
+		gui.add(bigButton);
 	}
 
 	public void dispose() {
@@ -112,6 +115,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	private void modCam(int dx, int dy) {
 		Position.LEVEL_REF.moveBy(dx, dy);
+		System.out.println("S:"+Position.LEVEL_REF.getScale());
+		System.out.println("X:"+Position.LEVEL_REF.getX()*Position.LEVEL_REF.getScale());
+		System.out.println("Y:"+Position.LEVEL_REF.getY()*Position.LEVEL_REF.getScale());
 	}
 
 	private void drawLineBased(float delta) {

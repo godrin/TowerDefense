@@ -8,10 +8,9 @@ public class Position {
 
 	public static CoordSystem SCREEN_REF = new CoordSystem(0, 0, 1);
 	public static CoordSystem BUTTON_REF = new CoordSystem(0, 0, 1);
-	public static CoordSystem LEVEL_REF = new CoordSystem(0, 0, 32);
+	public static CoordSystem LEVEL_REF = new CoordSystem(0, 0, 48);
 
 	public float x;
-
 	public float y;
 	public static Vector3 tmpVector = new Vector3();
 	public static Position tmpPos = new Position(0, 0, null);

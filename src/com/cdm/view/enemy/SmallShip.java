@@ -24,10 +24,21 @@ public class SmallShip extends EnemyUnit implements Element {
 			c, c, d, d, a, });
 	private static List<Vector3> poly = Arrays.asList(new Vector3[] { a, b, d,
 			b, c, d });
+
+	private static List<Vector3> ray = Arrays.asList(new Vector3[] {
+			new Vector3(), new Vector3(), new Vector3(), new Vector3(),
+			new Vector3(), new Vector3(), new Vector3(), new Vector3() });
+	private float rayPhase = 0.0f;
+
 	float angle = 0.0f;
 
 	private static final float SPEED = 0.3f;
 	private static final Color lineColor = new Color(0.9f, 0, 0, 1.0f);
+
+	private static final float RAY_START = 0.5f;
+	private static final float RAY_DISTANCE = 0.5f;
+	private static final float RAY_LENGTH = RAY_DISTANCE*4;
+	private static final float RAY_SPEED = 0.5f;
 
 	public SmallShip(Position position) {
 		super(position);
@@ -42,7 +53,7 @@ public class SmallShip extends EnemyUnit implements Element {
 
 		renderer.drawPoly(getPosition(), poly, angle, Color.BLACK, getSize());
 		renderer.drawLines(getPosition(), lines, angle, lineColor, getSize());
-
+		renderer.drawLines(getPosition(), ray, angle, lineColor, getSize());
 	}
 
 	@Override
@@ -51,6 +62,20 @@ public class SmallShip extends EnemyUnit implements Element {
 		Position p = getPosition();
 		p.x += time * getSpeed();
 		setPosition(p); // react to position change
+
+		rayPhase += RAY_SPEED * time;
+
+		for (int rayI = 0; rayI < ray.size() / 2; rayI++) {
+			Vector3 a = ray.get(rayI * 2);
+			Vector3 b = ray.get(rayI * 2 + 1);
+
+			float ph = rayI * RAY_DISTANCE + rayPhase;
+			
+			ph %= RAY_LENGTH;
+			float size=(1-ph/RAY_LENGTH)*0.15f;
+			a.set(-ph - RAY_START, -size, 0);
+			b.set(-ph - RAY_START, size, 0);
+		}
 	}
 
 	@Override

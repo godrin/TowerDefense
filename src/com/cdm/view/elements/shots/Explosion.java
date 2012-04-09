@@ -21,7 +21,6 @@ public class Explosion implements DisplayEffect {
 		public float size;
 	}
 
-	// private Position pos;
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 	private List<Vector3> splinterPoly;
@@ -60,7 +59,10 @@ public class Explosion implements DisplayEffect {
 			splinter.currentPosition = new Position(getPosition());
 			splinter.currentAngle = (float) Math.random() * 180.0f;
 			splinter.angleSpeed = (float) Math.random() * 180.0f - 90.0f;
-			splinter.color = new Color(1, 0, 0, 1);
+			if (Math.random() < 0.8f)
+				splinter.color = new Color(1, 0, 0, 1);
+			else
+				splinter.color = new Color(0.8f, 0.8f, 0, 1);
 			splinter.size = getSize() * 0.5f + (float) Math.random() * 0.5f
 					+ getSize();
 			float maxSpeed = 2.0f;
@@ -77,7 +79,7 @@ public class Explosion implements DisplayEffect {
 	}
 
 	public void draw(IRenderer renderer) {
-		if (size >=0.9f)
+		if (size >= 0.9f)
 			size = 0.8f;
 		if (size >= 0.0f) {
 
