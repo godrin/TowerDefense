@@ -245,7 +245,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	@Override
 	public boolean scrolled(int amount) {
 		int nu = (int) (Position.LEVEL_REF.getScale() + amount);
-		if (nu >= 32 && nu <= 128)
+		if (nu >= 40 && nu <= 128)
 			Position.LEVEL_REF.setScale(nu);
 
 		System.out.println("SCROLL " + amount + " "

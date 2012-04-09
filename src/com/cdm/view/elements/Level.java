@@ -38,6 +38,8 @@ public class Level {
 
 	public Level(int w, int h, int endY) {
 		grid = new Grid(w, h, endY);
+		Position.LEVEL_REF.setWidth(w);
+		Position.LEVEL_REF.setHeight(h);
 		player = new EnemyPlayer();
 		player.setLevel(this);
 		boxDrawer = new BoxDrawing(getEnemyStartPosition(),
