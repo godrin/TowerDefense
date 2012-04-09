@@ -5,12 +5,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL10;
 import com.cdm.gui.effects.SoundFX;
-import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.LevelScreen;
+import com.cdm.view.MenuScreen;
 import com.cdm.view.Screen;
 import com.cdm.view.enemy.EnemyPlayer;
 
-public class TowerGame extends EnemyPlayer implements ApplicationListener {
+public class TowerGame extends EnemyPlayer implements ApplicationListener, Game {
 	private static final long serialVersionUID = 1L;
 
 	private boolean running = false;
@@ -19,11 +19,13 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener {
 	private float accum = 0;
 	public Music music, music0, music1;
 	boolean stop = false;
+	private LevelScreen levelScreen;
+	private MenuScreen menuScreen;
 
 	public void create() {
 		running = true;
-		setScreen(new LevelScreen());
-		Gdx.input.setInputProcessor(screen);
+		levelScreen=new LevelScreen(this);
+		setScreen(menuScreen=new MenuScreen(this));
 		music0 = Gdx.audio.newMusic(Gdx.files.internal("data/level01.ogg"));
 		music1 = Gdx.audio.newMusic(Gdx.files.internal("data/level02.ogg"));
 		music = music1;
@@ -61,8 +63,11 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener {
 		if (screen != null)
 			screen.removed();
 		screen = newScreen;
-		if (screen != null)
+
+		if (screen != null) {
+			Gdx.input.setInputProcessor(screen);
 			screen.wait(this);
+		}
 	}
 
 	public void render() {
@@ -88,8 +93,7 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener {
 						music = music0;
 						stop = true;
 					}
-				}
-				else if (music == music0) {
+				} else if (music == music0) {
 					if (stop != true) {
 						music = music1;
 						stop = true;
@@ -113,5 +117,12 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener {
 		if (screen != null)
 			screen.dispose();
 
+	}
+
+	@Override
+	public void setScreen(String string) {
+		if(Screen.LEVEL_SCREEN.equals(string))
+			setScreen(levelScreen);
+		
 	}
 }

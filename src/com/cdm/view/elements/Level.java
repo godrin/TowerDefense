@@ -96,6 +96,8 @@ public class Level {
 	}
 
 	public void draw(IRenderer renderer) {
+		drawBox(renderer);
+
 		for (Unit unit : units) {
 			if (unit != null)
 				unit.draw(renderer);
@@ -106,7 +108,6 @@ public class Level {
 		if (selector != null)
 			selector.draw(renderer);
 
-		drawBox(renderer);
 
 	}
 
