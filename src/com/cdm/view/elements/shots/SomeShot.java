@@ -11,7 +11,7 @@ import com.cdm.view.elements.Level;
 
 public class SomeShot extends MovingShot {
 
-	public static float speed = 0.7f;
+	public static float speed = 1f;
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 
@@ -29,26 +29,33 @@ public class SomeShot extends MovingShot {
 
 		lines = Arrays.asList(new Vector3[] { a, b, b, c, c, d, d, e, e, f, f,
 				g, g, h, h, i, i, a });
-		poly = Arrays.asList(new Vector3[] { a, b, c });
+		poly = Arrays.asList(new Vector3[] { a, b, c, d, e, i, i, h, e, h, g,
+				f, f, g, i, f, g, d });
 
 	}
 
 	public float getSize() {
-		return 0.3f;
+		return 0.2f;
 
 	}
 
 	@Override
 	public void draw(IRenderer renderer) {
-		renderer.drawPoly(getPosition(), poly, angle, new Color(0.5f, 0, 0,
-				1.0f), getSize());
-		renderer.drawLines(getPosition(), lines, angle, new Color(0.9f, 0, 0,
-				1.0f), getSize());
+
+		renderer.drawPoly(getPosition(), poly, angle,
+				new Color(1, 0, 0, 1.0f), getSize());
+		renderer.drawLines(getPosition(), lines, angle,
+				new Color((float) Math.random() + 1, (float) Math.random(),
+						(float) Math.random(), 1.0f), getSize());
 	}
 
 	@Override
 	public float getSpeed() {
 		return speed;
+	}
+	
+	public static float getImpact() {
+		return 10;
 	}
 
 }

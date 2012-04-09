@@ -9,7 +9,6 @@ import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.elements.shots.Rocket;
 import com.cdm.view.elements.shots.SomeShot;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -81,10 +80,6 @@ public class RocketThrower extends RotatingUnit implements Element {
 				getLevel().addShot(
 						new SomeShot(startingPos, anticipatePosition(enemy),
 								getLevel()));
-				if (false)
-					getLevel().addShot(
-							new Rocket(startingPos, anticipatePosition(enemy),
-									getLevel()));
 				SoundFX.play(Type.SHOT);
 
 			}

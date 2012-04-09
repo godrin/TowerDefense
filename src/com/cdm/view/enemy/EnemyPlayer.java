@@ -15,7 +15,7 @@ public class EnemyPlayer {
 	};
 
 	private Mode mode = Mode.WAIT;
-	private int levelNo = 1;
+	private static int levelNo = 1;
 	private float enemyStrength = 3.0f;
 	private Level level;
 	private float timeToNextWave = WAITING_TIME;
@@ -27,7 +27,7 @@ public class EnemyPlayer {
 		return level;
 	}
 
-	public int getLevelNo() {
+	public static int getLevelNo() {
 		return levelNo;
 	}
 
@@ -74,7 +74,7 @@ public class EnemyPlayer {
 
 		if (true) {
 			// strength-based randomized enemy creation
-			enemyStrength+=1.5f;
+			enemyStrength += (1.5f * (float)getLevelNo());
 			Float currentStrength = enemyStrength;
 			Float lastTime = 0.0f;
 
@@ -83,7 +83,7 @@ public class EnemyPlayer {
 				if (t.getStrength() < currentStrength
 						+ EnemyType.STRENGTH_THRESHOLD) {
 					currentStrength -= t.getStrength();
-					lastTime += (float) Math.random()*5.0f + 0.6f;
+					lastTime += (float) Math.random() * 5.0f + 0.6f;
 					System.out.println("ADD " + t + " " + lastTime);
 					defs.add(new EnemyDef(t, lastTime));
 				}

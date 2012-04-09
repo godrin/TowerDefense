@@ -63,7 +63,11 @@ public abstract class MovingShot implements Element, DisplayEffect {
 	}
 
 	public float getLevel() {
-		return 1;
+		if (this.getClass()== SomeShot.class)
+		return 10;
+		if (this.getClass()== SimpleShot.class)
+			return 1;
+		else return 1;
 	}
 
 }
