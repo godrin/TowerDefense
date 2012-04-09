@@ -57,6 +57,18 @@ public class CoordSystem {
 	public void moveBy(int dx, int dy) {
 		x += dx / scale;
 		y += dy / scale;
+		System.out.println("XXXX:"+x);
+		if(x>34.0f/48f)
+			x=34.0f/48f;
+		if(y>34.0f/48f)
+			y=34.0f/48f;
+		if(true)
+			return;
+		//FIXME
+		if(x<-148/48.0f)
+			x=-148/48.0f;
+		if(y<-34/48.0f)
+			y=-36/48.0f;
 	}
 
 }

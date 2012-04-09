@@ -70,6 +70,7 @@ public class SmallShip extends EnemyUnit implements Element {
 			Vector3 b = ray.get(rayI * 2 + 1);
 
 			float ph = rayI * RAY_DISTANCE + rayPhase;
+			
 			ph %= RAY_LENGTH;
 			float size=(1-ph/RAY_LENGTH)*0.15f;
 			a.set(-ph - RAY_START, -size, 0);

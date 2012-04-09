@@ -12,7 +12,7 @@ public class UnitTypeButton extends Button {
 	private Unit.UnitType type;
 	private IUnitTypeSelected listener;
 	private Unit caption;
-	private Color moneyColor = new Color(0, 0, 0, 1);
+	private Color moneyColor = new Color(1, 1, 1, 1);
 	private Level level;
 	private int cost = 2;
 
@@ -54,7 +54,7 @@ public class UnitTypeButton extends Button {
 		setEnabled(level.getMoney() >= cost);
 
 		super.draw(renderer);
-		Position.BUTTON_REF.setScale(getRadius()*2);
+		Position.BUTTON_REF.setScale(getRadius() * 2);
 		caption.draw(renderer);
 
 		String money = "$" + cost;

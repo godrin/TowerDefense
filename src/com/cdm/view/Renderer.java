@@ -138,7 +138,7 @@ public class Renderer implements IRenderer {
 		spriteBatch.setColor(c);
 		// spriteBatch.setBlendFunction(GL10.GL_ONE,
 		// GL10.GL_ONE_MINUS_SRC_ALPHA);
-
+font.setColor(c);
 		font.drawMultiLine(spriteBatch, string, i, j,
 		// 160 + bounds.height / 2,
 				bounds.width, HAlignment.CENTER);
