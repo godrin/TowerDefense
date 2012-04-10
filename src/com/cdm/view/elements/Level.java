@@ -38,6 +38,8 @@ public class Level {
 
 	public Level(int w, int h, int endY) {
 		grid = new Grid(w, h, endY);
+		Position.LEVEL_REF.setWidth(w);
+		Position.LEVEL_REF.setHeight(h);
 		player = new EnemyPlayer();
 		player.setLevel(this);
 		boxDrawer = new BoxDrawing(getEnemyStartPosition(),
@@ -96,6 +98,8 @@ public class Level {
 	}
 
 	public void draw(IRenderer renderer) {
+		drawBox(renderer);
+
 		for (Unit unit : units) {
 			if (unit != null)
 				unit.draw(renderer);
@@ -106,7 +110,6 @@ public class Level {
 		if (selector != null)
 			selector.draw(renderer);
 
-		drawBox(renderer);
 
 	}
 

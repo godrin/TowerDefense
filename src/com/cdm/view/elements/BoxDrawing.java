@@ -8,10 +8,11 @@ import com.cdm.view.Position;
 
 public class BoxDrawing {
 	List<SingleBox> boxes = new ArrayList<SingleBox>();
+	List<Element> es = new ArrayList<Element>();
 
 	public BoxDrawing(Position start, Position end, int gh) {
-		//makeBox(0,0);
-		if(false)
+		// makeBox(0,0);
+		if (false)
 			return;
 		for (int x = (int) start.x; x <= (int) end.x; x++) {
 			makeBox(x, -1);
@@ -23,6 +24,15 @@ public class BoxDrawing {
 			makeBox(-1, y);
 			makeBox((int) end.x, y);
 		}
+
+		for (int x = 0; x < end.x; x++) {
+			for (int y = 0; y <= gh; y++) {
+				es.add(new BackgroundElement(new Position(x, y,
+						Position.LEVEL_REF)));
+			}
+		}
+		es.add(new BackgroundElement(start));
+		es.add(new BackgroundElement(end));
 	}
 
 	private void makeBox(int x, int y) {
@@ -36,5 +46,7 @@ public class BoxDrawing {
 
 		for (int i = 0; i < boxes.size(); i++)
 			boxes.get(i).draw(renderer);
+		for (int i = 0; i < es.size(); i++)
+			es.get(i).draw(renderer);
 	}
 }

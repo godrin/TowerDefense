@@ -17,8 +17,8 @@ public class Cannon extends RotatingUnit implements Element {
 	private static final float COOLING_SPEED = 0.3f;
 	private static final float HOT_PER_SHOT = 0.4f;
 	private static final float TOO_HOT = 0.6f;
-	private List<Vector3> lines;
-	private List<Vector3> poly;
+	private static List<Vector3> lines = null;
+	private static List<Vector3> poly = null;
 	private float shotFrequency = 0.5f;
 	private float hot = 0.0f;
 
@@ -35,21 +35,23 @@ public class Cannon extends RotatingUnit implements Element {
 
 	public Cannon(Position p) {
 		super(p);
-		Vector3 a = new Vector3(-0.95f, 0.25f, 0);
-		Vector3 b = new Vector3(-0.25f, 0.75f, 0);
-		Vector3 c = new Vector3(0.25f, 0.75f, 0);
-		Vector3 d = new Vector3(0.85f, 0.25f, 0);
-		Vector3 d2 = new Vector3(0.85f, -0.25f, 0);
-		Vector3 e = new Vector3(0.25f, -0.75f, 0);
-		Vector3 f = new Vector3(-0.25f, -0.75f, 0);
-		Vector3 g = new Vector3(-0.95f, -0.25f, 0);
-		Vector3 h = new Vector3(-0.5f, -0.25f, 0);
-		Vector3 i = new Vector3(-0.5f, 0.25f, 0);
+		if (lines == null) {
+			Vector3 a = new Vector3(-0.95f, 0.25f, 0);
+			Vector3 b = new Vector3(-0.25f, 0.75f, 0);
+			Vector3 c = new Vector3(0.25f, 0.75f, 0);
+			Vector3 d = new Vector3(0.85f, 0.25f, 0);
+			Vector3 d2 = new Vector3(0.85f, -0.25f, 0);
+			Vector3 e = new Vector3(0.25f, -0.75f, 0);
+			Vector3 f = new Vector3(-0.25f, -0.75f, 0);
+			Vector3 g = new Vector3(-0.95f, -0.25f, 0);
+			Vector3 h = new Vector3(-0.5f, -0.25f, 0);
+			Vector3 i = new Vector3(-0.5f, 0.25f, 0);
 
-		lines = Arrays.asList(new Vector3[] { a, b, b, c, c, d, d, d2, d2, e,
-				e, f, f, g, g, h, h, i, i, a });
-		poly = Arrays.asList(new Vector3[] { a, b, c, a, c, d, i, d, h, d, h,
-				d2, g, f, d2, f, d2, e });
+			lines = Arrays.asList(new Vector3[] { a, b, b, c, c, d, d, d2, d2,
+					e, e, f, f, g, g, h, h, i, i, a });
+			poly = Arrays.asList(new Vector3[] { a, b, c, a, c, d, i, d, h, d,
+					h, d2, g, f, d2, f, d2, e });
+		}
 
 	}
 

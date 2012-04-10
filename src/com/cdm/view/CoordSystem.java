@@ -4,8 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 
 public class CoordSystem {
-	private float x = 0.0f, y = 0.0f, scale = 1.0f;
+	private float x = 0.0f, y = 0.0f, scale = 1.0f, w=-1, h=-1;
 	private static final Vector3 tmp = new Vector3();
+	private static final float MARGIN = 1.0f / 2.0f;
 
 	public CoordSystem(float px, float py, float s) {
 		x = px;
@@ -25,6 +26,7 @@ public class CoordSystem {
 
 	public void setScale(float s) {
 		scale = s;
+		checkTranslation();
 	}
 
 	public Vector3 getTranslate() {
@@ -54,21 +56,36 @@ public class CoordSystem {
 		return scale;
 	}
 
+	public void checkTranslation() {
+		// System.out.println("XXXX:" + x);
+		if (x > 0.5f + MARGIN)
+			x = 0.5f + MARGIN;
+		if (y > 0.5f + MARGIN)
+			y = 0.5f + MARGIN;
+		if (h>0 && w>0) {
+			
+			float mw=w-Gdx.graphics.getWidth()/getScale();
+			float mh=h+1-Gdx.graphics.getHeight()/getScale();
+			
+			if (x < -mw)
+				x = -mw;
+			if (y < -mh)
+				y = -mh;
+		}
+	}
+
 	public void moveBy(int dx, int dy) {
 		x += dx / scale;
 		y += dy / scale;
-		System.out.println("XXXX:"+x);
-		if(x>34.0f/48f)
-			x=34.0f/48f;
-		if(y>34.0f/48f)
-			y=34.0f/48f;
-		if(true)
-			return;
-		//FIXME
-		if(x<-148/48.0f)
-			x=-148/48.0f;
-		if(y<-34/48.0f)
-			y=-36/48.0f;
+		checkTranslation();
+	}
+
+	public void setWidth(int w) {
+		this.w = w;
+	}
+
+	public void setHeight(int h2) {
+		this.h = h2;
 	}
 
 }

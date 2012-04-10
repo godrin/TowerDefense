@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.cdm.Game;
 import com.cdm.SString;
 import com.cdm.gui.BigButton;
 import com.cdm.gui.Button;
@@ -32,10 +33,14 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Position dragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Position oldDragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Sound sound;
-	private BigButton bigButton=new BigButton(400,50,160,50,"Start game");
 
-	public LevelScreen() {
+	//private BigButton bigButton=new BigButton(400,50,160,50,"Start game");
 
+	private Game game;
+
+
+	public LevelScreen(Game pGame) {
+		game = pGame;
 		level = new Level(20, 10, 5);
 		hud.setLevel(level);
 		bg = load("data/bg_stars2.png", 128, 128);
@@ -45,7 +50,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		sizeButton.setButtonName(SString.SIZE_BUTTON);
 		sizeButton.setPressedListener(this);
 		gui.add(sizeButton);
-		gui.add(bigButton);
+
 	}
 
 	public void dispose() {
@@ -85,7 +90,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	private void draw(float delta) {
-		drawBackground();
+		//drawBackground();
 
 		drawLineBased(delta);
 		hud.draw(renderer);
@@ -94,7 +99,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private void drawBackground() {
 
 		spriteBatch.begin();
-
 		for (int x = 0; x < 16; x++)
 			for (int y = 0; y < 16; y++)
 				draw(bg, x * 128, y * 128);
@@ -115,9 +119,11 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	private void modCam(int dx, int dy) {
 		Position.LEVEL_REF.moveBy(dx, dy);
-		System.out.println("S:"+Position.LEVEL_REF.getScale());
-		System.out.println("X:"+Position.LEVEL_REF.getX()*Position.LEVEL_REF.getScale());
-		System.out.println("Y:"+Position.LEVEL_REF.getY()*Position.LEVEL_REF.getScale());
+		System.out.println("S:" + Position.LEVEL_REF.getScale());
+		System.out.println("X:" + Position.LEVEL_REF.getX()
+				* Position.LEVEL_REF.getScale());
+		System.out.println("Y:" + Position.LEVEL_REF.getY()
+				* Position.LEVEL_REF.getScale());
 	}
 
 	private void drawLineBased(float delta) {
@@ -243,7 +249,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	@Override
 	public boolean scrolled(int amount) {
 		int nu = (int) (Position.LEVEL_REF.getScale() + amount);
-		if (nu >= 32 && nu <= 128)
+		if (nu >= 40 && nu <= 128)
 			Position.LEVEL_REF.setScale(nu);
 
 		System.out.println("SCROLL " + amount + " "
