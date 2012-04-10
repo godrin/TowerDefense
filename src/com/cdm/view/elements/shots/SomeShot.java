@@ -55,7 +55,7 @@ public class SomeShot extends MovingShot {
 	}
 	
 	public static float getImpact() {
-		return 10;
+		return 25;
 	}
 
 }

@@ -7,16 +7,15 @@ public enum EnemyType {
 
 	public static EnemyType random() {
 		double r = Math.random();
-		//if (r > 0) return TRUCK;
-		if (EnemyPlayer.getLevelNo() > 3 && r < 0.1)
+		if (EnemyPlayer.getLevelNo() > 5 && r < 0.1)
 			return TANK2;
-		if (EnemyPlayer.getLevelNo() > 5 && r < 0.2)
+		if (EnemyPlayer.getLevelNo() > 7 && r < 0.2)
 			return ROCKET;
 		else if (r < 0.4)
 			return TANK;
 		else if (r < 0.6)
 			return BIG_SHIP;
-		else if (EnemyPlayer.getLevelNo() > 2 && r < 0.8f)
+		else if (EnemyPlayer.getLevelNo() > 3 && r < 0.8f)
 			return TRUCK;
 		else
 			return SMALL_SHIP;

@@ -32,7 +32,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Position dragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Position oldDragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Sound sound;
-	private BigButton bigButton=new BigButton(200,100,160,50,"Start game");
+	private BigButton bigButton=new BigButton(400,50,160,50,"Start game");
 
 	public LevelScreen() {
 

@@ -3,6 +3,7 @@ package com.cdm.gui;
 import com.badlogic.gdx.graphics.Color;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Rectangle;
+import com.cdm.view.elements.Level;
 
 public class BigButton extends Widget {
 
@@ -20,11 +21,13 @@ public class BigButton extends Widget {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		Rectangle box = getBBox();
-		renderer.fillRect(box.x(), box.y(), box.x2(), box.y2(), bg);
-		renderer.fillRect(topBox.x(), topBox.y(), topBox.x2(), topBox.y2(), bg2);
-		renderer.drawText((int) box.x()+5, (int) box.y2(), caption, textColor);
-		// rect.draw(renderer);
+				Rectangle box = getBBox();
+				renderer.fillRect(box.x(), box.y(), box.x2(), box.y2(), bg);
+				renderer.fillRect(topBox.x(), topBox.y(), topBox.x2(),
+						topBox.y2(), bg2);
+				renderer.drawText((int) box.x() + 5, (int) box.y2(), caption,
+						textColor);
+				// rect.draw(renderer);
 	}
 
 	@Override
