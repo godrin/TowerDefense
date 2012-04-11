@@ -5,6 +5,7 @@ import java.util.TreeMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.cdm.view.SoundScreen;
 
 public class SoundFX {
 
@@ -37,6 +38,6 @@ public class SoundFX {
 	public static void play(Type type) {
 		Sound s = sounds.get(type);
 		if (s != null)
-			s.play(0.5f);
+			s.play(SoundScreen.FXvol);
 	}
 }
