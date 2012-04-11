@@ -86,4 +86,9 @@ public class RocketThrower extends RotatingUnit implements Element {
 
 		}
 	}
+
+	@Override
+	public int getZLayer() {
+		return 0;
+	}
 }

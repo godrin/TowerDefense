@@ -100,16 +100,18 @@ public class Level {
 	public void draw(IRenderer renderer) {
 		drawBox(renderer);
 
-		for (Unit unit : units) {
-			if (unit != null)
-				unit.draw(renderer);
+		for (int zLayer = 0; zLayer < 10; zLayer++) {
+			for (Unit unit : units) {
+				if (unit != null)
+					if (unit.getZLayer()==zLayer)
+						unit.draw(renderer);
+			}
 		}
 		for (DisplayEffect shot : displayEffects) {
 			shot.draw(renderer);
 		}
 		if (selector != null)
 			selector.draw(renderer);
-
 
 	}
 
@@ -240,8 +242,8 @@ public class Level {
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		SoundFX.play(Type.HIT);
-			displayEffectsToAdd.add(new Explosion(enemyUnit.getPosition(), enemyUnit
-					.getSize(),this));
+		displayEffectsToAdd.add(new Explosion(enemyUnit.getPosition(),
+				enemyUnit.getSize(), this));
 		unitsToRemove.add(enemyUnit);
 		money += enemyUnit.getMoney();
 		points += enemyUnit.getPoints();
@@ -301,7 +303,7 @@ public class Level {
 	}
 
 	public int getHealth() {
-		if (health<= 0)
+		if (health <= 0)
 			health = 0;
 		return health;
 	}

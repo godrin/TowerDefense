@@ -182,4 +182,9 @@ public class Tank2 extends EnemyUnit {
 		return 2;
 	}
 
+	@Override
+	public int getZLayer() {
+		return 0;
+	}
+
 }

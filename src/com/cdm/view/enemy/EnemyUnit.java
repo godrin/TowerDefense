@@ -27,7 +27,7 @@ public abstract class EnemyUnit extends Unit {
 	public abstract int getPoints();
 
 	public abstract int getBonus();
-
+	
 	@Override
 	public void draw(IRenderer renderer) {
 		float pad = 0.05f;

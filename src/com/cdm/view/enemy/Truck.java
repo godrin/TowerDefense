@@ -210,4 +210,9 @@ public class Truck extends EnemyUnit {
 		return (shotLevel / EnemyPlayer.getLevelNo());
 	}
 
+	@Override
+	public int getZLayer() {
+		return 0;
+	}
+
 }

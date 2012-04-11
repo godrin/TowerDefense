@@ -82,4 +82,6 @@ public abstract class Unit implements Element {
 		this.cost = cost;
 	}
 
+	public abstract int getZLayer();
+
 }
