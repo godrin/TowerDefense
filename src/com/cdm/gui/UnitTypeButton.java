@@ -15,7 +15,9 @@ public class UnitTypeButton extends Button {
 	private Color moneyColor = new Color(1, 1, 1, 1);
 	private Level level;
 	private int cost = 2;
-
+	private Position pos = getPosition();
+	
+	
 	public UnitTypeButton(int px, int py, int pradius, Unit.UnitType ptype,
 			Level plevel) {
 		super(px, py, pradius);
@@ -23,6 +25,8 @@ public class UnitTypeButton extends Button {
 		level = plevel;
 		caption = Elements.getElementBy(ptype, new Position(px, py,
 				Position.BUTTON_REF));
+		pos.y += 55;
+		pos.x -= 20;
 		// caption.setSize(pradius*0.7f);
 	}
 
@@ -58,7 +62,8 @@ public class UnitTypeButton extends Button {
 		caption.draw(renderer);
 
 		String money = "$" + cost;
-		renderer.drawText(getPosition(), money, moneyColor);
+		
+		renderer.drawText(pos, money, moneyColor);
 	}
 
 }

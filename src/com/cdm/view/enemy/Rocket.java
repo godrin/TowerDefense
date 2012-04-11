@@ -14,7 +14,7 @@ public class Rocket extends EnemyUnit implements Element {
 
 	public Position nextStep = null;
 	private static final Vector3 DIRECTION = new Vector3(1, 0, 0);
-
+	boolean up = true;
 	public static final Vector3 a = new Vector3(-1.25f, 0.25f, 0);
 	public static final Vector3 b = new Vector3(-0.5f, 0.75f, 0);
 	public static final Vector3 c = new Vector3(1.0f, 0.85f, 0);
@@ -56,12 +56,20 @@ public class Rocket extends EnemyUnit implements Element {
 
 		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize());
 		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize());
-		if (innerColor.b >= 0) {
-			innerColor.b -= 0.0025f;
-			innerColor.r += 0.0025f;
+		if (up) {
+			if (innerColor.b >= 0) {
+				innerColor.b -= 0.0025f;
+				innerColor.r += 0.0025f;
+			} else {
+				up = false;
+			}
 		} else {
-			innerColor.b = 0.5f;
-			innerColor.r = 0;
+			if (innerColor.r >= 0) {
+				innerColor.b += 0.0025f;
+				innerColor.r -= 0.0025f;
+			} else {
+				up = true;
+			}
 		}
 	}
 
