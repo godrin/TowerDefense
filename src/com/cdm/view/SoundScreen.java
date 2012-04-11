@@ -20,7 +20,7 @@ public class SoundScreen extends Screen implements IButtonPressed {
 	boolean stop = true;
 	Color white = new Color(1, 1, 1, 1);
 	String Smusic = "Not Playing...";
-	private float vol = 0.75f;
+	private float vol = 0.7f;
 
 	public SoundScreen(Game pgame) {
 
@@ -51,7 +51,8 @@ public class SoundScreen extends Screen implements IButtonPressed {
 		gui.addTime(delta);
 		gui.draw(renderer);
 		renderer.drawText(280, 400, Smusic, white);
-		renderer.drawText(300, 380, "Volume: " + vol, white);
+		float Svol = vol * 100;
+		renderer.drawText(300, 380, "Volume: " + Integer.toString((int) Svol), white);
 	}
 
 	@Override
@@ -68,15 +69,15 @@ public class SoundScreen extends Screen implements IButtonPressed {
 			}
 		} else if (buttonName.equals(SString.create("down"))) {
 			if (music != null) {
-				vol -= 0.05f;
+				vol -= 0.1;
 				if (vol <= 0)
 					vol = 0;
 				music.setVolume(vol);
-				System.out.println(vol);
+				System.out.println(Integer.toString((int) vol));
 			}
 		} else if (buttonName.equals(SString.create("on"))) {
 			if (music != null) {
-				music.setVolume(0.75f);
+				music.setVolume(vol);
 				music.setLooping(true);
 				stop = false;
 				if (!music.isPlaying())
