@@ -2,12 +2,15 @@ package com.cdm.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.cdm.Game;
+import com.cdm.TowerGame;
 import com.cdm.view.elements.Level;
 
 public class LevelDisplays {
 	private Level level;
 	private Color moneyColor = new Color(0.7f, 0.7f, 1.0f, 1.0f);
-
+	private MenuScreen menuScreen;
+	
 	public LevelDisplays() {
 
 	}
@@ -31,7 +34,8 @@ public class LevelDisplays {
 		renderer.drawText(Gdx.graphics.getWidth() - 140,
 				Gdx.graphics.getHeight() - 30,
 				"Energy " + Integer.toString(level.getHealth()), moneyColor);
-		if (level.gameover())
+		if (level.gameover()){
 			renderer.drawText(200, 200, "Game Over", moneyColor);
+		}
 	}
 }
