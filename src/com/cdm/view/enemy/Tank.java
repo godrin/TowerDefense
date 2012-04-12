@@ -45,12 +45,11 @@ public class Tank extends EnemyUnit {
 					new Vector3(0, -1.1f, 0), new Vector3(0, -1.5f, 0),
 					new Vector3(0, -1.1f, 0), new Vector3(0, -1.5f, 0),
 					new Vector3(0, -1.1f, 0),
-					
-					new Vector3(0, 1.5f, 0),
-					new Vector3(0, 1.1f, 0), new Vector3(0, 1.5f, 0),
-					new Vector3(0, 1.1f, 0), new Vector3(0, 1.5f, 0),
-					new Vector3(0, 1.1f, 0), new Vector3(0, 1.5f, 0),
-					new Vector3(0, 1.1f, 0), });
+
+					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0),
+					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0),
+					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0),
+					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0), });
 	private float chainPhase = 0.0f;
 
 	private static final Color innerColor = new Color(0.7f, 0, 0.6f, 1.0f);
@@ -131,7 +130,7 @@ public class Tank extends EnemyUnit {
 			x = (float) Math.sin(x);
 			x *= delta;
 			x += startX;
-			for (int lr = 0; lr < size * 4; lr += size*2) {
+			for (int lr = 0; lr < size * 4; lr += size * 2) {
 				Vector3 a = chainLines.get(lr + i * 2);
 				Vector3 b = chainLines.get(lr + i * 2 + 1);
 				a.x = x;
@@ -161,7 +160,7 @@ public class Tank extends EnemyUnit {
 
 	@Override
 	public float getImpact(Class<? extends MovingShot> shotType, float shotLevel) {
-		return (0.1f / EnemyPlayer.getLevelNo())*shotLevel;
+		return 0.2f * shotLevel;
 	}
 
 	@Override

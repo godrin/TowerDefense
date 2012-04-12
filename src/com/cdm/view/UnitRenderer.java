@@ -53,4 +53,13 @@ public class UnitRenderer implements IRenderer {
 		r.drawText(position, money, moneyColor);
 	}
 
+	@Override
+	public void render(PolySprite sprite, Position pos, float size, float angle) {
+		if (pos.buttonPos())
+			size *= Position.BUTTON_REF.getScale();
+		if (pos.screenPos())
+			size *= Position.LEVEL_REF.getScale();
+		r.render(sprite, pos, size, angle);
+	}
+
 }

@@ -29,7 +29,7 @@ public class Renderer implements IRenderer {
 	public void dispose() {
 		font.dispose();
 	}
-
+	
 	@Override
 	public void drawLines(Position pos, List<Vector3> lines, float angle,
 			Color color, float size) {
@@ -149,5 +149,25 @@ font.setColor(c);
 	@Override
 	public void drawText(Position position, String money, Color moneyColor) {
 		drawText((int) position.x, (int) position.y, money, moneyColor);
+	}
+
+	@Override
+	public void render(PolySprite sprite, Position pos, float size,float angle) {
+		if (Gdx.gl10 != null) {
+
+			Gdx.gl10.glPushMatrix();
+			initGlSettings();
+			Gdx.gl10.glTranslatef(pos.x, pos.y, 0);
+			Gdx.gl10.glRotatef(angle, 0, 0, 1);
+
+			Gdx.gl10.glScalef(size, size, size);
+			Gdx.gl10.glLineWidth(pos.getSystem().getScale() * 0.04f);
+
+			sprite.render();
+
+			Gdx.gl10.glPopMatrix();
+		} else {
+
+		}
 	}
 }

@@ -9,13 +9,13 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Level;
 
-public class SomeShot extends MovingShot {
+public class RocketShot extends MovingShot {
 
 	public static float speed = 1f;
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 
-	public SomeShot(Position from, Position to, Level plevel) {
+	public RocketShot(Position from, Position to, Level plevel) {
 		super(from, to, plevel);
 		Vector3 a = new Vector3(0, -0.4f, 0);
 		Vector3 b = new Vector3(0.75f, 0, 0);
@@ -54,8 +54,8 @@ public class SomeShot extends MovingShot {
 		return speed;
 	}
 	
-	public static float getImpact() {
-		return 25;
+	public float getLevel() {
+		return 3;
 	}
 
 }
