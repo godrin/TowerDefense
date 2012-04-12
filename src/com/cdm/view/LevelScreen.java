@@ -34,10 +34,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Position oldDragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Sound sound;
 
-	//private BigButton bigButton=new BigButton(400,50,160,50,"Start game");
-
 	private Game game;
-
 
 	public LevelScreen(Game pGame) {
 		game = pGame;
@@ -90,7 +87,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	private void draw(float delta) {
-		//drawBackground();
+		// drawBackground();
 
 		drawLineBased(delta);
 		hud.draw(renderer);
@@ -119,11 +116,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	private void modCam(int dx, int dy) {
 		Position.LEVEL_REF.moveBy(dx, dy);
-		System.out.println("S:" + Position.LEVEL_REF.getScale());
-		System.out.println("X:" + Position.LEVEL_REF.getX()
-				* Position.LEVEL_REF.getScale());
-		System.out.println("Y:" + Position.LEVEL_REF.getY()
-				* Position.LEVEL_REF.getScale());
 	}
 
 	private void drawLineBased(float delta) {

@@ -37,11 +37,7 @@ public class RocketThrower extends RotatingUnit implements Element {
 		poly = Arrays.asList(new Vector3[] { c0, c1, c2, c0, c2, c3 });
 
 		Color xColor = new Color(1, 1, 1, 1);
-		
-		Vector3 z0=new Vector3(-1000,-1000,0);
-		Vector3 z1=new Vector3(1000,-1000,0);
-		Vector3 z2=new Vector3(1000,1000,0);
-		Vector3 z3=new Vector3(-1000,1000,0);
+
 		sprite.addVertex(c0, xColor);
 		sprite.addVertex(c1, xColor);
 		sprite.addVertex(c2, xColor);
