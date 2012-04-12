@@ -19,7 +19,6 @@ public class SimpleShot extends MovingShot {
 		Vector3 a = new Vector3(-0.75f, 0.4f, 0);
 		Vector3 b = new Vector3(0.75f, 0.0f, 0);
 		Vector3 c = new Vector3(-0.75f, -0.4f, 0);
-		// Vector3 d = new Vector3(-0.25f, 0, 0);
 
 		lines = Arrays.asList(new Vector3[] { a, b, b, c, c, a });
 		poly = Arrays.asList(new Vector3[] { a, b, c });
