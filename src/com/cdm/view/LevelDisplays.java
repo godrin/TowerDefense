@@ -36,7 +36,7 @@ public class LevelDisplays {
 		renderer.drawText(Gdx.graphics.getWidth() - 140,
 				Gdx.graphics.getHeight() - 30,
 				"Energy " + Integer.toString(level.getHealth()), moneyColor);
-		if (!level.gameover()) {
+		if (level.gameover()) {
 			Renderer.font.setScale(2f);
 			if (up) {
 				if (color.a >= 0.01f) {
