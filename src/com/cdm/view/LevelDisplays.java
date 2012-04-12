@@ -10,7 +10,9 @@ public class LevelDisplays {
 	private Level level;
 	private Color moneyColor = new Color(0.7f, 0.7f, 1.0f, 1.0f);
 	private MenuScreen menuScreen;
-	
+	private Color color = new Color(moneyColor);
+	private boolean up = false;
+
 	public LevelDisplays() {
 
 	}
@@ -34,8 +36,25 @@ public class LevelDisplays {
 		renderer.drawText(Gdx.graphics.getWidth() - 140,
 				Gdx.graphics.getHeight() - 30,
 				"Energy " + Integer.toString(level.getHealth()), moneyColor);
-		if (level.gameover()){
-			renderer.drawText(200, 200, "Game Over", moneyColor);
+		if (!level.gameover()) {
+			Renderer.font.setScale(2f);
+			if (up) {
+				if (color.a <= 1.0f) {
+					color.a += 0.01f;
+				} if (color.a >= 1) {
+					up = false;
+				}
+			}
+			if (!up) {
+				if (color.a >= 0.0f) {
+					color.a -= 0.01f;
+				}
+				if (color.a <= 0) {
+					up = true;
+				}
+			}
+			renderer.drawText(280, 300, "Game Over", color);
+			Renderer.font.setScale(1f);
 		}
 	}
 }

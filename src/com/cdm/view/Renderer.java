@@ -14,14 +14,14 @@ import com.badlogic.gdx.math.Vector3;
 
 public class Renderer implements IRenderer {
 	ImmediateModeRenderer renderer = null;
-	BitmapFont font;
+	public static BitmapFont font;
 	private final SpriteBatch spriteBatch;
 
 	public Renderer() {
 		font = new BitmapFont(Gdx.files.internal("data/font16.fnt"),
 				Gdx.files.internal("data/font16.png"), false);
 		spriteBatch = new SpriteBatch();
-
+		
 		if (Gdx.gl20 == null)
 			renderer = new ImmediateModeRenderer();
 	}
