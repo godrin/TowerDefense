@@ -7,6 +7,8 @@ import com.cdm.TowerGame;
 public class Screen extends InputAdapter {
 
 	public static final String LEVEL_SCREEN = "levelScreen";
+	public static final String MENU_SCREEN = "menuScreen";
+	public static final String OPTIONS_SCREEN = "optionsScreen";
 
 	public void removed() {
 		// TODO Auto-generated method stub

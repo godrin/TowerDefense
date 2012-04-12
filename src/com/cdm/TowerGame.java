@@ -8,6 +8,7 @@ import com.cdm.gui.effects.SoundFX;
 import com.cdm.view.LevelScreen;
 import com.cdm.view.MenuScreen;
 import com.cdm.view.Screen;
+import com.cdm.view.SoundScreen;
 import com.cdm.view.enemy.EnemyPlayer;
 
 public class TowerGame extends EnemyPlayer implements ApplicationListener, Game {
@@ -21,11 +22,13 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener, Game 
 	boolean stop = false;
 	private LevelScreen levelScreen;
 	private MenuScreen menuScreen;
+	private SoundScreen optionsScreen;
 
 	public void create() {
 		running = true;
-		levelScreen=new LevelScreen(this);
-		setScreen(menuScreen=new MenuScreen(this));
+		levelScreen = new LevelScreen(this);
+		optionsScreen = new SoundScreen(this);
+		setScreen(menuScreen = new MenuScreen(this));
 		music0 = Gdx.audio.newMusic(Gdx.files.internal("data/level01.ogg"));
 		music1 = Gdx.audio.newMusic(Gdx.files.internal("data/level02.ogg"));
 		music = music1;
@@ -121,8 +124,12 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener, Game 
 
 	@Override
 	public void setScreen(String string) {
-		if(Screen.LEVEL_SCREEN.equals(string))
+		if (Screen.LEVEL_SCREEN.equals(string))
 			setScreen(levelScreen);
-		
+		if (Screen.OPTIONS_SCREEN.equals(string))
+			setScreen(optionsScreen);
+		if (Screen.MENU_SCREEN.equals(string))
+			setScreen(menuScreen);
+
 	}
 }

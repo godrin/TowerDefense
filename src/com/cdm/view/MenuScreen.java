@@ -39,7 +39,7 @@ public class MenuScreen extends Screen implements IButtonPressed {
 		else if (buttonName.equals(SString.create("startGame")))
 			game.setScreen(Screen.LEVEL_SCREEN);
 		else if (buttonName.equals(SString.create("options")))
-			game.setScreen(soundscreen = new SoundScreen(game));
+			game.setScreen(Screen.OPTIONS_SCREEN);
 
 	}
 

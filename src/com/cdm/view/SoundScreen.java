@@ -72,7 +72,7 @@ public class SoundScreen extends Screen implements IButtonPressed {
 	@Override
 	public void buttonPressed(SString buttonName) {
 		if (buttonName.equals(SString.create("back")))
-			game.setScreen(menuScreen = new MenuScreen(game));
+			game.setScreen(Screen.MENU_SCREEN);
 		else if (buttonName.equals(SString.create("up"))) {
 			if (music != null) {
 				vol += 0.1f;
@@ -99,7 +99,7 @@ public class SoundScreen extends Screen implements IButtonPressed {
 			}
 		} else if (buttonName.equals(SString.create("off"))) {
 			if (music.isPlaying())
-			music.stop();
+				music.stop();
 			if (song <= 2) {
 				song += 1;
 			} else
@@ -112,21 +112,13 @@ public class SoundScreen extends Screen implements IButtonPressed {
 				music = music2;
 
 			System.out.println(song);
-			/*if (!music.isPlaying()) {
-				if (music == music1) {
-					if (stop != true) {
-						music = music0;
-						Smusic = "song 1 selected";
-						stop = true;
-					}
-				} else if (music == music0) {
-					if (stop != true) {
-						music = music1;
-						Smusic = "song 2 selected";
-						stop = true;
-					}
-				}*/
-			//}
+			/*
+			 * if (!music.isPlaying()) { if (music == music1) { if (stop !=
+			 * true) { music = music0; Smusic = "song 1 selected"; stop = true;
+			 * } } else if (music == music0) { if (stop != true) { music =
+			 * music1; Smusic = "song 2 selected"; stop = true; } }
+			 */
+			// }
 
 		} else if (buttonName.equals(SString.create("FXup"))) {
 			if (music != null) {
