@@ -2,14 +2,11 @@ package com.cdm.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.cdm.Game;
-import com.cdm.TowerGame;
 import com.cdm.view.elements.Level;
 
 public class LevelDisplays {
 	private Level level;
 	private Color moneyColor = new Color(0.7f, 0.7f, 1.0f, 1.0f);
-	private MenuScreen menuScreen;
 	private Color color = new Color(1, 1, 1, 1);
 	private boolean up = false;
 

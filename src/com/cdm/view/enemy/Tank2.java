@@ -9,7 +9,6 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.MathTools;
 import com.cdm.view.elements.RotatingThing;
-import com.cdm.view.elements.shots.MovingShot;
 
 public class Tank2 extends EnemyUnit {
 

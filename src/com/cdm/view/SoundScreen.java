@@ -5,7 +5,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.cdm.Game;
 import com.cdm.SString;
-import com.cdm.TowerGame;
 import com.cdm.gui.BigButton;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.WidgetContainer;
@@ -17,7 +16,6 @@ public class SoundScreen extends Screen implements IButtonPressed {
 	private WidgetContainer gui = new WidgetContainer();
 	private Renderer renderer = new Renderer();
 	private Game game;
-	private MenuScreen menuScreen;
 	public Music music, music0, music1, music2;
 	private int song = 2;
 	boolean stop = true;

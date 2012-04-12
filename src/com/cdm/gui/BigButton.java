@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.cdm.SString;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Rectangle;
-import com.cdm.view.elements.Level;
 
 public class BigButton extends Widget {
 
