@@ -54,12 +54,13 @@ public class UnitRenderer implements IRenderer {
 	}
 
 	@Override
-	public void render(PolySprite sprite, Position pos, float size, float angle) {
+	public void render(PolySprite sprite, Position pos, float size,
+			float angle, int renderMode) {
 		if (pos.buttonPos())
 			size *= Position.BUTTON_REF.getScale();
 		if (pos.screenPos())
 			size *= Position.LEVEL_REF.getScale();
-		r.render(sprite, pos, size, angle);
+		r.render(sprite, pos, size, angle, renderMode);
 	}
 
 }

@@ -21,7 +21,7 @@ public class Renderer implements IRenderer {
 		font = new BitmapFont(Gdx.files.internal("data/font16.fnt"),
 				Gdx.files.internal("data/font16.png"), false);
 		spriteBatch = new SpriteBatch();
-		
+
 		if (Gdx.gl20 == null)
 			renderer = new ImmediateModeRenderer();
 	}
@@ -29,7 +29,7 @@ public class Renderer implements IRenderer {
 	public void dispose() {
 		font.dispose();
 	}
-	
+
 	@Override
 	public void drawLines(Position pos, List<Vector3> lines, float angle,
 			Color color, float size) {
@@ -138,7 +138,7 @@ public class Renderer implements IRenderer {
 		spriteBatch.setColor(c);
 		// spriteBatch.setBlendFunction(GL10.GL_ONE,
 		// GL10.GL_ONE_MINUS_SRC_ALPHA);
-font.setColor(c);
+		font.setColor(c);
 		font.drawMultiLine(spriteBatch, string, i, j,
 		// 160 + bounds.height / 2,
 				bounds.width, HAlignment.CENTER);
@@ -152,7 +152,8 @@ font.setColor(c);
 	}
 
 	@Override
-	public void render(PolySprite sprite, Position pos, float size,float angle) {
+	public void render(PolySprite sprite, Position pos, float size,
+			float angle, int renderMode) {
 		if (Gdx.gl10 != null) {
 
 			Gdx.gl10.glPushMatrix();
@@ -163,7 +164,7 @@ font.setColor(c);
 			Gdx.gl10.glScalef(size, size, size);
 			Gdx.gl10.glLineWidth(pos.getSystem().getScale() * 0.04f);
 
-			sprite.render();
+			sprite.render(renderMode);
 
 			Gdx.gl10.glPopMatrix();
 		} else {

@@ -7,7 +7,7 @@ public class Elements {
 		if (t == Unit.UnitType.CANNON) {
 			return new Cannon(p);
 		} else if (t == Unit.UnitType.ROCKET_THROWER) {
-			return new RocketThrower(p);
+			return new RocketLauncher(p);
 		} else if (t == Unit.UnitType.STUNNER) {
 			return new Stunner(p);
 		} 

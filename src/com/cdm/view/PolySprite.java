@@ -45,13 +45,55 @@ public class PolySprite {
 			vertices[b + 0] = v.x;
 			vertices[b + 1] = v.y;
 			vertices[b + 2] = v.z;
-			vertices[b + colorOffset] = Color.toFloatBits(c.r, c.g, c.b, c.a);			
+			vertices[b + colorOffset] = Color.toFloatBits(c.r, c.g, c.b, c.a);
 			indexes[i] = i;
 		}
 		mesh.setAutoBind(true);
 		mesh.setVertices(vertices);
 		mesh.setIndices(indexes);
 
+	}
+
+	public void fillRectangle(float x, float y, float w, float h, Color color) {
+		Vector3 a = new Vector3(x, y, 0);
+		Vector3 b = new Vector3(x + w, y, 0);
+		Vector3 c = new Vector3(x + w, y + h, 0);
+		Vector3 d = new Vector3(x, y + h, 0);
+		addVertex(a, color);
+		addVertex(b, color);
+		addVertex(c, color);
+		addVertex(a, color);
+		addVertex(c, color);
+		addVertex(d, color);
+	}
+
+	public void makeRectangle(float x, float y, float w, float h, Color color) {
+		Vector3 a = new Vector3(x, y, 0);
+		Vector3 b = new Vector3(x + w, y, 0);
+		Vector3 c = new Vector3(x + w, y + h, 0);
+		Vector3 d = new Vector3(x, y + h, 0);
+		addVertex(a, color);
+		addVertex(b, color);
+		addVertex(b, color);
+		addVertex(c, color);
+		addVertex(c, color);
+		addVertex(d, color);
+		addVertex(d, color);
+		addVertex(a, color);
+	}
+
+	public void fillCircle(float x, float y, float r, Color c, int segments) {
+		float step = 3.1415f * 2 / segments;
+		for (float a = 0.0f; a < 2 * 3.1415f; a += step) {
+			Vector3 v0 = new Vector3(x + (float) Math.sin(a) * r, y
+					+ (float) Math.cos(a) * r, 0);
+			Vector3 v1 = new Vector3(x + (float) Math.sin(a + step) * r, y
+					+ (float) Math.cos(a + step) * r, 0);
+			Vector3 v2 = new Vector3(x, y, 0);
+			addVertex(v0, c);
+			addVertex(v1, c);
+			addVertex(v2, c);
+		}
 	}
 
 	private VertexAttribute[] getAttributes() {
@@ -67,7 +109,7 @@ public class PolySprite {
 		return array;
 	}
 
-	public void render() {
-		mesh.render(GL10.GL_TRIANGLES);
+	public void render(int renderMode) {
+		mesh.render(renderMode);
 	}
 }

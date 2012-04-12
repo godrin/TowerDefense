@@ -1,10 +1,7 @@
 package com.cdm.view.elements;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.graphics.GL10;
 import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
@@ -13,47 +10,49 @@ import com.cdm.view.Position;
 import com.cdm.view.elements.shots.RocketShot;
 import com.cdm.view.enemy.EnemyUnit;
 
-public class RocketThrower extends RotatingUnit implements Element {
+public class RocketLauncher extends RotatingUnit implements Element {
 
-	private List<Vector3> lines;
-	private List<Vector3> poly;
-	private PolySprite sprite;
+	private static PolySprite sprite = null;
+	private static PolySprite lines = null;
 	float shotFrequency = 5.0f;
 	float lastShot = 0.0f;
 	private float maxDist = 3.5f;
-	private double startingRadius = 0.4f;
+	private double startingRadius = 0.01f;
 	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
 	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
 
-	public RocketThrower(Position p) {
+	Color groundColor = new Color(0, 0, 0.6f, 1.0f);
+	Color plateColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
+	Color highlight2Color = new Color(0.2f, 0.2f, 0.8f, 1.0f);
+	Color highlightColor = new Color(0.2f, 0.2f, 0.5f, 1.0f);
+	Color borderColor = new Color(0.6f, 0.6f, 1.0f, 1.0f);
+
+	public RocketLauncher(Position p) {
 		super(p);
-		Vector3 c0 = new Vector3(-1, -1, 0);
-		Vector3 c1 = new Vector3(1, -1, 0);
-		Vector3 c2 = new Vector3(1, 1, 0);
-		Vector3 c3 = new Vector3(-1, 1, 0);
+		if (sprite == null) {
+			sprite = new PolySprite();
+			sprite.fillCircle(0, 0, 0.95f, groundColor, 16);
+			sprite.fillRectangle(-0.7f, -0.7f, 1.4f, 1.4f, plateColor);
+			sprite.fillRectangle(-0.5f, -0.5f, 1.0f, 0.2f, highlightColor);
+			sprite.fillRectangle(-0.5f, 0.3f, 1.0f, 0.2f, highlightColor);
+			sprite.fillRectangle(-0.5f, 0.1f, 1.0f, 0.1f, highlight2Color);
+			sprite.fillRectangle(-0.5f, -0.2f, 1.0f, 0.1f, highlight2Color);
+			sprite.init();
 
-		sprite = new PolySprite();
-		lines = Arrays.asList(new Vector3[] { c0, c1, c1, c2, c2, c3, c3, c0 });
-		poly = Arrays.asList(new Vector3[] { c0, c1, c2, c0, c2, c3 });
-
-		Color xColor = new Color(1, 1, 1, 1);
-
-		sprite.addVertex(c0, xColor);
-		sprite.addVertex(c1, xColor);
-		sprite.addVertex(c2, xColor);
-		sprite.addVertex(c0, xColor);
-		sprite.addVertex(c2, xColor);
-		sprite.addVertex(c3, xColor);
-		sprite.init();
+			lines = new PolySprite();
+			lines.makeRectangle(-0.7f, -0.7f, 1.4f, 1.4f, borderColor);
+			lines.init();
+		}
 	}
 
 	@Override
 	public void draw(IRenderer renderer) {
-		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
-				getSize());
-		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
-				getSize());
-		renderer.render(sprite, getPosition(), getSize(), getAngle());
+
+		renderer.render(sprite, getPosition(), getSize(), getAngle(),
+				GL10.GL_TRIANGLES);
+
+		renderer.render(lines, getPosition(), getSize(), getAngle(),
+				GL10.GL_LINES);
 
 	}
 
@@ -92,7 +91,7 @@ public class RocketThrower extends RotatingUnit implements Element {
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
 				getLevel().addShot(
-						new RocketShot(startingPos, anticipatePosition(enemy),
+						new RocketShot(startingPos, anticipatePosition(enemy,RocketShot.speed),
 								getLevel()));
 				SoundFX.play(Type.SHOT);
 
