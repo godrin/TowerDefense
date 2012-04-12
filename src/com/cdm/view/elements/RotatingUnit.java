@@ -48,9 +48,9 @@ public abstract class RotatingUnit extends Unit {
 		rotation.setTurningSpeed(s);
 	}
 
-	protected Position anticipatePosition(EnemyUnit enemy) {
+	protected Position anticipatePosition(EnemyUnit enemy,float speed) {
 		float enemyDistance = getPosition().distance(enemy.getPosition());
-		float enemyMoveDistance = (enemyDistance / SimpleShot.speed)
+		float enemyMoveDistance = (enemyDistance / speed)
 				* enemy.getSpeed();
 
 		result.set(enemy.getPosition().toVector());
