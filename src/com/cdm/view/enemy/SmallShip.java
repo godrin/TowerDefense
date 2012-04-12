@@ -88,10 +88,6 @@ public class SmallShip extends EnemyUnit implements Element {
 		return DIRECTION;
 	}
 
-	@Override
-	public float getImpact(Class<? extends MovingShot> shotType, float shotLevel) {
-		return shotLevel;
-	}
 
 	@Override
 	public int getMoney() {

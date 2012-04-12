@@ -13,13 +13,22 @@ public abstract class EnemyUnit extends Unit {
 	private static final Color BORDER_COLOR = new Color(1, 0, 0, 0.8f);
 	private static final Color FILL_COLOR = new Color(1, 0, 0, 0.7f);
 
-	private float energy;
+	private float energy = -1;
+	private float orignalEnergy = -1;
 	private float frozenTime = 0.0f;
 	private float speed = -10.0f;
 
 	public EnemyUnit(Position pos) {
 		super(pos);
-		energy = 1.0f;
+	}
+
+	public void setEnergy(float e) {
+
+		if (energy < 0) {
+			orignalEnergy = e;
+
+			energy = e;
+		}
 	}
 
 	public abstract int getMoney();
@@ -27,7 +36,7 @@ public abstract class EnemyUnit extends Unit {
 	public abstract int getPoints();
 
 	public abstract int getBonus();
-	
+
 	@Override
 	public void draw(IRenderer renderer) {
 		float pad = 0.05f;
@@ -43,7 +52,7 @@ public abstract class EnemyUnit extends Unit {
 
 		float x1 = x - pad + 0.5f;
 
-		float nx1 = x0 + (x1 - x0) * energy;
+		float nx1 = x0 + (x1 - x0) * (energy / orignalEnergy);
 
 		renderer.drawRect(x0, y0, x1, y1, BORDER_COLOR);
 		renderer.fillRect(x0, y0, nx1, y1, FILL_COLOR);
@@ -96,7 +105,9 @@ public abstract class EnemyUnit extends Unit {
 
 	public abstract Vector3 getMovingDirection();
 
-	public abstract float getImpact(Class<? extends MovingShot> shotType,
-			float shotLevel);
+	public float getImpact(Class<? extends MovingShot> shotType, float shotLevel) {
+		// FIXME: different impact depending on shottype
+		return shotLevel;
+	}
 
 }

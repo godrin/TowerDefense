@@ -11,25 +11,28 @@ import com.cdm.view.enemy.Tank2;
 import com.cdm.view.enemy.Truck;
 
 public class EnemyUnits {
-	public static EnemyUnit create(EnemyType t, Position position) {
+	public static EnemyUnit create(EnemyType t, Position position, int levelNo) {
+		EnemyUnit u = null;
 		if (EnemyType.BIG_SHIP.equals(t)) {
-			return new BigShip(position);
+			u = new BigShip(position);
 		}
 		if (EnemyType.SMALL_SHIP.equals(t)) {
-			return new SmallShip(position);
+			u = new SmallShip(position);
 		}
 		if (EnemyType.TANK.equals(t)) {
-			return new Tank(position);
+			u = new Tank(position);
 		}
 		if (EnemyType.ROCKET.equals(t)) {
-			return new Rocket(position);
+			u = new Rocket(position);
 		}
 		if (EnemyType.TRUCK.equals(t)) {
-			return new Truck(position);
+			u = new Truck(position);
 		}
 		if (EnemyType.TANK2.equals(t)) {
-			return new Tank2(position);
+			u = new Tank2(position);
 		}
-		return null;
+		if (u != null)
+			u.setEnergy(t.getEnergy(levelNo));
+		return u;
 	}
 }

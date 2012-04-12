@@ -163,11 +163,6 @@ public class Tank2 extends EnemyUnit {
 	}
 
 	@Override
-	public float getImpact(Class<? extends MovingShot> shotType, float shotLevel) {
-		return 0.1f;
-	}
-
-	@Override
 	public int getMoney() {
 		return 4;
 	}

@@ -91,11 +91,6 @@ public class Rocket extends EnemyUnit implements Element {
 		return DIRECTION;
 	}
 
-	@Override
-	public float getImpact(Class<? extends MovingShot> shotType, float shotLevel) {
-		// FIXME: different impact depending on shottype
-		return 0.3f;
-	}
 
 	@Override
 	public int getMoney() {

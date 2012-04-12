@@ -205,10 +205,6 @@ public class Truck extends EnemyUnit {
 		return DEFAULT_DIRECTION;
 	}
 
-	@Override
-	public float getImpact(Class<? extends MovingShot> shotType, float shotLevel) {
-		return shotLevel;
-	}
 
 	@Override
 	public int getZLayer() {

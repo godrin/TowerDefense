@@ -8,6 +8,7 @@ import com.cdm.view.elements.EnemyUnits;
 import com.cdm.view.elements.Level;
 
 public class EnemyPlayer {
+	private static final int MAX_TRIALS = 50;
 	public final float WAITING_TIME = 3.0f;
 
 	enum Mode {
@@ -45,7 +46,7 @@ public class EnemyPlayer {
 					defs.remove(def);
 					alreadySent = true;
 					Position x = new Position(level.getEnemyStartPosition());
-					EnemyUnit e = EnemyUnits.create(def.type, x);
+					EnemyUnit e = EnemyUnits.create(def.type, x, levelNo);
 					level.add(e);
 				}
 			} else
@@ -74,19 +75,23 @@ public class EnemyPlayer {
 
 		if (true) {
 			// strength-based randomized enemy creation
-			enemyStrength += (1.5f * (float)getLevelNo());
+			enemyStrength += (1.5f * (float) getLevelNo());
 			Float currentStrength = enemyStrength;
 			Float lastTime = 0.0f;
+			int trials = MAX_TRIALS; // don' run endlessly
 
-			while (currentStrength > 0) {
+			while (currentStrength > 0 && trials > 0) {
 				EnemyType t = EnemyType.random();
-				if (t.getStrength() < currentStrength
-						+ EnemyType.STRENGTH_THRESHOLD) {
-					currentStrength -= t.getStrength();
+				float strength = t.getStrength(getLevelNo());
+				
+				if (strength < currentStrength + EnemyType.STRENGTH_THRESHOLD) {
+					currentStrength -= strength;
 					lastTime += (float) Math.random() * 5.0f + 0.6f;
 					System.out.println("ADD " + t + " " + lastTime);
 					defs.add(new EnemyDef(t, lastTime));
-				}
+					trials = MAX_TRIALS;
+				} else
+					trials -= 1;
 			}
 		} else {
 
