@@ -110,13 +110,7 @@ public class SoundScreen extends Screen implements IButtonPressed {
 				music = music2;
 
 			System.out.println(song);
-			/*
-			 * if (!music.isPlaying()) { if (music == music1) { if (stop !=
-			 * true) { music = music0; Smusic = "song 1 selected"; stop = true;
-			 * } } else if (music == music0) { if (stop != true) { music =
-			 * music1; Smusic = "song 2 selected"; stop = true; } }
-			 */
-			// }
+			
 
 		} else if (buttonName.equals(SString.create("FXup"))) {
 			if (music != null) {

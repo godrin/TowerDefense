@@ -28,6 +28,7 @@ public class Level {
 	private int money = 25;
 	private int points = 0;
 	private int bonus = 0;
+	private boolean plus = true;
 	private List<Unit> units = new ArrayList<Unit>();
 	private List<Unit> unitsToRemove = new ArrayList<Unit>();
 
@@ -103,7 +104,7 @@ public class Level {
 		for (int zLayer = 0; zLayer < 10; zLayer++) {
 			for (Unit unit : units) {
 				if (unit != null)
-					if (unit.getZLayer()==zLayer)
+					if (unit.getZLayer() == zLayer)
 						unit.draw(renderer);
 			}
 		}
@@ -235,8 +236,25 @@ public class Level {
 	public void enemyReachedEnd(EnemyUnit enemyUnit) {
 		SoundFX.play(Type.HURT);
 		health -= 1;
+		shake();
+		shake();
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		unitsToRemove.add(enemyUnit);
+	}
+
+	private void shake() {
+		int nu = (int) Position.LEVEL_REF.getScale();
+		if (plus) {
+			nu += 10;
+			plus = false;
+		} else {
+			nu -= 10;
+			plus = true;
+		}
+		Position.LEVEL_REF.setScale(nu);
+		System.out.println("SCROLL " + 10 + " "
+				+ Position.LEVEL_REF.getScale());
+
 	}
 
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
