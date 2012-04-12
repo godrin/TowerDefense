@@ -8,7 +8,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
-import com.cdm.view.elements.shots.MovingShot;
 
 public class Rocket extends EnemyUnit implements Element {
 
@@ -56,21 +55,7 @@ public class Rocket extends EnemyUnit implements Element {
 
 		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize());
 		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize());
-		if (up) {
-			if (innerColor.b >= 0) {
-				innerColor.b -= 0.0025f;
-				innerColor.r += 0.0025f;
-			} else {
-				up = false;
-			}
-		} else {
-			if (innerColor.r >= 0) {
-				innerColor.b += 0.0025f;
-				innerColor.r -= 0.0025f;
-			} else {
-				up = true;
-			}
-		}
+		
 	}
 
 	@Override
@@ -79,6 +64,25 @@ public class Rocket extends EnemyUnit implements Element {
 		Position p = getPosition();
 		p.x += time * getSpeed();
 		setPosition(p); // react to position change
+		
+		
+		float SPEED=0.1f;
+		float fraction=SPEED*time;
+		if (up) {
+			if (innerColor.b >= 0) {
+				innerColor.b -= fraction;
+				innerColor.r += fraction;
+			} else {
+				up = false;
+			}
+		} else {
+			if (innerColor.r >= 0) {
+				innerColor.b += fraction;
+				innerColor.r -= fraction;
+			} else {
+				up = true;
+			}
+		}
 	}
 
 	@Override
