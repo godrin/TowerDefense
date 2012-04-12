@@ -27,7 +27,7 @@ public class EnemyPlayer {
 		return level;
 	}
 
-	public static int getLevelNo() {
+	public int getLevelNo() {
 		return levelNo;
 	}
 

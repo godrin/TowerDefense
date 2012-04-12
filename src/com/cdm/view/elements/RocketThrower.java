@@ -8,14 +8,16 @@ import com.badlogic.gdx.math.Vector3;
 import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
+import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
-import com.cdm.view.elements.shots.SomeShot;
+import com.cdm.view.elements.shots.RocketShot;
 import com.cdm.view.enemy.EnemyUnit;
 
 public class RocketThrower extends RotatingUnit implements Element {
 
 	private List<Vector3> lines;
 	private List<Vector3> poly;
+	private PolySprite sprite;
 	float shotFrequency = 5.0f;
 	float lastShot = 0.0f;
 	private float maxDist = 3.5f;
@@ -30,9 +32,23 @@ public class RocketThrower extends RotatingUnit implements Element {
 		Vector3 c2 = new Vector3(1, 1, 0);
 		Vector3 c3 = new Vector3(-1, 1, 0);
 
+		sprite = new PolySprite();
 		lines = Arrays.asList(new Vector3[] { c0, c1, c1, c2, c2, c3, c3, c0 });
 		poly = Arrays.asList(new Vector3[] { c0, c1, c2, c0, c2, c3 });
 
+		Color xColor = new Color(1, 1, 1, 1);
+		
+		Vector3 z0=new Vector3(-1000,-1000,0);
+		Vector3 z1=new Vector3(1000,-1000,0);
+		Vector3 z2=new Vector3(1000,1000,0);
+		Vector3 z3=new Vector3(-1000,1000,0);
+		sprite.addVertex(c0, xColor);
+		sprite.addVertex(c1, xColor);
+		sprite.addVertex(c2, xColor);
+		sprite.addVertex(c0, xColor);
+		sprite.addVertex(c2, xColor);
+		sprite.addVertex(c3, xColor);
+		sprite.init();
 	}
 
 	@Override
@@ -41,6 +57,8 @@ public class RocketThrower extends RotatingUnit implements Element {
 				getSize());
 		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
 				getSize());
+		renderer.render(sprite, getPosition(), getSize(), getAngle());
+
 	}
 
 	@Override
@@ -78,7 +96,7 @@ public class RocketThrower extends RotatingUnit implements Element {
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
 				getLevel().addShot(
-						new SomeShot(startingPos, anticipatePosition(enemy),
+						new RocketShot(startingPos, anticipatePosition(enemy),
 								getLevel()));
 				SoundFX.play(Type.SHOT);
 

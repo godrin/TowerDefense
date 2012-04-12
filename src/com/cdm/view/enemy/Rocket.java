@@ -93,7 +93,8 @@ public class Rocket extends EnemyUnit implements Element {
 
 	@Override
 	public float getImpact(Class<? extends MovingShot> shotType, float shotLevel) {
-		return 0.3f / EnemyPlayer.getLevelNo();
+		// FIXME: different impact depending on shottype
+		return 0.3f;
 	}
 
 	@Override

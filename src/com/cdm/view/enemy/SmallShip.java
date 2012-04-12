@@ -37,7 +37,7 @@ public class SmallShip extends EnemyUnit implements Element {
 
 	private static final float RAY_START = 0.5f;
 	private static final float RAY_DISTANCE = 0.5f;
-	private static final float RAY_LENGTH = RAY_DISTANCE*4;
+	private static final float RAY_LENGTH = RAY_DISTANCE * 4;
 	private static final float RAY_SPEED = 0.5f;
 
 	public SmallShip(Position position) {
@@ -70,9 +70,9 @@ public class SmallShip extends EnemyUnit implements Element {
 			Vector3 b = ray.get(rayI * 2 + 1);
 
 			float ph = rayI * RAY_DISTANCE + rayPhase;
-			
+
 			ph %= RAY_LENGTH;
-			float size=(1-ph/RAY_LENGTH)*0.15f;
+			float size = (1 - ph / RAY_LENGTH) * 0.15f;
 			a.set(-ph - RAY_START, -size, 0);
 			b.set(-ph - RAY_START, size, 0);
 		}
@@ -90,7 +90,7 @@ public class SmallShip extends EnemyUnit implements Element {
 
 	@Override
 	public float getImpact(Class<? extends MovingShot> shotType, float shotLevel) {
-		return shotLevel / EnemyPlayer.getLevelNo();
+		return shotLevel;
 	}
 
 	@Override

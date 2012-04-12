@@ -207,7 +207,7 @@ public class Truck extends EnemyUnit {
 
 	@Override
 	public float getImpact(Class<? extends MovingShot> shotType, float shotLevel) {
-		return (shotLevel / EnemyPlayer.getLevelNo());
+		return shotLevel;
 	}
 
 	@Override
