@@ -45,15 +45,13 @@ public class LevelDisplays {
 					up = false;
 				}
 			} else {
-				if (color.a <= 1) {
+				if (color.a <= 0.99) {
 					color.a += 0.01f;
 
 				} else {
 					up = true;
 				}
 			}
-			if (color.a < 0)
-				color.a = 0;
 			renderer.drawText(280, 300, "Game Over", color);
 			Renderer.font.setScale(1f);
 		}
