@@ -10,7 +10,7 @@ public class LevelDisplays {
 	private Level level;
 	private Color moneyColor = new Color(0.7f, 0.7f, 1.0f, 1.0f);
 	private MenuScreen menuScreen;
-	private Color color = new Color(moneyColor);
+	private Color color = new Color(1, 1, 1, 1);
 	private boolean up = false;
 
 	public LevelDisplays() {
@@ -39,20 +39,21 @@ public class LevelDisplays {
 		if (!level.gameover()) {
 			Renderer.font.setScale(2f);
 			if (up) {
-				if (color.a <= 1.0f) {
-					color.a += 0.01f;
-				} if (color.a >= 1) {
+				if (color.a >= 0.01f) {
+					color.a -= 0.01f;
+				} else {
 					up = false;
 				}
-			}
-			if (!up) {
-				if (color.a >= 0.0f) {
-					color.a -= 0.01f;
-				}
-				if (color.a <= 0) {
+			} else {
+				if (color.a <= 1) {
+					color.a += 0.01f;
+
+				} else {
 					up = true;
 				}
 			}
+			if (color.a < 0)
+				color.a = 0;
 			renderer.drawText(280, 300, "Game Over", color);
 			Renderer.font.setScale(1f);
 		}
