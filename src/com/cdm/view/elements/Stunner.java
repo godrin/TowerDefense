@@ -119,4 +119,9 @@ public class Stunner extends RotatingUnit implements Element {
 		return maxDist;
 	}
 
+	@Override
+	public int getZLayer() {
+		return 0;
+	}
+
 }

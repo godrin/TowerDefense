@@ -111,4 +111,9 @@ public class Rocket extends EnemyUnit implements Element {
 		return 1;
 	}
 
+	@Override
+	public int getZLayer() {
+		return 3;
+	}
+
 }

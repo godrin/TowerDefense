@@ -107,4 +107,9 @@ public class SmallShip extends EnemyUnit implements Element {
 	public int getBonus() {
 		return 1;
 	}
+
+	@Override
+	public int getZLayer() {
+		return 2;
+	}
 }

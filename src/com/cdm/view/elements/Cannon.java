@@ -118,4 +118,9 @@ public class Cannon extends RotatingUnit implements Element {
 		return maxDist;
 	}
 
+	@Override
+	public int getZLayer() {
+		return 0;
+	}
+
 }
