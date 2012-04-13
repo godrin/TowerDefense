@@ -10,9 +10,8 @@ import com.cdm.view.Position;
 import com.cdm.view.elements.MathTools;
 import com.cdm.view.elements.RotatingThing;
 
-public class Tank2 extends EnemyUnit {
+public class Tank2 extends GroundMovingEnemy {
 
-	public Position nextStep = null;
 	public static final float SPEED = 0.3f;
 
 	private static final Vector3 c0 = new Vector3(-1, -1, 0);
@@ -61,10 +60,6 @@ public class Tank2 extends EnemyUnit {
 	private static final Color outerColor = new Color(0.9f, 0.0f, 0.1f, 1.0f);
 	private static final Vector3 DEFAULT_DIRECTION = new Vector3(1, 0, 0);
 
-	private Vector3 diff = new Vector3();
-	private Vector3 movingDir = new Vector3();
-	private RotatingThing rotation = new RotatingThing();
-
 	public Tank2(Position pos) {
 		super(pos);
 		setSize(0.25f);
@@ -73,39 +68,6 @@ public class Tank2 extends EnemyUnit {
 	public void move(float time) {
 		super.move(time);
 		chainPhase += time;
-
-		while (time > 0) {
-			if (nextStep == null) {
-				nextStep = getLevel().getNextPos(getPosition().alignedToGrid());
-			}
-			Position nuPos = new Position(getPosition());
-
-			diff.set(getPosition().to(nextStep));
-
-			float targetAngle = MathTools.angle(diff);
-			rotation.setTargetAngle(targetAngle);
-
-			time -= rotation.move(time);
-
-			if (time < 0.00001f)
-				return;
-
-			float len = diff.len();
-			float delta = time * getSpeed();
-
-			if (delta >= len) {
-				setPosition(nextStep);
-				time -= len / delta;
-				nextStep = null;
-			} else {
-				diff.mul(delta / diff.len());
-				nuPos.x += diff.x;
-				nuPos.y += diff.y;
-				setPosition(nuPos);
-				time = 0;
-			}
-
-		}
 	}
 
 	@Override
@@ -145,20 +107,9 @@ public class Tank2 extends EnemyUnit {
 
 	}
 
-	private float getAngle() {
-		return rotation.getCurrentAngle();
-	}
-
 	@Override
 	public float getOriginalSpeed() {
 		return SPEED;
-	}
-
-	@Override
-	public Vector3 getMovingDirection() {
-		if (nextStep != null)
-			return movingDir.set(getPosition().to(nextStep).nor());
-		return DEFAULT_DIRECTION;
 	}
 
 	@Override
@@ -175,10 +126,4 @@ public class Tank2 extends EnemyUnit {
 	public int getBonus() {
 		return 2;
 	}
-
-	@Override
-	public int getZLayer() {
-		return 0;
-	}
-
 }

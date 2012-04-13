@@ -99,4 +99,8 @@ public class Position {
 	public boolean buttonPos() {
 		return system.equals(BUTTON_REF);
 	}
+
+	public Position tmp() {
+		return tmpPos.set(this);
+	}
 }

@@ -10,7 +10,7 @@ import com.cdm.view.SoundScreen;
 public class SoundFX {
 
 	public enum Type {
-		KLICK, SHOT, SHOT2, HIT, HURT,STUNRAY
+		KLICK, SHOT, SHOT2, HIT, HURT,STUNRAY,ZOOM
 	};
 
 	private static Map<Type, Sound> sounds = new TreeMap<Type, Sound>();
@@ -26,6 +26,8 @@ public class SoundFX {
 				Gdx.audio.newSound(Gdx.files.internal("data/shot04.ogg")));
 		sounds.put(Type.STUNRAY,
 				Gdx.audio.newSound(Gdx.files.internal("data/stunray01.ogg")));
+		sounds.put(Type.ZOOM,
+				Gdx.audio.newSound(Gdx.files.internal("data/zoom.ogg")));
 	}
 
 	public static void dispose() {

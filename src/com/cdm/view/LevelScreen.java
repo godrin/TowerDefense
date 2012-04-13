@@ -1,7 +1,6 @@
 package com.cdm.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,6 +12,8 @@ import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.IUnitTypeSelected;
 import com.cdm.gui.UnitTypeButton;
 import com.cdm.gui.WidgetContainer;
+import com.cdm.gui.effects.SoundFX;
+import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.Unit;
@@ -31,7 +32,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private boolean rendering = false;
 	private Position dragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Position oldDragPosition = new Position(0, 0, Position.SCREEN_REF);
-	private Sound sound;
 
 	private Game game;
 
@@ -53,6 +53,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		renderer.dispose();
 	}
 
+	/**
+	 * called only at screen initialization
+	 */
 	private void createUnitButtons() {
 		float pos = 35;
 		UnitTypeButton tb;
@@ -65,7 +68,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 			pos += 80;
 		}
-		System.out.println(gui);
 	}
 
 	private Long oldMicros = 0L;
@@ -259,9 +261,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	@Override
 	public void buttonPressed(SString buttonName) {
 		if (buttonName.equals(SString.SIZE_BUTTON)) {
-			sound = Gdx.audio.newSound(Gdx.files.internal("data/zoom.ogg"));
-			sound.play();
-			// FIXME
+			SoundFX.play(Type.ZOOM);
 		}
 	}
 }
