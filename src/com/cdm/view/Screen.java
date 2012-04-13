@@ -11,8 +11,7 @@ public class Screen extends InputAdapter {
 	public static final String OPTIONS_SCREEN = "optionsScreen";
 
 	public void removed() {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	public void wait(TowerGame towerGame) {

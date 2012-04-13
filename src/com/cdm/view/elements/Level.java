@@ -26,7 +26,7 @@ public class Level {
 	private EnemyPlayer player;
 	private float speedFactor = 2.0f;
 	private int health = 3;
-	private int money = 25;
+	private int money = 15;
 	private int points = 0;
 	private int bonus = 0;
 	private boolean plus = true;
@@ -238,16 +238,16 @@ public class Level {
 		SoundFX.play(Type.HURT);
 		health -= 1;
 		shake();
-		//shake();
+		// shake();
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		unitsToRemove.add(enemyUnit);
 	}
 
 	private void shake() {
 		addShot(new Shake(this));
-		if(true)
+		if (true)
 			return;
-		
+
 		int nu = (int) Position.LEVEL_REF.getScale();
 		if (plus) {
 			nu += 10;
@@ -257,8 +257,8 @@ public class Level {
 			plus = true;
 		}
 		Position.LEVEL_REF.setScale(nu);
-		System.out.println("SCROLL " + 10 + " "
-				+ Position.LEVEL_REF.getScale());
+		System.out
+				.println("SCROLL " + 10 + " " + Position.LEVEL_REF.getScale());
 
 	}
 

@@ -2,6 +2,9 @@ package com.cdm.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.cdm.SString;
+import com.cdm.gui.BigButton;
+import com.cdm.gui.WidgetContainer;
 import com.cdm.view.elements.Level;
 
 public class LevelDisplays {
@@ -28,7 +31,7 @@ public class LevelDisplays {
 				"$" + Integer.toString(level.getMoney()), moneyColor);
 		renderer.drawText(Gdx.graphics.getWidth() - 120,
 				Gdx.graphics.getHeight(),
-				"Level " + Integer.toString(level.getPlayer().getLevelNo()),
+				"LeveL " + Integer.toString(level.getPlayer().getLevelNo()),
 				moneyColor);
 		renderer.drawText(Gdx.graphics.getWidth() - 140,
 				Gdx.graphics.getHeight() - 30,
