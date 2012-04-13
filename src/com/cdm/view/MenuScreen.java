@@ -12,7 +12,6 @@ public class MenuScreen extends Screen implements IButtonPressed {
 	private WidgetContainer gui = new WidgetContainer();
 	private Renderer renderer = new Renderer();
 	private Game game;
-	private SoundScreen soundscreen;
 
 	public MenuScreen(Game pgame) {
 		game = pgame;
