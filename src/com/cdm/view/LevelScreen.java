@@ -13,11 +13,13 @@ import com.cdm.gui.Button;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.IUnitTypeSelected;
 import com.cdm.gui.UnitTypeButton;
+import com.cdm.gui.Widget;
 import com.cdm.gui.WidgetContainer;
 import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.Unit;
 import com.cdm.view.elements.Unit.UnitType;
+import com.cdm.view.enemy.EnemyPlayer;
 
 public class LevelScreen extends Screen implements IUnitTypeSelected,
 		IButtonPressed {
@@ -33,6 +35,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Position dragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Position oldDragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Sound sound;
+	private Widget restartButton = new BigButton(400, 200,
+			Gdx.graphics.getWidth() / 6, 50, "restart",
+			SString.create("RESTART_BUTTON"), this);
 
 	private Game game;
 
@@ -175,9 +180,10 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchDown(int x, int y, int pointer, int button) {
-		/*
-		 * if (level.gameover()) return false;
-		 */
+
+		if (level.gameover())
+			return false;
+
 		int oy = y;
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
@@ -192,9 +198,10 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchUp(int x, int y, int pointer, int button) {
-		/*
-		 * if (level.gameover()) return false;
-		 */
+
+		if (level.gameover())
+			return false;
+
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
 			gui.touchUp(x, y, pointer, button);
@@ -269,19 +276,18 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 				// FIXME
 			}
 		}
-		if (level.gameover()) {
-			if (buttonName.equals(SString.RESTART_BUTTON)) {
-				game.setScreen(Screen.MENU_SCREEN);
-				
-				System.out.println("Restart");
-			}
-		}
 	}
 
 	public void restart() {
 		if (level.gameover()) {
-			gui.add(new BigButton(400, 200, Gdx.graphics.getWidth() / 6, 50,
-					"restart", SString.create("RESTART_BUTTON"), this));
+			if (Gdx.input.justTouched()) {
+				game.setScreen(Screen.MENU_SCREEN);
+				//level.setHealth(3);
+				level = new Level(20,10,5);
+				hud.setLevel(level);
+				createUnitButtons();
+				System.out.println("Restart");
+			}
 		}
 	}
 }

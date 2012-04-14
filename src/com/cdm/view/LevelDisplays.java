@@ -37,7 +37,7 @@ public class LevelDisplays {
 				Gdx.graphics.getHeight() - 30,
 				"Energy " + Integer.toString(level.getHealth()), moneyColor);
 		if (level.gameover()) {
-			Renderer.font.setScale(2f);
+			Renderer.font.setScale(3f);
 			if (up) {
 				if (color.a >= 0.01f) {
 					color.a -= 0.01f;
@@ -52,8 +52,9 @@ public class LevelDisplays {
 					up = true;
 				}
 			}
-			renderer.drawText(280, 300, "Game Over", color);
+			renderer.drawText(220, 300, "Game OveR", color);
 			Renderer.font.setScale(1f);
+			renderer.drawText(235,200, "click to go back to menu", moneyColor);
 		}
 	}
 }

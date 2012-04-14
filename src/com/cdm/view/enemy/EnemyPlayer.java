@@ -102,4 +102,11 @@ public class EnemyPlayer {
 				defs.add(new EnemyDef(EnemyType.SMALL_SHIP, 1.0f * i));
 		}
 	}
+
+	public static void setLevelNo(int i) {
+		levelNo = i; 
+		
+	}
+
+
 }

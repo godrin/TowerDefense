@@ -12,8 +12,6 @@ public class MenuScreen extends Screen implements IButtonPressed {
 	private WidgetContainer gui = new WidgetContainer();
 	private Renderer renderer = new Renderer();
 	private Game game;
-	private SoundScreen soundscreen;
-
 	public MenuScreen(Game pgame) {
 		game = pgame;
 		gui.add(new BigButton(Gdx.graphics.getWidth() / 2, 300, Gdx.graphics
@@ -36,8 +34,8 @@ public class MenuScreen extends Screen implements IButtonPressed {
 	public void buttonPressed(SString buttonName) {
 		if (buttonName.equals(SString.create("quit")))
 			Gdx.app.exit();
-		else if (buttonName.equals(SString.create("startGame")))
-			game.setScreen(Screen.LEVEL_SCREEN);
+		else if (buttonName.equals(SString.create("startGame"))){
+			game.setScreen(Screen.LEVEL_SCREEN);}
 		else if (buttonName.equals(SString.create("options")))
 			game.setScreen(Screen.OPTIONS_SCREEN);
 

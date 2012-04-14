@@ -28,8 +28,8 @@ public class Truck extends EnemyUnit {
 	private static final Vector3 d2 = new Vector3(2f, 0.81f, 0);
 	private static final Vector3 d3 = new Vector3(1f, 0.8f, 0);
 	private static final Vector3 k0 = new Vector3(-1f, -1.5f, 0);
-	private static final Vector3 k1 = new Vector3(-0.1f, -1.5f, 0);
-	private static final Vector3 k2 = new Vector3(-0.1f, -1.1f, 0);
+	private static final Vector3 k1 = new Vector3(-0.3f, -1.5f, 0);
+	private static final Vector3 k2 = new Vector3(-0.3f, -1.1f, 0);
 	private static final Vector3 k3 = new Vector3(-1f, -1.1f, 0);
 	private static final Vector3 x0 = new Vector3(-1f, 1.5f, 0);
 	private static final Vector3 x1 = new Vector3(-0.3f, 1.5f, 0);
@@ -73,7 +73,7 @@ public class Truck extends EnemyUnit {
 	private Vector3 diff = new Vector3();
 	private Vector3 movingDir = new Vector3();
 	private RotatingThing rotation = new RotatingThing();
-
+	
 	public Truck(Position pos) {
 		super(pos);
 		setSize(0.25f);
@@ -94,7 +94,6 @@ public class Truck extends EnemyUnit {
 
 			float targetAngle = MathTools.angle(diff);
 			rotation.setTargetAngle(targetAngle);
-
 			time -= rotation.move(time);
 
 			if (time < 0.00001f)
@@ -150,10 +149,11 @@ public class Truck extends EnemyUnit {
 				b.x = x;
 			}
 		}
+		
 		renderer.drawLines(getPosition(), chainLines, getAngle(), outerColor,
 				getSize());
 
-		float startX2 = 1.0f;
+		float startX2 = 1f;
 		for (int i = 0; i < size; i++) {
 			x = ((float) i) / size * 3.1415f * 0.5f;
 			x += chainPhase * speed + 3.1415;
