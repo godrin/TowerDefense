@@ -45,8 +45,7 @@ public class RocketShot extends MovingShot {
 		renderer.drawPoly(getPosition(), poly, angle,
 				new Color(1, 0, 0, 1.0f), getSize());
 		renderer.drawLines(getPosition(), lines, angle,
-				new Color((float) Math.random() + 1, (float) Math.random(),
-						(float) Math.random(), 1.0f), getSize());
+				new Color(1, 0.7f, 1, 1.0f), getSize());
 	}
 
 	@Override

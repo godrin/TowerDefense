@@ -237,6 +237,8 @@ public class Level {
 	public void enemyReachedEnd(EnemyUnit enemyUnit) {
 		SoundFX.play(Type.HURT);
 		health -= 1;
+		if (health < 1)
+			SoundFX.play(Type.LOOSE);
 		shake();
 		// shake();
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
@@ -271,6 +273,15 @@ public class Level {
 		money += enemyUnit.getMoney();
 		points += enemyUnit.getPoints();
 		bonus += enemyUnit.getBonus();
+		if (bonus == 100) {
+			health += 1;
+			SoundFX.play(Type.WIN);
+			
+		}
+		if (bonus == 200) {
+			health += 1;
+			SoundFX.play(Type.WIN);
+		}
 	}
 
 	public void removeShot(DisplayEffect shot) {
@@ -338,7 +349,5 @@ public class Level {
 	public boolean gameover() {
 		return health < 1;
 	}
-
-	
 
 }

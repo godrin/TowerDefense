@@ -2,6 +2,7 @@ package com.cdm.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,6 +16,8 @@ import com.cdm.gui.IUnitTypeSelected;
 import com.cdm.gui.UnitTypeButton;
 import com.cdm.gui.Widget;
 import com.cdm.gui.WidgetContainer;
+import com.cdm.gui.effects.SoundFX;
+import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.Unit;
@@ -117,6 +120,11 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		oldMicros = micro;
 		mywait(delta);
 		restart();
+		if (level.getBonus() >= 100 && level.getBonus() <= 113) {
+			renderer.font.setScale(2f);
+			renderer.drawText(350, 300, "1 up!", new Color(1, 1, 1, 1));
+			renderer.font.setScale(1f);
+		}
 		return delta;
 	}
 
@@ -271,8 +279,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public void buttonPressed(SString buttonName) {
 		if (!level.gameover()) {
 			if (buttonName.equals(SString.SIZE_BUTTON)) {
-				sound = Gdx.audio.newSound(Gdx.files.internal("data/zoom.ogg"));
-				sound.play();
 				// FIXME
 			}
 		}
@@ -282,8 +288,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (level.gameover()) {
 			if (Gdx.input.justTouched()) {
 				game.setScreen(Screen.MENU_SCREEN);
-				//level.setHealth(3);
-				level = new Level(20,10,5);
+				EnemyPlayer.setLevelNo(1);
+				level = new Level(20, 10, 5);
 				hud.setLevel(level);
 				createUnitButtons();
 				System.out.println("Restart");
