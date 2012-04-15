@@ -1,5 +1,9 @@
 The game:
 David Kamphausen <david.kamphausen@web.de>
+Marc Giersch <undermink@devtal.de>
+
+The sounds & music:
+Marc Giersch <undermink@devtal.de>
 
 The dependencies:
 libGDX by the libGDX Team. Please have a look at LICENSE_gdx
