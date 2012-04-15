@@ -163,7 +163,7 @@ public class Tank2 extends EnemyUnit {
 
 	@Override
 	public int getMoney() {
-		return 4;
+		return 2;
 	}
 
 	@Override
@@ -173,7 +173,7 @@ public class Tank2 extends EnemyUnit {
 
 	@Override
 	public int getBonus() {
-		return 2;
+		return 1;
 	}
 
 	@Override

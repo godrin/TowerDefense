@@ -179,7 +179,7 @@ public class Truck extends EnemyUnit {
 
 	@Override
 	public int getMoney() {
-		return 3;
+		return 1;
 	}
 
 	@Override

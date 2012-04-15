@@ -25,7 +25,7 @@ public class Level {
 	private Selector selector = null;
 	private EnemyPlayer player;
 	private float speedFactor = 2.0f;
-	private int health = 1;
+	private int health = 3;
 	private int money = 10;
 	private int points = 0;
 	private int bonus = 0;
