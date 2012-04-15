@@ -16,6 +16,7 @@ import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.DisplayEffect;
 import com.cdm.view.elements.shots.Explosion;
+import com.cdm.view.elements.shots.Shake;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -237,12 +238,16 @@ public class Level {
 		SoundFX.play(Type.HURT);
 		health -= 1;
 		shake();
-		shake();
+		//shake();
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		unitsToRemove.add(enemyUnit);
 	}
 
 	private void shake() {
+		addShot(new Shake(this));
+		if(true)
+			return;
+		
 		int nu = (int) Position.LEVEL_REF.getScale();
 		if (plus) {
 			nu += 10;
