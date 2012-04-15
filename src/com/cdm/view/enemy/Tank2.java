@@ -13,7 +13,7 @@ import com.cdm.view.elements.RotatingThing;
 public class Tank2 extends EnemyUnit {
 
 	public Position nextStep = null;
-	public static final float SPEED = 0.3f;
+	public static final float SPEED = 0.35f;
 
 	private static final Vector3 c0 = new Vector3(-1, -1, 0);
 	private static final Vector3 c1 = new Vector3(1, -1, 0);
@@ -163,7 +163,7 @@ public class Tank2 extends EnemyUnit {
 
 	@Override
 	public int getMoney() {
-		return 2;
+		return 3;
 	}
 
 	@Override

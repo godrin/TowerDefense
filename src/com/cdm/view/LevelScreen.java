@@ -120,11 +120,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		oldMicros = micro;
 		mywait(delta);
 		restart();
-		if (level.getBonus() >= 100 && level.getBonus() <= 113) {
-			renderer.font.setScale(2f);
-			renderer.drawText(350, 300, "1 up!", new Color(1, 1, 1, 1));
-			renderer.font.setScale(1f);
-		}
 		return delta;
 	}
 

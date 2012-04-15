@@ -13,7 +13,7 @@ import com.cdm.view.elements.RotatingThing;
 public class Truck extends EnemyUnit {
 
 	public Position nextStep = null;
-	public static final float SPEED = 0.3f;
+	public static final float SPEED = 0.33f;
 
 	private static final Vector3 c0 = new Vector3(-1.5f, -1, 0);
 	private static final Vector3 c1 = new Vector3(1, -1, 0);
@@ -184,7 +184,7 @@ public class Truck extends EnemyUnit {
 
 	@Override
 	public int getPoints() {
-		return 5;
+		return 1;
 	}
 
 	@Override
