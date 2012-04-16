@@ -22,8 +22,8 @@ import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
-import com.cdm.view.elements.Unit;
-import com.cdm.view.elements.Unit.UnitType;
+import com.cdm.view.elements.units.Unit;
+import com.cdm.view.elements.units.Unit.UnitType;
 import com.cdm.view.enemy.EnemyPlayer;
 
 public class LevelScreen extends Screen implements IUnitTypeSelected,

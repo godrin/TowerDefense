@@ -11,12 +11,13 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Selector;
 import com.cdm.view.elements.Grid.GridElement;
-import com.cdm.view.elements.Unit.UnitType;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.DisplayEffect;
 import com.cdm.view.elements.shots.Explosion;
 import com.cdm.view.elements.shots.Shake;
+import com.cdm.view.elements.units.Unit;
+import com.cdm.view.elements.units.Unit.UnitType;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -29,7 +30,6 @@ public class Level {
 	private int money = 10;
 	private int points = 0;
 	private int bonus = 0;
-	private boolean plus = true;
 	private List<Unit> units = new ArrayList<Unit>();
 	private List<Unit> unitsToRemove = new ArrayList<Unit>();
 
@@ -247,21 +247,6 @@ public class Level {
 
 	private void shake() {
 		addShot(new Shake(this));
-		if (true)
-			return;
-
-		int nu = (int) Position.LEVEL_REF.getScale();
-		if (plus) {
-			nu += 10;
-			plus = false;
-		} else {
-			nu -= 10;
-			plus = true;
-		}
-		Position.LEVEL_REF.setScale(nu);
-		System.out
-				.println("SCROLL " + 10 + " " + Position.LEVEL_REF.getScale());
-
 	}
 
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
@@ -276,7 +261,7 @@ public class Level {
 		if (bonus == 100) {
 			health += 1;
 			SoundFX.play(Type.WIN);
-			
+
 		}
 		if (bonus == 200) {
 			health += 1;

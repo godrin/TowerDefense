@@ -2,6 +2,7 @@ package com.cdm.view.elements;
 
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.Position;
+import com.cdm.view.elements.units.Unit;
 import com.cdm.view.enemy.EnemyUnit;
 
 public abstract class RotatingUnit extends Unit {
