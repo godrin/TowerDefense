@@ -20,6 +20,7 @@ public class RocketShot extends MovingShot {
 					0.5f, 0.2f, 0.9f));
 			sprite.fillRectangle(-0.75f, -0.3f, 0.6f, 0.6f, new Color(0.4f,
 					0.2f, 0.08f, 0.9f));
+			sprite.fillRectangle(0.75f,-0.1f, 0.2f, 0.2f, new Color(0.0f,0,0,0.9f));
 			sprite.init();
 		}
 	}

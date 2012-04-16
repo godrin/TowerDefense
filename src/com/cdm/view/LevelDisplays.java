@@ -48,18 +48,21 @@ public class LevelDisplays {
 			}
 		}
 
-		if (level.gameover()) {
+		if (!level.gameover()) {
 			Renderer.font.setScale(3f);
 			renderer.drawText(220, 300, "Game OveR", color);
 			Renderer.font.setScale(1f);
-			renderer.drawText(235,200, "click to go back to menu", moneyColor);
+			renderer.drawText(260, 330,
+					"You've got " + Integer.toString(level.getPoints())
+							+ " Points", moneyColor);
+			renderer.drawText(235, 200, "click to go back to menu", moneyColor);
 		}
-		if (level.getBonus() >= 100 && level.getBonus() <= 103) {
+		if (level.getBonus() >= 100 && level.getBonus() <= 101) {
 			Renderer.font.setScale(2f);
 			renderer.drawText(350, 300, "1 up!", color);
 			Renderer.font.setScale(1f);
 		}
-		if (level.getBonus() >= 200 && level.getBonus() <= 203) {
+		if (level.getBonus() >= 200 && level.getBonus() <= 201) {
 			Renderer.font.setScale(2f);
 			renderer.drawText(350, 300, "1 up!", color);
 			Renderer.font.setScale(1f);

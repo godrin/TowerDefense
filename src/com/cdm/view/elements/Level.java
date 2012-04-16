@@ -26,7 +26,7 @@ public class Level {
 	private EnemyPlayer player;
 	private float speedFactor = 2.0f;
 	private int health = 3;
-	private int money = 10;
+	private int money = 100;
 	private int points = 0;
 	private int bonus = 0;
 	private boolean plus = true;
@@ -336,6 +336,10 @@ public class Level {
 		return bonus;
 	}
 
+	public int getPoints() {
+		return points;
+	}
+	
 	public void setBonus(int bonus) {
 		this.bonus = bonus;
 	}
