@@ -2,9 +2,6 @@ package com.cdm.view;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.cdm.SString;
-import com.cdm.gui.BigButton;
-import com.cdm.gui.WidgetContainer;
 import com.cdm.view.elements.Level;
 
 public class LevelDisplays {

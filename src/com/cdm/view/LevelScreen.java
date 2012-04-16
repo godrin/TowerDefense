@@ -1,8 +1,10 @@
 package com.cdm.view;
 
 import com.badlogic.gdx.Gdx;
+
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
+
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -37,6 +39,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private boolean rendering = false;
 	private Position dragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Position oldDragPosition = new Position(0, 0, Position.SCREEN_REF);
+
 	private Sound sound;
 	private Widget restartButton = new BigButton(400, 200,
 			Gdx.graphics.getWidth() / 6, 50, "restart",
@@ -62,6 +65,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		renderer.dispose();
 	}
 
+	/**
+	 * called only at screen initialization
+	 */
 	private void createUnitButtons() {
 		float pos = 35;
 		UnitTypeButton tb;
@@ -74,7 +80,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 			pos += 80;
 		}
-		System.out.println(gui);
 	}
 
 	private Long oldMicros = 0L;
@@ -272,6 +277,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	@Override
 	public void buttonPressed(SString buttonName) {
+
 		if (!level.gameover()) {
 			if (buttonName.equals(SString.SIZE_BUTTON)) {
 				// FIXME
@@ -289,6 +295,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 				createUnitButtons();
 				System.out.println("Restart");
 			}
+
 		}
 	}
 }

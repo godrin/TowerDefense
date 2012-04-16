@@ -9,6 +9,7 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Level;
 
+@Deprecated
 public class Rocket2 extends MovingShot {
 
 	public static float speed = 0.7f;

@@ -7,14 +7,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.elements.MathTools;
-import com.cdm.view.elements.RotatingThing;
 
-public class Tank extends EnemyUnit {
-
-	public Position nextStep = null;
-	public static final float SPEED = 0.2f;
-
+public class Tank extends GroundMovingEnemy {
 	private static final Vector3 c0 = new Vector3(-1, -1, 0);
 	private static final Vector3 c1 = new Vector3(1, -1, 0);
 	private static final Vector3 c2 = new Vector3(1, 1, 0);
@@ -53,11 +47,6 @@ public class Tank extends EnemyUnit {
 
 	private static final Color innerColor = new Color(0.7f, 0, 0.6f, 1.0f);
 	private static final Color outerColor = new Color(0.7f, 0.2f, 1.0f, 1.0f);
-	private static final Vector3 DEFAULT_DIRECTION = new Vector3(1, 0, 0);
-
-	private Vector3 diff = new Vector3();
-	private Vector3 movingDir = new Vector3();
-	private RotatingThing rotation = new RotatingThing();
 
 	public Tank(Position pos) {
 		super(pos);
@@ -70,38 +59,6 @@ public class Tank extends EnemyUnit {
 		super.move(time);
 		chainPhase += time;
 
-		while (time > 0) {
-			if (nextStep == null) {
-				nextStep = getLevel().getNextPos(getPosition().alignedToGrid());
-			}
-			Position nuPos = new Position(getPosition());
-
-			diff.set(getPosition().to(nextStep));
-
-			float targetAngle = MathTools.angle(diff);
-			rotation.setTargetAngle(targetAngle);
-
-			time -= rotation.move(time);
-
-			if (time < 0.00001f)
-				return;
-
-			float len = diff.len();
-			float delta = time * getSpeed();
-
-			if (delta >= len) {
-				setPosition(nextStep);
-				time -= len / delta;
-				nextStep = null;
-			} else {
-				diff.mul(delta / diff.len());
-				nuPos.x += diff.x;
-				nuPos.y += diff.y;
-				setPosition(nuPos);
-				time = 0;
-			}
-
-		}
 	}
 
 	@Override
@@ -141,22 +98,6 @@ public class Tank extends EnemyUnit {
 
 	}
 
-	private float getAngle() {
-		return rotation.getCurrentAngle();
-	}
-
-	@Override
-	public float getOriginalSpeed() {
-		return SPEED;
-	}
-
-	@Override
-	public Vector3 getMovingDirection() {
-		if (nextStep != null)
-			return movingDir.set(getPosition().to(nextStep).nor());
-		return DEFAULT_DIRECTION;
-	}
-
 	@Override
 	public int getMoney() {
 		return 2;
@@ -170,11 +111,6 @@ public class Tank extends EnemyUnit {
 	@Override
 	public int getBonus() {
 		return 1;
-	}
-
-	@Override
-	public int getZLayer() {
-		return 0;
 	}
 
 }

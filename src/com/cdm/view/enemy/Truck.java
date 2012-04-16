@@ -10,10 +10,12 @@ import com.cdm.view.Position;
 import com.cdm.view.elements.MathTools;
 import com.cdm.view.elements.RotatingThing;
 
-public class Truck extends EnemyUnit {
+public class Truck extends GroundMovingEnemy {
+
 
 	public Position nextStep = null;
 	public static final float SPEED = 0.33f;
+
 
 	private static final Vector3 c0 = new Vector3(-1.5f, -1, 0);
 	private static final Vector3 c1 = new Vector3(1, -1, 0);
@@ -84,6 +86,7 @@ public class Truck extends EnemyUnit {
 		super.move(time);
 		chainPhase += time;
 
+
 		while (time > 0) {
 			if (nextStep == null) {
 				nextStep = getLevel().getNextPos(getPosition().alignedToGrid());
@@ -115,6 +118,7 @@ public class Truck extends EnemyUnit {
 			}
 
 		}
+
 	}
 
 	@Override
@@ -173,10 +177,6 @@ public class Truck extends EnemyUnit {
 
 	}
 
-	private float getAngle() {
-		return rotation.getCurrentAngle();
-	}
-
 	@Override
 	public int getMoney() {
 		return 1;
@@ -195,19 +195,6 @@ public class Truck extends EnemyUnit {
 	@Override
 	public float getOriginalSpeed() {
 		return SPEED;
-	}
-
-	@Override
-	public Vector3 getMovingDirection() {
-		if (nextStep != null)
-			return movingDir.set(getPosition().to(nextStep).nor());
-		return DEFAULT_DIRECTION;
-	}
-
-
-	@Override
-	public int getZLayer() {
-		return 0;
 	}
 
 }

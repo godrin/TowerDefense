@@ -12,6 +12,9 @@ public class MenuScreen extends Screen implements IButtonPressed {
 	private WidgetContainer gui = new WidgetContainer();
 	private Renderer renderer = new Renderer();
 	private Game game;
+
+
+
 	public MenuScreen(Game pgame) {
 		game = pgame;
 		gui.add(new BigButton(Gdx.graphics.getWidth() / 2, 300, Gdx.graphics
