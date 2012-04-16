@@ -14,7 +14,7 @@ public class Truck extends GroundMovingEnemy {
 
 
 	public Position nextStep = null;
-	public static final float SPEED = 0.33f;
+	public static final float SPEED = 0.21f;
 
 
 	private static final Vector3 c0 = new Vector3(-1.5f, -1, 0);
@@ -127,7 +127,7 @@ public class Truck extends GroundMovingEnemy {
 				getSize());
 		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
 				getSize());
-
+		
 		drawChain(renderer);
 
 		super.draw(renderer);
