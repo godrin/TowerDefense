@@ -28,28 +28,40 @@ public class LevelDisplays {
 				"$" + Integer.toString(level.getMoney()), moneyColor);
 		renderer.drawText(Gdx.graphics.getWidth() - 120,
 				Gdx.graphics.getHeight(),
-				"Level " + Integer.toString(level.getPlayer().getLevelNo()),
+				"LeveL " + Integer.toString(level.getPlayer().getLevelNo()),
 				moneyColor);
 		renderer.drawText(Gdx.graphics.getWidth() - 140,
 				Gdx.graphics.getHeight() - 30,
 				"Energy " + Integer.toString(level.getHealth()), moneyColor);
-		if (level.gameover()) {
-			Renderer.font.setScale(2f);
-			if (up) {
-				if (color.a >= 0.01f) {
-					color.a -= 0.01f;
-				} else {
-					up = false;
-				}
+		if (up) {
+			if (color.a >= 0.01f) {
+				color.a -= 0.01f;
 			} else {
-				if (color.a <= 0.99) {
-					color.a += 0.01f;
-
-				} else {
-					up = true;
-				}
+				up = false;
 			}
-			renderer.drawText(280, 300, "Game Over", color);
+		} else {
+			if (color.a <= 0.99) {
+				color.a += 0.01f;
+
+			} else {
+				up = true;
+			}
+		}
+
+		if (level.gameover()) {
+			Renderer.font.setScale(3f);
+			renderer.drawText(220, 300, "Game OveR", color);
+			Renderer.font.setScale(1f);
+			renderer.drawText(235,200, "click to go back to menu", moneyColor);
+		}
+		if (level.getBonus() >= 100 && level.getBonus() <= 103) {
+			Renderer.font.setScale(2f);
+			renderer.drawText(350, 300, "1 up!", color);
+			Renderer.font.setScale(1f);
+		}
+		if (level.getBonus() >= 200 && level.getBonus() <= 203) {
+			Renderer.font.setScale(2f);
+			renderer.drawText(350, 300, "1 up!", color);
 			Renderer.font.setScale(1f);
 		}
 	}

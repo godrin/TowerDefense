@@ -31,19 +31,6 @@ public class Tank extends GroundMovingEnemy {
 
 	private static final List<Vector3> poly = Arrays.asList(new Vector3[] { c0,
 			c1, c2, c0, c2, c3 });
-
-	private static final List<Vector3> chainLines = Arrays
-			.asList(new Vector3[] { new Vector3(0, -1.5f, 0),
-					new Vector3(0, -1.1f, 0), new Vector3(0, -1.5f, 0),
-					new Vector3(0, -1.1f, 0), new Vector3(0, -1.5f, 0),
-					new Vector3(0, -1.1f, 0), new Vector3(0, -1.5f, 0),
-					new Vector3(0, -1.1f, 0),
-
-					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0),
-					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0),
-					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0),
-					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0), });
-
 	private static final Color innerColor = new Color(0.7f, 0, 0.6f, 1.0f);
 	private static final Color outerColor = new Color(0.7f, 0.2f, 1.0f, 1.0f);
 	private final Chain chains = new Chain();
@@ -70,8 +57,6 @@ public class Tank extends GroundMovingEnemy {
 
 		chains.drawChain(renderer, getPosition(), getAngle(), outerColor,
 				getSize());
-		// drawChain(renderer);
-
 		super.draw(renderer);
 	}
 

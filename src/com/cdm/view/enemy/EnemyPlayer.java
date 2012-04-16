@@ -94,4 +94,11 @@ public class EnemyPlayer {
 		}
 
 	}
+
+	public static void setLevelNo(int i) {
+		levelNo = i; 
+		
+	}
+
+
 }

@@ -7,9 +7,9 @@ public enum EnemyType {
 	public static final Float FACTOR = 0.4f;
 
 	public static EnemyType random() {
-		if(true)
-			return TANK;
 		double r = Math.random();
+		if (true)
+			return TRUCK;
 		if (r < 0.1)
 			return TANK2;
 		if (r < 0.2)

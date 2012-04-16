@@ -7,12 +7,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.elements.MathTools;
-import com.cdm.view.elements.RotatingThing;
 
 public class Truck extends GroundMovingEnemy {
 
-	public static final float SPEED = 0.3f;
+
+	public Position nextStep = null;
+	public static final float SPEED = 0.21f;
+
 
 	private static final Vector3 c0 = new Vector3(-1.5f, -1, 0);
 	private static final Vector3 c1 = new Vector3(1, -1, 0);
@@ -27,8 +28,8 @@ public class Truck extends GroundMovingEnemy {
 	private static final Vector3 d2 = new Vector3(2f, 0.81f, 0);
 	private static final Vector3 d3 = new Vector3(1f, 0.8f, 0);
 	private static final Vector3 k0 = new Vector3(-1f, -1.5f, 0);
-	private static final Vector3 k1 = new Vector3(-0.1f, -1.5f, 0);
-	private static final Vector3 k2 = new Vector3(-0.1f, -1.1f, 0);
+	private static final Vector3 k1 = new Vector3(-0.3f, -1.5f, 0);
+	private static final Vector3 k2 = new Vector3(-0.3f, -1.1f, 0);
 	private static final Vector3 k3 = new Vector3(-1f, -1.1f, 0);
 	private static final Vector3 x0 = new Vector3(-1f, 1.5f, 0);
 	private static final Vector3 x1 = new Vector3(-0.3f, 1.5f, 0);
@@ -67,8 +68,7 @@ public class Truck extends GroundMovingEnemy {
 
 	private static final Color innerColor = new Color(0.3f, 0.2f, 0.0f, 1.0f);
 	private static final Color outerColor = new Color(0.8f, 0.7f, 0f, 1.0f);
-	private static final Vector3 DEFAULT_DIRECTION = new Vector3(1, 0, 0);
-
+	
 	public Truck(Position pos) {
 		super(pos);
 		setSize(0.25f);
@@ -87,7 +87,7 @@ public class Truck extends GroundMovingEnemy {
 				getSize());
 		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
 				getSize());
-
+		
 		drawChain(renderer);
 
 		super.draw(renderer);
@@ -113,10 +113,11 @@ public class Truck extends GroundMovingEnemy {
 				b.x = x;
 			}
 		}
+		
 		renderer.drawLines(getPosition(), chainLines, getAngle(), outerColor,
 				getSize());
 
-		float startX2 = 1.0f;
+		float startX2 = 1f;
 		for (int i = 0; i < size; i++) {
 			x = ((float) i) / size * 3.1415f * 0.5f;
 			x += chainPhase * speed + 3.1415;
@@ -138,12 +139,12 @@ public class Truck extends GroundMovingEnemy {
 
 	@Override
 	public int getMoney() {
-		return 3;
+		return 1;
 	}
 
 	@Override
 	public int getPoints() {
-		return 5;
+		return 1;
 	}
 
 	@Override

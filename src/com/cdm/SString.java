@@ -9,7 +9,8 @@ public class SString implements Comparable<SString> {
 	private static List<SString> sstrings = new ArrayList<SString>();
 	
 	public static SString SIZE_BUTTON=SString.create("SIZE_BUTTON");
-
+	public static SString RESTART_BUTTON=SString.create("RESTART_BUTTON");
+	
 	private SString(int i) {
 		id = i;
 	}

@@ -1,16 +1,22 @@
 package com.cdm.view;
 
 import com.badlogic.gdx.Gdx;
+
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
+
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cdm.Game;
 import com.cdm.SString;
+import com.cdm.gui.BigButton;
 import com.cdm.gui.Button;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.IUnitTypeSelected;
 import com.cdm.gui.UnitTypeButton;
+import com.cdm.gui.Widget;
 import com.cdm.gui.WidgetContainer;
 import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
@@ -18,6 +24,7 @@ import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.Unit;
 import com.cdm.view.elements.Unit.UnitType;
+import com.cdm.view.enemy.EnemyPlayer;
 
 public class LevelScreen extends Screen implements IUnitTypeSelected,
 		IButtonPressed {
@@ -32,6 +39,11 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private boolean rendering = false;
 	private Position dragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Position oldDragPosition = new Position(0, 0, Position.SCREEN_REF);
+
+	private Sound sound;
+	private Widget restartButton = new BigButton(400, 200,
+			Gdx.graphics.getWidth() / 6, 50, "restart",
+			SString.create("RESTART_BUTTON"), this);
 
 	private Game game;
 
@@ -112,6 +124,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		}
 		oldMicros = micro;
 		mywait(delta);
+		restart();
 		return delta;
 	}
 
@@ -175,8 +188,10 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchDown(int x, int y, int pointer, int button) {
+
 		if (level.gameover())
 			return false;
+
 		int oy = y;
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
@@ -191,8 +206,10 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchUp(int x, int y, int pointer, int button) {
+
 		if (level.gameover())
 			return false;
+
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
 			gui.touchUp(x, y, pointer, button);
@@ -241,7 +258,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	@Override
 	public boolean scrolled(int amount) {
-		int nu = (int) (Position.LEVEL_REF.getScale() + amount);
+		int nu = (int) (Position.LEVEL_REF.getScale() - amount);
 		if (nu >= 40 && nu <= 128)
 			Position.LEVEL_REF.setScale(nu);
 
@@ -260,8 +277,25 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	@Override
 	public void buttonPressed(SString buttonName) {
-		if (buttonName.equals(SString.SIZE_BUTTON)) {
-			SoundFX.play(Type.ZOOM);
+
+		if (!level.gameover()) {
+			if (buttonName.equals(SString.SIZE_BUTTON)) {
+				// FIXME
+			}
+		}
+	}
+
+	public void restart() {
+		if (level.gameover()) {
+			if (Gdx.input.justTouched()) {
+				game.setScreen(Screen.MENU_SCREEN);
+				EnemyPlayer.setLevelNo(1);
+				level = new Level(20, 10, 5);
+				hud.setLevel(level);
+				createUnitButtons();
+				System.out.println("Restart");
+			}
+
 		}
 	}
 }

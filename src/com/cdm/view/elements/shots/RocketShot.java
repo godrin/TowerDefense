@@ -31,7 +31,15 @@ public class RocketShot extends MovingShot {
 
 	@Override
 	public void draw(IRenderer renderer) {
+
+
+		/*renderer.drawPoly(getPosition(), poly, angle,
+				new Color(1, 0, 0, 1.0f), getSize());
+		renderer.drawLines(getPosition(), lines, angle,
+				new Color(1, 0.7f, 1, 1.0f), getSize());
+		*/
 		renderer.render(sprite, pos, getSize(), angle, GL10.GL_TRIANGLES);
+
 	}
 
 	@Override

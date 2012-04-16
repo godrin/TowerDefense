@@ -6,7 +6,7 @@ import com.cdm.view.Position;
 public abstract class Unit implements Element {
 
 	public enum UnitType {
-		CANNON, ROCKET_THROWER, STUNNER, PHAZER, ROCKET, EXPLOSION;
+		CANNON, ROCKET_THROWER, STUNNER, PHAZER;
 
 		public int getCost() {
 			switch (this) {
@@ -28,6 +28,7 @@ public abstract class Unit implements Element {
 	private float size;
 	private Level level;
 	private int cost;
+	private int speed;
 
 	public Unit(Position p) {
 		pos = p;
@@ -82,6 +83,14 @@ public abstract class Unit implements Element {
 		this.cost = cost;
 	}
 
+	public void setSpeed(int speed) {
+		this.speed = speed;
+	}
+	
+	public float getSpeed() {
+		return speed;
+	}
+	
 	public abstract int getZLayer();
 
 }

@@ -95,7 +95,7 @@ public class SmallShip extends EnemyUnit implements Element {
 
 	@Override
 	public int getPoints() {
-		return 10;
+		return 5;
 	}
 
 	@Override
