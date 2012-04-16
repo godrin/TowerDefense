@@ -10,10 +10,8 @@ import com.cdm.view.Position;
 
 public class Truck extends GroundMovingEnemy {
 
-
 	public Position nextStep = null;
 	public static final float SPEED = 0.21f;
-
 
 	private static final Vector3 c0 = new Vector3(-1.5f, -1, 0);
 	private static final Vector3 c1 = new Vector3(1, -1, 0);
@@ -53,22 +51,11 @@ public class Truck extends GroundMovingEnemy {
 	private static final List<Vector3> poly = Arrays.asList(new Vector3[] { c0,
 			c1, c2, c0, c2, c3, d0, d1, d2, d2, d3, d0 });
 
-	private static final List<Vector3> chainLines = Arrays
-			.asList(new Vector3[] { new Vector3(0, -1.5f, 0),
-					new Vector3(0, -1.1f, 0), new Vector3(0, -1.5f, 0),
-					new Vector3(0, -1.1f, 0), new Vector3(0, -1.5f, 0),
-					new Vector3(0, -1.1f, 0), new Vector3(0, -1.5f, 0),
-					new Vector3(0, -1.1f, 0),
-
-					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0),
-					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0),
-					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0),
-					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0), });
-	private float chainPhase = 0.0f;
-
 	private static final Color innerColor = new Color(0.3f, 0.2f, 0.0f, 1.0f);
 	private static final Color outerColor = new Color(0.8f, 0.7f, 0f, 1.0f);
-	
+
+	private final Chain chains = new Chain();
+
 	public Truck(Position pos) {
 		super(pos);
 		setSize(0.25f);
@@ -77,7 +64,7 @@ public class Truck extends GroundMovingEnemy {
 	@Override
 	public void move(float time) {
 		super.move(time);
-		chainPhase += time;
+		chains.move(time * SPEED / GroundMovingEnemy.SPEED);
 
 	}
 
@@ -87,54 +74,13 @@ public class Truck extends GroundMovingEnemy {
 				getSize());
 		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
 				getSize());
-		
-		drawChain(renderer);
+
+		chains.drawChain(renderer, getPosition(), getAngle(), outerColor,
+				getSize(), -0.9f, 0.55f);
+		chains.drawChain(renderer, getPosition(), getAngle(), outerColor,
+				getSize(), 1f, 0.55f);
 
 		super.draw(renderer);
-	}
-
-	private void drawChain(IRenderer renderer) {
-		float x;
-		float startX = -0.9f;
-		float delta = 0.55f;
-		int size = 4;
-		float speed = 0.5f;
-		for (int i = 0; i < size; i++) {
-			x = ((float) i) / size * 3.1415f * 0.5f;
-			x += chainPhase * speed + 3.1415;
-			x %= 3.1415 * 0.5;
-			x = (float) Math.sin(x);
-			x *= delta;
-			x += startX;
-			for (int lr = 0; lr < size * 4; lr += size * 2) {
-				Vector3 a = chainLines.get(lr + i * 2);
-				Vector3 b = chainLines.get(lr + i * 2 + 1);
-				a.x = x;
-				b.x = x;
-			}
-		}
-		
-		renderer.drawLines(getPosition(), chainLines, getAngle(), outerColor,
-				getSize());
-
-		float startX2 = 1f;
-		for (int i = 0; i < size; i++) {
-			x = ((float) i) / size * 3.1415f * 0.5f;
-			x += chainPhase * speed + 3.1415;
-			x %= 3.1415 * 0.5;
-			x = (float) Math.sin(x);
-			x *= delta;
-			x += startX2;
-			for (int lr = 0; lr < size * 4; lr += size * 2) {
-				Vector3 a = chainLines.get(lr + i * 2);
-				Vector3 b = chainLines.get(lr + i * 2 + 1);
-				a.x = x;
-				b.x = x;
-			}
-		}
-		renderer.drawLines(getPosition(), chainLines, getAngle(), outerColor,
-				getSize());
-
 	}
 
 	@Override

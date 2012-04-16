@@ -25,9 +25,13 @@ public class Chain {
 
 	public void drawChain(IRenderer renderer, Position pos, float angle,
 			Color outerColor, float scale) {
+		drawChain(renderer, pos, angle, outerColor, scale, -0.9f,0.7f + 0.9f);
+	}
+
+	public void drawChain(IRenderer renderer, Position pos, float angle,
+			Color outerColor, float scale, float startX,float delta) {
 		float x;
-		float startX = -0.9f;
-		float delta = 0.7f + 0.9f;
+		
 		int size = 4;
 		float speed = 0.5f;
 		for (int i = 0; i < size; i++) {
@@ -50,6 +54,6 @@ public class Chain {
 
 	public void move(float time) {
 		chainPhase += time;
-		
+
 	}
 }
