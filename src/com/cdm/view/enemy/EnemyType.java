@@ -41,13 +41,13 @@ public enum EnemyType {
 			s = 2.5f;
 			break;
 		case ROCKET:
-			s = 4.5f;
+			s = 13.5f;
 			break;
 		case TRUCK:
-			s = 3.5f;
+			s = 10.5f;
 			break;
 		case TANK2:
-			s = 6.0f;
+			s = 10.0f;
 			break;
 		}
 		return s * (1.0f + (levelNo - 1) * FACTOR);

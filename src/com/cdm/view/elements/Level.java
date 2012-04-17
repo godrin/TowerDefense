@@ -44,7 +44,7 @@ public class Level {
 		Position.LEVEL_REF.setHeight(h);
 		player = new EnemyPlayer();
 		player.setLevel(this);
-		boxDrawer = new BoxDrawing(getEnemyStartPosition(),
+		boxDrawer = new BoxDrawing(new Position(-1, grid.endY(), Position.LEVEL_REF),
 				getEnemyEndPosition(), grid.getH());
 
 		PathFinder.breadthSearch(grid, getEnemyStartPositionPlusOne(),
@@ -194,7 +194,11 @@ public class Level {
 	public Position getEnemyStartPosition() {
 		return new Position(-1, grid.endY(), Position.LEVEL_REF);
 	}
-
+	
+	public Position getEnemyStartPosition2() {
+		return new Position(0, grid.endY()-4, Position.LEVEL_REF);
+	}
+	
 	public PathPos getEnemyStartPositionPlusOne() {
 		return new PathPos(0, grid.endY(), -1);
 	}
@@ -215,7 +219,7 @@ public class Level {
 		Position finish = getEnemyEndPosition();
 		PathPos from = new PathPos(alignToGrid);
 		PathPos finishPos = new PathPos(finish);
-
+		finish.y+=4;
 		if (true) {
 			int curVal = 1000;
 			GridElement ge = grid.getElement(from.x, from.y);
@@ -240,7 +244,6 @@ public class Level {
 		if (health < 1)
 			SoundFX.play(Type.LOOSE);
 		shake();
-		// shake();
 		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		unitsToRemove.add(enemyUnit);
 	}
@@ -280,6 +283,7 @@ public class Level {
 		}
 		if (bonus == 200) {
 			health += 1;
+			EnemyPlayer.level2= true;
 			SoundFX.play(Type.WIN);
 		}
 	}

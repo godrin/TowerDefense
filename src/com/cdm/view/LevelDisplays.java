@@ -48,7 +48,7 @@ public class LevelDisplays {
 			}
 		}
 
-		if (!level.gameover()) {
+		if (level.gameover()) {
 			Renderer.font.setScale(3f);
 			renderer.drawText(220, 300, "Game OveR", color);
 			Renderer.font.setScale(1f);
