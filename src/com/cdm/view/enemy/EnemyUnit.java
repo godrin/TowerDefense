@@ -17,6 +17,7 @@ public abstract class EnemyUnit extends Unit {
 	private float orignalEnergy = -1;
 	private float frozenTime = 0.0f;
 	private float speed = -10.0f;
+	private ShakingLines shaking = new ShakingLines();
 
 	public EnemyUnit(Position pos) {
 		super(pos);
@@ -29,6 +30,10 @@ public abstract class EnemyUnit extends Unit {
 
 			energy = e;
 		}
+	}
+
+	public ShakingLines getShakingLines() {
+		return shaking;
 	}
 
 	public abstract int getMoney();
@@ -68,6 +73,7 @@ public abstract class EnemyUnit extends Unit {
 	}
 
 	public void wasHitBy(MovingShot shot) {
+		getShakingLines().shake();
 		Class<? extends MovingShot> type = shot.getClass();
 		float impact = getImpact(type, shot.getLevel());
 		// FIXME: randomize impact
@@ -84,6 +90,7 @@ public abstract class EnemyUnit extends Unit {
 
 	@Override
 	public void move(float time) {
+		shaking.move(time);
 		if (frozenTime > 0.0f) {
 			setSpeed(getOriginalSpeed() * FREEZE_FACTOR);
 			frozenTime -= time;

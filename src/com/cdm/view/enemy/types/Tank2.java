@@ -63,7 +63,7 @@ public class Tank2 extends GroundMovingEnemy {
 	public void draw(IRenderer renderer) {
 		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
 				getSize());
-		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
+		getShakingLines().draw(renderer,getPosition(), lines, getAngle(), outerColor,
 				getSize());
 
 		chains.drawChain(renderer, getPosition(), getAngle(), outerColor,

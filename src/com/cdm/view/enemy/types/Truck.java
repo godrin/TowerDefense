@@ -74,9 +74,13 @@ public class Truck extends GroundMovingEnemy {
 	public void draw(IRenderer renderer) {
 		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
 				getSize());
+		
+		getShakingLines().draw(renderer,getPosition(), lines, getAngle(), outerColor,
+				getSize());
+		/*
 		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
 				getSize());
-
+*/
 		chains.drawChain(renderer, getPosition(), getAngle(), outerColor,
 				getSize(), -0.9f, 0.55f);
 		chains.drawChain(renderer, getPosition(), getAngle(), outerColor,

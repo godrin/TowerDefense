@@ -55,7 +55,7 @@ public class Rocket extends EnemyUnit implements Element {
 		super.draw(renderer);
 
 		renderer.drawPoly(getPosition(), poly, angle, innerColor, getSize());
-		renderer.drawLines(getPosition(), lines, angle, outerColor, getSize());
+		getShakingLines().draw(renderer,getPosition(), lines, angle, outerColor, getSize());
 		
 	}
 

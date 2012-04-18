@@ -52,8 +52,8 @@ public class SmallShip extends EnemyUnit implements Element {
 		super.draw(renderer);
 
 		renderer.drawPoly(getPosition(), poly, angle, Color.BLACK, getSize());
-		renderer.drawLines(getPosition(), lines, angle, lineColor, getSize());
-		renderer.drawLines(getPosition(), ray, angle, lineColor, getSize());
+		getShakingLines().draw(renderer,getPosition(), lines, angle, lineColor, getSize());
+		getShakingLines().draw(renderer,getPosition(), ray, angle, lineColor, getSize());
 	}
 
 	@Override
