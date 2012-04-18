@@ -10,12 +10,14 @@ import com.cdm.view.Position;
 public class ShakingLines {
 
 	private static final double FACTOR = 0.1f;
-	private static final float SPEED = 3.1415f*4;
+	private static final float SPEED = 3.1415f * 4;
 	private float shakeTime = -1;
 	private Position tmp = new Position(0, 0, Position.LEVEL_REF);
+	private float shakeAngle;
 
 	public void shake() {
-		shakeTime = 1.4f;
+		shakeTime = 1.1f;
+		shakeAngle = (float) Math.random() * 3.1415f;
 	}
 
 	public void move(float t) {
@@ -27,13 +29,16 @@ public class ShakingLines {
 		if (shakeTime > 0) {
 			tmp.set(position);
 
-			tmp.x -= Math.sin(shakeTime*SPEED) * shakeTime * FACTOR;
-			tmp.y -= Math.sin(shakeTime*SPEED) * shakeTime * FACTOR;
-			renderer.drawLines(tmp, lines, angle, outercolor, size);
+			float dx = (float) (Math.sin(shakeAngle)
+					* Math.sin(shakeTime * SPEED) * shakeTime * FACTOR);
+			float dy = (float) (Math.cos(shakeAngle)
+					* Math.sin(shakeTime * SPEED) * shakeTime * FACTOR);
+			tmp.x -= dx;
+			tmp.y -= dy;
 			tmp.set(position);
 
-			tmp.x += Math.sin(shakeTime*SPEED) * shakeTime * FACTOR;
-			tmp.y += Math.sin(shakeTime*SPEED) * shakeTime * FACTOR;
+			tmp.x += dx;
+			tmp.y += dy;
 			renderer.drawLines(tmp, lines, angle, outercolor, size);
 		} else {
 			renderer.drawLines(position, lines, angle, outercolor, size);
