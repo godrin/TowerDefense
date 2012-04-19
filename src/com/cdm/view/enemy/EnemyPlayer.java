@@ -23,6 +23,8 @@ public class EnemyPlayer {
 	private float timeInWave = 0.0f;
 	private SortedSet<EnemyDef> defs = new TreeSet<EnemyDef>();
 	private boolean alreadySent = false;
+	public static boolean level2 = false;
+	public static boolean level3 = false;
 
 	public Level getLevel() {
 		return level;
@@ -45,9 +47,28 @@ public class EnemyPlayer {
 					EnemyDef def = defs.first();
 					defs.remove(def);
 					alreadySent = true;
-					Position x = new Position(level.getEnemyStartPosition());
-					EnemyUnit e = EnemyUnits.create(def.type, x, levelNo);
-					level.add(e);
+					// Position x = new Position(level.getEnemyStartPosition());
+					if (level2) {
+						float i = (float) Math.random();
+						if (i <= 0.5) {
+							Position x = new Position(
+									level.getEnemyStartPosition2());
+							EnemyUnit e = EnemyUnits.create(def.type, x,
+									levelNo);
+							level.add(e);
+						} else {
+							Position x = new Position(
+									level.getEnemyStartPosition());
+							EnemyUnit e = EnemyUnits.create(def.type, x,
+									levelNo);
+							level.add(e);
+						}
+					} else {
+						Position x = new Position(level.getEnemyStartPosition());
+						EnemyUnit e = EnemyUnits.create(def.type, x, levelNo);
+						level.add(e);
+					}
+
 				}
 			} else
 				startWait();
@@ -70,7 +91,13 @@ public class EnemyPlayer {
 		timeInWave = 0.0f;
 		mode = Mode.ATTACK;
 		alreadySent = false;
-
+		if ((getLevelNo() > 1) && !level3)
+			level2 = true;
+		if (getLevelNo() > 3){
+			
+		level2=false;
+			level3 =true;
+		}
 		defs.clear();
 
 		// strength-based randomized enemy creation
@@ -96,9 +123,8 @@ public class EnemyPlayer {
 	}
 
 	public static void setLevelNo(int i) {
-		levelNo = i; 
-		
-	}
+		levelNo = i;
 
+	}
 
 }

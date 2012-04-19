@@ -71,6 +71,11 @@ public abstract class GroundMovingEnemy extends EnemyUnit {
 		return SPEED;
 	}
 
+	public void setTurningSpeed2(float speed) {
+		rotation.setTurningSpeed(speed);
+	}
+
+	
 	@Override
 	public Vector3 getMovingDirection() {
 		if (nextStep != null)
