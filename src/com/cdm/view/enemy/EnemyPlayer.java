@@ -91,13 +91,13 @@ public class EnemyPlayer {
 		timeInWave = 0.0f;
 		mode = Mode.ATTACK;
 		alreadySent = false;
-		if ((getLevelNo() > 1) && !level3)
+		/*if ((getLevelNo() > 1) && !level3)
 			level2 = true;
 		if (getLevelNo() > 3){
 			
 		level2=false;
 			level3 =true;
-		}
+		}*/
 		defs.clear();
 
 		// strength-based randomized enemy creation

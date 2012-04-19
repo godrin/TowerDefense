@@ -77,4 +77,7 @@ public class WidgetContainer extends Widget {
 		}
 		return ws;
 	}
+	public void clear(){
+		widgets.clear();
+	}
 }
