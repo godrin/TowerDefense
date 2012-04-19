@@ -44,11 +44,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	public LevelScreen(Game pGame) {
 		game = pGame;
-		if (EnemyPlayer.level3) {
-			level = new Level(20, 5, 2);
-		} else {
-			level = new Level(20, 10, 5);
-		}
+		level = new Level(20, 10, 5);
 		hud.setLevel(level);
 		bg = load("data/bg_stars2.png", 128, 128);
 		createUnitButtons();
@@ -291,6 +287,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 				game.setScreen(Screen.MENU_SCREEN);
 				EnemyPlayer.setLevelNo(1);
 				//if (!EnemyPlayer.level3)
+				
 				level = new Level(20, 10, 5);
 				/*else {
 					level = new Level (20,5,2);

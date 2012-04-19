@@ -44,9 +44,9 @@ public class Tank2 extends GroundMovingEnemy {
 			x3, x0 });
 
 	private static final List<Vector3> poly = Arrays.asList(new Vector3[] { c0,
-			c1, c2, c0, c2, c3 });
-	private static final Color innerColor = new Color(0.0f, 0.5f, 0.0f, 1.0f);
-	private static final Color outerColor = new Color(0.9f, 0.0f, 0.1f, 1.0f);
+			c1, c2, c0, c2, c3,k0,k1,k2,k3,k2,k0,x0,x1,x2,x3,x2,x0 });
+	private static final Color innerColor = new Color(0.0f, 0.0f, 0.0f, 1.0f);
+	private static final Color outerColor = new Color(0.9f, 0.0f, 0.0f, 1.0f);
 	private final Chain chains = new Chain();
 
 	public Tank2(Position pos) {
