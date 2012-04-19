@@ -39,6 +39,7 @@ public class SmallShip extends EnemyUnit implements Element {
 	private static final float RAY_DISTANCE = 0.5f;
 	private static final float RAY_LENGTH = RAY_DISTANCE * 4;
 	private static final float RAY_SPEED = 0.5f;
+	private static final Color BG_COLOR = new Color(0,0,0,0.6f);
 
 	public SmallShip(Position position) {
 		super(position);
@@ -51,7 +52,7 @@ public class SmallShip extends EnemyUnit implements Element {
 	public void draw(IRenderer renderer) {
 		super.draw(renderer);
 
-		renderer.drawPoly(getPosition(), poly, angle, Color.BLACK, getSize());
+		renderer.drawPoly(getPosition(), poly, angle, BG_COLOR, getSize()*1f);
 		getShakingLines().draw(renderer,getPosition(), lines, angle, lineColor, getSize());
 		getShakingLines().draw(renderer,getPosition(), ray, angle, lineColor, getSize());
 	}

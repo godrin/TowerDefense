@@ -35,6 +35,7 @@ public class ShakingLines {
 					* Math.sin(shakeTime * SPEED) * shakeTime * FACTOR);
 			tmp.x -= dx;
 			tmp.y -= dy;
+			renderer.drawLines(tmp, lines, angle, outercolor, size);
 			tmp.set(position);
 
 			tmp.x += dx;
