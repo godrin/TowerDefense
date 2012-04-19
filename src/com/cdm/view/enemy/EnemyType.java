@@ -42,7 +42,7 @@ public enum EnemyType {
 			s = 13.5f;
 			break;
 		case TRUCK:
-			s = 10.5f;
+			s = 1.5f;
 			break;
 		case TANK2:
 			s = 10.0f;
