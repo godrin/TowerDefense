@@ -87,4 +87,11 @@ public class CoordSystem {
 		this.h = h2;
 	}
 
+	public float getW() {
+		return w;
+	}
+	public float getH() {
+		return h;
+	}
+
 }

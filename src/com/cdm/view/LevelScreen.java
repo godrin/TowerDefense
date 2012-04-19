@@ -120,7 +120,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		}
 		oldMicros = micro;
 		mywait(delta);
-		restart();
 		return delta;
 	}
 
@@ -185,9 +184,11 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	public boolean touchDown(int x, int y, int pointer, int button) {
 
-		if (level.gameover())
+		if (level.gameover()) {
+			restart();
 			return false;
 
+		}
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
 			gui.touchDown(x, y, pointer, button);
@@ -281,21 +282,17 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public void restart() {
-		if (level.gameover()) {
-			if (Gdx.input.justTouched()) {
-				game.setScreen(Screen.MENU_SCREEN);
-				EnemyPlayer.setLevelNo(1);
-				//if (!EnemyPlayer.level3)
-				
-				level = new Level(20, 10, 5);
-				/*else {
-					level = new Level (20,5,2);
-				}*/
-				hud.setLevel(level);
-				createUnitButtons();
-				System.out.println("Restart");
-			}
 
-		}
+		game.setScreen(Screen.MENU_SCREEN);
+		EnemyPlayer.setLevelNo(1);
+		// if (!EnemyPlayer.level3)
+
+		level = new Level(20, 10, 5);
+		/*
+		 * else { level = new Level (20,5,2); }
+		 */
+		hud.setLevel(level);
+		createUnitButtons();
+		System.out.println("Restart");
 	}
 }
