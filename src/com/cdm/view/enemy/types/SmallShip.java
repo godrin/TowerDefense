@@ -38,23 +38,30 @@ public class SmallShip extends EnemyUnit implements Element {
 	private static final float RAY_START = 0.5f;
 	private static final float RAY_DISTANCE = 0.5f;
 	private static final float RAY_LENGTH = RAY_DISTANCE * 4;
-	private static final float RAY_SPEED = 0.5f;
-	private static final Color BG_COLOR = new Color(0,0,0,0.6f);
+	private float raySpeed;
+	private static final Color BG_COLOR = new Color(0, 0, 0, 0.6f);
 
 	public SmallShip(Position position) {
 		super(position);
+		setRayspeed(1.1f);
 
 		setSize(0.5f);
 
+	}
+
+	public void setRayspeed(float s) {
+		raySpeed = s;
 	}
 
 	@Override
 	public void draw(IRenderer renderer) {
 		super.draw(renderer);
 
-		renderer.drawPoly(getPosition(), poly, angle, BG_COLOR, getSize()*1f);
-		getShakingLines().draw(renderer,getPosition(), lines, angle, lineColor, getSize());
-		getShakingLines().draw(renderer,getPosition(), ray, angle, lineColor, getSize());
+		renderer.drawPoly(getPosition(), poly, angle, BG_COLOR, getSize() * 1f);
+		getShakingLines().draw(renderer, getPosition(), lines, angle,
+				lineColor, getSize());
+		getShakingLines().draw(renderer, getPosition(), ray, angle, lineColor,
+				getSize());
 	}
 
 	@Override
@@ -64,7 +71,7 @@ public class SmallShip extends EnemyUnit implements Element {
 		p.x += time * getSpeed();
 		setPosition(p); // react to position change
 
-		rayPhase += RAY_SPEED * time;
+		rayPhase += raySpeed * time;
 
 		for (int rayI = 0; rayI < ray.size() / 2; rayI++) {
 			Vector3 a = ray.get(rayI * 2);
@@ -88,7 +95,6 @@ public class SmallShip extends EnemyUnit implements Element {
 	public Vector3 getMovingDirection() {
 		return DIRECTION;
 	}
-
 
 	@Override
 	public int getMoney() {

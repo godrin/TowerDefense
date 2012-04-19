@@ -191,7 +191,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (level.gameover())
 			return false;
 
-		int oy = y;
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
 			gui.touchDown(x, y, pointer, button);
