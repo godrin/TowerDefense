@@ -4,7 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 
 public class CoordSystem {
-	private float x = 0.0f, y = 0.0f, scale = 1.0f, w=-1, h=-1;
+	private float x = 0.0f, y = 0.0f, scale = 1.0f, w = -1, h = -1;
 	private static final Vector3 tmp = new Vector3();
 	private static final float MARGIN = 1.0f / 2.0f;
 
@@ -57,16 +57,15 @@ public class CoordSystem {
 	}
 
 	public void checkTranslation() {
-		// System.out.println("XXXX:" + x);
 		if (x > 0.5f + MARGIN)
 			x = 0.5f + MARGIN;
 		if (y > 0.5f + MARGIN)
 			y = 0.5f + MARGIN;
-		if (h>0 && w>0) {
-			
-			float mw=w-Gdx.graphics.getWidth()/getScale();
-			float mh=h+1-Gdx.graphics.getHeight()/getScale();
-			
+		if (h > 0 && w > 0) {
+
+			float mw = w - Gdx.graphics.getWidth() / getScale();
+			float mh = h + 1 - Gdx.graphics.getHeight() / getScale();
+
 			if (x < -mw)
 				x = -mw;
 			if (y < -mh)

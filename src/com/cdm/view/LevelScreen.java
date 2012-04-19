@@ -1,10 +1,7 @@
 package com.cdm.view;
 
 import com.badlogic.gdx.Gdx;
-
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
-
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,12 +15,10 @@ import com.cdm.gui.IUnitTypeSelected;
 import com.cdm.gui.UnitTypeButton;
 import com.cdm.gui.Widget;
 import com.cdm.gui.WidgetContainer;
-import com.cdm.gui.effects.SoundFX;
-import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
-import com.cdm.view.elements.Unit;
-import com.cdm.view.elements.Unit.UnitType;
+import com.cdm.view.elements.units.Unit;
+import com.cdm.view.elements.units.Unit.UnitType;
 import com.cdm.view.enemy.EnemyPlayer;
 
 public class LevelScreen extends Screen implements IUnitTypeSelected,
@@ -262,7 +257,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	@Override
 	public boolean scrolled(int amount) {
-		int nu = (int) (Position.LEVEL_REF.getScale() - amount);
+		int nu = (int) (Position.LEVEL_REF.getScale() + amount);
 		if (nu >= 40 && nu <= 128)
 			Position.LEVEL_REF.setScale(nu);
 

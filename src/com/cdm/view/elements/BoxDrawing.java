@@ -11,9 +11,6 @@ public class BoxDrawing {
 	List<Element> es = new ArrayList<Element>();
 
 	public BoxDrawing(Position start, Position end, int gh) {
-		// makeBox(0,0);
-		if (false)
-			return;
 		for (int x = (int) start.x; x <= (int) end.x; x++) {
 			makeBox(x, -1);
 			makeBox(x, gh + 1);

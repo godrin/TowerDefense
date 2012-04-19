@@ -20,7 +20,7 @@ public class BackgroundElement implements Element {
 	public BackgroundElement(Position p) {
 		pos = p;
 		if (boxes == null) {
-			float o = 0.7f;
+			float o = 0.8f;
 
 			boxes = new ArrayList<Vector3>();
 			boxes.add(new Vector3(-o, -o, 0));

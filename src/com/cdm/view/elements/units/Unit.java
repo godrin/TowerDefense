@@ -1,7 +1,9 @@
-package com.cdm.view.elements;
+package com.cdm.view.elements.units;
 
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
+import com.cdm.view.elements.Element;
+import com.cdm.view.elements.Level;
 
 public abstract class Unit implements Element {
 

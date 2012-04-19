@@ -1,4 +1,4 @@
-package com.cdm.view.enemy;
+package com.cdm.view.enemy.types;
 
 import com.cdm.view.Position;
 

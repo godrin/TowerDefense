@@ -1,4 +1,4 @@
-package com.cdm.view.elements;
+package com.cdm.view.elements.units;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,6 +9,9 @@ import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
+import com.cdm.view.elements.Element;
+import com.cdm.view.elements.MathTools;
+import com.cdm.view.elements.RotatingUnit;
 import com.cdm.view.elements.shots.SimpleShot;
 import com.cdm.view.enemy.EnemyUnit;
 

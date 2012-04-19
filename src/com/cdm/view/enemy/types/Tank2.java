@@ -1,4 +1,4 @@
-package com.cdm.view.enemy;
+package com.cdm.view.enemy.types;
 
 import java.util.Arrays;
 import java.util.List;
@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-import com.cdm.view.elements.MathTools;
-import com.cdm.view.elements.RotatingThing;
+import com.cdm.view.enemy.Chain;
+import com.cdm.view.enemy.GroundMovingEnemy;
 
 public class Tank2 extends GroundMovingEnemy {
 
@@ -45,23 +45,9 @@ public class Tank2 extends GroundMovingEnemy {
 
 	private static final List<Vector3> poly = Arrays.asList(new Vector3[] { c0,
 			c1, c2, c0, c2, c3 });
-
-	private static final List<Vector3> chainLines = Arrays
-			.asList(new Vector3[] { new Vector3(0, -1.5f, 0),
-					new Vector3(0, -1.1f, 0), new Vector3(0, -1.5f, 0),
-					new Vector3(0, -1.1f, 0), new Vector3(0, -1.5f, 0),
-					new Vector3(0, -1.1f, 0), new Vector3(0, -1.5f, 0),
-					new Vector3(0, -1.1f, 0),
-
-					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0),
-					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0),
-					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0),
-					new Vector3(0, 1.5f, 0), new Vector3(0, 1.1f, 0), });
-	private float chainPhase = 0.0f;
-
 	private static final Color innerColor = new Color(0.0f, 0.5f, 0.0f, 1.0f);
 	private static final Color outerColor = new Color(0.9f, 0.0f, 0.1f, 1.0f);
-	private static final Vector3 DEFAULT_DIRECTION = new Vector3(1, 0, 0);
+	private final Chain chains = new Chain();
 
 	public Tank2(Position pos) {
 		super(pos);
@@ -70,7 +56,7 @@ public class Tank2 extends GroundMovingEnemy {
 
 	public void move(float time) {
 		super.move(time);
-		chainPhase += time;
+		chains.move(time*SPEED/GroundMovingEnemy.SPEED);
 	}
 
 	@Override
@@ -80,34 +66,10 @@ public class Tank2 extends GroundMovingEnemy {
 		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
 				getSize());
 
-		drawChain(renderer);
-
-		super.draw(renderer);
-	}
-
-	private void drawChain(IRenderer renderer) {
-		float x;
-		float startX = -0.9f;
-		float delta = 0.7f + 0.9f;
-		int size = 4;
-		float speed = 0.6f;
-		for (int i = 0; i < size; i++) {
-			x = ((float) i) / size * 3.1415f * 0.5f;
-			x += chainPhase * speed + 3.1415;
-			x %= 3.1415 * 0.5;
-			x = (float) Math.sin(x);
-			x *= delta;
-			x += startX;
-			for (int lr = 0; lr < size * 4; lr += size * 2) {
-				Vector3 a = chainLines.get(lr + i * 2);
-				Vector3 b = chainLines.get(lr + i * 2 + 1);
-				a.x = x;
-				b.x = x;
-			}
-		}
-		renderer.drawLines(getPosition(), chainLines, getAngle(), outerColor,
+		chains.drawChain(renderer, getPosition(), getAngle(), outerColor,
 				getSize());
 
+		super.draw(renderer);
 	}
 
 	@Override

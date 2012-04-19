@@ -5,7 +5,7 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
-import com.cdm.view.elements.Unit;
+import com.cdm.view.elements.units.Unit;
 
 public class UnitTypeButton extends Button {
 
