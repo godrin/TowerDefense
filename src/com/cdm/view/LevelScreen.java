@@ -44,11 +44,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	public LevelScreen(Game pGame) {
 		game = pGame;
-		if (EnemyPlayer.level3) {
-			level = new Level(20, 5, 2);
-		} else {
-			level = new Level(20, 10, 5);
-		}
+		level = new Level(20, 10, 5);
 		hud.setLevel(level);
 		bg = load("data/bg_stars2.png", 128, 128);
 		createUnitButtons();
@@ -69,6 +65,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	 */
 	private void createUnitButtons() {
 		float pos = 35;
+		gui.clear();
 		UnitTypeButton tb;
 		for (UnitType t : new UnitType[] { UnitType.CANNON, UnitType.STUNNER,
 				UnitType.ROCKET_THROWER }) {
@@ -285,13 +282,15 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public void restart() {
+
 		game.setScreen(Screen.MENU_SCREEN);
 		EnemyPlayer.setLevelNo(1);
-		if (!EnemyPlayer.level3)
-			level = new Level(20, 10, 5);
-		else {
-			level = new Level(20, 5, 2);
-		}
+		// if (!EnemyPlayer.level3)
+
+		level = new Level(20, 10, 5);
+		/*
+		 * else { level = new Level (20,5,2); }
+		 */
 		hud.setLevel(level);
 		createUnitButtons();
 		System.out.println("Restart");
