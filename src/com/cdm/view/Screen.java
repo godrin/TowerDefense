@@ -1,7 +1,9 @@
 package com.cdm.view;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.GL10;
 import com.cdm.TowerGame;
 
 public class Screen extends InputAdapter {
@@ -25,7 +27,7 @@ public class Screen extends InputAdapter {
 	}
 
 	public void render(float accum) {
-		// TODO Auto-generated method stub
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 	}
 
