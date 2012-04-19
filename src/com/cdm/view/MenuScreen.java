@@ -29,6 +29,7 @@ public class MenuScreen extends Screen implements IButtonPressed {
 	@Override
 	public void render(float delta) {
 		super.render(delta);
+		renderer.initGlSettings();
 		gui.addTime(delta);
 		gui.draw(renderer);
 	}
