@@ -26,9 +26,7 @@ public class ZoomInEffect implements DisplayEffect {
 		Position.LEVEL_REF.setScale(scale);
 		Position.LEVEL_REF.setTranslate(-4.55f + Gdx.graphics.getWidth()
 				/ scale / 3.0f, -Position.LEVEL_REF.getH() / 2 + 1.5f
-
-		+ Gdx.graphics.getHeight() / scale / 3.0f);
-
+				+ Gdx.graphics.getHeight() / scale / 3.0f);
 	}
 
 	@Override
