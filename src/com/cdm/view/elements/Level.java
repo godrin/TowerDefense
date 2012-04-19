@@ -16,6 +16,7 @@ import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.DisplayEffect;
 import com.cdm.view.elements.shots.Explosion;
 import com.cdm.view.elements.shots.Shake;
+import com.cdm.view.elements.shots.ZoomInEffect;
 import com.cdm.view.elements.units.Unit;
 import com.cdm.view.elements.units.Unit.UnitType;
 import com.cdm.view.enemy.EnemyPlayer;
@@ -44,12 +45,12 @@ public class Level {
 		Position.LEVEL_REF.setHeight(h);
 		player = new EnemyPlayer();
 		player.setLevel(this);
-		boxDrawer = new BoxDrawing(new Position(-1, grid.endY(), Position.LEVEL_REF),
-				getEnemyEndPosition(), grid.getH());
+		boxDrawer = new BoxDrawing(new Position(-1, grid.endY(),
+				Position.LEVEL_REF), getEnemyEndPosition(), grid.getH());
 
 		PathFinder.breadthSearch(grid, getEnemyStartPositionPlusOne(),
 				new PathPos(getEnemyEndPosition()), null, false);
-
+		displayEffects.add(new ZoomInEffect(this));
 	}
 
 	public void add(Position pos, UnitType type) {
@@ -194,11 +195,11 @@ public class Level {
 	public Position getEnemyStartPosition() {
 		return new Position(-1, grid.endY(), Position.LEVEL_REF);
 	}
-	
+
 	public Position getEnemyStartPosition2() {
-		return new Position(0, grid.endY()-4, Position.LEVEL_REF);
+		return new Position(0, grid.endY() - 4, Position.LEVEL_REF);
 	}
-	
+
 	public PathPos getEnemyStartPositionPlusOne() {
 		return new PathPos(0, grid.endY(), -1);
 	}
@@ -219,7 +220,7 @@ public class Level {
 		Position finish = getEnemyEndPosition();
 		PathPos from = new PathPos(alignToGrid);
 		PathPos finishPos = new PathPos(finish);
-		finish.y+=4;
+		finish.y += 4;
 		if (true) {
 			int curVal = 1000;
 			GridElement ge = grid.getElement(from.x, from.y);
@@ -268,7 +269,7 @@ public class Level {
 		}
 		if (bonus == 200) {
 			health += 1;
-			EnemyPlayer.level2= true;
+			EnemyPlayer.level2 = true;
 			SoundFX.play(Type.WIN);
 		}
 	}
@@ -328,7 +329,7 @@ public class Level {
 	public int getPoints() {
 		return points;
 	}
-	
+
 	public void setBonus(int bonus) {
 		this.bonus = bonus;
 	}
