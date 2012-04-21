@@ -31,8 +31,9 @@ public class BigButton extends Widget {
 		Rectangle box = getBBox();
 		renderer.fillRect(box.x(), box.y(), box.x2(), box.y2(), bg);
 		renderer.fillRect(topBox.x(), topBox.y(), topBox.x2(), topBox.y2(), bg2);
-		renderer.drawText((int) box.x() + 5, (int) box.y2(), caption, textColor);
 		renderer.drawRect(box.x()-5, box.y()-5, box.x2()+5, box.y2()+5, bg);
+		renderer.drawText((int) box.x() + 5, (int) box.y2(), caption, textColor);
+		
 		// rect.draw(renderer);
 	}
 
