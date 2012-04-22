@@ -8,7 +8,6 @@ public enum EnemyType {
 
 	public static EnemyType random() {
 		double r = Math.random();
-		if (true) return ROTOR;
 		if (r < 0.1)
 			return TANK2;
 		else if (r < 0.2)
