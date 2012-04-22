@@ -49,7 +49,7 @@ public class RocketShot extends MovingShot {
 	}
 
 	public float getLevel() {
-		return 3;
+		return 5;
 	}
 
 }

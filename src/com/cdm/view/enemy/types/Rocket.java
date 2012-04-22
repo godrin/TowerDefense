@@ -39,7 +39,7 @@ public class Rocket extends EnemyUnit implements Element {
 			a, i, b, i, c, d, h, g, f, f, h, e, h, d2, e, d2, d, h, h, i, d });
 	// setSize(1.0f / 1.5f);
 	private static final float SPEED = 0.5f;
-	private static final Color outerColor = new Color(0, 0, 1, 1.0f);
+	private static final Color outerColor = new Color(0, 0, 0, 1.0f);
 	private static final Color innerColor = new Color(0, 0, 0.5f, 1f);
 	float angle = 180;
 

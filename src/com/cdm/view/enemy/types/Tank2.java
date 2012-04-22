@@ -52,6 +52,7 @@ public class Tank2 extends GroundMovingEnemy {
 	public Tank2(Position pos) {
 		super(pos);
 		setSize(0.25f);
+		setEnergy(20);
 	}
 
 	public void move(float time) {

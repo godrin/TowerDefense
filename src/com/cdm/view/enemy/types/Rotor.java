@@ -55,8 +55,8 @@ public class Rotor extends GroundMovingEnemy {
 			 */
 		}
 		setSize(0.4f);
-		setTurningSpeed2(10);
-		setEnergy(3);
+		setTurningSpeed2(15);
+		setEnergy(25);
 	}
 
 	@Override
@@ -64,11 +64,13 @@ public class Rotor extends GroundMovingEnemy {
 		super.draw(renderer);
 
 		getShakingLines().draw(renderer, getPosition(), lines, angle1,
-				innerColor, getSize());
+				innerColor, getSize()*0.9f);
 		getShakingLines().draw(renderer, getPosition(), lines, angle1+45,
-				innerColor, getSize());
+				innerColor, getSize()*0.85f);
 		getShakingLines().draw(renderer, getPosition(), lines, angle2,
-				outerColor, getSize());
+				outerColor, getSize()*0.88f);
+		getShakingLines().draw(renderer, getPosition(), lines, angle2+45,
+				outerColor, getSize()*0.8f);
 		renderer.render(sprite, getPosition(), getSize(), 180,
 				GL10.GL_TRIANGLES);
 		
@@ -96,12 +98,12 @@ public class Rotor extends GroundMovingEnemy {
 
 	@Override
 	public int getMoney() {
-		return 5;
+		return 10;
 	}
 
 	@Override
 	public int getPoints() {
-		return 10;
+		return 20;
 	}
 
 	@Override
