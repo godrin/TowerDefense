@@ -267,9 +267,9 @@ public class Level {
 			SoundFX.play(Type.WIN);
 
 		}
-		if (bonus == 200) {
+		if (bonus == 250) {
 			health += 1;
-			EnemyPlayer.level2 = true;
+			//EnemyPlayer.level2 = true;
 			SoundFX.play(Type.WIN);
 		}
 	}

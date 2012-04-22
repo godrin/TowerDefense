@@ -5,6 +5,7 @@ import com.cdm.view.enemy.EnemyType;
 import com.cdm.view.enemy.EnemyUnit;
 import com.cdm.view.enemy.types.BigShip;
 import com.cdm.view.enemy.types.Rocket;
+import com.cdm.view.enemy.types.Rotor;
 import com.cdm.view.enemy.types.SmallShip;
 import com.cdm.view.enemy.types.Tank;
 import com.cdm.view.enemy.types.Tank2;
@@ -30,6 +31,9 @@ public class EnemyUnits {
 		}
 		if (EnemyType.TANK2.equals(t)) {
 			u = new Tank2(position);
+		}
+		if (EnemyType.ROTOR.equals(t)){
+			u = new Rotor(position);
 		}
 		if (u != null)
 			u.setEnergy(t.getEnergy(levelNo));

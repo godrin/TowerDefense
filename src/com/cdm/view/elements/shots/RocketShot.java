@@ -9,7 +9,7 @@ import com.cdm.view.elements.Level;
 
 public class RocketShot extends MovingShot {
 
-	public static float speed = 1f;
+	public static float speed = 1.5f;
 	private PolySprite sprite = null;
 
 	public RocketShot(Position from, Position to, Level plevel) {

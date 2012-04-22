@@ -60,7 +60,7 @@ public class Truck extends GroundMovingEnemy {
 
 	public Truck(Position pos) {
 		super(pos);
-		setSize(0.25f);
+		setSize(0.2f);
 		setTurningSpeed2(90);
 	}
 
@@ -102,7 +102,7 @@ public class Truck extends GroundMovingEnemy {
 
 	@Override
 	public int getBonus() {
-		return 0;
+		return 1;
 	}
 
 	@Override

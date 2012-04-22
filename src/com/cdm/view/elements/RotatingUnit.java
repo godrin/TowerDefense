@@ -37,7 +37,7 @@ public abstract class RotatingUnit extends Unit {
 	}
 
 	private float getMinDist() {
-		return 1;
+		return 0.8f;
 	}
 
 	public float getAngle() {

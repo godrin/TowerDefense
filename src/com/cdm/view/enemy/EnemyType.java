@@ -1,17 +1,20 @@
 package com.cdm.view.enemy;
 
 public enum EnemyType {
-	SMALL_SHIP, TANK, BIG_SHIP, BIG_SHIP2, ROCKET, TRUCK, TANK2;
+	SMALL_SHIP, TANK, BIG_SHIP, BIG_SHIP2, ROCKET, TRUCK, TANK2, ROTOR;
 
 	public static final Float STRENGTH_THRESHOLD = 1.1f;
 	public static final Float FACTOR = 0.4f;
 
 	public static EnemyType random() {
 		double r = Math.random();
+		if (true) return ROTOR;
 		if (r < 0.1)
 			return TANK2;
-		if (r < 0.2)
+		else if (r < 0.2)
 			return ROCKET;
+		else if (r < 0.3)
+			return ROTOR;
 		else if (r < 0.4)
 			return TANK;
 		else if (r < 0.6)
@@ -39,13 +42,16 @@ public enum EnemyType {
 			s = 2.5f;
 			break;
 		case ROCKET:
-			s = 13.5f;
+			s = 20.5f;
 			break;
 		case TRUCK:
-			s = 1.5f;
+			s = 10.5f;
 			break;
 		case TANK2:
 			s = 10.0f;
+			break;
+		case ROTOR:
+			s = 1.5f;
 			break;
 		}
 		return s * (1.0f + (levelNo - 1) * FACTOR);
