@@ -44,8 +44,11 @@ public abstract class EnemyUnit extends Unit {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		if(true)
+		if (true)
 			return;
+	}
+
+	public void drawEnergyBar(IRenderer renderer) {
 		float pad = 0.05f;
 		float height = 0.1f;
 		Position pos = getPosition();
