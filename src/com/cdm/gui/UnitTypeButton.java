@@ -17,7 +17,6 @@ public class UnitTypeButton extends Button {
 	private int cost = 2;
 	private Position pos = getPosition();
 	
-	
 	public UnitTypeButton(int px, int py, int pradius, Unit.UnitType ptype,
 			Level plevel) {
 		super(px, py, pradius);
@@ -27,7 +26,6 @@ public class UnitTypeButton extends Button {
 				Position.BUTTON_REF));
 		pos.y += 55;
 		pos.x -= 20;
-		// caption.setSize(pradius*0.7f);
 	}
 
 	public int getCost() {

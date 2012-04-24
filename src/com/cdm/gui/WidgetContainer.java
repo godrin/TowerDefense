@@ -3,7 +3,6 @@ package com.cdm.gui;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.cdm.SString;
 import com.cdm.view.IRenderer;
 
 public class WidgetContainer extends Widget {
@@ -49,7 +48,6 @@ public class WidgetContainer extends Widget {
 	}
 
 	public void touchDown(int x, int y, int pointer, int button) {
-		System.out.println("WCCC");
 		for (Widget w : widgetsOf(x, y)) {
 			w.touchDown(x, y, pointer, button);
 		}

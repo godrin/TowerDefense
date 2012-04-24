@@ -25,7 +25,7 @@ public class SmallShip extends EnemyUnit implements Element {
 	private static List<Vector3> poly = Arrays.asList(new Vector3[] { a, b, d,
 			b, c, d });
 
-	private static List<Vector3> ray = Arrays.asList(new Vector3[] {
+	private  List<Vector3> ray = Arrays.asList(new Vector3[] {
 			new Vector3(), new Vector3(), new Vector3(), new Vector3(),
 			new Vector3(), new Vector3(), new Vector3(), new Vector3() });
 	private float rayPhase = 0.0f;

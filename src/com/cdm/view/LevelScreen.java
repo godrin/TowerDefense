@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cdm.Game;
 import com.cdm.SString;
 import com.cdm.gui.BigButton;
-import com.cdm.gui.Button;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.IUnitTypeSelected;
 import com.cdm.gui.UnitTypeButton;
@@ -35,11 +34,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Position dragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Position oldDragPosition = new Position(0, 0, Position.SCREEN_REF);
 
-	private Sound sound;
-	private Widget restartButton = new BigButton(400, 200,
-			Gdx.graphics.getWidth() / 6, 50, "restart",
-			SString.create("RESTART_BUTTON"), this);
-
 	private Game game;
 
 	public LevelScreen(Game pGame) {
@@ -48,12 +42,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		hud.setLevel(level);
 		bg = load("data/bg_stars2.png", 128, 128);
 		createUnitButtons();
-
-		Button sizeButton = new Button(300, 400, 30);
-		sizeButton.setButtonName(SString.SIZE_BUTTON);
-		sizeButton.setPressedListener(this);
-		gui.add(sizeButton);
-
 	}
 
 	public void dispose() {
@@ -79,6 +67,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	private Long oldMicros = 0L;
+	private boolean dragging = false;
 
 	@Override
 	public synchronized void render(float delta) {
@@ -191,10 +180,11 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		}
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
+			System.out.println("OPAQUEEE");
 			gui.touchDown(x, y, pointer, button);
 			return true;
 		} else {
-
+			dragging = true;
 			dragPosition.set(x, y, Position.SCREEN_REF);
 			oldDragPosition.set(x, y, Position.SCREEN_REF);
 		}
@@ -202,6 +192,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchUp(int x, int y, int pointer, int button) {
+		dragging = false;
 
 		if (level.gameover())
 			return false;
@@ -236,10 +227,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 			dragElement.setPosition(dragPosition);
 			level.hover(dragPosition);
-		} else {
+		} else if (dragging) {
 			int dx = (int) (dragPosition.x - oldDragPosition.x);
 			int dy = (int) (dragPosition.y - oldDragPosition.y);
-			System.out.println("DX " + dx + " DY" + dy);
 			oldDragPosition.set(dragPosition);
 			modCam(dx, dy);
 		}

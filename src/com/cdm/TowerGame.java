@@ -15,6 +15,7 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener, Game 
 
 	private boolean running = false;
 	private Screen screen;
+	private Screen prevScreen = null;
 	private boolean started = false;
 	private float accum = 0;
 	boolean stop = false;
@@ -31,7 +32,6 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener, Game 
 
 	}
 
-	
 	public void pause() {
 		running = false;
 	}
@@ -43,6 +43,10 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener, Game 
 	public void setScreen(Screen newScreen) {
 		if (screen != null)
 			screen.removed();
+
+		if (false)
+			prevScreen = screen;
+
 		screen = newScreen;
 
 		if (screen != null) {
@@ -58,7 +62,9 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener, Game 
 			accum -= 1.0f / 60.0f;
 		}
 		screen.render(accum);
-		
+		if (prevScreen != null)
+			prevScreen.render(accum);
+
 	}
 
 	@Override
@@ -79,9 +85,9 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener, Game 
 	public void setScreen(String string) {
 		if (Screen.LEVEL_SCREEN.equals(string))
 			setScreen(levelScreen);
-		if (Screen.OPTIONS_SCREEN.equals(string))
+		else if (Screen.OPTIONS_SCREEN.equals(string))
 			setScreen(optionsScreen);
-		if (Screen.MENU_SCREEN.equals(string))
+		else if (Screen.MENU_SCREEN.equals(string))
 			setScreen(menuScreen);
 
 	}

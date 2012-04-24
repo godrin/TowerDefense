@@ -9,7 +9,7 @@ public class BigShip extends SmallShip {
 	public BigShip(Position position) {
 		super(position);
 		setSize(0.95f);
-		setRayspeed(0.35f);
+		setRayspeed(0.7f);
 
 	}
 

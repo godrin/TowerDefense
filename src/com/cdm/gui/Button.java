@@ -83,7 +83,6 @@ public class Button extends Widget {
 
 	@Override
 	public boolean opaque(int x, int y) {
-		System.out.println("OP");
 		Rectangle r = new Rectangle(x - radius, y - radius, x + radius, y
 				+ radius);
 		return r.contains(x, y);
