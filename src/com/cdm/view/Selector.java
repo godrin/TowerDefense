@@ -47,4 +47,10 @@ public class Selector implements Element {
 	public void setPosition(Position p) {
 		pos = p;
 	}
+
+	@Override
+	public void move(float time) {
+		// TODO Auto-generated method stub
+		
+	}
 }

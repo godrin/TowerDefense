@@ -52,4 +52,10 @@ public class SingleBox {
 		renderer.drawLines(pos, lines, angle, color, size);
 
 	}
+
+	public void move(float time) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

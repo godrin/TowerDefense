@@ -5,6 +5,9 @@ import com.cdm.view.Position;
 
 public interface Element {
 	void draw(IRenderer renderer);
+
 	void setPosition(Position pos);
+
+	void move(float time);
 
 }

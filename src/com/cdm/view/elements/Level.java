@@ -98,6 +98,7 @@ public class Level {
 		displayEffectsToRemove.clear();
 		displayEffects.addAll(displayEffectsToAdd);
 		displayEffectsToAdd.clear();
+		boxDrawer.move(time);
 	}
 
 	public void draw(IRenderer renderer) {
@@ -269,7 +270,7 @@ public class Level {
 		}
 		if (bonus == 250) {
 			health += 1;
-			//EnemyPlayer.level2 = true;
+			// EnemyPlayer.level2 = true;
 			SoundFX.play(Type.WIN);
 		}
 	}
@@ -344,5 +345,4 @@ public class Level {
 		return health < 1;
 	}
 
-	
 }
