@@ -13,7 +13,6 @@ public class WidgetContainer extends Widget {
 		for (Widget w : widgets) {
 			w.draw(renderer);
 		}
-
 	}
 
 	@Override
@@ -39,7 +38,6 @@ public class WidgetContainer extends Widget {
 	@Override
 	public boolean opaque(int x, int y) {
 		for (Widget w : widgets) {
-			System.out.println("OPQQQQ??");
 			if (w.getBBox().contains(x, y))
 				if (w.opaque(x, y))
 					return true;

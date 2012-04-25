@@ -19,7 +19,7 @@ public class RocketLauncher extends RotatingUnit implements Element {
 	private static PolySprite lines = null;
 	float shotFrequency = 5.0f;
 	float lastShot = 0.0f;
-	private float maxDist = 3.5f;
+	private float maxDist = 4.5f;
 	private double startingRadius = 0.01f;
 	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
 	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);

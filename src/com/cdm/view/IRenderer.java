@@ -7,7 +7,7 @@ import com.badlogic.gdx.math.Vector3;
 
 public interface IRenderer {
 
-	void drawRect(float f, float g, float h, float d, Color c);
+	void drawRect(float x0, float y0, float x1, float y1, Color c);
 
 	public void fillRect(float x0, float y0, float x1, float y1, Color c);
 

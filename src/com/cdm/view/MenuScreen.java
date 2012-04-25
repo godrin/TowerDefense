@@ -12,8 +12,7 @@ public class MenuScreen extends Screen implements IButtonPressed {
 	private WidgetContainer gui = new WidgetContainer();
 	private Renderer renderer = new Renderer();
 	private Game game;
-
-
+	private float animX=0;
 
 	public MenuScreen(Game pgame) {
 		game = pgame;
@@ -28,9 +27,11 @@ public class MenuScreen extends Screen implements IButtonPressed {
 
 	@Override
 	public void render(float delta) {
+		animX-=delta;
 		super.render(delta);
 		renderer.initGlSettings();
 		gui.addTime(delta);
+		
 		gui.draw(renderer);
 	}
 

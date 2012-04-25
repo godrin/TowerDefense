@@ -94,8 +94,9 @@ public class Renderer implements IRenderer {
 
 	@Override
 	public void drawRect(float x0, float y0, float x1, float y1, Color c) {
-		renderer.begin(GL10.GL_LINE_LOOP);
+		Gdx.gl10.glLineWidth(3);
 		initGlSettings();
+		renderer.begin(GL10.GL_LINE_LOOP);
 
 		renderer.color(c.r, c.g, c.b, c.a);
 		renderer.vertex(x0, y0, 0);
