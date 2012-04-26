@@ -25,20 +25,20 @@ public class BoxDrawing {
 		for (int x = 0; x < end.x; x++) {
 			for (int y = 0; y <= gh; y++) {
 				BackgroundElement e = new BackgroundElement(new Position(x, y,
-						Position.LEVEL_REF));
+						Position.LEVEL_REF),null);
 				if (x == 2 && y == 3)
 					e.startRotation();
 				es.add(e);
 			}
 		}
-		es.add(new BackgroundElement(start));
-		es.add(new BackgroundElement(end));
+		es.add(new BackgroundElement(start,null));
+		es.add(new BackgroundElement(end,null));
 	}
 
 	private void makeBox(int x, int y) {
 		SingleBox box;
 		box = new SingleBox();
-		box.setPos(new Position(x - 1, y - 1, Position.LEVEL_REF));
+		box.setPosition(new Position(x - 1, y - 1, Position.LEVEL_REF));
 		boxes.add(box);
 	}
 
