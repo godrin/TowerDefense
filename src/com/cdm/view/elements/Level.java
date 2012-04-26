@@ -163,10 +163,23 @@ public class Level {
 			units.add(dragElement);
 			setMoney(getMoney() - dragElement.getCost());
 
-			if (!(dragElement instanceof EnemyUnit))
+			// FIXME: insert abstract class "PlayerUnit" for all "player units"
+			if (!(dragElement instanceof EnemyUnit)) {
 				PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
 						getEnemyStartPositionPlusOne(), new PathPos(
 								getEnemyEndPosition()), null, false);
+				List<PathPos> playerUnitPositions = new ArrayList<PathPos>();
+				for (Unit unit : units) {
+					if (!(unit instanceof EnemyUnit)) {
+						playerUnitPositions
+								.add(new PathPos(unit.getPosition()));
+					}
+				}
+
+				PathFinder.breadthSearch(grid, PathFinder.UNITDIST_ACCESSOR,
+						null, playerUnitPositions, null, false);
+
+			}
 			grid.print();
 
 			return true;
@@ -218,7 +231,7 @@ public class Level {
 	}
 
 	public Position getEnemyEndPosition() {
-		return new Position(grid.getW()-1, grid.endY(), Position.LEVEL_REF);
+		return new Position(grid.getW() - 1, grid.endY(), Position.LEVEL_REF);
 	}
 
 	public boolean isFreeForNewUnit(Position pos) {

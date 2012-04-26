@@ -56,6 +56,7 @@ public class PathFinder {
 
 	public static GridTmpDistanceAccess TMP_ACCESSOR = new GridTmpDistanceAccess();
 	public static GridGoalDistanceAccess GOAL_ACCESSOR = new GridGoalDistanceAccess();
+	public static GridUnitDistanceAccess UNITDIST_ACCESSOR = new GridUnitDistanceAccess();
 
 	private static List<PathPos> tmpList = Arrays
 			.asList(new PathPos[] { new PathPos() });
@@ -86,9 +87,10 @@ public class PathFinder {
 				if (fastOut)
 					return found;
 			}
-			if (!grid.passable(current.x, current.y)) {
-				continue;
-			}
+			if (current.value>0)
+				if (!grid.passable(current.x, current.y)) {
+					continue;
+				}
 
 			int currentValue = current.value;
 			GridElement currentElement = grid.getElement(current.x, current.y);
