@@ -10,10 +10,12 @@ public class Grid {
 		private List<Element> e;
 		private int distToEnd;
 		private int tempValue;
-
+		private int distToUnit;
+		
 		public GridElement() {
 			e = new ArrayList<Element>();
 			distToEnd = -1;
+			distToUnit = -1;
 		}
 
 		public List<Element> getList() {
@@ -33,11 +35,19 @@ public class Grid {
 		public int getDistToEnd() {
 			return distToEnd;
 		}
+		
+		public int getDistToUnit() {
+			return distToUnit;
+		}
 
 		public void setDistToEnd(int distToEnd) {
 			this.distToEnd = distToEnd;
 		}
-
+		
+		public void setDistToUnit(int distToUnit){
+			this.distToUnit = distToUnit;
+		}
+		
 	}
 
 	private GridElement[] cells;
