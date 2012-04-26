@@ -6,17 +6,52 @@ import com.cdm.view.elements.Grid.GridElement;
 public class PathFinder {
 	private static RoundQueue todoBuffer = null;
 
-	public static boolean breadthSearch(Grid grid, PathPos from, PathPos to,
-			PathPos ignoreThis, boolean fastOut) {
+	public interface GridElementAccess {
+		int read(GridElement e);
+
+		void write(GridElement e, int value);
+	}
+
+	public static class GridGoalDistanceAccess implements GridElementAccess {
+
+		@Override
+		public int read(GridElement e) {
+			return e.getDistToEnd();
+		}
+
+		@Override
+		public void write(GridElement e, int value) {
+			e.setDistToEnd(value);
+		}
+	}
+
+	public static class GridTmpDistanceAccess implements GridElementAccess {
+
+		@Override
+		public int read(GridElement e) {
+			return e.getTempValue();
+		}
+
+		@Override
+		public void write(GridElement e, int value) {
+			e.setTempValue(value);
+		}
+	}
+
+	public static GridTmpDistanceAccess TMP_ACCESSOR = new GridTmpDistanceAccess();
+	public static GridGoalDistanceAccess GOAL_ACCESSOR = new GridGoalDistanceAccess();
+
+	public static boolean breadthSearch(Grid grid, GridElementAccess accessor,
+			PathPos from, PathPos to, PathPos ignoreThis, boolean fastOut) {
 		checkTodoBuffer(grid);
 
-		cleanGrid(grid, fastOut);
+		cleanGrid(grid, accessor);
 		boolean found = false;
 		todoBuffer.add(to);
 		while (todoBuffer.size() > 0) {
 			PathPos current = todoBuffer.first();
 			todoBuffer.removeFirst();
-			
+
 			if (current.equals(from)) {
 				found = true;
 				if (fastOut)
@@ -30,39 +65,30 @@ public class PathFinder {
 			int currentValue = current.value;
 			GridElement currentElement = grid.getElement(current.x, current.y);
 			if (currentElement != null) {
-				if (fastOut)
-					currentElement.setTempValue(currentValue);
-				else
-					currentElement.setDistToEnd(currentValue);
+				accessor.write(currentElement, currentValue);
 			} else
 				currentValue = 0;
 			for (PathPos next : current.next()) {
 				if (next.equals(ignoreThis))
 					continue;
 				GridElement ge = grid.getElement(next.x, next.y);
-				if (ge != null)
-					if (fastOut) {
-						if (ge.getTempValue() < 0) {
-							todoBuffer.add(next);
-						}
-					} else {
-						if (ge.getDistToEnd() < 0) {
-							todoBuffer.add(next);
-						}
+				if (ge != null) {
+
+					if (accessor.read(ge) < 0) {
+						todoBuffer.add(next);
 					}
+
+				}
 			}
 		}
 		return found;
 	}
 
-	private static void cleanGrid(Grid grid, boolean fastOut) {
+	private static void cleanGrid(Grid grid, GridElementAccess accessor) {
 		int x, y;
 		for (x = 0; x < grid.getW(); x++)
 			for (y = 0; y < grid.getH(); y++) {
-				if (fastOut)
-					grid.getElement(x, y).setTempValue(-1);
-				else
-					grid.getElement(x, y).setDistToEnd(-1);
+				accessor.write(grid.getElement(x, y), -1);
 			}
 	}
 
