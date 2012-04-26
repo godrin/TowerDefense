@@ -55,8 +55,9 @@ public class Level {
 		boxDrawer = new BoxDrawing(new Position(-1, grid.endY(),
 				Position.LEVEL_REF), getEnemyEndPosition(), grid.getH());
 
-		PathFinder.breadthSearch(grid, getEnemyStartPositionPlusOne(),
-				new PathPos(getEnemyEndPosition()), null, false);
+		PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
+				getEnemyStartPositionPlusOne(), new PathPos(
+						getEnemyEndPosition()), null, false);
 		displayEffects.add(new ZoomInEffect(this));
 	}
 
@@ -163,8 +164,9 @@ public class Level {
 			setMoney(getMoney() - dragElement.getCost());
 
 			if (!(dragElement instanceof EnemyUnit))
-				PathFinder.breadthSearch(grid, getEnemyStartPositionPlusOne(),
-						new PathPos(getEnemyEndPosition()), null, false);
+				PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
+						getEnemyStartPositionPlusOne(), new PathPos(
+								getEnemyEndPosition()), null, false);
 			grid.print();
 
 			return true;
@@ -224,7 +226,8 @@ public class Level {
 		PathPos to = new PathPos(getEnemyEndPosition());
 
 		PathPos ignore = new PathPos(pos);
-		return PathFinder.breadthSearch(grid, from, to, ignore, true);
+		return PathFinder.breadthSearch(grid, PathFinder.TMP_ACCESSOR, from,
+				to, ignore, true);
 	}
 
 	public Position getNextPos(Position alignToGrid) {
