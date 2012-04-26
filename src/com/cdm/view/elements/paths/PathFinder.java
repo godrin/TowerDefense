@@ -1,5 +1,8 @@
 package com.cdm.view.elements.paths;
 
+import java.util.Arrays;
+import java.util.List;
+
 import com.cdm.view.elements.Grid;
 import com.cdm.view.elements.Grid.GridElement;
 
@@ -38,16 +41,42 @@ public class PathFinder {
 		}
 	}
 
+	public static class GridUnitDistanceAccess implements GridElementAccess {
+
+		@Override
+		public int read(GridElement e) {
+			return e.getDistToUnit();
+		}
+
+		@Override
+		public void write(GridElement e, int value) {
+			e.setDistToUnit(value);
+		}
+	}
+
 	public static GridTmpDistanceAccess TMP_ACCESSOR = new GridTmpDistanceAccess();
 	public static GridGoalDistanceAccess GOAL_ACCESSOR = new GridGoalDistanceAccess();
 
+	private static List<PathPos> tmpList = Arrays
+			.asList(new PathPos[] { new PathPos() });
+
 	public static boolean breadthSearch(Grid grid, GridElementAccess accessor,
 			PathPos from, PathPos to, PathPos ignoreThis, boolean fastOut) {
+		tmpList.set(0, to);
+		return breadthSearch(grid, accessor, from,
+				Arrays.asList(new PathPos[] { to }), ignoreThis, fastOut);
+	}
+
+	public static boolean breadthSearch(Grid grid, GridElementAccess accessor,
+			PathPos from, List<PathPos> to, PathPos ignoreThis, boolean fastOut) {
+
 		checkTodoBuffer(grid);
 
 		cleanGrid(grid, accessor);
 		boolean found = false;
-		todoBuffer.add(to);
+		for (int i = 0; i < to.size(); i++)
+			todoBuffer.add(to.get(i));
+
 		while (todoBuffer.size() > 0) {
 			PathPos current = todoBuffer.first();
 			todoBuffer.removeFirst();
@@ -57,10 +86,9 @@ public class PathFinder {
 				if (fastOut)
 					return found;
 			}
-			if (!current.equals(to))
-				if (!grid.passable(current.x, current.y)) {
-					continue;
-				}
+			if (!grid.passable(current.x, current.y)) {
+				continue;
+			}
 
 			int currentValue = current.value;
 			GridElement currentElement = grid.getElement(current.x, current.y);

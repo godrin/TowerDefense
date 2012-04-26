@@ -206,7 +206,7 @@ public class Level {
 	}
 
 	public Position getEnemyStartPosition() {
-		return new Position(-1, grid.endY(), Position.LEVEL_REF);
+		return new Position(0, grid.endY(), Position.LEVEL_REF);
 	}
 
 	public Position getEnemyStartPosition2() {
@@ -218,7 +218,7 @@ public class Level {
 	}
 
 	public Position getEnemyEndPosition() {
-		return new Position(grid.getW(), grid.endY(), Position.LEVEL_REF);
+		return new Position(grid.getW()-1, grid.endY(), Position.LEVEL_REF);
 	}
 
 	public boolean isFreeForNewUnit(Position pos) {
