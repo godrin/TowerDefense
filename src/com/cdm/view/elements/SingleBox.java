@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 
-public class SingleBox {
+public class SingleBox implements Element {
 
 	private static final boolean CROSS = true;
 	private Position pos = new Position(0, 0, Position.LEVEL_REF);
@@ -43,10 +43,6 @@ public class SingleBox {
 		return pos;
 	}
 
-	public void setPos(Position pos) {
-		this.pos = pos;
-	}
-
 	public void draw(IRenderer renderer) {
 
 		renderer.drawLines(pos, lines, angle, color, size);
@@ -55,7 +51,12 @@ public class SingleBox {
 
 	public void move(float time) {
 		// TODO Auto-generated method stub
-		
+
+	}
+
+	@Override
+	public void setPosition(Position pos) {
+		this.pos = pos;
 	}
 
 }

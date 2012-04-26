@@ -6,10 +6,16 @@ import java.util.List;
 import com.cdm.view.enemy.EnemyUnit;
 
 public class Grid {
+	public enum CellType {
+		FREE, BLOCK, EMPTY
+	};
+
 	public class GridElement {
+
 		private List<Element> e;
 		private int distToEnd;
 		private int tempValue;
+		private CellType cellType = CellType.FREE;
 
 		public GridElement() {
 			e = new ArrayList<Element>();
@@ -19,8 +25,6 @@ public class Grid {
 		public List<Element> getList() {
 			return e;
 		}
-		
-		
 
 		public int getTempValue() {
 			return tempValue;
@@ -36,6 +40,18 @@ public class Grid {
 
 		public void setDistToEnd(int distToEnd) {
 			this.distToEnd = distToEnd;
+		}
+
+		public CellType getCellType() {
+			return cellType;
+		}
+
+		public void setCellType(CellType cellType) {
+			this.cellType = cellType;
+		}
+
+		public boolean isFree() {
+			return cellType.equals(CellType.FREE);
 		}
 
 	}
@@ -66,6 +82,7 @@ public class Grid {
 	public int endY() {
 		return endy;
 	}
+
 	public GridElement getElement(int x, int y) {
 		if (x >= 0 && y >= 0 && x < w && y < h)
 			return cells[x + y * w];
@@ -73,8 +90,8 @@ public class Grid {
 	}
 
 	public List<Element> get(int x, int y) {
-		GridElement ge=getElement(x, y);
-		if(ge!=null)
+		GridElement ge = getElement(x, y);
+		if (ge != null)
 			return ge.getList();
 		return null;
 	}
@@ -84,11 +101,10 @@ public class Grid {
 	}
 
 	public boolean passable(int x, int y) {
-		/*
-		 * if (x == w - 1) { return (y == endy); }
-		 */
 		List<Element> l = get(x, y);
 		if (l == null)
+			return false;
+		if (!getElement(x, y).isFree())
 			return false;
 		for (Element e : l) {
 			if (!(e instanceof EnemyUnit))
@@ -98,13 +114,11 @@ public class Grid {
 	}
 
 	public void print() {
-		for(int y=0;y<h;y++) {
-			for(int x=0;x<w;x++) {
-				System.out.print(" "+getElement(x, y).getDistToEnd());
+		for (int y = 0; y < h; y++) {
+			for (int x = 0; x < w; x++) {
+				System.out.print(" " + getElement(x, y).getDistToEnd());
 			}
 			System.out.println();
 		}
-		// TODO Auto-generated method stub
-		
 	}
 }

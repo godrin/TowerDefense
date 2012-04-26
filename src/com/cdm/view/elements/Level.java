@@ -10,6 +10,7 @@ import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Selector;
+import com.cdm.view.elements.Grid.CellType;
 import com.cdm.view.elements.Grid.GridElement;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
@@ -38,13 +39,19 @@ public class Level {
 	private List<DisplayEffect> displayEffectsToRemove = new ArrayList<DisplayEffect>();
 	private List<DisplayEffect> displayEffectsToAdd = new ArrayList<DisplayEffect>();
 	private BoxDrawing boxDrawer;
+	private GridDrawing gridDrawing;
 
 	public Level(int w, int h, int endY) {
 		grid = new Grid(w, h, endY);
+
+		grid.getElement(2, 2).setCellType(CellType.BLOCK);
+		grid.getElement(3, 2).setCellType(CellType.EMPTY);
 		Position.LEVEL_REF.setWidth(w);
 		Position.LEVEL_REF.setHeight(h);
 		player = new EnemyPlayer();
 		player.setLevel(this);
+		gridDrawing = new GridDrawing(grid);
+
 		boxDrawer = new BoxDrawing(new Position(-1, grid.endY(),
 				Position.LEVEL_REF), getEnemyEndPosition(), grid.getH());
 
@@ -99,6 +106,7 @@ public class Level {
 		displayEffects.addAll(displayEffectsToAdd);
 		displayEffectsToAdd.clear();
 		boxDrawer.move(time);
+		gridDrawing.move(time);
 	}
 
 	public void draw(IRenderer renderer) {
@@ -120,7 +128,9 @@ public class Level {
 	}
 
 	private void drawBox(IRenderer renderer) {
-		boxDrawer.draw(renderer);
+		if (false)
+			boxDrawer.draw(renderer);
+		gridDrawing.draw(renderer);
 	}
 
 	public boolean add(Unit dragElement) {
