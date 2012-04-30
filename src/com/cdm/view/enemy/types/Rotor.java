@@ -9,9 +9,10 @@ import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
+import com.cdm.view.enemy.AirMovingEnemy;
 import com.cdm.view.enemy.GroundMovingEnemy;
 
-public class Rotor extends GroundMovingEnemy {
+public class Rotor extends AirMovingEnemy {
 
 	public Position nextStep = null;
 	private static PolySprite sprite = null;
@@ -81,6 +82,9 @@ public class Rotor extends GroundMovingEnemy {
 		super.move(time);
 		angle1 -= 4;
 		angle2 += 2f;
+		if (getLevel().getNextUnitPos(getPosition()) == FightPos){
+			attack(getLevel().getUnitAt(getPosition().alignedToGrid()));
+			}
 		
 
 	}

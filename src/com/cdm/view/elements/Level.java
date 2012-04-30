@@ -44,8 +44,8 @@ public class Level {
 	public Level(int w, int h, int endY) {
 		grid = new Grid(w, h, endY);
 
-		grid.getElement(2, 2).setCellType(CellType.BLOCK);
-		grid.getElement(3, 2).setCellType(CellType.EMPTY);
+		grid.getElement(2, 5).setCellType(CellType.BLOCK);
+		grid.getElement(3, 5).setCellType(CellType.EMPTY);
 		Position.LEVEL_REF.setWidth(w);
 		Position.LEVEL_REF.setHeight(h);
 		player = new EnemyPlayer();
@@ -194,8 +194,10 @@ public class Level {
 		int y0 = Math.round(p.y);
 
 		List<Element> l = grid.get(x0, y0);
-		if (l != null)
+		if (l != null){
 			l.remove(unit);
+			//unitsToRemove.add(unit);
+			}
 		else {
 			System.out.println("NOT FOUND" + x0 + " " + y0);
 		}
@@ -264,6 +266,33 @@ public class Level {
 			}
 		}
 		return null; // something went wrong
+	}
+
+	public Position getNextUnitPos(Position pos) {
+
+		Position finish = getEnemyEndPosition();
+		PathPos from = new PathPos(pos);
+		PathPos finishPos = new PathPos(finish);
+		finish.y += 4;
+
+		if (true) {
+			GridElement ge = grid.getElement(from.x, from.y);
+
+			int curVal = 1000;
+			if (ge != null)
+				curVal = ge.getDistToUnit();
+			for (PathPos p : from.next()) {
+				if (finishPos.equals(p))
+					return new Position(p.x, p.y, Position.LEVEL_REF);
+				GridElement nge = grid.getElement(p.x, p.y);
+				if (nge != null)
+					if (nge.getDistToUnit() < curVal
+							&& nge.getDistToUnit() >= 0)
+						return new Position(p.x, p.y, Position.LEVEL_REF);
+					else if (curVal == 0) return new Position(0,0,Position.LEVEL_REF);				
+			}
+		}
+		return null;
 	}
 
 	public void enemyReachedEnd(EnemyUnit enemyUnit) {
@@ -340,6 +369,19 @@ public class Level {
 		return null;
 	}
 
+	public Unit getUnitAt(Position target) {
+		List<Element> l = grid.get((int) (target.x + 0.5f),
+				(int) (target.y + 0.5f));
+		if (l != null) {
+			for (Element e : l) {
+				if (e instanceof Unit) {
+					return (Unit) e;
+				}
+			}
+		}
+		return null;
+	}
+	
 	public int getMoney() {
 		return money;
 	}
@@ -372,6 +414,14 @@ public class Level {
 
 	public boolean gameover() {
 		return health < 1;
+	}
+
+	public void unitDestroyed(Position position, Unit unit) {
+		removeMeFromGrid(position, unit);
+		SoundFX.play(Type.HIT);
+		displayEffectsToAdd.add(new Explosion(unit.getPosition(),
+				unit.getSize(), this));
+		unitsToRemove.add(unit);
 	}
 
 }
