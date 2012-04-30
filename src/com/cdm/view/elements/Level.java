@@ -290,6 +290,7 @@ public class Level {
 							&& nge.getDistToUnit() >= 0)
 						return new Position(p.x, p.y, Position.LEVEL_REF);
 					else if (curVal == 0) return new Position(0,0,Position.LEVEL_REF);				
+					else if (curVal == -1) return new Position(p.x+1,p.y,Position.LEVEL_REF);
 			}
 		}
 		return null;

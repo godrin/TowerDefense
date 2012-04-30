@@ -3,6 +3,7 @@ package com.cdm.view.enemy.types;
 import java.util.Arrays;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector3;
@@ -82,9 +83,7 @@ public class Rotor extends AirMovingEnemy {
 		super.move(time);
 		angle1 -= 4;
 		angle2 += 2f;
-		if (getLevel().getNextUnitPos(getPosition()) == FightPos){
-			attack(getLevel().getUnitAt(getPosition().alignedToGrid()));
-			}
+		
 		
 
 	}

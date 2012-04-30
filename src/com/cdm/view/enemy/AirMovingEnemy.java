@@ -1,5 +1,6 @@
 package com.cdm.view.enemy;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.Position;
 import com.cdm.view.elements.MathTools;
@@ -30,12 +31,13 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 		super.move(time);
 
 		while (time > 0) {
-			
-			if (nextStep.equals(invalidPos)) {
+					if (nextStep.equals(invalidPos)) {
 				nextStep.set(getLevel().getNextUnitPos(
 						getPosition().tmp().alignedToGrid()));
 			}
-
+			if (nextStep.equals(FightPos)){
+				attack(getLevel().getUnitAt(getPosition().alignedToGrid()));
+			}
 			Position nuPos = new Position(getPosition());
 
 			diff.set(getPosition().to(nextStep));
@@ -93,7 +95,7 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 	
 	public void attack(Unit unit){
 		getLevel().unitDestroyed(unit.getPosition().alignedToGrid(), unit);
-		unit.setPosition(FightPos);
+		Gdx.app.log("tag", "ATTACK!");
 		
 	}
 
