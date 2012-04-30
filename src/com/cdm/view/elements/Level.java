@@ -12,6 +12,7 @@ import com.cdm.view.Position;
 import com.cdm.view.Selector;
 import com.cdm.view.elements.Grid.CellType;
 import com.cdm.view.elements.Grid.GridElement;
+import com.cdm.view.elements.paths.Path;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.DisplayEffect;
@@ -420,9 +421,19 @@ public class Level {
 	public void unitDestroyed(Position position, Unit unit) {
 		removeMeFromGrid(position, unit);
 		SoundFX.play(Type.HIT);
-		displayEffectsToAdd.add(new Explosion(unit.getPosition(),
-				unit.getSize(), this));
+		//displayEffectsToAdd.add(new Explosion(unit.getPosition(),
+			//	unit.getSize(), this));
 		unitsToRemove.add(unit);
+		List<PathPos> playerUnitPositions = new ArrayList<PathPos>();
+		for (Unit unit1 : units) {
+			if (!(unit1 instanceof EnemyUnit)) {
+				playerUnitPositions
+						.add(new PathPos(unit1.getPosition()));
+			}
+		}
+
+		PathFinder.breadthSearch(grid, PathFinder.UNITDIST_ACCESSOR,
+				null, playerUnitPositions, null, false);
 	}
 
 }
