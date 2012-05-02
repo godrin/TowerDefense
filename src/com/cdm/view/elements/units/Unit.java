@@ -1,9 +1,13 @@
 package com.cdm.view.elements.units;
 
+import com.badlogic.gdx.Gdx;
+import com.cdm.gui.effects.SoundFX;
+import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.Level;
+import com.cdm.view.enemy.EnemyUnit;
 
 public abstract class Unit implements Element {
 
@@ -31,6 +35,7 @@ public abstract class Unit implements Element {
 	private Level level;
 	private int cost;
 	private int speed;
+	private int unitenergy = 3;
 
 	public Unit(Position p) {
 		pos = p;
@@ -88,13 +93,33 @@ public abstract class Unit implements Element {
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
-	
+
 	public float getSpeed() {
 		return speed;
 	}
-	
+
 	public abstract int getZLayer();
-	
-	
+
+	public void wasAttacked(Unit unit) {
+		if (!(unit instanceof EnemyUnit)) {
+			if (unitenergy <= 0) {
+				getLevel().unitDestroyed(unit.getPosition().alignedToGrid(), unit);
+				Gdx.app.log("", "KILLED...");
+			} else {
+				
+				Gdx.app.log("", "ATTACK!");
+				setUnitEnergy(getUnitEnergy() - 1);
+				Gdx.app.log("Energy", Integer.toString(getUnitEnergy()));
+			}
+		}
+	}
+
+	public int getUnitEnergy() {
+		return unitenergy;
+	}
+
+	public void setUnitEnergy(int energy) {
+		this.unitenergy = energy;
+	}
 
 }

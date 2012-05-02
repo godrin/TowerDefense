@@ -45,8 +45,8 @@ public class Level {
 	public Level(int w, int h, int endY) {
 		grid = new Grid(w, h, endY);
 
-		grid.getElement(2, 5).setCellType(CellType.BLOCK);
-		grid.getElement(3, 5).setCellType(CellType.EMPTY);
+		grid.getElement(2, 4).setCellType(CellType.BLOCK);
+		grid.getElement(3, 4).setCellType(CellType.EMPTY);
 		Position.LEVEL_REF.setWidth(w);
 		Position.LEVEL_REF.setHeight(h);
 		player = new EnemyPlayer();
@@ -195,11 +195,10 @@ public class Level {
 		int y0 = Math.round(p.y);
 
 		List<Element> l = grid.get(x0, y0);
-		if (l != null){
+		if (l != null) {
 			l.remove(unit);
-			//unitsToRemove.add(unit);
-			}
-		else {
+			// unitsToRemove.add(unit);
+		} else {
 			System.out.println("NOT FOUND" + x0 + " " + y0);
 		}
 	}
@@ -290,8 +289,10 @@ public class Level {
 					if (nge.getDistToUnit() < curVal
 							&& nge.getDistToUnit() >= 0)
 						return new Position(p.x, p.y, Position.LEVEL_REF);
-					else if (curVal == 0) return new Position(0,0,Position.LEVEL_REF);				
-					else if (curVal == -1) return new Position(p.x+1,p.y,Position.LEVEL_REF);
+					else if (curVal == 0)
+						return new Position(0, 0, Position.LEVEL_REF);
+					else if (curVal == -1)
+						return new Position(p.x + 1, p.y, Position.LEVEL_REF);
 			}
 		}
 		return null;
@@ -383,7 +384,7 @@ public class Level {
 		}
 		return null;
 	}
-	
+
 	public int getMoney() {
 		return money;
 	}
@@ -421,19 +422,16 @@ public class Level {
 	public void unitDestroyed(Position position, Unit unit) {
 		removeMeFromGrid(position, unit);
 		SoundFX.play(Type.HIT);
-		//displayEffectsToAdd.add(new Explosion(unit.getPosition(),
-			//	unit.getSize(), this));
+		displayEffectsToAdd.add(new Explosion(position, unit.getSize(), this));
 		unitsToRemove.add(unit);
 		List<PathPos> playerUnitPositions = new ArrayList<PathPos>();
 		for (Unit unit1 : units) {
 			if (!(unit1 instanceof EnemyUnit)) {
-				playerUnitPositions
-						.add(new PathPos(unit1.getPosition()));
+				playerUnitPositions.add(new PathPos(unit1.getPosition()));
 			}
 		}
-
-		PathFinder.breadthSearch(grid, PathFinder.UNITDIST_ACCESSOR,
-				null, playerUnitPositions, null, false);
+		PathFinder.breadthSearch(grid, PathFinder.UNITDIST_ACCESSOR, null,
+				playerUnitPositions, null, false);
 	}
 
 }

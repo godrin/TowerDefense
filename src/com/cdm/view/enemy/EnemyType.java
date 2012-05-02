@@ -51,7 +51,7 @@ public enum EnemyType {
 			s = 10.0f;
 			break;
 		case ROTOR:
-			s = 1.5f;
+			s = 15.5f;
 			break;
 		}
 		return s * (1.0f + (levelNo - 1) * FACTOR);

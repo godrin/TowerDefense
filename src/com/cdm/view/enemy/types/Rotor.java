@@ -35,7 +35,7 @@ public class Rotor extends AirMovingEnemy {
 	private static final Color innerColor = new Color(0, 0, 0, 1f);
 	private static final Color innerColor2 = new Color(0.7f, 0, 0, 1f);
 	float angle1, angle2 = 180;
-		
+
 	public Rotor(Position position) {
 		super(position);
 		if (sprite == null) {
@@ -45,10 +45,7 @@ public class Rotor extends AirMovingEnemy {
 			sprite.fillCircle(0, 0, 0.50f, innerColor, 16);
 			sprite.fillCircle(0, 0, 0.40f, innerColor2, 16);
 			sprite.fillCircle(0, 0, 0.30f, innerColor, 16);
-			
-			
-			
-			
+
 			sprite.init();
 
 			/*
@@ -57,7 +54,7 @@ public class Rotor extends AirMovingEnemy {
 			 */
 		}
 		setSize(0.4f);
-		setTurningSpeed2(15);
+		setTurningSpeed2(90);
 		setEnergy(25);
 	}
 
@@ -66,29 +63,26 @@ public class Rotor extends AirMovingEnemy {
 		super.draw(renderer);
 
 		getShakingLines().draw(renderer, getPosition(), lines, angle1,
-				innerColor, getSize()*0.9f);
-		getShakingLines().draw(renderer, getPosition(), lines, angle1+45,
-				innerColor, getSize()*0.85f);
+				innerColor, getSize() * 0.9f);
+		getShakingLines().draw(renderer, getPosition(), lines, angle1 + 45,
+				innerColor, getSize() * 0.85f);
 		getShakingLines().draw(renderer, getPosition(), lines, angle2,
-				outerColor, getSize()*0.88f);
-		getShakingLines().draw(renderer, getPosition(), lines, angle2+45,
-				outerColor, getSize()*0.8f);
+				outerColor, getSize() * 0.88f);
+		getShakingLines().draw(renderer, getPosition(), lines, angle2 + 45,
+				outerColor, getSize() * 0.8f);
 		renderer.render(sprite, getPosition(), getSize(), 180,
 				GL10.GL_TRIANGLES);
-		
+
 	}
-	
+
 	@Override
 	public void move(float time) {
 		super.move(time);
 		angle1 -= 4;
 		angle2 += 2f;
-		
-		
 
 	}
-	
-	
+
 	@Override
 	public float getOriginalSpeed() {
 		return SPEED;

@@ -2,12 +2,16 @@ package com.cdm.view.enemy;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
+import com.cdm.gui.effects.SoundFX;
+import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.Position;
+import com.cdm.view.Screen;
 import com.cdm.view.elements.MathTools;
 import com.cdm.view.elements.RotatingThing;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.units.Unit;
+import com.cdm.view.elements.units.Unit.UnitType;
 
 public abstract class AirMovingEnemy extends EnemyUnit {
 
@@ -21,6 +25,7 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 	private Vector3 diff = new Vector3();
 	private Vector3 movingDir = new Vector3();
 	private RotatingThing rotation = new RotatingThing();
+	private float attackfreq = 0.0f;
 
 	public AirMovingEnemy(Position pos) {
 		super(pos);
@@ -29,14 +34,17 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 	@Override
 	public void move(float time) {
 		super.move(time);
-
 		while (time > 0) {
-					if (nextStep.equals(invalidPos)) {
+			if (nextStep.equals(invalidPos)) {
 				nextStep.set(getLevel().getNextUnitPos(
 						getPosition().tmp().alignedToGrid()));
 			}
-			if (nextStep.equals(FightPos)){
+			if (nextStep.equals(FightPos)) {
 				attack(getLevel().getUnitAt(getPosition().alignedToGrid()));
+				nextStep.set(getPosition());
+			}
+			if (getPosition().x >= 20){
+				getLevel().enemyReachedEnd(getLevel().getEnemyAt(getPosition()));
 			}
 			Position nuPos = new Position(getPosition());
 
@@ -44,7 +52,6 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 
 			float targetAngle = MathTools.angle(diff);
 			rotation.setTargetAngle(targetAngle);
-
 			time -= rotation.move(time);
 
 			if (time < 0.00001f)
@@ -92,11 +99,14 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 	public int getZLayer() {
 		return 0;
 	}
-	
-	public void attack(Unit unit){
-		getLevel().unitDestroyed(unit.getPosition().alignedToGrid(), unit);
-		Gdx.app.log("tag", "ATTACK!");
-		
-	}
 
+	public void attack(Unit unit) {
+
+		// if (attackfreq > 2.0f) {
+		// attackfreq = 0.0f;
+		if (unit == null) {
+			nextStep.set(invalidPos);
+		}
+		else getLevel().unitDestroyed(getPosition(), unit);
+	}
 }
