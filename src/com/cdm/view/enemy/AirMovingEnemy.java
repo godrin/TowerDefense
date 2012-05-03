@@ -1,17 +1,10 @@
 package com.cdm.view.enemy;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
-import com.cdm.gui.effects.SoundFX;
-import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.Position;
-import com.cdm.view.Screen;
 import com.cdm.view.elements.MathTools;
 import com.cdm.view.elements.RotatingThing;
-import com.cdm.view.elements.paths.PathFinder;
-import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.units.Unit;
-import com.cdm.view.elements.units.Unit.UnitType;
 
 public abstract class AirMovingEnemy extends EnemyUnit {
 
@@ -41,10 +34,11 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 			}
 			if (nextStep.equals(FightPos)) {
 				attack(getLevel().getUnitAt(getPosition().alignedToGrid()));
-				nextStep.set(getPosition());
+				nextStep.set(invalidPos);
 			}
-			if (getPosition().x >= 20){
-				getLevel().enemyReachedEnd(getLevel().getEnemyAt(getPosition()));
+			if (getPosition().x >= 20) {
+				getLevel()
+						.enemyReachedEnd(getLevel().getEnemyAt(getPosition()));
 			}
 			Position nuPos = new Position(getPosition());
 
@@ -104,9 +98,8 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 
 		// if (attackfreq > 2.0f) {
 		// attackfreq = 0.0f;
-		if (unit == null) {
-			nextStep.set(invalidPos);
+		if (unit != null) {
+			getLevel().unitDestroyed(getPosition(), unit);
 		}
-		else getLevel().unitDestroyed(getPosition(), unit);
 	}
 }
