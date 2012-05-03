@@ -80,8 +80,8 @@ public class Cannon extends RotatingUnit implements Element {
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
 				getLevel().addShot(
-						new SimpleShot(startingPos, anticipatePosition(enemy,
-								SimpleShot.speed), getLevel()));
+						new SimpleShot(startingPos, anticipatePosition(startingPos,enemy,
+								SimpleShot.SPEED), getLevel()));
 				SoundFX.play(Type.SHOT2);
 				hot += HOT_PER_SHOT;
 				if (hot > TOO_HOT)

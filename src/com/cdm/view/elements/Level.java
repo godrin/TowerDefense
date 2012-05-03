@@ -98,6 +98,8 @@ public class Level {
 		}
 		for (Unit unit : unitsToRemove) {
 			units.remove(unit);
+			removeMeFromGrid(unit.getPosition(), unit);
+
 		}
 		unitsToRemove.clear();
 		for (DisplayEffect shot : displayEffectsToRemove) {
@@ -272,7 +274,7 @@ public class Level {
 		if (health < 1)
 			SoundFX.play(Type.LOOSE);
 		shake();
-		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
+		//removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		unitsToRemove.add(enemyUnit);
 	}
 
@@ -281,7 +283,7 @@ public class Level {
 	}
 
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
-		removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
+		//removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		SoundFX.play(Type.HIT);
 		displayEffectsToAdd.add(new Explosion(enemyUnit.getPosition(),
 				enemyUnit.getSize(), this));

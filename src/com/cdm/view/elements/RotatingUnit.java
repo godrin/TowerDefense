@@ -25,12 +25,12 @@ public abstract class RotatingUnit extends Unit {
 
 		EnemyUnit enemy = getEnemy();
 
-		ableToShoot=false;
+		ableToShoot = false;
 		if (enemy != null) {
 			delta.set(enemy.getPosition().to(getPosition()));
-			if (delta.len() < getMaxDist() && delta.len()>getMinDist()) {
+			if (delta.len() < getMaxDist() && delta.len() > getMinDist()) {
 				rotation.setTargetAngle(MathTools.angle(delta));
-				ableToShoot = rotation.move(time)<time;
+				ableToShoot = rotation.move(time) < time;
 			}
 		}
 
@@ -48,10 +48,10 @@ public abstract class RotatingUnit extends Unit {
 		rotation.setTurningSpeed(s);
 	}
 
-	protected Position anticipatePosition(EnemyUnit enemy,float speed) {
-		float enemyDistance = getPosition().distance(enemy.getPosition());
-		float enemyMoveDistance = (enemyDistance / speed)
-				* enemy.getSpeed();
+	protected Position anticipatePosition(Position startingPos, EnemyUnit enemy, float speed) {
+		float enemyDistance = startingPos.distance(enemy.getPosition());
+		float timeToTarget = (enemyDistance / speed);
+		float enemyMoveDistance = timeToTarget * enemy.getSpeed();
 
 		result.set(enemy.getPosition().toVector());
 		result.add(enemy.getMovingDirection().mul(enemyMoveDistance));
