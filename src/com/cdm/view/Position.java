@@ -77,6 +77,10 @@ public class Position {
 	}
 
 	public Position set(Position dragPosition) {
+		if (dragPosition == null) {
+			x = y = -1;
+			return this;
+		}
 		x = dragPosition.x;
 		y = dragPosition.y;
 		system = dragPosition.system;
@@ -102,5 +106,9 @@ public class Position {
 
 	public Position tmp() {
 		return tmpPos.set(this);
+	}
+
+	public boolean valid() {
+		return x >= 0 && y >= 0;
 	}
 }

@@ -2,7 +2,6 @@ package com.cdm.view.elements;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -201,8 +200,9 @@ public class Level {
 		if (gridElement != null) {
 			if (gridElement.contains(unit)) {
 				System.out.println("OK FOUND unit");
-			} else
-				throw new RuntimeException("not found");
+			} else {
+			//	throw new RuntimeException("not found");
+			}
 			gridElement.remove(unit);
 		} else {
 			System.out.println("NOT FOUND" + x0 + " " + y0);
@@ -273,7 +273,24 @@ public class Level {
 		return null; // something went wrong
 	}
 
-	public Position getNextUnitPos(Position pos) {
+	public Position getNextStepToUnit(Position pos) {
+
+		if (true) {
+			PathPos current = new PathPos(pos);
+			GridElement ge0 = grid.get(pos);
+
+			int curVal = 1000;
+			if (ge0 != null)
+				curVal = ge0.getDistToUnit();
+			for (PathPos neighbor : current.next()) {
+				GridElement ge = grid.get(neighbor.tmp());
+				if (ge != null)
+					if (ge.getDistToUnit() < curVal)
+						return neighbor.tmp();
+
+			}
+			return null;
+		}
 
 		Position finish = getEnemyEndPosition();
 

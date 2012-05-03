@@ -7,8 +7,8 @@ import com.cdm.view.elements.RotatingThing;
 
 public abstract class GroundMovingEnemy extends EnemyUnit {
 
-	public static Position invalidPos = new Position(-1, -1, Position.LEVEL_REF);
-	public Position nextStep = new Position(invalidPos);
+	private static Position invalidPos = new Position(-1, -1, Position.LEVEL_REF);
+	private Position nextStep = new Position(invalidPos);
 	public static final float SPEED = 0.2f;
 
 	private static final Vector3 DEFAULT_DIRECTION = new Vector3(1, 0, 0);

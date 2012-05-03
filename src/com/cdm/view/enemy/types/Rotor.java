@@ -3,7 +3,6 @@ package com.cdm.view.enemy.types;
 import java.util.Arrays;
 import java.util.List;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector3;
@@ -11,7 +10,6 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.enemy.AirMovingEnemy;
-import com.cdm.view.enemy.GroundMovingEnemy;
 
 public class Rotor extends AirMovingEnemy {
 
