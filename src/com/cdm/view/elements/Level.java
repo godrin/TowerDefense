@@ -2,6 +2,7 @@ package com.cdm.view.elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -44,8 +45,8 @@ public class Level {
 	public Level(int w, int h, int endY) {
 		grid = new Grid(w, h, endY);
 
-		grid.getElement(2, 2).setCellType(CellType.BLOCK);
-		grid.getElement(3, 2).setCellType(CellType.EMPTY);
+		grid.getElement(2, 4).setCellType(CellType.BLOCK);
+		grid.getElement(3, 4).setCellType(CellType.EMPTY);
 		Position.LEVEL_REF.setWidth(w);
 		Position.LEVEL_REF.setHeight(h);
 		player = new EnemyPlayer();
@@ -99,7 +100,6 @@ public class Level {
 		for (Unit unit : unitsToRemove) {
 			units.remove(unit);
 			removeMeFromGrid(unit.getPosition(), unit);
-
 		}
 		unitsToRemove.clear();
 		for (DisplayEffect shot : displayEffectsToRemove) {
@@ -156,12 +156,12 @@ public class Level {
 				return false;
 		}
 
-		List<Element> l = grid.get((int) lpos.x, (int) lpos.y);
+		GridElement gridElement = grid.get(lpos);
 
-		if (l == null || l.isEmpty() || dragElement instanceof EnemyUnit) {
+		if (gridElement.isEmpty() || dragElement instanceof EnemyUnit) {
 
 			dragElement.setLevel(this);
-			dragElement.setPosition(lpos);
+			dragElement.setPosition(lpos, true);
 			units.add(dragElement);
 			setMoney(getMoney() - dragElement.getCost());
 
@@ -195,21 +195,26 @@ public class Level {
 		int x0 = Math.round(p.x);
 		int y0 = Math.round(p.y);
 
-		List<Element> l = grid.get(x0, y0);
-		if (l != null)
-			l.remove(unit);
-		else {
+		System.out.println("REMOVE " + unit + " at " + x0 + "," + y0);
+
+		GridElement gridElement = grid.get(p);
+		if (gridElement != null) {
+			if (gridElement.contains(unit)) {
+				System.out.println("OK FOUND unit");
+			} else
+				throw new RuntimeException("not found");
+			gridElement.remove(unit);
+		} else {
 			System.out.println("NOT FOUND" + x0 + " " + y0);
+			throw new RuntimeException("not found");
 		}
 	}
 
 	public void addMeToGrid(Position p, Unit unit) {
-		int x0 = Math.round(p.x);
-		int y0 = Math.round(p.y);
 
-		List<Element> l = grid.get(x0, y0);
-		if (l != null)
-			l.add(unit);
+		GridElement gridElement = grid.get(p);
+		if (gridElement != null)
+			gridElement.add(unit);
 	}
 
 	public boolean hasEnemies() {
@@ -252,13 +257,13 @@ public class Level {
 		finish.y += 4;
 		if (true) {
 			int curVal = 1000;
-			GridElement ge = grid.getElement(from.x, from.y);
+			GridElement ge = grid.get(from.tmp());
 			if (ge != null)
 				curVal = ge.getDistToEnd();
 			for (PathPos p : from.next()) {
 				if (finishPos.equals(p))
 					return new Position(p.x, p.y, Position.LEVEL_REF);
-				GridElement nge = grid.getElement(p.x, p.y);
+				GridElement nge = grid.get(p.tmp());
 				if (nge != null)
 					if (nge.getDistToEnd() < curVal && nge.getDistToEnd() >= 0)
 						return new Position(p.x, p.y, Position.LEVEL_REF);
@@ -268,13 +273,44 @@ public class Level {
 		return null; // something went wrong
 	}
 
+	public Position getNextUnitPos(Position pos) {
+
+		Position finish = getEnemyEndPosition();
+
+		PathPos from = new PathPos(pos);
+		PathPos finishPos = new PathPos(finish);
+		finish.y += 4;
+
+		if (true) {
+			GridElement ge = grid.get(from.tmp());
+
+			int curVal = 1000;
+			if (ge != null)
+				curVal = ge.getDistToUnit();
+			for (PathPos p : from.next()) {
+				if (finishPos.equals(p))
+					return new Position(p.x, p.y, Position.LEVEL_REF);
+				GridElement nge = grid.get(p.tmp());
+				if (nge != null)
+					if (nge.getDistToUnit() < curVal
+							&& nge.getDistToUnit() >= 0)
+						return new Position(p.x, p.y, Position.LEVEL_REF);
+					else if (curVal == 0)
+						return new Position(0, 0, Position.LEVEL_REF);
+					else if (curVal == -1)
+						return new Position(p.x + 1, p.y, Position.LEVEL_REF);
+			}
+		}
+		return null;
+	}
+
 	public void enemyReachedEnd(EnemyUnit enemyUnit) {
 		SoundFX.play(Type.HURT);
 		health -= 1;
 		if (health < 1)
 			SoundFX.play(Type.LOOSE);
 		shake();
-		//removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
+		// removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		unitsToRemove.add(enemyUnit);
 	}
 
@@ -283,7 +319,7 @@ public class Level {
 	}
 
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
-		//removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
+		// removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		SoundFX.play(Type.HIT);
 		displayEffectsToAdd.add(new Explosion(enemyUnit.getPosition(),
 				enemyUnit.getSize(), this));
@@ -298,7 +334,10 @@ public class Level {
 		}
 		if (bonus == 250) {
 			health += 1;
-			// EnemyPlayer.level2 = true;
+			SoundFX.play(Type.WIN);
+		}
+		if (bonus == 500) {
+			health += 1;
 			SoundFX.play(Type.WIN);
 		}
 	}
@@ -327,14 +366,17 @@ public class Level {
 	}
 
 	public EnemyUnit getEnemyAt(Position target) {
-		List<Element> l = grid.get((int) (target.x + 0.5f),
-				(int) (target.y + 0.5f));
-		if (l != null) {
-			for (Element e : l) {
-				if (e instanceof EnemyUnit) {
-					return (EnemyUnit) e;
-				}
-			}
+		GridElement gridElement = grid.get(target);
+		if (gridElement != null) {
+			return gridElement.getFirstEnemyUnit();
+		}
+		return null;
+	}
+
+	public Unit getUnitAt(Position target) {
+		GridElement gridElement = grid.get(target);
+		if (gridElement != null) {
+			return gridElement.getFirstUnit();
 		}
 		return null;
 	}
@@ -371,6 +413,20 @@ public class Level {
 
 	public boolean gameover() {
 		return health < 1;
+	}
+
+	public void unitDestroyed(Position position, Unit unit) {
+		SoundFX.play(Type.HIT);
+		displayEffectsToAdd.add(new Explosion(position, unit.getSize(), this));
+		unitsToRemove.add(unit);
+		List<PathPos> playerUnitPositions = new ArrayList<PathPos>();
+		for (Unit unit1 : units) {
+			if (!(unit1 instanceof EnemyUnit)) {
+				playerUnitPositions.add(new PathPos(unit1.getPosition()));
+			}
+		}
+		PathFinder.breadthSearch(grid, PathFinder.UNITDIST_ACCESSOR, null,
+				playerUnitPositions, null, false);
 	}
 
 }

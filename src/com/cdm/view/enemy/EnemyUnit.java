@@ -44,8 +44,9 @@ public abstract class EnemyUnit extends Unit {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		if (true)
-			return;
+		/*if (true)
+			return;*/
+		drawEnergyBar(renderer);
 	}
 
 	public void drawEnergyBar(IRenderer renderer) {

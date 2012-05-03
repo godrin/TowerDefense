@@ -135,7 +135,7 @@ public class Explosion implements DisplayEffect {
 
 		// shrink
 		size -= time * 0.4f;
-		if (splinters.size() < 0) {
+		if (splinters.size() <= 0) {
 			// FIXME: remove from level
 			level.removeShot(this);
 		}
