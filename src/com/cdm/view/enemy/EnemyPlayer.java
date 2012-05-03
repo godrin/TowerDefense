@@ -91,13 +91,12 @@ public class EnemyPlayer {
 		timeInWave = 0.0f;
 		mode = Mode.ATTACK;
 		alreadySent = false;
-		/*if ((getLevelNo() > 1) && !level3)
-			level2 = true;
-		if (getLevelNo() > 3){
-			
-		level2=false;
-			level3 =true;
-		}*/
+		/*
+		 * if ((getLevelNo() > 1) && !level3) level2 = true; if (getLevelNo() >
+		 * 3){
+		 * 
+		 * level2=false; level3 =true; }
+		 */
 		defs.clear();
 
 		// strength-based randomized enemy creation
@@ -113,7 +112,6 @@ public class EnemyPlayer {
 			if (strength < currentStrength + EnemyType.STRENGTH_THRESHOLD) {
 				currentStrength -= strength;
 				lastTime += (float) Math.random() * 5.0f + 0.6f;
-				System.out.println("ADD " + t + " " + lastTime);
 				defs.add(new EnemyDef(t, lastTime));
 				trials = MAX_TRIALS;
 			} else

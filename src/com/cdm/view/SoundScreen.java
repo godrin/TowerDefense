@@ -77,7 +77,6 @@ public class SoundScreen extends Screen implements IButtonPressed {
 				if (vol >= 1)
 					vol = 1;
 				music.setVolume(vol);
-				System.out.println(vol);
 			}
 		} else if (buttonName.equals(SString.create("down"))) {
 			if (music != null) {
@@ -85,7 +84,6 @@ public class SoundScreen extends Screen implements IButtonPressed {
 				if (vol <= 0)
 					vol = 0;
 				music.setVolume(vol);
-				System.out.println(vol);
 			}
 		} else if (buttonName.equals(SString.create("on"))) {
 			if (music != null) {
@@ -109,15 +107,11 @@ public class SoundScreen extends Screen implements IButtonPressed {
 			if (song == 3)
 				music = music2;
 
-			System.out.println(song);
-			
-
 		} else if (buttonName.equals(SString.create("FXup"))) {
 			if (music != null) {
 				FXvol += 0.1f;
 				if (FXvol >= 1)
 					FXvol = 1;
-				System.out.println(FXvol);
 				SoundFX.play(Type.KLICK);
 			}
 		} else if (buttonName.equals(SString.create("FXdown"))) {
@@ -125,7 +119,6 @@ public class SoundScreen extends Screen implements IButtonPressed {
 				FXvol -= 0.1;
 				if (FXvol <= 0)
 					FXvol = 0;
-				System.out.println(FXvol);
 				SoundFX.play(Type.KLICK);
 			}
 		}

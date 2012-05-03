@@ -10,7 +10,7 @@ import com.cdm.view.Position;
 import com.cdm.view.elements.Level;
 
 public class SimpleShot extends MovingShot {
-	public static final float speed = 1.5f;
+	public static final float SPEED = 1.5f;
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 
@@ -26,7 +26,7 @@ public class SimpleShot extends MovingShot {
 
 	@Override
 	public float getSpeed() {
-		return speed;
+		return SPEED;
 	}
 
 	@Override

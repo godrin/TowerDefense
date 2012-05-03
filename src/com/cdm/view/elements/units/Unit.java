@@ -1,15 +1,13 @@
 package com.cdm.view.elements.units;
 
 import com.badlogic.gdx.Gdx;
-import com.cdm.gui.effects.SoundFX;
-import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.Level;
 import com.cdm.view.enemy.EnemyUnit;
 
-public abstract class Unit implements Element {
+public abstract class Unit implements Element, Comparable<Unit> {
 
 	public enum UnitType {
 		CANNON, ROCKET_THROWER, STUNNER, PHAZER;
@@ -37,7 +35,11 @@ public abstract class Unit implements Element {
 	private int speed;
 	private int unitenergy = 3;
 
+	private static int idCounter = 0;
+	private int id;
+
 	public Unit(Position p) {
+		id = (idCounter++);
 		pos = p;
 		size = 0.4f;
 		level = null;
@@ -49,15 +51,22 @@ public abstract class Unit implements Element {
 
 	@Override
 	public void setPosition(Position p) {
+		setPosition(p, false);
+	}
+
+	public void setPosition(Position p, boolean initial) {
 		boolean modified = (!oldpos.alignedToGrid().equals(p.alignedToGrid()));
-		if (modified && level != null) {
-			level.removeMeFromGrid(oldpos, this);
+		if (!initial) {
+			if (modified && level != null) {
+				level.removeMeFromGrid(oldpos, this);
+			}
 		}
 		pos.assignFrom(p);
-		if (modified && level != null) {
+		if ((modified && level != null) || initial) {
 			level.addMeToGrid(p, this);
+			oldpos.assignFrom(pos);
 		}
-		oldpos.assignFrom(pos);
+		
 
 	}
 
@@ -103,10 +112,11 @@ public abstract class Unit implements Element {
 	public void wasAttacked(Unit unit) {
 		if (!(unit instanceof EnemyUnit)) {
 			if (unitenergy <= 0) {
-				getLevel().unitDestroyed(unit.getPosition().alignedToGrid(), unit);
+				getLevel().unitDestroyed(unit.getPosition().alignedToGrid(),
+						unit);
 				Gdx.app.log("", "KILLED...");
 			} else {
-				
+
 				Gdx.app.log("", "ATTACK!");
 				setUnitEnergy(getUnitEnergy() - 1);
 				Gdx.app.log("Energy", Integer.toString(getUnitEnergy()));
@@ -122,4 +132,15 @@ public abstract class Unit implements Element {
 		this.unitenergy = energy;
 	}
 
+	@Override
+	public int compareTo(Unit arg0) {
+
+		if (this.id < ((Unit) arg0).id) {
+			return -1;
+		}
+		if (this.id > ((Unit) arg0).id) {
+			return -1;
+		}
+		return 0;
+	}
 }

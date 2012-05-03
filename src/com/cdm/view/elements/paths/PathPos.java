@@ -8,6 +8,7 @@ import com.cdm.view.Position;
 public class PathPos implements Comparable<PathPos> {
 	public int x, y;
 	public int value;
+	private static Position tmp=new Position(0,0,Position.LEVEL_REF);
 
 	public PathPos(Position pos) {
 		x = (int) pos.x;
@@ -20,9 +21,15 @@ public class PathPos implements Comparable<PathPos> {
 		y = _y;
 		value = _v;
 	}
+	
 
 	public PathPos() {
 		x = y = value = -1;
+	}
+	public Position tmp() {
+		tmp.x=x;
+		tmp.y=y;
+		return tmp;
 	}
 
 	public String toString() {

@@ -93,7 +93,7 @@ public class PathFinder {
 				}
 
 			int currentValue = current.value;
-			GridElement currentElement = grid.getElement(current.x, current.y);
+			GridElement currentElement = grid.get(current.tmp());
 			if (currentElement != null) {
 				accessor.write(currentElement, currentValue);
 			} else
@@ -101,7 +101,7 @@ public class PathFinder {
 			for (PathPos next : current.next()) {
 				if (next.equals(ignoreThis))
 					continue;
-				GridElement ge = grid.getElement(next.x, next.y);
+				GridElement ge = grid.get(next.tmp());
 				if (ge != null) {
 
 					if (accessor.read(ge) < 0) {

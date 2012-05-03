@@ -8,9 +8,10 @@ import com.cdm.view.elements.units.Unit;
 
 public abstract class AirMovingEnemy extends EnemyUnit {
 
-	public static Position invalidPos = new Position(-1, -1, Position.LEVEL_REF);
-	public static Position FightPos = new Position(0, 0, Position.LEVEL_REF);
-	public Position nextStep = new Position(invalidPos);
+	private static Position invalidPos = new Position(-1, -1,
+			Position.LEVEL_REF);
+	private static Position FightPos = new Position(0, 0, Position.LEVEL_REF);
+	private Position nextStep = new Position(invalidPos);
 	public static final float SPEED = 0.2f;
 
 	private static final Vector3 DEFAULT_DIRECTION = new Vector3(1, 0, 0);
@@ -29,16 +30,20 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 		super.move(time);
 		while (time > 0) {
 			if (nextStep.equals(invalidPos)) {
-				nextStep.set(getLevel().getNextUnitPos(
+				nextStep.set(getLevel().getNextStepToUnit(
 						getPosition().tmp().alignedToGrid()));
 			}
 			if (nextStep.equals(FightPos)) {
 				attack(getLevel().getUnitAt(getPosition().alignedToGrid()));
 				nextStep.set(invalidPos);
 			}
+			if (!nextStep.valid()) {
+				getLevel().removeMeFromGrid(getPosition(), this);
+				return;
+			}
+
 			if (getPosition().x >= 20) {
-				getLevel()
-						.enemyReachedEnd(getLevel().getEnemyAt(getPosition()));
+				getLevel().enemyReachedEnd(this);
 			}
 			Position nuPos = new Position(getPosition());
 
@@ -101,5 +106,6 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 		if (unit != null) {
 			getLevel().unitDestroyed(getPosition(), unit);
 		}
+
 	}
 }

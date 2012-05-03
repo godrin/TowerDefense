@@ -1,18 +1,15 @@
 package com.cdm.view;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cdm.Game;
 import com.cdm.SString;
-import com.cdm.gui.BigButton;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.IUnitTypeSelected;
 import com.cdm.gui.UnitTypeButton;
-import com.cdm.gui.Widget;
 import com.cdm.gui.WidgetContainer;
 import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
@@ -180,7 +177,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		}
 		y = Gdx.graphics.getHeight() - y;
 		if (gui.opaque(x, y)) {
-			System.out.println("OPAQUEEE");
 			gui.touchDown(x, y, pointer, button);
 			return true;
 		} else {
@@ -248,8 +244,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (nu >= 40 && nu <= 128)
 			Position.LEVEL_REF.setScale(nu);
 
-		System.out.println("SCROLL " + amount + " "
-				+ Position.LEVEL_REF.getScale());
 		return false;
 	}
 
@@ -283,6 +277,5 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		 */
 		hud.setLevel(level);
 		createUnitButtons();
-		System.out.println("Restart");
 	}
 }

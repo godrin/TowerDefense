@@ -1,8 +1,10 @@
 package com.cdm.view.elements;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
+import com.cdm.view.Position;
+import com.cdm.view.elements.units.Unit;
 import com.cdm.view.enemy.EnemyUnit;
 
 public class Grid {
@@ -12,20 +14,20 @@ public class Grid {
 
 	public class GridElement {
 
-		private List<Element> e;
+		private Set<Element> e;
 		private int distToEnd;
 		private int tempValue;
 		private int distToUnit;
-		
+
 		private CellType cellType = CellType.FREE;
 
 		public GridElement() {
-			e = new ArrayList<Element>();
+			e = new TreeSet<Element>();
 			distToEnd = -1;
 			distToUnit = -1;
 		}
 
-		public List<Element> getList() {
+		public Set<Element> getList() {
 			return e;
 		}
 
@@ -40,7 +42,7 @@ public class Grid {
 		public int getDistToEnd() {
 			return distToEnd;
 		}
-		
+
 		public int getDistToUnit() {
 			return distToUnit;
 		}
@@ -60,11 +62,68 @@ public class Grid {
 		public boolean isFree() {
 			return cellType.equals(CellType.FREE);
 		}
-		
-		public void setDistToUnit(int distToUnit){
+
+		public void setDistToUnit(int distToUnit) {
 			this.distToUnit = distToUnit;
 		}
-		
+
+		public boolean isPassable() {
+			if (e == null)
+				return false;
+			if (!isFree())
+				return false;
+			for (Element ce : e) {
+				if (!(ce instanceof EnemyUnit))
+					return false;
+			}
+			return true;
+
+		}
+
+		public boolean isEmpty() {
+			return e.isEmpty();
+		}
+
+		public boolean contains(Unit unit) {
+			System.out.println("CONTAINS ?");
+			System.out.println(this);
+			System.out.println(unit);
+			System.out.println(e.contains(unit));
+			return e.contains(unit);
+		}
+
+		public void remove(Unit unit) {
+			System.out.println(this);
+			System.out.println(e);
+			e.remove(unit);
+			System.out.println(e);
+		}
+
+		public void add(Unit unit) {
+			System.out.println(this);
+			System.out.println(e);
+			e.add(unit);
+			System.out.println(e);
+		}
+
+		public EnemyUnit getFirstEnemyUnit() {
+			for (Element u : e) {
+				if (u instanceof EnemyUnit) {
+					return (EnemyUnit) u;
+				}
+			}
+			return null;
+		}
+
+		public Unit getFirstUnit() {
+			for (Element u : e) {
+				if (u instanceof EnemyUnit) {
+					return (Unit) u;
+				}
+			}
+			return null;
+		}
+
 	}
 
 	private GridElement[] cells;
@@ -100,31 +159,21 @@ public class Grid {
 		return null;
 	}
 
-	public List<Element> get(int x, int y) {
-		GridElement ge = getElement(x, y);
-		if (ge != null)
-			return ge.getList();
-		return null;
-	}
-
+	/*
+	 * public Set<Element> get(int x, int y) { GridElement ge = getElement(x,
+	 * y); if (ge != null) return ge.getList(); return null; }
+	 */
 	public boolean isEndPlace(int x, int y) {
 		return (x == w - 1 && y == endy);
 	}
 
 	public boolean passable(int x, int y) {
-		List<Element> l = get(x, y);
-		if (l == null)
-			return false;
-		if (!getElement(x, y).isFree())
-			return false;
-		for (Element e : l) {
-			if (!(e instanceof EnemyUnit))
-				return false;
-		}
-		return true;
+		return getElement(x, y).isPassable();
 	}
 
 	public void print() {
+		if (true)
+			return;
 		for (int y = 0; y < h; y++) {
 			for (int x = 0; x < w; x++) {
 				System.out.print(" " + getElement(x, y).getDistToEnd());
@@ -139,6 +188,9 @@ public class Grid {
 			System.out.println();
 		}
 
-		
+	}
+
+	public GridElement get(Position target) {
+		return getElement(Math.round(target.x), Math.round(target.y));
 	}
 }
