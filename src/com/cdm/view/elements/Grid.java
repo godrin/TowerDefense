@@ -123,6 +123,14 @@ public class Grid {
 			}
 			return null;
 		}
+		public Unit getPlayerUnit() {
+			for (Element u : e) {
+				if (!(u instanceof EnemyUnit)) {
+					return (Unit) u;
+				}
+			}
+			return null;
+		}
 
 	}
 
