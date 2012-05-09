@@ -37,10 +37,9 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 			if (nextStep.equals(FightPos)) {
 				attack(getLevel()
 						.getPlayerUnitAt(getPosition().alignedToGrid()));
-				// etLevel().removeMeFromGrid(this.getPosition(), this);
-				//nextStep.set(getPosition().x + 20, getPosition().y,
-					//	Position.LEVEL_REF);
-				getLevel().enemyDestroyed(this);
+				// getLevel().removeMeFromGrid(this.getPosition(), this);
+				nextStep.set(getPosition().x + 20, getPosition().y,
+						Position.LEVEL_REF);
 				return;
 			}
 			if (!nextStep.valid()) {
@@ -114,6 +113,5 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 			getLevel().unitDestroyed(unit.getPosition(), unit);
 		} else
 			nextStep.set(invalidPos);
-
 	}
 }

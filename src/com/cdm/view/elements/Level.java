@@ -201,7 +201,6 @@ public class Level {
 			if (gridElement.contains(unit)) {
 				System.out.println("OK FOUND unit");
 			} else {
-				gridElement.remove(getUnitAt(p));
 				// throw new RuntimeException("not found");
 			}
 			gridElement.remove(unit);
@@ -455,7 +454,7 @@ public class Level {
 			
 		}
 		PathFinder.breadthSearch(grid, PathFinder.UNITDIST_ACCESSOR, null,
-				playerUnitPositions, null, true);		
+				playerUnitPositions, null, false);		
 	}
 
 }

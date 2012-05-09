@@ -12,9 +12,9 @@ public enum EnemyType {
 		if (r < 0.05)
 			return ROCKET;
 		else if (r < 0.1)
-			return TANK2;
-		else if (r < 0.3)
 			return ROTOR;
+		else if (r < 0.3)
+			return TANK2;
 		else if (r < 0.4)
 			return TANK;
 		else if (r < 0.6)
