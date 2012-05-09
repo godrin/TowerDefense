@@ -201,6 +201,7 @@ public class Level {
 			if (gridElement.contains(unit)) {
 				System.out.println("OK FOUND unit");
 			} else {
+				gridElement.remove(getUnitAt(p));
 				// throw new RuntimeException("not found");
 			}
 			gridElement.remove(unit);
@@ -285,7 +286,7 @@ public class Level {
 			if (curVal == 0){
 				return new Position(0, 0, Position.LEVEL_REF);
 			} else	if (curVal == -1){
-				return new Position(getEnemyEndPosition());}
+				return new Position(pos.x+1,pos.y,Position.LEVEL_REF);}
 			for (PathPos neighbor : current.next()) {
 				GridElement ge = grid.get(neighbor.tmp());
 				if (ge != null)
@@ -450,10 +451,11 @@ public class Level {
 		for (Unit unit1 : units) {
 			if (!(unit1 instanceof EnemyUnit)) {
 				playerUnitPositions.add(new PathPos(unit1.getPosition()));
-			}
+					}
+			
 		}
 		PathFinder.breadthSearch(grid, PathFinder.UNITDIST_ACCESSOR, null,
-				playerUnitPositions, null, false);
+				playerUnitPositions, null, true);		
 	}
 
 }

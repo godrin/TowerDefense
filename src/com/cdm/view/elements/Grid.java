@@ -95,6 +95,7 @@ public class Grid {
 		public void remove(Unit unit) {
 			System.out.println(this);
 			System.out.println(e);
+			if (unit != null)
 			e.remove(unit);
 			System.out.println(e);
 		}

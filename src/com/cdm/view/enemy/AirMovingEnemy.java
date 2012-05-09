@@ -35,13 +35,17 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 				return;
 			}
 			if (nextStep.equals(FightPos)) {
-				attack(getLevel().getPlayerUnitAt(getPosition().alignedToGrid()));
-				nextStep.set(invalidPos);
+				attack(getLevel()
+						.getPlayerUnitAt(getPosition().alignedToGrid()));
+				// etLevel().removeMeFromGrid(this.getPosition(), this);
+				//nextStep.set(getPosition().x + 20, getPosition().y,
+					//	Position.LEVEL_REF);
+				getLevel().enemyDestroyed(this);
 				return;
 			}
 			if (!nextStep.valid()) {
 				nextStep.set(invalidPos);
-				getLevel().removeMeFromGrid(getPosition(), this);
+				// getLevel().removeMeFromGrid(getPosition(), this);
 				return;
 			}
 
@@ -108,7 +112,8 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 		// attackfreq = 0.0f;
 		if (unit != null) {
 			getLevel().unitDestroyed(unit.getPosition(), unit);
-		}
+		} else
+			nextStep.set(invalidPos);
 
 	}
 }

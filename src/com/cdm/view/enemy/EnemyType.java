@@ -8,11 +8,11 @@ public enum EnemyType {
 
 	public static EnemyType random() {
 		double r = Math.random();
-		if (true) return ROTOR;
-		if (r < 0.1)
-			return TANK2;
-		else if (r < 0.2)
+		// if (true) return ROTOR;
+		if (r < 0.05)
 			return ROCKET;
+		else if (r < 0.1)
+			return TANK2;
 		else if (r < 0.3)
 			return ROTOR;
 		else if (r < 0.4)
@@ -51,7 +51,7 @@ public enum EnemyType {
 			s = 10.0f;
 			break;
 		case ROTOR:
-			s = 1.5f;
+			s = 20.5f;
 			break;
 		}
 		return s * (1.0f + (levelNo - 1) * FACTOR);

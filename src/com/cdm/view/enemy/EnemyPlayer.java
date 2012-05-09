@@ -83,6 +83,7 @@ public class EnemyPlayer {
 
 	private void startWait() {
 		levelNo += 1;
+		
 		mode = Mode.WAIT;
 		timeToNextWave = WAITING_TIME;
 	}
