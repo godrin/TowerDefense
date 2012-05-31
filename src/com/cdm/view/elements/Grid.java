@@ -92,8 +92,8 @@ public class Grid {
 		public boolean contains(Unit unit) {
 			System.out.println("is " + unit + " contained in " + this + "(" + x
 					+ "," + y + ") :" + e.contains(unit));
-			if(!e.contains(unit))
-				System.out.println("LIST "+e+" of "+this);
+			if (!e.contains(unit))
+				System.out.println("LIST " + e + " of " + this);
 
 			return e.contains(unit);
 		}
@@ -101,17 +101,20 @@ public class Grid {
 		public void remove(Unit unit) {
 			System.out.println("removing " + unit + " from " + this + "(" + x
 					+ "," + y + ")");
-			e.remove(unit);
+			System.out.println(this);
+			System.out.println(e);
+			if (unit != null)
+				e.remove(unit);
 		}
 
 		public void add(Unit unit) {
-			System.out.println("adding " + unit + " to " + this + "(" + x
-					+ "," + y + ")");
+			System.out.println("adding " + unit + " to " + this + "(" + x + ","
+					+ y + ")");
 			e.add(unit);
-			if(!e.contains(unit))
+			if (!e.contains(unit))
 				throw new RuntimeException("adding filaed");
 			else {
-				System.out.println("LIST "+e+" of "+this);
+				System.out.println("LIST " + e + " of " + this);
 			}
 		}
 
@@ -129,6 +132,15 @@ public class Grid {
 				return getFirstUnit(EnemyUnit.class);
 			for (Element u : e) {
 				if (u instanceof EnemyUnit) {
+					return (Unit) u;
+				}
+			}
+			return null;
+		}
+
+		public Unit getPlayerUnit() {
+			for (Element u : e) {
+				if (!(u instanceof EnemyUnit)) {
 					return (Unit) u;
 				}
 			}
@@ -157,7 +169,7 @@ public class Grid {
 		int x, y;
 		for (x = 0; x < w; x++)
 			for (y = 0; y < h; y++)
-				cells[x + y * w] = new GridElement(x,y);
+				cells[x + y * w] = new GridElement(x, y);
 		endy = pendy;
 	}
 

@@ -285,6 +285,11 @@ public class Level {
 			int curVal = 1000;
 			if (ge0 != null)
 				curVal = ge0.getDistToUnit();
+			if (curVal == 0) {
+				return new Position(0, 0, Position.LEVEL_REF);
+			} else if (curVal == -1) {
+				return new Position(pos.x + 1, pos.y, Position.LEVEL_REF);
+			}
 			for (PathPos neighbor : current.next()) {
 				GridElement ge = grid.get(neighbor.tmp());
 				if (ge != null)
@@ -317,8 +322,6 @@ public class Level {
 						return new Position(p.x, p.y, Position.LEVEL_REF);
 					else if (curVal == 0)
 						return new Position(0, 0, Position.LEVEL_REF);
-					else if (curVal == -1)
-						return new Position(p.x + 1, p.y, Position.LEVEL_REF);
 			}
 		}
 		return null;
@@ -402,6 +405,14 @@ public class Level {
 		return null;
 	}
 
+	public Unit getPlayerUnitAt(Position target) {
+		GridElement gridElement = grid.get(target);
+		if (gridElement != null) {
+			return gridElement.getPlayerUnit();
+		}
+		return null;
+	}
+
 	public int getMoney() {
 		return money;
 	}
@@ -445,6 +456,7 @@ public class Level {
 			if (!(unit1 instanceof EnemyUnit)) {
 				playerUnitPositions.add(new PathPos(unit1.getPosition()));
 			}
+
 		}
 		PathFinder.breadthSearch(grid, PathFinder.UNITDIST_ACCESSOR, null,
 				playerUnitPositions, null, false);
