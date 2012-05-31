@@ -3,7 +3,7 @@ package com.cdm.view.elements;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 
-public interface Element {
+public interface Element extends Comparable<Element>{
 	void draw(IRenderer renderer);
 
 	void setPosition(Position pos);

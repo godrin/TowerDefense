@@ -11,7 +11,6 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.MathTools;
-import com.cdm.view.elements.RotatingUnit;
 import com.cdm.view.elements.shots.SimpleShot;
 import com.cdm.view.enemy.EnemyUnit;
 

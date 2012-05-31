@@ -10,7 +10,6 @@ import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
-import com.cdm.view.elements.RotatingUnit;
 import com.cdm.view.elements.shots.DisplayEffect;
 import com.cdm.view.elements.shots.StunRay;
 import com.cdm.view.enemy.EnemyUnit;

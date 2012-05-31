@@ -70,15 +70,17 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public synchronized void render(float delta) {
 		if (rendering)
 			return;
-		renderer.initGlSettings();
-		rendering = true;
-		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		synchronized (this) {
 
-		delta = move(delta);
+			renderer.initGlSettings();
+			rendering = true;
+			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-		draw(delta);
-		rendering = false;
+			delta = move(delta);
 
+			draw(delta);
+			rendering = false;
+		}
 	}
 
 	private void draw(float delta) {
@@ -169,38 +171,44 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchDown(int x, int y, int pointer, int button) {
+		synchronized (this) {
 
-		if (level.gameover()) {
-			restart();
-			return false;
+			if (level.gameover()) {
+				restart();
+				return false;
 
-		}
-		y = Gdx.graphics.getHeight() - y;
-		if (gui.opaque(x, y)) {
-			gui.touchDown(x, y, pointer, button);
-			return true;
-		} else {
-			dragging = true;
-			dragPosition.set(x, y, Position.SCREEN_REF);
-			oldDragPosition.set(x, y, Position.SCREEN_REF);
+			}
+			y = Gdx.graphics.getHeight() - y;
+			if (gui.opaque(x, y)) {
+				gui.touchDown(x, y, pointer, button);
+				return true;
+			} else {
+				dragging = true;
+				dragPosition.set(x, y, Position.SCREEN_REF);
+				oldDragPosition.set(x, y, Position.SCREEN_REF);
+			}
 		}
 		return false;
 	}
 
 	public boolean touchUp(int x, int y, int pointer, int button) {
-		dragging = false;
+		synchronized (this) {
 
-		if (level.gameover())
-			return false;
+			dragging = false;
 
-		y = Gdx.graphics.getHeight() - y;
-		if (gui.opaque(x, y)) {
-			gui.touchUp(x, y, pointer, button);
-			return true;
+			if (level.gameover())
+				return false;
+
+			y = Gdx.graphics.getHeight() - y;
+			if (gui.opaque(x, y)) {
+				gui.touchUp(x, y, pointer, button);
+				return true;
+			}
+			stopDragging();
+			level.stopHover();
 		}
-		stopDragging();
-		level.stopHover();
 		return false;
+
 	}
 
 	private void stopDragging() {
@@ -213,37 +221,46 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchDragged(int x, int y, int pointer) {
-		if (level.gameover())
-			return false;
-		y = Gdx.graphics.getHeight() - y;
+		synchronized (this) {
 
-		dragPosition.set(x, y, Position.SCREEN_REF);
-		if (dragElement != null) {
-			dragPosition = dragPosition.to(Position.LEVEL_REF).alignedToGrid();
+			if (level.gameover())
+				return false;
+			y = Gdx.graphics.getHeight() - y;
 
-			dragElement.setPosition(dragPosition);
-			level.hover(dragPosition);
-		} else if (dragging) {
-			int dx = (int) (dragPosition.x - oldDragPosition.x);
-			int dy = (int) (dragPosition.y - oldDragPosition.y);
-			oldDragPosition.set(dragPosition);
-			modCam(dx, dy);
+			dragPosition.set(x, y, Position.SCREEN_REF);
+			if (dragElement != null) {
+				dragPosition = dragPosition.to(Position.LEVEL_REF)
+						.alignedToGrid();
+
+				dragElement.setPosition(dragPosition);
+				level.hover(dragPosition);
+			} else if (dragging) {
+				int dx = (int) (dragPosition.x - oldDragPosition.x);
+				int dy = (int) (dragPosition.y - oldDragPosition.y);
+				oldDragPosition.set(dragPosition);
+				modCam(dx, dy);
+			}
 		}
 		return false;
 	}
 
 	@Override
 	public boolean touchMoved(int x, int y) {
-		y = Gdx.graphics.getHeight() - y;
+		synchronized (this) {
+
+			y = Gdx.graphics.getHeight() - y;
+		}
 		return false;
 	}
 
 	@Override
 	public boolean scrolled(int amount) {
-		int nu = (int) (Position.LEVEL_REF.getScale() + amount);
-		if (nu >= 40 && nu <= 128)
-			Position.LEVEL_REF.setScale(nu);
+		synchronized (this) {
 
+			int nu = (int) (Position.LEVEL_REF.getScale() + amount);
+			if (nu >= 40 && nu <= 128)
+				Position.LEVEL_REF.setScale(nu);
+		}
 		return false;
 	}
 

@@ -150,4 +150,9 @@ public class BackgroundElement implements Element {
 		this.pos = pos;
 	}
 
+	@Override
+	public int compareTo(Element arg0) {
+		return arg0.hashCode() - this.hashCode();
+	}
+
 }

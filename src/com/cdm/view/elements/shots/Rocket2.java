@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
+import com.cdm.view.elements.Element;
 import com.cdm.view.elements.Level;
 
 @Deprecated
@@ -48,5 +49,6 @@ public class Rocket2 extends MovingShot {
 	public float getSpeed() {
 		return speed;
 	}
+
 
 }

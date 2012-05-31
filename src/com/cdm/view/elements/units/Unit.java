@@ -7,7 +7,7 @@ import com.cdm.view.elements.Element;
 import com.cdm.view.elements.Level;
 import com.cdm.view.enemy.EnemyUnit;
 
-public abstract class Unit implements Element, Comparable<Unit> {
+public abstract class Unit implements Element {
 
 	public enum UnitType {
 		CANNON, ROCKET_THROWER, STUNNER, PHAZER;
@@ -55,19 +55,22 @@ public abstract class Unit implements Element, Comparable<Unit> {
 	}
 
 	public void setPosition(Position p, boolean initial) {
-		boolean modified = (!oldpos.alignedToGrid().equals(p.alignedToGrid()));
-		if (!initial) {
-			if (modified && level != null) {
-				level.removeMeFromGrid(oldpos, this);
+		if (level != null) {
+			boolean modified = (!oldpos.alignedToGrid().equals(
+					p.alignedToGrid()));
+			if (!initial) {
+				if (modified) {
+					level.removeMeFromGrid(oldpos, this);
+				}
 			}
+			pos.assignFrom(p);
+			if (modified || initial) {
+				level.addMeToGrid(p, this);
+				oldpos.assignFrom(pos);
+			}
+		} else {
+			pos.assignFrom(p);
 		}
-		pos.assignFrom(p);
-		if ((modified && level != null) || initial) {
-			level.addMeToGrid(p, this);
-			oldpos.assignFrom(pos);
-		}
-		
-
 	}
 
 	public Position getPosition() {
@@ -133,14 +136,7 @@ public abstract class Unit implements Element, Comparable<Unit> {
 	}
 
 	@Override
-	public int compareTo(Unit arg0) {
-
-		if (this.id < ((Unit) arg0).id) {
-			return -1;
-		}
-		if (this.id > ((Unit) arg0).id) {
-			return -1;
-		}
-		return 0;
+	public int compareTo(Element arg0) {
+		return arg0.hashCode() - this.hashCode();
 	}
 }

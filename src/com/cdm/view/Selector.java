@@ -51,6 +51,12 @@ public class Selector implements Element {
 	@Override
 	public void move(float time) {
 		// TODO Auto-generated method stub
-		
+
 	}
+
+	@Override
+	public int compareTo(Element arg0) {
+		return arg0.hashCode() - this.hashCode();
+	}
+
 }

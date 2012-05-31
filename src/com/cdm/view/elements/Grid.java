@@ -4,6 +4,8 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.cdm.view.Position;
+import com.cdm.view.elements.Grid.GridElement;
+import com.cdm.view.elements.units.PlayerUnit;
 import com.cdm.view.elements.units.Unit;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -20,8 +22,11 @@ public class Grid {
 		private int distToUnit;
 
 		private CellType cellType = CellType.FREE;
+		int x, y;
 
-		public GridElement() {
+		public GridElement(int x, int y) {
+			this.x = x;
+			this.y = y;
 			e = new TreeSet<Element>();
 			distToEnd = -1;
 			distToUnit = -1;
@@ -85,25 +90,29 @@ public class Grid {
 		}
 
 		public boolean contains(Unit unit) {
-			System.out.println("CONTAINS ?");
-			System.out.println(this);
-			System.out.println(unit);
-			System.out.println(e.contains(unit));
+			System.out.println("is " + unit + " contained in " + this + "(" + x
+					+ "," + y + ") :" + e.contains(unit));
+			if(!e.contains(unit))
+				System.out.println("LIST "+e+" of "+this);
+
 			return e.contains(unit);
 		}
 
 		public void remove(Unit unit) {
-			System.out.println(this);
-			System.out.println(e);
+			System.out.println("removing " + unit + " from " + this + "(" + x
+					+ "," + y + ")");
 			e.remove(unit);
-			System.out.println(e);
 		}
 
 		public void add(Unit unit) {
-			System.out.println(this);
-			System.out.println(e);
+			System.out.println("adding " + unit + " to " + this + "(" + x
+					+ "," + y + ")");
 			e.add(unit);
-			System.out.println(e);
+			if(!e.contains(unit))
+				throw new RuntimeException("adding filaed");
+			else {
+				System.out.println("LIST "+e+" of "+this);
+			}
 		}
 
 		public EnemyUnit getFirstEnemyUnit() {
@@ -116,8 +125,19 @@ public class Grid {
 		}
 
 		public Unit getFirstUnit() {
+			if (true)
+				return getFirstUnit(EnemyUnit.class);
 			for (Element u : e) {
 				if (u instanceof EnemyUnit) {
+					return (Unit) u;
+				}
+			}
+			return null;
+		}
+
+		public Unit getFirstUnit(Class<? extends Unit> klass) {
+			for (Element u : e) {
+				if (klass.isAssignableFrom(u.getClass())) {
 					return (Unit) u;
 				}
 			}
@@ -137,7 +157,7 @@ public class Grid {
 		int x, y;
 		for (x = 0; x < w; x++)
 			for (y = 0; y < h; y++)
-				cells[x + y * w] = new GridElement();
+				cells[x + y * w] = new GridElement(x,y);
 		endy = pendy;
 	}
 
@@ -193,4 +213,5 @@ public class Grid {
 	public GridElement get(Position target) {
 		return getElement(Math.round(target.x), Math.round(target.y));
 	}
+
 }

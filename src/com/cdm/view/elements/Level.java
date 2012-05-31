@@ -2,6 +2,7 @@ package com.cdm.view.elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -18,6 +19,7 @@ import com.cdm.view.elements.shots.DisplayEffect;
 import com.cdm.view.elements.shots.Explosion;
 import com.cdm.view.elements.shots.Shake;
 import com.cdm.view.elements.shots.ZoomInEffect;
+import com.cdm.view.elements.units.PlayerUnit;
 import com.cdm.view.elements.units.Unit;
 import com.cdm.view.elements.units.Unit.UnitType;
 import com.cdm.view.enemy.EnemyPlayer;
@@ -33,7 +35,7 @@ public class Level {
 	private int points = 0;
 	private int bonus = 0;
 	private List<Unit> units = new ArrayList<Unit>();
-	private List<Unit> unitsToRemove = new ArrayList<Unit>();
+	private Set<Unit> unitsToRemove = new TreeSet<Unit>();
 
 	private List<DisplayEffect> displayEffects = new ArrayList<DisplayEffect>();
 	private List<DisplayEffect> displayEffectsToRemove = new ArrayList<DisplayEffect>();
@@ -82,6 +84,7 @@ public class Level {
 	}
 
 	public synchronized void move(float time) {
+
 		boolean gameover = gameover();
 		if (time > 0.1f)
 			time = 0.1f;
@@ -201,7 +204,7 @@ public class Level {
 			if (gridElement.contains(unit)) {
 				System.out.println("OK FOUND unit");
 			} else {
-			//	throw new RuntimeException("not found");
+				throw new RuntimeException("not found");
 			}
 			gridElement.remove(unit);
 		} else {
@@ -390,10 +393,11 @@ public class Level {
 		return null;
 	}
 
-	public Unit getUnitAt(Position target) {
+	public Unit getUnitAt(Position target, Class<PlayerUnit> klass) {
 		GridElement gridElement = grid.get(target);
 		if (gridElement != null) {
-			return gridElement.getFirstUnit();
+
+			return gridElement.getFirstUnit(klass);
 		}
 		return null;
 	}
@@ -444,6 +448,11 @@ public class Level {
 		}
 		PathFinder.breadthSearch(grid, PathFinder.UNITDIST_ACCESSOR, null,
 				playerUnitPositions, null, false);
+	}
+
+	public void remove(Unit unit) {
+		if (units.contains(unit))
+			unitsToRemove.add(unit);
 	}
 
 }

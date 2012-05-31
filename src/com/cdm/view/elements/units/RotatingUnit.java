@@ -1,11 +1,12 @@
-package com.cdm.view.elements;
+package com.cdm.view.elements.units;
 
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.Position;
-import com.cdm.view.elements.units.Unit;
+import com.cdm.view.elements.MathTools;
+import com.cdm.view.elements.RotatingThing;
 import com.cdm.view.enemy.EnemyUnit;
 
-public abstract class RotatingUnit extends Unit {
+public abstract class RotatingUnit extends PlayerUnit {
 
 	private RotatingThing rotation = new RotatingThing();
 	protected boolean ableToShoot = false;

@@ -4,13 +4,13 @@ import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.Position;
 import com.cdm.view.elements.MathTools;
 import com.cdm.view.elements.RotatingThing;
+import com.cdm.view.elements.units.PlayerUnit;
 import com.cdm.view.elements.units.Unit;
 
 public abstract class AirMovingEnemy extends EnemyUnit {
 
 	private static Position invalidPos = new Position(-1, -1,
 			Position.LEVEL_REF);
-	private static Position FightPos = new Position(0, 0, Position.LEVEL_REF);
 	private Position nextStep = new Position(invalidPos);
 	public static final float SPEED = 0.2f;
 
@@ -19,7 +19,6 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 	private Vector3 diff = new Vector3();
 	private Vector3 movingDir = new Vector3();
 	private RotatingThing rotation = new RotatingThing();
-	private float attackfreq = 0.0f;
 
 	public AirMovingEnemy(Position pos) {
 		super(pos);
@@ -33,12 +32,10 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 				nextStep.set(getLevel().getNextStepToUnit(
 						getPosition().tmp().alignedToGrid()));
 			}
-			if (nextStep.equals(FightPos)) {
-				attack(getLevel().getUnitAt(getPosition().alignedToGrid()));
-				nextStep.set(getPosition());
-			}
+
 			if (!nextStep.valid()) {
-				getLevel().removeMeFromGrid(getPosition(), this);
+				attack(getLevel().getUnitAt(getPosition().alignedToGrid(),PlayerUnit.class));
+				getLevel().remove(this);
 				return;
 			}
 

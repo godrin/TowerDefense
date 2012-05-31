@@ -9,7 +9,6 @@ import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.MathTools;
-import com.cdm.view.elements.RotatingUnit;
 import com.cdm.view.elements.shots.RocketShot;
 import com.cdm.view.enemy.EnemyUnit;
 

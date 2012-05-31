@@ -65,5 +65,9 @@ public abstract class MovingShot implements Element, DisplayEffect {
 	public float getLevel() {
 		return 1;
 	}
+	@Override
+	public int compareTo(Element arg0) {
+		return arg0.hashCode() - this.hashCode();
+	}
 
 }
