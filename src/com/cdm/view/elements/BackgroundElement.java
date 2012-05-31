@@ -30,9 +30,11 @@ public class BackgroundElement implements Element {
 	private float rotateAngle = 0;
 	private float lightness = 0.0f;
 	private GridElement gridElement;
+	private float rotatingSpeed = 0.8f;
 
 	public BackgroundElement(Position p, GridElement e) {
 		pos = p;
+		rotatingSpeed = ((p.x + p.y) * 0.3f + 5) * 0.1f;
 		gridElement = e;
 		// if (boxes == null) {
 
@@ -65,7 +67,7 @@ public class BackgroundElement implements Element {
 
 	public void move(float t) {
 		if (rotating) {
-			rotateAngle += t * 0.8f;
+			rotateAngle += t * rotatingSpeed;
 			if (rotateAngle > 3.1415f) {
 				rotateAngle = 0;
 				rotating = false;
@@ -81,12 +83,12 @@ public class BackgroundElement implements Element {
 
 		if (gridElement != null) {
 			if (gridElement.getList().size() > 0) {
-				lightness += t*LIGHTING_SPEED;
+				lightness += t * LIGHTING_SPEED;
 				if (lightness > 1)
 					lightness = 1;
 
 			} else {
-				lightness -= t*LIGHTING_SPEED;
+				lightness -= t * LIGHTING_SPEED;
 				if (lightness < 0)
 					lightness = 0;
 
@@ -153,6 +155,14 @@ public class BackgroundElement implements Element {
 	@Override
 	public int compareTo(Element arg0) {
 		return arg0.hashCode() - this.hashCode();
+	}
+
+	public float getRotatingSpeed() {
+		return rotatingSpeed;
+	}
+
+	public void setRotatingSpeed(float rotatingSpeed) {
+		this.rotatingSpeed = rotatingSpeed;
 	}
 
 }
