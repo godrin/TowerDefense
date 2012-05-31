@@ -90,32 +90,18 @@ public class Grid {
 		}
 
 		public boolean contains(Unit unit) {
-			System.out.println("is " + unit + " contained in " + this + "(" + x
-					+ "," + y + ") :" + e.contains(unit));
-			if (!e.contains(unit))
-				System.out.println("LIST " + e + " of " + this);
-
 			return e.contains(unit);
 		}
 
 		public void remove(Unit unit) {
-			System.out.println("removing " + unit + " from " + this + "(" + x
-					+ "," + y + ")");
-			System.out.println(this);
-			System.out.println(e);
 			if (unit != null)
 				e.remove(unit);
 		}
 
 		public void add(Unit unit) {
-			System.out.println("adding " + unit + " to " + this + "(" + x + ","
-					+ y + ")");
 			e.add(unit);
 			if (!e.contains(unit))
-				throw new RuntimeException("adding filaed");
-			else {
-				System.out.println("LIST " + e + " of " + this);
-			}
+				throw new RuntimeException("adding failed");
 		}
 
 		public EnemyUnit getFirstEnemyUnit() {
@@ -128,14 +114,7 @@ public class Grid {
 		}
 
 		public Unit getFirstUnit() {
-			if (true)
-				return getFirstUnit(EnemyUnit.class);
-			for (Element u : e) {
-				if (u instanceof EnemyUnit) {
-					return (Unit) u;
-				}
-			}
-			return null;
+			return getFirstUnit(EnemyUnit.class);
 		}
 
 		public Unit getPlayerUnit() {
@@ -191,10 +170,6 @@ public class Grid {
 		return null;
 	}
 
-	/*
-	 * public Set<Element> get(int x, int y) { GridElement ge = getElement(x,
-	 * y); if (ge != null) return ge.getList(); return null; }
-	 */
 	public boolean isEndPlace(int x, int y) {
 		return (x == w - 1 && y == endy);
 	}
