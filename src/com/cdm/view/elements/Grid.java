@@ -117,10 +117,10 @@ public class Grid {
 			return getFirstUnit(EnemyUnit.class);
 		}
 
-		public Unit getPlayerUnit() {
+		public PlayerUnit getPlayerUnit() {
 			for (Element u : e) {
-				if (!(u instanceof EnemyUnit)) {
-					return (Unit) u;
+				if (u instanceof PlayerUnit) {
+					return (PlayerUnit) u;
 				}
 			}
 			return null;
