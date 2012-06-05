@@ -10,7 +10,7 @@ import com.cdm.view.Rectangle;
 public abstract class Widget {
 	private Rectangle bbox;
 	private BitSet touching = new BitSet(20); // too much ;)
-	
+
 	public void setBBox(Rectangle box) {
 		bbox = box;
 	}
@@ -37,7 +37,7 @@ public abstract class Widget {
 	}
 
 	public void clicked(int x, int y, int pointer, int button) {
-		
+
 	}
 
 	public void touchUp(int x, int y, int pointer, int button) {
