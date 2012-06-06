@@ -167,8 +167,8 @@ public class Level {
 			units.add(dragElement);
 			setMoney(getMoney() - dragElement.getCost());
 
-			// FIXME: insert abstract class "PlayerUnit" for all "player units"
-			if (!(dragElement instanceof EnemyUnit)) {
+			// FIXME: insert abstract class "PlayerUnit" for all "player units" - DONE ?
+			if (dragElement instanceof PlayerUnit) {
 				PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
 						getEnemyStartPositionPlusOne(), new PathPos(
 								getEnemyEndPosition()), null, false);
@@ -197,18 +197,17 @@ public class Level {
 		int x0 = Math.round(p.x);
 		int y0 = Math.round(p.y);
 
-		System.out.println("REMOVE " + unit + " at " + x0 + "," + y0);
-
+		
 		GridElement gridElement = grid.get(p);
 		if (gridElement != null) {
 			if (gridElement.contains(unit)) {
-				System.out.println("OK FOUND unit");
+				//System.out.println("OK FOUND unit");
 			} else {
 				throw new RuntimeException("not found");
 			}
 			gridElement.remove(unit);
 		} else {
-			System.out.println("NOT FOUND" + x0 + " " + y0);
+			//System.out.println("NOT FOUND" + x0 + " " + y0);
 			throw new RuntimeException("not found");
 		}
 	}
