@@ -22,8 +22,8 @@ public class Leg {
 		
 		a.x=startX;
 		a.y=-0.3f*yDir;
-		b.x=(startX+endX)*0.5f+(float)Math.sin(alpha+0.4f)*0.6f;
-		b.y=-0.5f*yDir+(float)Math.cos(alpha+0.4f)*0.1f;
+		b.x=0.4f+(startX+endX)*0.5f+(float)Math.sin(alpha+0.4f)*0.6f;
+		b.y=-0.8f*yDir+(float)Math.cos(alpha+0.4f)*0.1f;
 		c.x=endX+(float)Math.sin(alpha)*0.9f;
 		c.y=-1.3f*yDir+(float)Math.cos(alpha)*0.3f;
 		

@@ -1,15 +1,15 @@
 package com.cdm.view.enemy;
 
 public enum EnemyType {
-	SMALL_SHIP, TANK, BIG_SHIP, BIG_SHIP2, ROCKET, TRUCK, TANK2, ROTOR,BUG;
+	SMALL_SHIP, TANK, BIG_SHIP, BIG_SHIP2, ROCKET, TRUCK, TANK2, ROTOR, BUG;
 
 	public static final Float STRENGTH_THRESHOLD = 1.1f;
 	public static final Float FACTOR = 0.4f;
 
 	public static EnemyType random() {
 		double r = Math.random();
-		 if (true) return BUG;
-		
+		if (true) return BUG;
+
 		if (r < 0.05)
 			return ROCKET;
 		else if (r < 0.1)

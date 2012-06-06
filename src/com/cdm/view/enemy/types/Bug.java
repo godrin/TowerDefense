@@ -9,48 +9,55 @@ import com.cdm.view.enemy.GroundMovingEnemy;
 import com.cdm.view.enemy.Leg;
 
 public class Bug extends GroundMovingEnemy {
-	private static final Color innerColor = new Color(0.8f, 0.8f, 0.0f, 0.8f);
-	private static final Color innerColor2 = new Color(0.2f, 0.2f, 0.2f, 0.8f);
-	private static final Color outerColor = new Color(0f, 0f, 0.1f, 1.0f);
+	private static final Color headColor = new Color(0.8f, 0.8f, 0.0f, 0.8f);
+	private static final Color torsoColor = new Color(0.2f, 0.2f, 0.2f, 0.8f);
+	private static final Color legColor = new Color(0f, 0f, 0.1f, 1.0f);
 	private PolySprite sprite = null;
+	private PolySprite outlineSprite = null;
 	private Leg leg = new Leg();
 	private float delta = 0;
+	private Color outlineColor= new Color(1.0f, 0f, 0.1f, 1.0f);
 
 	public Bug(Position pos) {
 		super(pos);
 		setSize(0.2f);
 		if (sprite == null) {
 			sprite = new PolySprite();
-			sprite.fillRectangle(-0.5f, -0.3f, 1.0f, 0.6f, innerColor2); // torso
-			sprite.fillRectangle(-1.1f, -0.5f, 0.7f, 1.0f, innerColor); // head
-			sprite.fillRectangle(0.3f, -0.6f, 1.7f, 1.2f, innerColor); // end
+			sprite.fillRectangle(-0.5f, -0.3f, 1.0f, 0.6f, torsoColor); // torso
+			sprite.fillRectangle(-1.1f, -0.5f, 0.7f, 1.0f, headColor); // head
+			sprite.fillRectangle(0.3f, -0.6f, 1.7f, 1.2f, headColor); // end
 			sprite.init();
+		}
+		if(outlineSprite==null){
+			outlineSprite=new PolySprite();
+			outlineSprite.makeRectangle(-0.5f, -0.3f, 1.0f, 0.6f, outlineColor);
+			outlineSprite.makeRectangle(-1.1f, -0.5f, 0.7f, 1.0f, outlineColor);
+			outlineSprite.makeRectangle(0.3f, -0.6f, 1.7f, 1.2f, outlineColor);
+			outlineSprite.init();
 		}
 	}
 
 	@Override
 	public void move(float time) {
 		super.move(time);
-		delta += time * 2.0f;
+		delta += time * 12.0f*getSpeed();
 
 	}
 
 	@Override
 	public void draw(IRenderer renderer) {
-		renderer.render(sprite, getPosition(), getSize(), 180,
-				GL10.GL_TRIANGLES);
 
-		leg.drawLeg(renderer, getPosition(), getAngle(), outerColor, getSize(),
+		leg.drawLeg(renderer, getPosition(), getAngle(), legColor, getSize(),
 				0f, -0.7f, delta, 1);
-		leg.drawLeg(renderer, getPosition(), getAngle(), outerColor, getSize(),
+		leg.drawLeg(renderer, getPosition(), getAngle(), legColor, getSize(),
 				0.2f, 0.2f, delta + 1.9f, 1);
-		leg.drawLeg(renderer, getPosition(), getAngle(), outerColor, getSize(),
+		leg.drawLeg(renderer, getPosition(), getAngle(), legColor, getSize(),
 				0.4f, 0.8f, delta + 3.9f, 1);
-		leg.drawLeg(renderer, getPosition(), getAngle(), outerColor, getSize(),
+		leg.drawLeg(renderer, getPosition(), getAngle(), legColor, getSize(),
 				0f, -0.7f, delta + 2.0f, -1);
-		leg.drawLeg(renderer, getPosition(), getAngle(), outerColor, getSize(),
+		leg.drawLeg(renderer, getPosition(), getAngle(), legColor, getSize(),
 				0.2f, 0.2f, delta + 2.0f + 1.9f, -1);
-		leg.drawLeg(renderer, getPosition(), getAngle(), outerColor, getSize(),
+		leg.drawLeg(renderer, getPosition(), getAngle(), legColor, getSize(),
 				0.4f, 0.8f, delta + 2.0f + 3.9f, -1);
 		/*
 		 * renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
@@ -60,6 +67,11 @@ public class Bug extends GroundMovingEnemy {
 		 * chains.drawChain(renderer, getPosition(), getAngle(), outerColor,
 		 * getSize());
 		 */
+		renderer.render(sprite, getPosition(), getSize(), 180,
+				GL10.GL_TRIANGLES);
+
+		renderer.render(outlineSprite, getPosition(), getSize(), 180,
+				GL10.GL_LINES);
 		super.draw(renderer);
 	}
 
