@@ -1,8 +1,11 @@
 package com.cdm.view;
 
+import java.util.Arrays;
+
 import com.badlogic.gdx.Gdx;
 import com.cdm.Game;
 import com.cdm.SString;
+import com.cdm.gui.AnimText;
 import com.cdm.gui.BigButton;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.WidgetContainer;
@@ -28,7 +31,8 @@ public class MenuScreen extends Screen implements IButtonPressed {
 				"options", SString.create("options"), this));
 		gui.add(b2 = new BigButton(-200, 100, Gdx.graphics.getWidth() / 4, 50,
 				"quit", SString.create("quit"), this));
-
+		gui.add(new AnimText(150, 150, 400, 100, Arrays.asList(new String[] {
+				"kjashdf", "kjhasdf", "aaaaa" })));
 		b0.add(new MoveAnimation(Easings.QUAD, 1.5f, middle, b0.getY(), b0));
 		b1.add(new MoveAnimation(Easings.QUAD, 2.0f, middle, b1.getY(), b1));
 		b2.add(new MoveAnimation(Easings.QUAD, 2.5f, middle, b2.getY(), b2));

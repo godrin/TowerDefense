@@ -8,24 +8,9 @@ public enum EnemyType {
 
 	public static EnemyType random() {
 		double r = Math.random();
-		if (true) return BUG;
+		// if (true) return TRUCK;
 
-		if (r < 0.05)
-			return ROCKET;
-		else if (r < 0.1)
-			return ROTOR;
-		else if (r < 0.3)
-			return TANK2;
-		else if (r < 0.35)
-			return BUG;
-		else if (r < 0.4)
-			return TANK;
-		else if (r < 0.6)
-			return BIG_SHIP;
-		else if (r < 0.8f)
-			return TRUCK;
-		else
-			return SMALL_SHIP;
+		return EnemyType.values()[((int) (r * 500)) % EnemyType.values().length];
 	}
 
 	public float getEnergy(int levelNo) {

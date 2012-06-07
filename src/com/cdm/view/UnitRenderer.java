@@ -63,4 +63,9 @@ public class UnitRenderer implements IRenderer {
 		r.render(sprite, pos, size, angle, renderMode);
 	}
 
+	@Override
+	public void drawText(int i, int j, String string, Color c, float scale) {
+		r.drawText(i, j, string, c, scale);
+	}
+
 }

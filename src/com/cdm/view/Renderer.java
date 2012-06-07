@@ -133,7 +133,12 @@ public class Renderer implements IRenderer {
 
 	@Override
 	public void drawText(int i, int j, String string, Color c) {
+		drawText(i, j, string, c, 1);
+	}
+
+	public void drawText(int i, int j, String string, Color c, float scale) {
 		spriteBatch.begin();
+		font.setScale(scale + 0.001f);
 
 		TextBounds bounds = font.getMultiLineBounds(string);
 		spriteBatch.setColor(c);

@@ -67,10 +67,10 @@ public class Bug extends GroundMovingEnemy {
 		 * chains.drawChain(renderer, getPosition(), getAngle(), outerColor,
 		 * getSize());
 		 */
-		renderer.render(sprite, getPosition(), getSize(), 180,
+		renderer.render(sprite, getPosition(), getSize(), getAngle()-180,
 				GL10.GL_TRIANGLES);
 
-		renderer.render(outlineSprite, getPosition(), getSize(), 180,
+		renderer.render(outlineSprite, getPosition(), getSize(), getAngle()-180,
 				GL10.GL_LINES);
 		super.draw(renderer);
 	}
