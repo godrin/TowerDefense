@@ -16,7 +16,7 @@ public class Bug extends GroundMovingEnemy {
 	private PolySprite outlineSprite = null;
 	private Leg leg = new Leg();
 	private float delta = 0;
-	private Color outlineColor= new Color(1.0f, 0f, 0.1f, 1.0f);
+	private Color outlineColor = new Color(1.0f, 0f, 0.1f, 1.0f);
 
 	public Bug(Position pos) {
 		super(pos);
@@ -28,8 +28,8 @@ public class Bug extends GroundMovingEnemy {
 			sprite.fillRectangle(0.3f, -0.6f, 1.7f, 1.2f, headColor); // end
 			sprite.init();
 		}
-		if(outlineSprite==null){
-			outlineSprite=new PolySprite();
+		if (outlineSprite == null) {
+			outlineSprite = new PolySprite();
 			outlineSprite.makeRectangle(-0.5f, -0.3f, 1.0f, 0.6f, outlineColor);
 			outlineSprite.makeRectangle(-1.1f, -0.5f, 0.7f, 1.0f, outlineColor);
 			outlineSprite.makeRectangle(0.3f, -0.6f, 1.7f, 1.2f, outlineColor);
@@ -40,7 +40,7 @@ public class Bug extends GroundMovingEnemy {
 	@Override
 	public void move(float time) {
 		super.move(time);
-		delta += time * 12.0f*getSpeed();
+		delta += time * 12.0f * getSpeed();
 
 	}
 
@@ -59,19 +59,11 @@ public class Bug extends GroundMovingEnemy {
 				0.2f, 0.2f, delta + 2.0f + 1.9f, -1);
 		leg.drawLeg(renderer, getPosition(), getAngle(), legColor, getSize(),
 				0.4f, 0.8f, delta + 2.0f + 3.9f, -1);
-		/*
-		 * renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
-		 * getSize()); getShakingLines().draw(renderer,getPosition(), lines,
-		 * getAngle(), outerColor, getSize());
-		 * 
-		 * chains.drawChain(renderer, getPosition(), getAngle(), outerColor,
-		 * getSize());
-		 */
-		renderer.render(sprite, getPosition(), getSize(), getAngle()-180,
+		renderer.render(sprite, getPosition(), getSize(), getAngle() - 180,
 				GL10.GL_TRIANGLES);
 
-		renderer.render(outlineSprite, getPosition(), getSize(), getAngle()-180,
-				GL10.GL_LINES);
+		renderer.render(outlineSprite, getPosition(), getSize(),
+				getAngle() - 180, GL10.GL_LINES);
 		super.draw(renderer);
 	}
 

@@ -18,6 +18,7 @@ public class MenuScreen extends Screen implements IButtonPressed {
 	private Renderer renderer = new Renderer();
 	private Game game;
 	private float animX = 0;
+	private long oldMicros=0;
 
 	public MenuScreen(Game pgame) {
 		game = pgame;
@@ -40,6 +41,14 @@ public class MenuScreen extends Screen implements IButtonPressed {
 
 	@Override
 	public void render(float delta) {
+		long millis = System.currentTimeMillis();
+		long micro = System.nanoTime() / 1000 + millis * 1000;
+		if (oldMicros > 0) {
+			delta = (micro - oldMicros) * 0.000001f;
+		}
+		oldMicros = micro;
+
+		
 		animX -= delta;
 		super.render(delta);
 		renderer.initGlSettings();

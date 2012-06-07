@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
+import com.cdm.view.LevelScreen;
 import com.cdm.view.Position;
 import com.cdm.view.Selector;
 import com.cdm.view.elements.Grid.CellType;
@@ -40,22 +41,40 @@ public class Level {
 	private List<DisplayEffect> displayEffects = new ArrayList<DisplayEffect>();
 	private List<DisplayEffect> displayEffectsToRemove = new ArrayList<DisplayEffect>();
 	private List<DisplayEffect> displayEffectsToAdd = new ArrayList<DisplayEffect>();
-	private BoxDrawing boxDrawer;
 	private GridDrawing gridDrawing;
+	private LevelFinishedListener levelFinishedListener;
 
-	public Level(int w, int h, int endY) {
-		grid = new Grid(w, h, endY);
+	public Level(int w, int h, int endY, LevelFinishedListener pfinishedListener) {
+		grid = new Grid(w, h);
+		grid.setEndy(endY);
 
 		grid.getElement(2, 4).setCellType(CellType.BLOCK);
 		grid.getElement(3, 4).setCellType(CellType.EMPTY);
-		Position.LEVEL_REF.setWidth(w);
-		Position.LEVEL_REF.setHeight(h);
-		player = new EnemyPlayer();
+
+		Position.LEVEL_REF.setWidth(grid.getW());
+		Position.LEVEL_REF.setHeight(grid.getH());
+
+		levelFinishedListener = pfinishedListener;
+		player = new EnemyPlayer(levelFinishedListener);
 		player.setLevel(this);
 		gridDrawing = new GridDrawing(grid);
 
-		boxDrawer = new BoxDrawing(new Position(-1, grid.endY(),
-				Position.LEVEL_REF), getEnemyEndPosition(), grid.getH());
+		PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
+				getEnemyStartPositionPlusOne(), new PathPos(
+						getEnemyEndPosition()), null, false);
+		displayEffects.add(new ZoomInEffect(this));
+	}
+
+	public Level(Grid grid2, LevelScreen pfinishedListener) {
+
+		grid = grid2;
+		Position.LEVEL_REF.setWidth(grid.getW());
+		Position.LEVEL_REF.setHeight(grid.getH());
+
+		levelFinishedListener = pfinishedListener;
+		player = new EnemyPlayer(levelFinishedListener);
+		player.setLevel(this);
+		gridDrawing = new GridDrawing(grid);
 
 		PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
 				getEnemyStartPositionPlusOne(), new PathPos(
@@ -110,7 +129,6 @@ public class Level {
 		displayEffectsToRemove.clear();
 		displayEffects.addAll(displayEffectsToAdd);
 		displayEffectsToAdd.clear();
-		boxDrawer.move(time);
 		gridDrawing.move(time);
 	}
 
@@ -133,8 +151,6 @@ public class Level {
 	}
 
 	private void drawBox(IRenderer renderer) {
-		if (false)
-			boxDrawer.draw(renderer);
 		gridDrawing.draw(renderer);
 	}
 
@@ -167,7 +183,8 @@ public class Level {
 			units.add(dragElement);
 			setMoney(getMoney() - dragElement.getCost());
 
-			// FIXME: insert abstract class "PlayerUnit" for all "player units" - DONE ?
+			// FIXME: insert abstract class "PlayerUnit" for all "player units"
+			// - DONE ?
 			if (dragElement instanceof PlayerUnit) {
 				PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
 						getEnemyStartPositionPlusOne(), new PathPos(
@@ -197,17 +214,16 @@ public class Level {
 		int x0 = Math.round(p.x);
 		int y0 = Math.round(p.y);
 
-		
 		GridElement gridElement = grid.get(p);
 		if (gridElement != null) {
 			if (gridElement.contains(unit)) {
-				//System.out.println("OK FOUND unit");
+				// System.out.println("OK FOUND unit");
 			} else {
 				throw new RuntimeException("not found");
 			}
 			gridElement.remove(unit);
 		} else {
-			//System.out.println("NOT FOUND" + x0 + " " + y0);
+			// System.out.println("NOT FOUND" + x0 + " " + y0);
 			throw new RuntimeException("not found");
 		}
 	}
@@ -227,12 +243,9 @@ public class Level {
 		return false;
 	}
 
+	// use more than one start position
 	public Position getEnemyStartPosition() {
 		return new Position(0, grid.endY(), Position.LEVEL_REF);
-	}
-
-	public Position getEnemyStartPosition2() {
-		return new Position(0, grid.endY() - 4, Position.LEVEL_REF);
 	}
 
 	public PathPos getEnemyStartPositionPlusOne() {
@@ -285,11 +298,12 @@ public class Level {
 			if (ge0 != null)
 				curVal = ge0.getDistToUnit();
 			if (curVal == 0) {
-				if (getPlayerUnitAt(pos)!=null)
-				return new Position(-3, -3, Position.LEVEL_REF);
-				else return new Position(pos.x+19,pos.y,Position.LEVEL_REF);
+				if (getPlayerUnitAt(pos) != null)
+					return new Position(-3, -3, Position.LEVEL_REF);
+				else
+					return new Position(pos.x + 19, pos.y, Position.LEVEL_REF);
 			} else if (curVal == -1) {
-				return new Position(pos.x+5,pos.y, Position.LEVEL_REF);
+				return new Position(pos.x + 5, pos.y, Position.LEVEL_REF);
 			}
 			for (PathPos neighbor : current.next()) {
 				GridElement ge = grid.get(neighbor.tmp());
