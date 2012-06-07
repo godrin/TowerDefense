@@ -6,12 +6,21 @@ import com.cdm.view.elements.Level;
 
 public class LevelDisplays {
 	private Level level;
+	private Campaign campaign;
 	private Color moneyColor = new Color(0.7f, 0.7f, 1.0f, 1.0f);
 	private Color color = new Color(1, 1, 1, 1);
 	private boolean up = false;
 
 	public LevelDisplays() {
 
+	}
+
+	public Campaign getCampaign() {
+		return campaign;
+	}
+
+	public void setCampaign(Campaign campaign) {
+		this.campaign = campaign;
 	}
 
 	public Level getLevel() {
@@ -28,8 +37,11 @@ public class LevelDisplays {
 				"$" + Integer.toString(level.getMoney()), moneyColor);
 		renderer.drawText(Gdx.graphics.getWidth() - 120,
 				Gdx.graphics.getHeight(),
-				"LeveL " + Integer.toString(level.getPlayer().getLevelNo()),
+				"Wave " + Integer.toString(level.getPlayer().getLevelNo()),
 				moneyColor);
+		renderer.drawText(Gdx.graphics.getWidth() - 260,
+				Gdx.graphics.getHeight(),
+				"Level " + Integer.toString(campaign.getLevelNo()), moneyColor);
 		renderer.drawText(Gdx.graphics.getWidth() - 140,
 				Gdx.graphics.getHeight() - 30,
 				"Energy " + Integer.toString(level.getHealth()), moneyColor);

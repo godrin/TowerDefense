@@ -13,12 +13,13 @@ import com.cdm.gui.UnitTypeButton;
 import com.cdm.gui.WidgetContainer;
 import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
+import com.cdm.view.elements.LevelFinishedListener;
 import com.cdm.view.elements.units.Unit;
 import com.cdm.view.elements.units.Unit.UnitType;
 import com.cdm.view.enemy.EnemyPlayer;
 
 public class LevelScreen extends Screen implements IUnitTypeSelected,
-		IButtonPressed {
+		IButtonPressed, LevelFinishedListener {
 	public SpriteBatch spriteBatch = new SpriteBatch();
 	public static TextureRegion bg;
 	private Renderer renderer = new Renderer();
@@ -32,11 +33,14 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Position oldDragPosition = new Position(0, 0, Position.SCREEN_REF);
 
 	private Game game;
+	private Campaign campaign;
 
-	public LevelScreen(Game pGame,Level plevel) {
+	public LevelScreen(Game pGame, Campaign c) {
+		campaign = c;
 		game = pGame;
-		level=plevel;
+		level = campaign.getNextLevel(this);
 		hud.setLevel(level);
+		hud.setCampaign(c);
 		bg = load("data/bg_stars2.png", 128, 128);
 		createUnitButtons();
 	}
@@ -282,18 +286,25 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		}
 	}
 
-	// FIXME move this function is a "Campaign" or game-control class, maybe "towergame"
+	// FIXME move this function is a "Campaign" or game-control class, maybe
+	// "towergame"
 	public void restart() {
 
 		game.setScreen(Screen.MENU_SCREEN);
-		EnemyPlayer.setLevelNo(1);
-		// if (!EnemyPlayer.level3)
 
-		level = new Level(20, 10, 5);
-		/*
-		 * else { level = new Level (20,5,2); }
-		 */
+		campaign.restart();
+		setLevel(campaign.getNextLevel(this));
+	}
+
+	@Override
+	public void levelFinished() {
+		setLevel(campaign.getNextLevel(this));
+	}
+
+	private void setLevel(Level nextLevel) {
+		level = nextLevel;
 		hud.setLevel(level);
+		// recreate, so that buttons have nu level
 		createUnitButtons();
 	}
 }
