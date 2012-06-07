@@ -21,6 +21,9 @@ public interface IRenderer {
 
 	void drawText(Position position, String money, Color moneyColor);
 
-	public void render(PolySprite sprite, Position pos, float size,float angle, int glTriangles);
+	public void drawText(int i, int j, String string, Color c, float scale);
+
+	public void render(PolySprite sprite, Position pos, float size,
+			float angle, int glTriangles);
 
 }

@@ -53,8 +53,8 @@ public class Truck extends GroundMovingEnemy {
 	private static final List<Vector3> poly = Arrays.asList(new Vector3[] { c0,
 			c1, c2, c0, c2, c3, d0, d1, d2, d2, d3, d0 });
 
-	private static final Color outerColor = new Color(0.0f, 0.0f, 0.0f, 1.0f);
-	private static final Color innerColor = new Color(0.9f, 0.0f, 0f, 1.0f);
+	private static final Color outerColor = new Color(0.0f, 0.0f, 0.0f, 0.6f);
+	private static final Color innerColor = new Color(0.9f, 0f, 0f, 0.9f);
 
 	private final Chain chains = new Chain();
 
@@ -78,10 +78,6 @@ public class Truck extends GroundMovingEnemy {
 		
 		getShakingLines().draw(renderer,getPosition(), lines, getAngle(), outerColor,
 				getSize());
-		/*
-		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
-				getSize());
-*/
 		chains.drawChain(renderer, getPosition(), getAngle(), outerColor,
 				getSize(), -0.9f, 0.55f);
 		chains.drawChain(renderer, getPosition(), getAngle(), outerColor,
