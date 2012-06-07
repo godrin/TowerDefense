@@ -8,15 +8,15 @@ public enum EnemyType {
 
 	public static EnemyType random() {
 		double r = Math.random();
-<<<<<<< HEAD
+
 
 		 //if (true) return ROTOR;
 
 		//if (true) return BUG;
 
-=======
+
 		// if (true) return TRUCK;
->>>>>>> dd4d3933c5ba7284de842a7c3f89c6d985ceacb5
+
 
 		return EnemyType.values()[((int) (r * 500)) % EnemyType.values().length];
 	}
