@@ -48,7 +48,6 @@ public class CampaignParser {
 			int w = 0;
 			List<PathPos> start = new ArrayList<PathPos>();
 			List<PathPos> end = new ArrayList<PathPos>();
-			int startX, startY, endX, endY;
 			// get size of grid
 			for (String l : gridBuffer) {
 				if (w < l.length())

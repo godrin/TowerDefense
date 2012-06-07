@@ -35,7 +35,7 @@ public class LevelDisplays {
 		Gdx.graphics.setIcon(null);
 		renderer.drawText(0, Gdx.graphics.getHeight(),
 				"$" + Integer.toString(level.getMoney()), moneyColor);
-		renderer.drawText(Gdx.graphics.getWidth() - 120,
+		renderer.drawText(Gdx.graphics.getWidth() - 112,
 				Gdx.graphics.getHeight(),
 				"Wave " + Integer.toString(level.getPlayer().getLevelNo()),
 				moneyColor);

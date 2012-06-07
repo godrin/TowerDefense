@@ -17,8 +17,8 @@ public class Campaign {
 			else
 				level = new Level(50, 5, 2, screen);
 		} else {
-			int w = 20, h = 5, endY = 2;
-			Grid grid = CampaignParser.getGrid(2);
+			int w = 30, h = 7, endY = 2;
+			Grid grid = CampaignParser.getGrid(levelNo);
 			/*
 			Grid grid = new Grid(w, h);
 			grid.setEndy(endY);

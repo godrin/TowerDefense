@@ -175,7 +175,7 @@ public class Level {
 		}
 
 		GridElement gridElement = grid.get(lpos);
-
+		if (gridElement!=null) 
 		if (gridElement.isEmpty() || dragElement instanceof EnemyUnit) {
 
 			dragElement.setLevel(this);

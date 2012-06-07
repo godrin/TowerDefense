@@ -25,7 +25,7 @@ public class EnemyPlayer {
 	private float timeInWave = 0.0f;
 	private SortedSet<EnemyDef> defs = new TreeSet<EnemyDef>();
 	private boolean alreadySent = false;
-	private Integer maxLevel = 3;
+	private Integer maxLevel = 20;
 	private LevelFinishedListener levelFinishedListener;
 
 	public EnemyPlayer(LevelFinishedListener pFinishedListener) {
