@@ -1,6 +1,7 @@
 package com.cdm.view;
 
 import com.badlogic.gdx.math.Vector3;
+import com.cdm.view.elements.paths.PathPos;
 
 public class Position {
 
@@ -24,6 +25,12 @@ public class Position {
 	public Position(float px, float py, CoordSystem s) {
 		x = px;
 		y = py;
+		system = s;
+	}
+
+	public Position(PathPos px, CoordSystem s) {
+		x = px.x;
+		y = px.y;
 		system = s;
 	}
 

@@ -55,7 +55,7 @@ public class CampaignParser {
 					w = l.length();
 			}
 			g = new Grid(w, h);
-			int x, y = h-1;
+			int x, y = h - 1;
 			for (String l : gridBuffer) {
 				for (x = 0; x < l.length(); x++) {
 					char c = l.charAt(x);
@@ -80,6 +80,8 @@ public class CampaignParser {
 			}
 			// FIXME
 			g.setEndy(end.get(0).y);
+			g.setEndPositions(end);
+			g.setStartPositions(start);
 
 		}
 
