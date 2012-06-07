@@ -69,7 +69,7 @@ public class CampaignParser {
 					case 'X':
 						g.getElement(x, y).setCellType(CellType.BLOCK);
 						break;
-					case ' ':
+					case '.':
 						g.getElement(x, y).setCellType(CellType.EMPTY);
 						break;
 					default:
