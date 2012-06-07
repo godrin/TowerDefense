@@ -4,7 +4,6 @@ import java.util.Set;
 import java.util.TreeSet;
 
 import com.cdm.view.Position;
-import com.cdm.view.elements.Grid.GridElement;
 import com.cdm.view.elements.units.PlayerUnit;
 import com.cdm.view.elements.units.Unit;
 import com.cdm.view.enemy.EnemyUnit;
@@ -141,15 +140,23 @@ public class Grid {
 	private int w, h;
 	private int endy;
 
-	public Grid(int pw, int ph, int pendy) {
-		w = pw;
-		h = ph;
+	
+	public int getEndy() {
+		return endy;
+	}
+
+	public void setEndy(int endy) {
+		this.endy = endy;
+	}
+
+	public Grid(int w2, int h2) {
+		w = w2;
+		h = h2;
 		cells = new GridElement[w * h];
 		int x, y;
 		for (x = 0; x < w; x++)
 			for (y = 0; y < h; y++)
 				cells[x + y * w] = new GridElement(x, y);
-		endy = pendy;
 	}
 
 	public int getW() {

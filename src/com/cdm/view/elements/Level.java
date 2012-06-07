@@ -9,6 +9,7 @@ import java.util.TreeSet;
 import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
+import com.cdm.view.LevelScreen;
 import com.cdm.view.Position;
 import com.cdm.view.Selector;
 import com.cdm.view.elements.Grid.CellType;
@@ -40,24 +41,40 @@ public class Level {
 	private List<DisplayEffect> displayEffects = new ArrayList<DisplayEffect>();
 	private List<DisplayEffect> displayEffectsToRemove = new ArrayList<DisplayEffect>();
 	private List<DisplayEffect> displayEffectsToAdd = new ArrayList<DisplayEffect>();
-	private BoxDrawing boxDrawer;
 	private GridDrawing gridDrawing;
 	private LevelFinishedListener levelFinishedListener;
 
 	public Level(int w, int h, int endY, LevelFinishedListener pfinishedListener) {
-		grid = new Grid(w, h, endY);
-		levelFinishedListener = pfinishedListener;
+		grid = new Grid(w, h);
+		grid.setEndy(endY);
 
 		grid.getElement(2, 4).setCellType(CellType.BLOCK);
 		grid.getElement(3, 4).setCellType(CellType.EMPTY);
-		Position.LEVEL_REF.setWidth(w);
-		Position.LEVEL_REF.setHeight(h);
+
+		Position.LEVEL_REF.setWidth(grid.getW());
+		Position.LEVEL_REF.setHeight(grid.getH());
+
+		levelFinishedListener = pfinishedListener;
 		player = new EnemyPlayer(levelFinishedListener);
 		player.setLevel(this);
 		gridDrawing = new GridDrawing(grid);
 
-		boxDrawer = new BoxDrawing(new Position(-1, grid.endY(),
-				Position.LEVEL_REF), getEnemyEndPosition(), grid.getH());
+		PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
+				getEnemyStartPositionPlusOne(), new PathPos(
+						getEnemyEndPosition()), null, false);
+		displayEffects.add(new ZoomInEffect(this));
+	}
+
+	public Level(Grid grid2, LevelScreen pfinishedListener) {
+
+		grid = grid2;
+		Position.LEVEL_REF.setWidth(grid.getW());
+		Position.LEVEL_REF.setHeight(grid.getH());
+
+		levelFinishedListener = pfinishedListener;
+		player = new EnemyPlayer(levelFinishedListener);
+		player.setLevel(this);
+		gridDrawing = new GridDrawing(grid);
 
 		PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
 				getEnemyStartPositionPlusOne(), new PathPos(
@@ -112,7 +129,6 @@ public class Level {
 		displayEffectsToRemove.clear();
 		displayEffects.addAll(displayEffectsToAdd);
 		displayEffectsToAdd.clear();
-		boxDrawer.move(time);
 		gridDrawing.move(time);
 	}
 
@@ -135,8 +151,6 @@ public class Level {
 	}
 
 	private void drawBox(IRenderer renderer) {
-		if (false)
-			boxDrawer.draw(renderer);
 		gridDrawing.draw(renderer);
 	}
 
