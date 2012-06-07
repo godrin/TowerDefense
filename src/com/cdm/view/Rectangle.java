@@ -58,6 +58,15 @@ public class Rectangle {
 	}
 
 	public Rectangle copy() {
-		return new Rectangle(x,y,w,h);
+		return new Rectangle(x, y, w, h);
 	}
+
+	public float getXMiddle() {
+		return x + w / 2;
+	}
+
+	public float getYMiddle() {
+		return y + h / 2;
+	}
+
 }

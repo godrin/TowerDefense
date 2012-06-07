@@ -33,9 +33,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	private Game game;
 
-	public LevelScreen(Game pGame) {
+	public LevelScreen(Game pGame,Level plevel) {
 		game = pGame;
-		level = new Level(20, 10, 5);
+		level=plevel;
 		hud.setLevel(level);
 		bg = load("data/bg_stars2.png", 128, 128);
 		createUnitButtons();
@@ -282,6 +282,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		}
 	}
 
+	// FIXME move this function is a "Campaign" or game-control class, maybe "towergame"
 	public void restart() {
 
 		game.setScreen(Screen.MENU_SCREEN);

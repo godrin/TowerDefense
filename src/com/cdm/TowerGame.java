@@ -8,6 +8,7 @@ import com.cdm.view.LevelScreen;
 import com.cdm.view.MenuScreen;
 import com.cdm.view.Screen;
 import com.cdm.view.SoundScreen;
+import com.cdm.view.elements.Level;
 import com.cdm.view.enemy.EnemyPlayer;
 
 public class TowerGame extends EnemyPlayer implements ApplicationListener, Game {
@@ -25,7 +26,9 @@ public class TowerGame extends EnemyPlayer implements ApplicationListener, Game 
 
 	public void create() {
 		running = true;
-		levelScreen = new LevelScreen(this);
+		Level level = new Level(20, 10, 5);
+
+		levelScreen = new LevelScreen(this, level);
 		optionsScreen = new SoundScreen(this);
 		setScreen(menuScreen = new MenuScreen(this));
 		SoundFX.Initialize();
