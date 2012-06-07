@@ -60,8 +60,8 @@ public class Level {
 		gridDrawing = new GridDrawing(grid);
 
 		PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
-				getEnemyStartPositionPlusOne(), new PathPos(
-						getEnemyEndPosition()), null, false);
+				getEnemyStartPosition().get(0), getEnemyEndPosition().get(0),
+				null, false);
 		displayEffects.add(new ZoomInEffect(this));
 	}
 
@@ -77,8 +77,8 @@ public class Level {
 		gridDrawing = new GridDrawing(grid);
 
 		PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
-				getEnemyStartPositionPlusOne(), new PathPos(
-						getEnemyEndPosition()), null, false);
+				getEnemyStartPosition().get(0), getEnemyEndPosition().get(0),
+				null, false);
 		displayEffects.add(new ZoomInEffect(this));
 	}
 
@@ -187,8 +187,8 @@ public class Level {
 			// - DONE ?
 			if (dragElement instanceof PlayerUnit) {
 				PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
-						getEnemyStartPositionPlusOne(), new PathPos(
-								getEnemyEndPosition()), null, false);
+						getEnemyStartPosition().get(0), getEnemyEndPosition()
+								.get(0), null, false);
 				List<PathPos> playerUnitPositions = new ArrayList<PathPos>();
 				for (Unit unit : units) {
 					if (!(unit instanceof EnemyUnit)) {
@@ -244,21 +244,23 @@ public class Level {
 	}
 
 	// use more than one start position
-	public Position getEnemyStartPosition() {
-		return new Position(0, grid.endY(), Position.LEVEL_REF);
+	public List<PathPos> getEnemyStartPosition() {
+		return grid.getEnemyStartPositions();
 	}
 
-	public PathPos getEnemyStartPositionPlusOne() {
-		return new PathPos(0, grid.endY(), -1);
-	}
-
-	public Position getEnemyEndPosition() {
-		return new Position(grid.getW() - 1, grid.endY(), Position.LEVEL_REF);
+	/*
+	 * public PathPos getEnemyStartPositionPlusOne() { return new PathPos(0,
+	 * grid.endY(), -1); }
+	 */
+	public List<PathPos> getEnemyEndPosition() {
+		return grid.getEnemyEndPosition();
+		// return new Position(grid.getW() - 1, grid.endY(),
+		// Position.LEVEL_REF);
 	}
 
 	public boolean isFreeForNewUnit(Position pos) {
-		PathPos from = getEnemyStartPositionPlusOne();
-		PathPos to = new PathPos(getEnemyEndPosition());
+		PathPos from = getEnemyStartPosition().get(0);
+		PathPos to = getEnemyEndPosition().get(0);
 
 		PathPos ignore = new PathPos(pos);
 		return PathFinder.breadthSearch(grid, PathFinder.TMP_ACCESSOR, from,
@@ -266,7 +268,8 @@ public class Level {
 	}
 
 	public Position getNextPos(Position alignToGrid) {
-		Position finish = getEnemyEndPosition();
+		Position finish = new Position(getEnemyEndPosition().get(0),
+				Position.LEVEL_REF);
 		PathPos from = new PathPos(alignToGrid);
 		PathPos finishPos = new PathPos(finish);
 		finish.y += 4;
@@ -315,7 +318,8 @@ public class Level {
 			return null;
 		}
 
-		Position finish = getEnemyEndPosition();
+		Position finish = new Position(getEnemyEndPosition().get(0),
+				Position.LEVEL_REF);
 
 		PathPos from = new PathPos(pos);
 		PathPos finishPos = new PathPos(finish);

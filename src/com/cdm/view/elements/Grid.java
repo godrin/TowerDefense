@@ -1,9 +1,11 @@
 package com.cdm.view.elements;
 
+import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
 import com.cdm.view.Position;
+import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.units.PlayerUnit;
 import com.cdm.view.elements.units.Unit;
 import com.cdm.view.enemy.EnemyUnit;
@@ -139,8 +141,9 @@ public class Grid {
 	private GridElement[] cells;
 	private int w, h;
 	private int endy;
+	private List<PathPos> startPositions;
+	private List<PathPos> endPositions;
 
-	
 	public int getEndy() {
 		return endy;
 	}
@@ -165,10 +168,6 @@ public class Grid {
 
 	public int getH() {
 		return h;
-	}
-
-	public int endY() {
-		return endy;
 	}
 
 	public GridElement getElement(int x, int y) {
@@ -206,6 +205,22 @@ public class Grid {
 
 	public GridElement get(Position target) {
 		return getElement(Math.round(target.x), Math.round(target.y));
+	}
+
+	public List<PathPos> getEnemyStartPositions() {
+		return startPositions;
+	}
+
+	public List<PathPos> getEnemyEndPosition() {
+		return endPositions;
+	}
+
+	public void setStartPositions(List<PathPos> startPositions) {
+		this.startPositions = startPositions;
+	}
+
+	public void setEndPositions(List<PathPos> endPositions) {
+		this.endPositions = endPositions;
 	}
 
 }

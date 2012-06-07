@@ -61,9 +61,7 @@ public class LevelDisplays {
 		}
 
 		if (level.gameover()) {
-			Renderer.font.setScale(3f);
-			renderer.drawText(220, 300, "Game OveR", color);
-			Renderer.font.setScale(1f);
+			renderer.drawText(220, 300, "Game OveR", color,3);
 			renderer.drawText(260, 330,
 					"You've got " + Integer.toString(level.getPoints())
 							+ " Points", moneyColor);

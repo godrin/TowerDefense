@@ -44,8 +44,9 @@ public abstract class EnemyUnit extends Unit {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		/*if (true)
-			return;*/
+		/*
+		 * if (true) return;
+		 */
 		drawEnergyBar(renderer);
 	}
 
@@ -72,7 +73,8 @@ public abstract class EnemyUnit extends Unit {
 	@Override
 	public void setPosition(Position p) {
 		super.setPosition(p);
-		Position endPos = getLevel().getEnemyEndPosition();
+		Position endPos = new Position(getLevel().getEnemyEndPosition().get(0),
+				Position.LEVEL_REF);
 		if (p.equals(endPos) || p.x > endPos.x) {
 			getLevel().enemyReachedEnd(this);
 		}
