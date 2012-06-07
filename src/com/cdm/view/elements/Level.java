@@ -285,9 +285,11 @@ public class Level {
 			if (ge0 != null)
 				curVal = ge0.getDistToUnit();
 			if (curVal == 0) {
-				return new Position(0, 0, Position.LEVEL_REF);
+				if (getPlayerUnitAt(pos)!=null)
+				return new Position(-3, -3, Position.LEVEL_REF);
+				else return new Position(pos.x+19,pos.y,Position.LEVEL_REF);
 			} else if (curVal == -1) {
-				return new Position(pos.x + 1, pos.y, Position.LEVEL_REF);
+				return new Position(pos.x+5,pos.y, Position.LEVEL_REF);
 			}
 			for (PathPos neighbor : current.next()) {
 				GridElement ge = grid.get(neighbor.tmp());
@@ -404,7 +406,7 @@ public class Level {
 		return null;
 	}
 
-	public Unit getPlayerUnitAt(Position target) {
+	public PlayerUnit getPlayerUnitAt(Position target) {
 		GridElement gridElement = grid.get(target);
 		if (gridElement != null) {
 			return gridElement.getPlayerUnit();
