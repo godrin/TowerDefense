@@ -210,4 +210,12 @@ public class Grid {
 		this.endPositions = endPositions;
 	}
 
+	public boolean isFree(PathPos p) {
+		return getElement(p).isFree() && !getEnemyEndPosition().contains(p);
+	}
+
+	private GridElement getElement(PathPos p) {
+		return getElement(p.x, p.y);
+	}
+
 }

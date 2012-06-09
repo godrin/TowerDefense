@@ -43,7 +43,6 @@ public class Level {
 	private GridDrawing gridDrawing;
 	private LevelFinishedListener levelFinishedListener;
 
-
 	public Level(Grid grid2, LevelScreen pfinishedListener) {
 
 		grid = grid2;
@@ -141,50 +140,46 @@ public class Level {
 
 		Position lpos = dragElement.getPosition().to(Position.LEVEL_REF)
 				.alignedToGrid();
-		if (!(dragElement instanceof EnemyUnit)
-				&& (lpos.x < 0 || lpos.x > grid.getW() - 1 || lpos.y < 0 || lpos.y > grid
-						.getH()))
-			return false;
+		PathPos pathPos = new PathPos(lpos);
 
 		// check if way is still free then
-		if (!(dragElement instanceof EnemyUnit)) {
-			if (!isFreeForNewUnit(lpos))
+		if (dragElement instanceof PlayerUnit) {
+			if (!isFreeForNewUnit(pathPos))
 				return false;
 		}
 
 		GridElement gridElement = grid.get(lpos);
-		if (gridElement!=null) 
-		if (gridElement.isEmpty() || dragElement instanceof EnemyUnit) {
+		if (gridElement != null)
+			if (gridElement.isEmpty() || dragElement instanceof EnemyUnit) {
 
-			dragElement.setLevel(this);
-			dragElement.setPosition(lpos, true);
-			units.add(dragElement);
-			setMoney(getMoney() - dragElement.getCost());
+				dragElement.setLevel(this);
+				dragElement.setPosition(lpos, true);
+				units.add(dragElement);
+				setMoney(getMoney() - dragElement.getCost());
 
-			// FIXME: insert abstract class "PlayerUnit" for all "player units"
-			// - DONE ?
-			if (dragElement instanceof PlayerUnit) {
-				PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
-						getEnemyStartPosition(), getEnemyEndPosition(), null,
-						false);
-				List<PathPos> playerUnitPositions = new ArrayList<PathPos>();
-				for (Unit unit : units) {
-					if (!(unit instanceof EnemyUnit)) {
-						playerUnitPositions
-								.add(new PathPos(unit.getPosition()));
+				if (dragElement instanceof PlayerUnit) {
+					PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
+							getEnemyStartPosition(), getEnemyEndPosition(),
+							null, false);
+					List<PathPos> playerUnitPositions = new ArrayList<PathPos>();
+					for (Unit unit : units) {
+						if (!(unit instanceof EnemyUnit)) {
+							playerUnitPositions.add(new PathPos(unit
+									.getPosition()));
+						}
 					}
+
+					PathFinder.breadthSearch(grid,
+							PathFinder.UNITDIST_ACCESSOR, (PathPos) null,
+							playerUnitPositions, null, false);
+
 				}
+				grid.print();
 
-				PathFinder.breadthSearch(grid, PathFinder.UNITDIST_ACCESSOR,
-						(PathPos) null, playerUnitPositions, null, false);
-
+				return true;
+			} else {
+				System.out.println("NOT EMPTY!");
 			}
-			grid.print();
-
-			return true;
-		} else {
-			System.out.println("NOT EMPTY!");
-		}
 		return false;
 	}
 
@@ -236,13 +231,15 @@ public class Level {
 		// Position.LEVEL_REF);
 	}
 
-	public boolean isFreeForNewUnit(Position pos) {
+	public boolean isFreeForNewUnit(PathPos pos) {
 		List<PathPos> from = getEnemyStartPosition();
 		List<PathPos> to = getEnemyEndPosition();
 
-		PathPos ignore = new PathPos(pos);
+		if (!grid.isFree(pos))
+			return false;
+
 		return PathFinder.breadthSearch(grid, PathFinder.TMP_ACCESSOR, from,
-				to, ignore, true);
+				to, pos, true);
 	}
 
 	public Position getNextPos(Position alignToGrid) {
