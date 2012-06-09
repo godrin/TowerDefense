@@ -2,6 +2,7 @@ package com.cdm.view.elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -42,10 +43,11 @@ public class Level {
 	private List<DisplayEffect> displayEffectsToAdd = new ArrayList<DisplayEffect>();
 	private GridDrawing gridDrawing;
 	private LevelFinishedListener levelFinishedListener;
+	private Random random = new Random();
 
-	public Level(Grid grid2, LevelScreen pfinishedListener) {
+	public Level(Grid pGrid, LevelScreen pfinishedListener) {
 
-		grid = grid2;
+		grid = pGrid;
 		Position.LEVEL_REF.setWidth(grid.getW());
 		Position.LEVEL_REF.setHeight(grid.getH());
 
@@ -421,6 +423,13 @@ public class Level {
 	public void remove(Unit unit) {
 		if (units.contains(unit))
 			unitsToRemove.add(unit);
+	}
+
+	public Position getSomeEnemyEndPosition() {
+
+		return new Position(getEnemyEndPosition().get(
+				random.nextInt(getEnemyEndPosition().size())),
+				Position.LEVEL_REF);
 	}
 
 }

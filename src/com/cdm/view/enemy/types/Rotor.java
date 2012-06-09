@@ -9,9 +9,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
-import com.cdm.view.enemy.AirMovingEnemy;
+import com.cdm.view.enemy.AirMovingEnemy2;
 
-public class Rotor extends AirMovingEnemy {
+public class Rotor extends AirMovingEnemy2 {
 
 	public Position nextStep = null;
 	private static PolySprite sprite = null;
