@@ -221,14 +221,8 @@ public class Level {
 		return grid.getEnemyStartPositions();
 	}
 
-	/*
-	 * public PathPos getEnemyStartPositionPlusOne() { return new PathPos(0,
-	 * grid.endY(), -1); }
-	 */
 	public List<PathPos> getEnemyEndPosition() {
 		return grid.getEnemyEndPosition();
-		// return new Position(grid.getW() - 1, grid.endY(),
-		// Position.LEVEL_REF);
 	}
 
 	public boolean isFreeForNewUnit(PathPos pos) {
@@ -264,51 +258,29 @@ public class Level {
 
 	public Position getNextStepToUnit(Position pos) {
 
-		if (true) {
-			PathPos current = new PathPos(pos);
-			GridElement ge0 = grid.get(pos);
+		PathPos current = new PathPos(pos);
+		GridElement ge0 = grid.get(pos);
 
-			int curVal = 1000;
-			if (ge0 != null)
-				curVal = ge0.getDistToUnit();
-			if (curVal == 0) {
-				if (getPlayerUnitAt(pos) != null)
-					return new Position(-3, -3, Position.LEVEL_REF);
-				else
-					return new Position(pos.x + 19, pos.y, Position.LEVEL_REF);
-			} else if (curVal == -1) {
-				return new Position(pos.x + 5, pos.y, Position.LEVEL_REF);
-			}
-			for (PathPos neighbor : current.next()) {
-				GridElement ge = grid.get(neighbor.tmp());
-				if (ge != null)
-					if (ge.getDistToUnit() < curVal)
-						return neighbor.tmp();
-
-			}
-			return null;
+		int curVal = 1000;
+		if (ge0 != null)
+			curVal = ge0.getDistToUnit();
+		if (curVal == 0) {
+			if (getPlayerUnitAt(pos) != null)
+				return new Position(-3, -3, Position.LEVEL_REF);
+			else
+				return new Position(pos.x + 19, pos.y, Position.LEVEL_REF);
+		} else if (curVal == -1) {
+			return new Position(pos.x + 5, pos.y, Position.LEVEL_REF);
 		}
-
-		PathPos from = new PathPos(pos);
-		if (true) {
-			GridElement ge = grid.get(from.tmp());
-
-			int curVal = 1000;
+		for (PathPos neighbor : current.next()) {
+			GridElement ge = grid.get(neighbor.tmp());
 			if (ge != null)
-				curVal = ge.getDistToUnit();
-			for (PathPos p : from.next()) {
-				if (grid.getEnemyEndPosition().contains(p))
-					return new Position(p.x, p.y, Position.LEVEL_REF);
-				GridElement nge = grid.get(p.tmp());
-				if (nge != null)
-					if (nge.getDistToUnit() < curVal
-							&& nge.getDistToUnit() >= 0)
-						return new Position(p.x, p.y, Position.LEVEL_REF);
-					else if (curVal == 0)
-						return new Position(0, 0, Position.LEVEL_REF);
-			}
+				if (ge.getDistToUnit() < curVal)
+					return neighbor.tmp();
+
 		}
 		return null;
+
 	}
 
 	public void enemyReachedEnd(EnemyUnit enemyUnit) {
