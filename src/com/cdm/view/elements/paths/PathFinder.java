@@ -1,5 +1,6 @@
 package com.cdm.view.elements.paths;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -70,48 +71,11 @@ public class PathFinder {
 
 	public static boolean breadthSearch(Grid grid, GridElementAccess accessor,
 			PathPos from, List<PathPos> to, PathPos ignoreThis, boolean fastOut) {
+		List<PathPos> p = new ArrayList<PathPos>();
+		if (from != null)
+			p.add(from);
+		return breadthSearch(grid, accessor, p, to, ignoreThis, fastOut);
 
-		checkTodoBuffer(grid);
-
-		cleanGrid(grid, accessor);
-		boolean found = false;
-		for (int i = 0; i < to.size(); i++)
-			todoBuffer.add(to.get(i));
-
-		while (todoBuffer.size() > 0) {
-			PathPos current = todoBuffer.first();
-			todoBuffer.removeFirst();
-
-			if (current.equals(from)) {
-				found = true;
-				if (fastOut)
-					return found;
-			}
-			if (current.value>0)
-				if (!grid.passable(current.x, current.y)) {
-					continue;
-				}
-
-			int currentValue = current.value;
-			GridElement currentElement = grid.get(current.tmp());
-			if (currentElement != null) {
-				accessor.write(currentElement, currentValue);
-			} else
-				currentValue = 0;
-			for (PathPos next : current.next()) {
-				if (next.equals(ignoreThis))
-					continue;
-				GridElement ge = grid.get(next.tmp());
-				if (ge != null) {
-
-					if (accessor.read(ge) < 0) {
-						todoBuffer.add(next);
-					}
-
-				}
-			}
-		}
-		return found;
 	}
 
 	private static void cleanGrid(Grid grid, GridElementAccess accessor) {
@@ -132,4 +96,70 @@ public class PathFinder {
 
 	}
 
+	public static boolean breadthSearch(Grid grid, GridElementAccess accessor,
+			List<PathPos> from, List<PathPos> to, PathPos ignoreThis,
+			boolean fastOut) {
+
+		checkTodoBuffer(grid);
+
+		cleanGrid(grid, accessor);
+		boolean found = false;
+		for (int i = 0; i < to.size(); i++)
+			todoBuffer.add(to.get(i));
+		for (int i = 0; i < from.size(); i++) {
+			if (from.get(i) == null) {
+				System.out.println("HÄ?");
+			}
+			if (!grid.passable(from.get(i).x, from.get(i).y))
+				throw new RuntimeException("FROM " + from.get(i)
+						+ " not passable!");
+		}
+
+		while (todoBuffer.size() > 0) {
+			PathPos current = todoBuffer.first();
+			if (current.x == 0 && current.y == 8) {
+				System.out.println("FOUND");
+			}
+
+			todoBuffer.removeFirst();
+
+			System.out.print(from);
+			System.out.print(":");
+			System.out.println(current);
+			if (from.contains(current)) {
+				found = true;
+				if (fastOut)
+					return found;
+			}
+			if (current.value > 0)
+				if (!grid.passable(current.x, current.y)) {
+					continue;
+				}
+
+			int currentValue = current.value;
+			GridElement currentElement = grid.get(current.tmp());
+			if (currentElement != null) {
+				accessor.write(currentElement, currentValue);
+			} else
+				currentValue = 0;
+			for (PathPos next : current.next()) {
+				if (next.x == 0 && next.y == 8) {
+					System.out.println("FOUND");
+				}
+				if (next.equals(ignoreThis))
+					continue;
+				GridElement ge = grid.get(next.tmp());
+				if (ge != null) {
+
+					if (accessor.read(ge) < 0) {
+						todoBuffer.add(next);
+					}
+
+				}
+			}
+		}
+		System.out.println("Accessor " + accessor.getClass());
+		grid.print();
+		return found;
+	}
 }

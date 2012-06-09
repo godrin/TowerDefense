@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
+import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.MovingShot;
 import com.cdm.view.elements.units.Unit;
 
@@ -73,9 +74,11 @@ public abstract class EnemyUnit extends Unit {
 	@Override
 	public void setPosition(Position p) {
 		super.setPosition(p);
+		PathPos pp=new PathPos(p);
 		Position endPos = new Position(getLevel().getEnemyEndPosition().get(0),
 				Position.LEVEL_REF);
-		if (p.equals(endPos) || p.x > endPos.x) {
+		if (getLevel().getEnemyEndPosition().contains(pp)
+				|| p.x > endPos.x) {
 			getLevel().enemyReachedEnd(this);
 		}
 	}

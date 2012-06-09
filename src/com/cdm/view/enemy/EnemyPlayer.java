@@ -1,5 +1,7 @@
 package com.cdm.view.enemy;
 
+import java.util.List;
+import java.util.Random;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
@@ -8,6 +10,7 @@ import com.cdm.view.Position;
 import com.cdm.view.elements.EnemyUnits;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.LevelFinishedListener;
+import com.cdm.view.elements.paths.PathPos;
 
 public class EnemyPlayer {
 	private static final int MAX_TRIALS = 50;
@@ -62,8 +65,9 @@ public class EnemyPlayer {
 					defs.remove(def);
 					alreadySent = true;
 					// FIXME: add more than 1 start position
-					Position x = new Position(level.getEnemyStartPosition()
-							.get(0), Position.LEVEL_REF);
+					List<PathPos> pp = level.getEnemyStartPosition();
+					Position x = new Position(pp.get(new Random().nextInt()
+							% pp.size()), Position.LEVEL_REF);
 					EnemyUnit e = EnemyUnits.create(def.type, x, levelNo);
 					level.add(e);
 
