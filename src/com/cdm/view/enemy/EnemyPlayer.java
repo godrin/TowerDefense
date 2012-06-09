@@ -30,6 +30,7 @@ public class EnemyPlayer {
 	private boolean alreadySent = false;
 	private Integer maxLevel = 20;
 	private LevelFinishedListener levelFinishedListener;
+	private Random random = new Random();
 
 	public EnemyPlayer(LevelFinishedListener pFinishedListener) {
 		levelFinishedListener = pFinishedListener;
@@ -66,8 +67,10 @@ public class EnemyPlayer {
 					alreadySent = true;
 					// FIXME: add more than 1 start position
 					List<PathPos> pp = level.getEnemyStartPosition();
-					Position x = new Position(pp.get(new Random().nextInt()
-							% pp.size()), Position.LEVEL_REF);
+					int nextInt = random.nextInt(pp.size());
+					System.out.println("next" + nextInt);
+					Position x = new Position(pp.get(nextInt),
+							Position.LEVEL_REF);
 					EnemyUnit e = EnemyUnits.create(def.type, x, levelNo);
 					level.add(e);
 
