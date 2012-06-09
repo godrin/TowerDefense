@@ -77,9 +77,14 @@ public class CampaignParser {
 				switch (c) {
 				case 'S':
 					start.add(new PathPos(x, y, 0));
+					g.getElement(x, y).setCellType(CellType.FREE);
 					break;
 				case 'E':
 					end.add(new PathPos(x, y, 0));
+					g.getElement(x, y).setCellType(CellType.FREE);
+					break;
+				case '0':
+					g.getElement(x, y).setCellType(CellType.FREE);
 					break;
 				case 'X':
 					g.getElement(x, y).setCellType(CellType.BLOCK);

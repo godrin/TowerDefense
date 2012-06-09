@@ -22,7 +22,7 @@ public class Grid {
 		private int tempValue;
 		private int distToUnit;
 
-		private CellType cellType = CellType.FREE;
+		private CellType cellType = CellType.EMPTY;
 		int x, y;
 
 		public GridElement(int x, int y) {
