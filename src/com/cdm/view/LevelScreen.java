@@ -14,6 +14,7 @@ import com.cdm.gui.WidgetContainer;
 import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.LevelFinishedListener;
+import com.cdm.view.elements.units.PlayerUnit;
 import com.cdm.view.elements.units.Unit;
 import com.cdm.view.elements.units.Unit.UnitType;
 
@@ -30,6 +31,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private boolean rendering = false;
 	private Position dragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Position oldDragPosition = new Position(0, 0, Position.SCREEN_REF);
+	private Position checkPosition = new Position(0, 0, Position.SCREEN_REF);
+	private PlayerUnit selectedUnit = null;
 
 	private Game game;
 	private Campaign campaign;
@@ -186,15 +189,33 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 				gui.touchDown(x, y, pointer, button);
 				return true;
 			} else {
-				dragging = true;
-				dragPosition.set(x, y, Position.SCREEN_REF);
-				oldDragPosition.set(x, y, Position.SCREEN_REF);
+				// FIXME: check if unit is below
+				checkPosition.set(x, y, Position.SCREEN_REF);
+				Position tmp = checkPosition.to(Position.LEVEL_REF);
+				if (selectedUnit != null)
+					selectedUnit.selected(false);
+				if ((selectedUnit = level.getPlayerUnitAt(tmp)) != null) {
+					System.out.println("PLAYER UNIT FOUND " + selectedUnit);
+					selectedUnit.selected(true);
+				} else {
+
+					dragging = true;
+					dragPosition.set(x, y, Position.SCREEN_REF);
+					oldDragPosition.set(x, y, Position.SCREEN_REF);
+				}
+
 			}
 		}
 		return false;
 	}
 
 	public boolean touchUp(int x, int y, int pointer, int button) {
+		if (selectedUnit != null) {
+
+			// FIXME: check if an upgrade was selected
+			selectedUnit.selected(false);
+			selectedUnit = null;
+		}
 		synchronized (this) {
 
 			dragging = false;
