@@ -6,14 +6,18 @@ import java.io.InputStreamReader;
 import java.io.LineNumberReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
 
 import com.cdm.view.elements.Grid;
 import com.cdm.view.elements.Grid.CellType;
 import com.cdm.view.elements.paths.PathPos;
 
 public class CampaignParser {
-	public static Grid getGrid(int i) {
-		Grid g = null;
+	public static Map<Integer, Grid> getGrids() {
+		Map<Integer, Grid> grids = new TreeMap<Integer, Grid>();
+
+		Integer level = null;
 
 		InputStream is = CampaignParser.class
 				.getResourceAsStream("/com/cdm/view/campaign1.txt");
@@ -29,8 +33,13 @@ public class CampaignParser {
 		try {
 			while ((line = lir.readLine()) != null) {
 				if (line.matches("^=.*")) {
-					found = line.equals("=" + i);
-				} else if (found) {
+					if (gridBuffer.size() > 0 && level != null) {
+						grids.put(level, parseLevel(gridBuffer));
+					}
+					gridBuffer.clear();
+					level = Integer.parseInt(line.substring(1));
+
+				} else {
 					if (line.matches("^#.*")) {
 						// comment - ignore
 					} else {
@@ -42,49 +51,51 @@ public class CampaignParser {
 		} catch (IOException e) {
 		}
 
-		if (gridBuffer.size() > 0) {
-			System.out.println("HOORAY");
-			int h = gridBuffer.size();
-			int w = 0;
-			List<PathPos> start = new ArrayList<PathPos>();
-			List<PathPos> end = new ArrayList<PathPos>();
-			// get size of grid
-			for (String l : gridBuffer) {
-				if (w < l.length())
-					w = l.length();
-			}
-			g = new Grid(w, h);
-			int x, y = h - 1;
-			for (String l : gridBuffer) {
-				for (x = 0; x < l.length(); x++) {
-					char c = l.charAt(x);
-					switch (c) {
-					case 'S':
-						start.add(new PathPos(x, y, 0));
-						break;
-					case 'E':
-						end.add(new PathPos(x, y, 0));
-						break;
-					case 'X':
-						g.getElement(x, y).setCellType(CellType.BLOCK);
-						break;
-					case '.':
-						g.getElement(x, y).setCellType(CellType.EMPTY);
-						break;
-					default:
-						break;
-					}
-				}
-				y--;
-			}
-			// FIXME
-			g.setEndy(end.get(0).y);
-			g.setEndPositions(end);
-			g.setStartPositions(start);
-
+		if (gridBuffer.size() > 0 && level != null) {
+			grids.put(level, parseLevel(gridBuffer));
 		}
 
-		return g;
+		return grids;
 
+	}
+
+	private static Grid parseLevel(List<String> gridBuffer) {
+		System.out.println("PARSING....");
+		int h = gridBuffer.size();
+		int w = 0;
+		List<PathPos> start = new ArrayList<PathPos>();
+		List<PathPos> end = new ArrayList<PathPos>();
+		// get size of grid
+		for (String l : gridBuffer) {
+			if (w < l.length())
+				w = l.length();
+		}
+		Grid g = new Grid(w, h);
+		int x, y = h - 1;
+		for (String l : gridBuffer) {
+			for (x = 0; x < l.length(); x++) {
+				char c = l.charAt(x);
+				switch (c) {
+				case 'S':
+					start.add(new PathPos(x, y, 0));
+					break;
+				case 'E':
+					end.add(new PathPos(x, y, 0));
+					break;
+				case 'X':
+					g.getElement(x, y).setCellType(CellType.BLOCK);
+					break;
+				case '.':
+					g.getElement(x, y).setCellType(CellType.EMPTY);
+					break;
+				default:
+					break;
+				}
+			}
+			y--;
+		}
+		g.setEndPositions(end);
+		g.setStartPositions(start);
+		return g;
 	}
 }

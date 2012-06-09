@@ -12,7 +12,6 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.LevelScreen;
 import com.cdm.view.Position;
 import com.cdm.view.Selector;
-import com.cdm.view.elements.Grid.CellType;
 import com.cdm.view.elements.Grid.GridElement;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
@@ -44,25 +43,6 @@ public class Level {
 	private GridDrawing gridDrawing;
 	private LevelFinishedListener levelFinishedListener;
 
-	public Level(int w, int h, int endY, LevelFinishedListener pfinishedListener) {
-		grid = new Grid(w, h);
-		grid.setEndy(endY);
-
-		grid.getElement(2, 4).setCellType(CellType.BLOCK);
-		grid.getElement(3, 4).setCellType(CellType.EMPTY);
-
-		Position.LEVEL_REF.setWidth(grid.getW());
-		Position.LEVEL_REF.setHeight(grid.getH());
-
-		levelFinishedListener = pfinishedListener;
-		player = new EnemyPlayer(levelFinishedListener);
-		player.setLevel(this);
-		gridDrawing = new GridDrawing(grid);
-
-		PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
-				getEnemyStartPosition(), getEnemyEndPosition(), null, false);
-		displayEffects.add(new ZoomInEffect(this));
-	}
 
 	public Level(Grid grid2, LevelScreen pfinishedListener) {
 

@@ -5,7 +5,6 @@ import java.util.Random;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import com.cdm.view.CoordSystem;
 import com.cdm.view.Position;
 import com.cdm.view.elements.EnemyUnits;
 import com.cdm.view.elements.Level;

@@ -9,9 +9,6 @@ import com.cdm.view.LevelScreen;
 import com.cdm.view.MenuScreen;
 import com.cdm.view.Screen;
 import com.cdm.view.SoundScreen;
-import com.cdm.view.elements.Level;
-import com.cdm.view.elements.LevelFinishedListener;
-import com.cdm.view.enemy.EnemyPlayer;
 
 public class TowerGame implements ApplicationListener, Game {
 	private static final long serialVersionUID = 1L;

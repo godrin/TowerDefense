@@ -16,7 +16,6 @@ import com.cdm.view.elements.Level;
 import com.cdm.view.elements.LevelFinishedListener;
 import com.cdm.view.elements.units.Unit;
 import com.cdm.view.elements.units.Unit.UnitType;
-import com.cdm.view.enemy.EnemyPlayer;
 
 public class LevelScreen extends Screen implements IUnitTypeSelected,
 		IButtonPressed, LevelFinishedListener {

@@ -140,17 +140,8 @@ public class Grid {
 
 	private GridElement[] cells;
 	private int w, h;
-	private int endy;
 	private List<PathPos> startPositions;
 	private List<PathPos> endPositions;
-
-	public int getEndy() {
-		return endy;
-	}
-
-	public void setEndy(int endy) {
-		this.endy = endy;
-	}
 
 	public Grid(int w2, int h2) {
 		w = w2;
@@ -174,10 +165,6 @@ public class Grid {
 		if (x >= 0 && y >= 0 && x < w && y < h)
 			return cells[x + y * w];
 		return null;
-	}
-
-	public boolean isEndPlace(int x, int y) {
-		return (x == w - 1 && y == endy);
 	}
 
 	public boolean passable(int x, int y) {
