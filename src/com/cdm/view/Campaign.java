@@ -9,16 +9,22 @@ public class Campaign {
 
 	public Level getNextLevel(LevelScreen screen) {
 
+		
 		levelNo += 1;
 		Level level = null;
+		int plevel = levelNo;
 		if (false) {
 			if (levelNo == 1)
 				level = new Level(20, 10, 5, screen);
 			else
 				level = new Level(50, 5, 2, screen);
 		} else {
-			int w = 20, h = 5, endY = 2;
-			Grid grid = CampaignParser.getGrid(2);
+			int w = 30, h = 7, endY = 2;
+			if ( levelNo <=4){
+			plevel = levelNo; 
+			}
+			else {plevel = 4;}
+			Grid grid = CampaignParser.getGrid(plevel);
 			/*
 			Grid grid = new Grid(w, h);
 			grid.setEndy(endY);
