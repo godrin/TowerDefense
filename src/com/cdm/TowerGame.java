@@ -26,7 +26,7 @@ public class TowerGame implements ApplicationListener, Game {
 	public void create() {
 		running = true;
 
-		Campaign c = new Campaign();
+		Campaign c = new Campaign("/com/cdm/view/campaign1.txt");
 		levelScreen = new LevelScreen(this, c);
 		optionsScreen = new SoundScreen(this);
 		setScreen(menuScreen = new MenuScreen(this));

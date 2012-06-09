@@ -14,13 +14,13 @@ import com.cdm.view.elements.Grid.CellType;
 import com.cdm.view.elements.paths.PathPos;
 
 public class CampaignParser {
-	public static Map<Integer, Grid> getGrids() {
+	public static Map<Integer, Grid> getGrids(String campaignFile) {
 		Map<Integer, Grid> grids = new TreeMap<Integer, Grid>();
 
 		Integer level = null;
 
 		InputStream is = CampaignParser.class
-				.getResourceAsStream("/com/cdm/view/campaign1.txt");
+				.getResourceAsStream(campaignFile);
 
 		InputStreamReader isr = new InputStreamReader(is);
 
@@ -29,7 +29,6 @@ public class CampaignParser {
 
 		List<String> gridBuffer = new ArrayList<String>();
 
-		boolean found = false;
 		try {
 			while ((line = lir.readLine()) != null) {
 				if (line.matches("^=.*")) {
@@ -42,7 +41,7 @@ public class CampaignParser {
 				} else {
 					if (line.matches("^#.*")) {
 						// comment - ignore
-					} else {
+					} else if(line.length()>0){
 						gridBuffer.add(line);
 					}
 				}

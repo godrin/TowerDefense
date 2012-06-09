@@ -10,9 +10,9 @@ public class Campaign {
 	private int levelNo = 0;
 	private List<Grid> levels;
 
-	public Campaign() {
+	public Campaign(String campaignFile) {
 		levels = new ArrayList<Grid>();
-		levels.addAll(CampaignParser.getGrids().values());
+		levels.addAll(CampaignParser.getGrids(campaignFile).values());
 	}
 
 	public Level getNextLevel(LevelScreen screen) {
