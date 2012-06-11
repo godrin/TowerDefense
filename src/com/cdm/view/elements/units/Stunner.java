@@ -45,7 +45,7 @@ public class Stunner extends RotatingUnit implements Element {
 			}
 
 			lines = new ArrayList<Vector3>();
-			
+
 			lines.add(q0);
 			lines.add(q1);
 			lines.add(q1);

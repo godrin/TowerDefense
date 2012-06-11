@@ -20,7 +20,7 @@ public class SingleBox implements Element {
 	public SingleBox() {
 		if (lines.size() == 0) {
 			float res = 4;
-			Vector3 s = new Vector3(-0.5f, -0.5f, 0);
+			Vector3 s = new Vector3(0.5f, -0.5f, 0);
 
 			for (int x = 0; x < res; x++) {
 				lines.add(new Vector3(x / res, 0, 0).sub(s));

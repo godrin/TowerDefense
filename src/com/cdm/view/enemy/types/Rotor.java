@@ -10,6 +10,7 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.enemy.AirMovingEnemy;
+//import com.cdm.view.enemy.AirMovingEnemy2;
 
 public class Rotor extends AirMovingEnemy {
 

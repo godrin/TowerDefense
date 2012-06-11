@@ -83,7 +83,7 @@ public class PolySprite {
 
 	public void fillCircle(float x, float y, float r, Color c, int segments) {
 		float step = 3.1415f * 2 / segments;
-		for (float a = 0.0f; a < 2 * 3.1415f; a += step) {
+		for (float a = 0.0f; a < 2 * 3.1415f-0.001f; a += step) {
 			Vector3 v0 = new Vector3(x + (float) Math.sin(a) * r, y
 					+ (float) Math.cos(a) * r, 0);
 			Vector3 v1 = new Vector3(x + (float) Math.sin(a + step) * r, y
@@ -92,6 +92,19 @@ public class PolySprite {
 			addVertex(v0, c);
 			addVertex(v1, c);
 			addVertex(v2, c);
+		}
+	}
+	public void fillCircle(float x, float y, float r, Color c,Color middleColor, int segments) {
+		float step = 3.1415f * 2 / segments;
+		for (float a = 0.0f; a < 2 * 3.1415f-0.001f; a += step) {
+			Vector3 v0 = new Vector3(x + (float) Math.sin(a) * r, y
+					+ (float) Math.cos(a) * r, 0);
+			Vector3 v1 = new Vector3(x + (float) Math.sin(a + step) * r, y
+					+ (float) Math.cos(a + step) * r, 0);
+			Vector3 v2 = new Vector3(x, y, 0);
+			addVertex(v0, c);
+			addVertex(v1, c);
+			addVertex(v2, middleColor);
 		}
 	}
 

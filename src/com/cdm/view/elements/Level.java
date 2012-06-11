@@ -2,6 +2,7 @@ package com.cdm.view.elements;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -12,7 +13,6 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.LevelScreen;
 import com.cdm.view.Position;
 import com.cdm.view.Selector;
-import com.cdm.view.elements.Grid.CellType;
 import com.cdm.view.elements.Grid.GridElement;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
@@ -43,14 +43,11 @@ public class Level {
 	private List<DisplayEffect> displayEffectsToAdd = new ArrayList<DisplayEffect>();
 	private GridDrawing gridDrawing;
 	private LevelFinishedListener levelFinishedListener;
+	private Random random = new Random();
 
-	public Level(int w, int h, int endY, LevelFinishedListener pfinishedListener) {
-		grid = new Grid(w, h);
-		grid.setEndy(endY);
+	public Level(Grid pGrid, LevelScreen pfinishedListener) {
 
-		grid.getElement(2, 4).setCellType(CellType.BLOCK);
-		grid.getElement(3, 4).setCellType(CellType.EMPTY);
-
+		grid = pGrid;
 		Position.LEVEL_REF.setWidth(grid.getW());
 		Position.LEVEL_REF.setHeight(grid.getH());
 
@@ -60,25 +57,7 @@ public class Level {
 		gridDrawing = new GridDrawing(grid);
 
 		PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
-				getEnemyStartPosition().get(0), getEnemyEndPosition().get(0),
-				null, false);
-		displayEffects.add(new ZoomInEffect(this));
-	}
-
-	public Level(Grid grid2, LevelScreen pfinishedListener) {
-
-		grid = grid2;
-		Position.LEVEL_REF.setWidth(grid.getW());
-		Position.LEVEL_REF.setHeight(grid.getH());
-
-		levelFinishedListener = pfinishedListener;
-		player = new EnemyPlayer(levelFinishedListener);
-		player.setLevel(this);
-		gridDrawing = new GridDrawing(grid);
-
-		PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
-				getEnemyStartPosition().get(0), getEnemyEndPosition().get(0),
-				null, false);
+				getEnemyStartPosition(), getEnemyEndPosition(), null, false);
 		displayEffects.add(new ZoomInEffect(this));
 	}
 
@@ -163,50 +142,46 @@ public class Level {
 
 		Position lpos = dragElement.getPosition().to(Position.LEVEL_REF)
 				.alignedToGrid();
-		if (!(dragElement instanceof EnemyUnit)
-				&& (lpos.x < 0 || lpos.x > grid.getW() - 1 || lpos.y < 0 || lpos.y > grid
-						.getH()))
-			return false;
+		PathPos pathPos = new PathPos(lpos);
 
 		// check if way is still free then
-		if (!(dragElement instanceof EnemyUnit)) {
-			if (!isFreeForNewUnit(lpos))
+		if (dragElement instanceof PlayerUnit) {
+			if (!isFreeForNewUnit(pathPos))
 				return false;
 		}
 
 		GridElement gridElement = grid.get(lpos);
-		if (gridElement!=null) 
-		if (gridElement.isEmpty() || dragElement instanceof EnemyUnit) {
+		if (gridElement != null)
+			if (gridElement.isEmpty() || dragElement instanceof EnemyUnit) {
 
-			dragElement.setLevel(this);
-			dragElement.setPosition(lpos, true);
-			units.add(dragElement);
-			setMoney(getMoney() - dragElement.getCost());
+				dragElement.setLevel(this);
+				dragElement.setPosition(lpos, true);
+				units.add(dragElement);
+				setMoney(getMoney() - dragElement.getCost());
 
-			// FIXME: insert abstract class "PlayerUnit" for all "player units"
-			// - DONE ?
-			if (dragElement instanceof PlayerUnit) {
-				PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
-						getEnemyStartPosition().get(0), getEnemyEndPosition()
-								.get(0), null, false);
-				List<PathPos> playerUnitPositions = new ArrayList<PathPos>();
-				for (Unit unit : units) {
-					if (!(unit instanceof EnemyUnit)) {
-						playerUnitPositions
-								.add(new PathPos(unit.getPosition()));
+				if (dragElement instanceof PlayerUnit) {
+					PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
+							getEnemyStartPosition(), getEnemyEndPosition(),
+							null, false);
+					List<PathPos> playerUnitPositions = new ArrayList<PathPos>();
+					for (Unit unit : units) {
+						if (!(unit instanceof EnemyUnit)) {
+							playerUnitPositions.add(new PathPos(unit
+									.getPosition()));
+						}
 					}
+
+					PathFinder.breadthSearch(grid,
+							PathFinder.UNITDIST_ACCESSOR, (PathPos) null,
+							playerUnitPositions, null, false);
+
 				}
+				grid.print();
 
-				PathFinder.breadthSearch(grid, PathFinder.UNITDIST_ACCESSOR,
-						null, playerUnitPositions, null, false);
-
+				return true;
+			} else {
+				System.out.println("NOT EMPTY!");
 			}
-			grid.print();
-
-			return true;
-		} else {
-			System.out.println("NOT EMPTY!");
-		}
 		return false;
 	}
 
@@ -248,38 +223,30 @@ public class Level {
 		return grid.getEnemyStartPositions();
 	}
 
-	/*
-	 * public PathPos getEnemyStartPositionPlusOne() { return new PathPos(0,
-	 * grid.endY(), -1); }
-	 */
 	public List<PathPos> getEnemyEndPosition() {
 		return grid.getEnemyEndPosition();
-		// return new Position(grid.getW() - 1, grid.endY(),
-		// Position.LEVEL_REF);
 	}
 
-	public boolean isFreeForNewUnit(Position pos) {
-		PathPos from = getEnemyStartPosition().get(0);
-		PathPos to = getEnemyEndPosition().get(0);
+	public boolean isFreeForNewUnit(PathPos pos) {
+		List<PathPos> from = getEnemyStartPosition();
+		List<PathPos> to = getEnemyEndPosition();
 
-		PathPos ignore = new PathPos(pos);
+		if (!grid.isFree(pos))
+			return false;
+
 		return PathFinder.breadthSearch(grid, PathFinder.TMP_ACCESSOR, from,
-				to, ignore, true);
+				to, pos, true);
 	}
 
 	public Position getNextPos(Position alignToGrid) {
-		Position finish = new Position(getEnemyEndPosition().get(0),
-				Position.LEVEL_REF);
 		PathPos from = new PathPos(alignToGrid);
-		PathPos finishPos = new PathPos(finish);
-		finish.y += 4;
 		if (true) {
 			int curVal = 1000;
 			GridElement ge = grid.get(from.tmp());
 			if (ge != null)
 				curVal = ge.getDistToEnd();
 			for (PathPos p : from.next()) {
-				if (finishPos.equals(p))
+				if (grid.getEnemyEndPosition().contains(p))
 					return new Position(p.x, p.y, Position.LEVEL_REF);
 				GridElement nge = grid.get(p.tmp());
 				if (nge != null)
@@ -293,57 +260,29 @@ public class Level {
 
 	public Position getNextStepToUnit(Position pos) {
 
-		if (true) {
-			PathPos current = new PathPos(pos);
-			GridElement ge0 = grid.get(pos);
+		PathPos current = new PathPos(pos);
+		GridElement ge0 = grid.get(pos);
 
-			int curVal = 1000;
-			if (ge0 != null)
-				curVal = ge0.getDistToUnit();
-			if (curVal == 0) {
-				if (getPlayerUnitAt(pos) != null)
-					return new Position(-3, -3, Position.LEVEL_REF);
-				else
-					return new Position(pos.x + 19, pos.y, Position.LEVEL_REF);
-			} else if (curVal == -1) {
-				return new Position(pos.x + 5, pos.y, Position.LEVEL_REF);
-			}
-			for (PathPos neighbor : current.next()) {
-				GridElement ge = grid.get(neighbor.tmp());
-				if (ge != null)
-					if (ge.getDistToUnit() < curVal)
-						return neighbor.tmp();
-
-			}
-			return null;
+		int curVal = 1000;
+		if (ge0 != null)
+			curVal = ge0.getDistToUnit();
+		if (curVal == 0) {
+			if (getPlayerUnitAt(pos) != null)
+				return new Position(-3, -3, Position.LEVEL_REF);
+			else
+				return new Position(pos.x + 19, pos.y, Position.LEVEL_REF);
+		} else if (curVal == -1) {
+			return new Position(pos.x + 5, pos.y, Position.LEVEL_REF);
 		}
-
-		Position finish = new Position(getEnemyEndPosition().get(0),
-				Position.LEVEL_REF);
-
-		PathPos from = new PathPos(pos);
-		PathPos finishPos = new PathPos(finish);
-		finish.y += 4;
-
-		if (true) {
-			GridElement ge = grid.get(from.tmp());
-
-			int curVal = 1000;
+		for (PathPos neighbor : current.next()) {
+			GridElement ge = grid.get(neighbor.tmp());
 			if (ge != null)
-				curVal = ge.getDistToUnit();
-			for (PathPos p : from.next()) {
-				if (finishPos.equals(p))
-					return new Position(p.x, p.y, Position.LEVEL_REF);
-				GridElement nge = grid.get(p.tmp());
-				if (nge != null)
-					if (nge.getDistToUnit() < curVal
-							&& nge.getDistToUnit() >= 0)
-						return new Position(p.x, p.y, Position.LEVEL_REF);
-					else if (curVal == 0)
-						return new Position(0, 0, Position.LEVEL_REF);
-			}
+				if (ge.getDistToUnit() < curVal)
+					return neighbor.tmp();
+
 		}
 		return null;
+
 	}
 
 	public void enemyReachedEnd(EnemyUnit enemyUnit) {
@@ -477,13 +416,20 @@ public class Level {
 			}
 
 		}
-		PathFinder.breadthSearch(grid, PathFinder.UNITDIST_ACCESSOR, null,
-				playerUnitPositions, null, false);
+		PathFinder.breadthSearch(grid, PathFinder.UNITDIST_ACCESSOR,
+				(PathPos) null, playerUnitPositions, null, false);
 	}
 
 	public void remove(Unit unit) {
 		if (units.contains(unit))
 			unitsToRemove.add(unit);
+	}
+
+	public Position getSomeEnemyEndPosition() {
+
+		return new Position(getEnemyEndPosition().get(
+				random.nextInt(getEnemyEndPosition().size())),
+				Position.LEVEL_REF);
 	}
 
 }

@@ -9,7 +9,6 @@ public enum EnemyType {
 	public static EnemyType random() {
 		double r = Math.random();
 
-
 		return EnemyType.values()[((int) (r * 500)) % EnemyType.values().length];
 	}
 

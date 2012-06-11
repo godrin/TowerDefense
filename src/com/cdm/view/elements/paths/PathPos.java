@@ -33,8 +33,14 @@ public class PathPos implements Comparable<PathPos> {
 	}
 
 	public String toString() {
-		return "[" + value + "]";
-		//return "[" + x + "," + y + ";" + value + "]";
+		//return "[" + value + "]";
+		return "[" + x + "," + y + ";" + value + "]";
+	}
+	public boolean equals(Object p) {
+		if(p instanceof PathPos) {
+			return equals((PathPos)p);
+		}
+		return false;
 	}
 
 	public boolean equals(PathPos p) {

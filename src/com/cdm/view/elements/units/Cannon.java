@@ -59,6 +59,7 @@ public class Cannon extends RotatingUnit implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
+		super.draw(renderer);
 		innerColor.b = 0.6f - hot;
 		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
 				getSize());
@@ -79,8 +80,9 @@ public class Cannon extends RotatingUnit implements Element {
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
 				getLevel().addShot(
-						new SimpleShot(startingPos, anticipatePosition(startingPos,enemy,
-								SimpleShot.SPEED), getLevel()));
+						new SimpleShot(startingPos, anticipatePosition(
+								startingPos, enemy, SimpleShot.SPEED),
+								getLevel()));
 				SoundFX.play(Type.SHOT2);
 				hot += HOT_PER_SHOT;
 				if (hot > TOO_HOT)

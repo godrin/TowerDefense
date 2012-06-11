@@ -7,7 +7,6 @@ import com.cdm.view.elements.MathTools;
 import com.cdm.view.elements.RotatingThing;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.units.PlayerUnit;
-import com.cdm.view.elements.units.Unit;
 
 public abstract class AirMovingEnemy extends EnemyUnit {
 

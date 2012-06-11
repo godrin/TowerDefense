@@ -7,7 +7,8 @@ import com.cdm.view.elements.RotatingThing;
 
 public abstract class GroundMovingEnemy extends EnemyUnit {
 
-	private static Position invalidPos = new Position(-1, -1, Position.LEVEL_REF);
+	private static Position invalidPos = new Position(-1, -1,
+			Position.LEVEL_REF);
 	private Position nextStep = new Position(invalidPos);
 	public static final float SPEED = 0.2f;
 
@@ -28,8 +29,7 @@ public abstract class GroundMovingEnemy extends EnemyUnit {
 
 		while (time > 0) {
 			if (nextStep.equals(invalidPos)) {
-				nextStep.set(getLevel().getNextPos(
-						getPosition().tmp().alignedToGrid()));
+				nextStep.set(createNextStep());
 			}
 			Position nuPos = new Position(getPosition());
 
@@ -37,7 +37,6 @@ public abstract class GroundMovingEnemy extends EnemyUnit {
 
 			float targetAngle = MathTools.angle(diff);
 			rotation.setTargetAngle(targetAngle);
-
 			time -= rotation.move(time);
 
 			if (time < 0.00001f)
@@ -61,6 +60,9 @@ public abstract class GroundMovingEnemy extends EnemyUnit {
 		}
 	}
 
+	protected Position createNextStep() {
+		return getLevel().getNextPos(getPosition().tmp().alignedToGrid());
+	}
 
 	protected float getAngle() {
 		return rotation.getCurrentAngle();
@@ -75,7 +77,6 @@ public abstract class GroundMovingEnemy extends EnemyUnit {
 		rotation.setTurningSpeed(speed);
 	}
 
-	
 	@Override
 	public Vector3 getMovingDirection() {
 		if (nextStep != null)
