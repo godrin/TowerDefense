@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.Position;
 import com.cdm.view.elements.MathTools;
 import com.cdm.view.elements.RotatingThing;
+import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.units.PlayerUnit;
 import com.cdm.view.elements.units.Unit;
 
@@ -20,7 +21,7 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 	private Vector3 diff = new Vector3();
 	private Vector3 movingDir = new Vector3();
 	private RotatingThing rotation = new RotatingThing();
-
+	private Position endx = new Position(invalidPos);
 	public AirMovingEnemy(Position pos) {
 		super(pos);
 	}
