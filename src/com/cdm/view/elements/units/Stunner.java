@@ -68,6 +68,7 @@ public class Stunner extends RotatingUnit implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
+		super.draw(renderer);
 		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
 				getSize());
 		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,

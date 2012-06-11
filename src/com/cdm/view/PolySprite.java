@@ -65,6 +65,13 @@ public class PolySprite {
 		addVertex(c, color);
 		addVertex(d, color);
 	}
+	
+	public void makeThickRectangle(float d,float x,float y, float w, float h, Color color) {
+		fillRectangle(x, y, w, d, color);
+		fillRectangle(x+w-d, y, d, h, color);
+		fillRectangle(x, y, d, h, color);
+		fillRectangle(x, y+h-d, w, d, color);
+	}
 
 	public void makeRectangle(float x, float y, float w, float h, Color color) {
 		Vector3 a = new Vector3(x, y, 0);

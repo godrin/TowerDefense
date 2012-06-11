@@ -51,6 +51,10 @@ public abstract class EnemyUnit extends Unit {
 		drawEnergyBar(renderer);
 	}
 
+	public void drawAfter(IRenderer renderer) {
+
+	}
+
 	public void drawEnergyBar(IRenderer renderer) {
 		float pad = 0.05f;
 		float height = 0.1f;
@@ -74,11 +78,10 @@ public abstract class EnemyUnit extends Unit {
 	@Override
 	public void setPosition(Position p) {
 		super.setPosition(p);
-		PathPos pp=new PathPos(p);
+		PathPos pp = new PathPos(p);
 		Position endPos = new Position(getLevel().getEnemyEndPosition().get(0),
 				Position.LEVEL_REF);
-		if (getLevel().getEnemyEndPosition().contains(pp)
-				|| p.x > endPos.x) {
+		if (getLevel().getEnemyEndPosition().contains(pp) || p.x > endPos.x) {
 			getLevel().enemyReachedEnd(this);
 		}
 	}

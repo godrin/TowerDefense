@@ -48,6 +48,7 @@ public abstract class Unit implements Element {
 	public abstract void move(float time);
 
 	public abstract void draw(IRenderer renderer);
+	public abstract void drawAfter(IRenderer renderer);
 
 	@Override
 	public void setPosition(Position p) {

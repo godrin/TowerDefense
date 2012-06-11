@@ -64,4 +64,10 @@ public class SingleBox implements Element {
 		return arg0.hashCode() - this.hashCode();
 	}
 
+	@Override
+	public void drawAfter(IRenderer renderer) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
