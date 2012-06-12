@@ -15,6 +15,7 @@ public abstract class PlayerUnit extends Unit {
 	private static PolySprite speed = null;
 	private static PolySprite shots = null;
 	private static PolySprite distance = null;
+	private static PolySprite highlight = null;
 	private Position tmpPos = new Position(0, 0, Position.LEVEL_REF);
 
 	public PlayerUnit(Position p) {
@@ -29,38 +30,48 @@ public abstract class PlayerUnit extends Unit {
 					.read("/com/cdm/view/elements/units/shots.sprite");
 			distance = SpriteReader
 					.read("/com/cdm/view/elements/units/distance.sprite");
+			highlight = SpriteReader
+					.read("/com/cdm/view/elements/units/highlight.sprite");
 		}
 
 		circle = new PolySprite();
-		circle.fillCircle(0, 0, 4 * 2, new Color(0, 0, 1, 0.3f), new Color(0,
+		circle.fillCircle(0, 0, 1 , new Color(0, 0, 1, 0.3f), new Color(0,
 				0, 0, 0), 32);
 		circle.init();
 	}
 
 	public void draw(IRenderer renderer) {
 		if (selected) {
-			renderer.render(circle, getPosition(), getSize(), 0.0f,
+			renderer.render(circle, getPosition(), getMaxDist(), 0.0f,
 					GL10.GL_TRIANGLES);
 		}
 	}
 
 	public void drawAfter(IRenderer renderer) {
-		if (selected) {
-			tmpPos.set(getPosition().x - 1.25f, getPosition().y - 0.25f,
+		if (selected && false) {
+			tmpPos.set(getPosition().x - 1f, getPosition().y,
 					Position.LEVEL_REF);
+
 			renderer.render(power, tmpPos, getSize(), 0.0f, GL10.GL_TRIANGLES);
-			tmpPos.set(getPosition().x + 0.75f, getPosition().y - 0.25f,
+			tmpPos.set(getPosition().x + 1f, getPosition().y,
 					Position.LEVEL_REF);
 			renderer.render(speed, tmpPos, getSize(), 0.0f, GL10.GL_LINES);
-			
-			tmpPos.set(getPosition().x - 0.25f, getPosition().y - 1.25f,
+
+			tmpPos.set(getPosition().x, getPosition().y - 1f,
 					Position.LEVEL_REF);
 			renderer.render(shots, tmpPos, getSize(), 0.0f, GL10.GL_LINES);
-			tmpPos.set(getPosition().x -0.25f, getPosition().y + 0.75f,
+			tmpPos.set(getPosition().x, getPosition().y + 1f,
 					Position.LEVEL_REF);
 			renderer.render(distance, tmpPos, getSize(), 0.0f, GL10.GL_LINES);
+
+			tmpPos.set(getPosition().x, getPosition().y - 1, Position.LEVEL_REF);
+			renderer.render(highlight, tmpPos, getSize(), 0.0f,
+					GL10.GL_TRIANGLES);
+
 		}
 	}
+
+	protected abstract float getMaxDist();
 
 	public void selected(boolean b) {
 		selected = b;

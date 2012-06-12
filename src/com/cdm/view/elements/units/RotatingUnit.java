@@ -19,7 +19,6 @@ public abstract class RotatingUnit extends PlayerUnit {
 
 	protected abstract EnemyUnit getEnemy();
 
-	protected abstract float getMaxDist();
 
 	@Override
 	public void move(float time) {
