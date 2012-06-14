@@ -211,7 +211,9 @@ public class Grid {
 	}
 
 	public boolean isFree(PathPos p) {
+		if (getElement(p) != null)
 		return getElement(p).isFree() && !getEnemyEndPosition().contains(p);
+		else return false;
 	}
 
 	private GridElement getElement(PathPos p) {

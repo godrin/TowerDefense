@@ -18,8 +18,8 @@ public class SoundFX {
 	private static Map<Type, Sound> sounds = new TreeMap<Type, Sound>();
 
 	public static void Initialize() {
-		sounds.put(Type.KLICK,
-				Gdx.audio.newSound(Gdx.files.internal("data/klick01.ogg")));
+		//sounds.put(Type.KLICK,
+			//	Gdx.audio.newSound(Gdx.files.internal("data/klick01.ogg")));
 		sounds.put(Type.SHOT,
 				Gdx.audio.newSound(Gdx.files.internal("data/shot01.ogg")));
 		sounds.put(Type.SHOT2,

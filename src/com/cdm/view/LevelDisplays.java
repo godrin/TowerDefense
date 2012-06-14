@@ -68,19 +68,14 @@ public class LevelDisplays {
 			renderer.drawText(235, 200, "click to go back to menu", moneyColor);
 		}
 		if (level.getBonus() >= 100 && level.getBonus() <= 102) {
-			Renderer.font.setScale(2f);
-			renderer.drawText(350, 300, "1 up!", color);
-			Renderer.font.setScale(1f);
+			renderer.drawText(350, 300, "1 up!", color,2);
 		}
 		if (level.getBonus() >= 250 && level.getBonus() <= 252) {
-			Renderer.font.setScale(2f);
-			renderer.drawText(350, 300, "1 up!", color);
-			Renderer.font.setScale(1f);
+			renderer.drawText(350, 300, "1 up!", color,2);
 		}
 		if (level.getBonus() >= 500 && level.getBonus() <= 502) {
-			Renderer.font.setScale(2f);
-			renderer.drawText(350, 300, "1 up!", color);
-			Renderer.font.setScale(1f);
+			renderer.drawText(350, 300, "1 up!", color,2);
+			
 		}
 	}
 }

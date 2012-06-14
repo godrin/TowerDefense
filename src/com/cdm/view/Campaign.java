@@ -31,6 +31,7 @@ public class Campaign {
 	public void restart() {
 		levelNo = 0;
 	}
+	
 
 	public int getLevelNo() {
 		return levelNo;

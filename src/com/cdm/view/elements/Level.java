@@ -230,7 +230,7 @@ public class Level {
 	public boolean isFreeForNewUnit(PathPos pos) {
 		List<PathPos> from = getEnemyStartPosition();
 		List<PathPos> to = getEnemyEndPosition();
-
+	
 		if (!grid.isFree(pos))
 			return false;
 
