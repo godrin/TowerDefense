@@ -165,4 +165,10 @@ public class BackgroundElement implements Element {
 		this.rotatingSpeed = rotatingSpeed;
 	}
 
+	@Override
+	public void drawAfter(IRenderer renderer) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -49,5 +49,11 @@ public class Rocket2 extends MovingShot {
 		return speed;
 	}
 
+	@Override
+	public void drawAfter(IRenderer renderer) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

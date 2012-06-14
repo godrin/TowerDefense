@@ -121,6 +121,11 @@ public class Level {
 						unit.draw(renderer);
 			}
 		}
+		for (Unit unit : units) {
+			if (unit != null)
+				unit.drawAfter(renderer);
+		}
+
 		for (DisplayEffect shot : displayEffects) {
 			shot.draw(renderer);
 		}

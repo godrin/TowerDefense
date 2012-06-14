@@ -52,4 +52,10 @@ public class RocketShot extends MovingShot {
 		return 5;
 	}
 
+	@Override
+	public void drawAfter(IRenderer renderer) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

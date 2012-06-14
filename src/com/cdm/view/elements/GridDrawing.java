@@ -39,6 +39,9 @@ public class GridDrawing {
 		for (Element e : es) {
 			e.draw(renderer);
 		}
+		for (Element e : es) {
+			e.drawAfter(renderer);
+		}
 	}
 
 	public void move(float time) {

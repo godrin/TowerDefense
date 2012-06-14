@@ -49,7 +49,7 @@ public class RocketLauncher extends RotatingUnit implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
-
+		super.draw(renderer);
 		renderer.render(sprite, getPosition(), getSize(), getAngle(),
 				GL10.GL_TRIANGLES);
 
