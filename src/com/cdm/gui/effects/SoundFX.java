@@ -11,15 +11,17 @@ public class SoundFX {
 
 	public enum Type {
 
-		KLICK, SHOT, SHOT2, HIT, HURT,STUNRAY, LOOSE, WIN
+		KLICK, SHOT, SHOT2, HIT, HIT2, HURT, STUNRAY, LOOSE, WIN
 
 	};
 
 	private static Map<Type, Sound> sounds = new TreeMap<Type, Sound>();
 
 	public static void Initialize() {
-		//sounds.put(Type.KLICK,
-			//	Gdx.audio.newSound(Gdx.files.internal("data/klick01.ogg")));
+		 sounds.put(Type.KLICK,
+				 Gdx.audio.newSound(Gdx.files.internal("data/klick01.ogg")));
+		sounds.put(Type.HIT2,
+				Gdx.audio.newSound(Gdx.files.internal("data/hit.ogg")));
 		sounds.put(Type.SHOT,
 				Gdx.audio.newSound(Gdx.files.internal("data/shot01.ogg")));
 		sounds.put(Type.SHOT2,
@@ -31,9 +33,11 @@ public class SoundFX {
 		sounds.put(Type.STUNRAY,
 				Gdx.audio.newSound(Gdx.files.internal("data/stunray01.ogg")));
 
-		sounds.put(Type.LOOSE, Gdx.audio.newSound(Gdx.files.internal("data/loose.ogg")));
-		sounds.put(Type.WIN, Gdx.audio.newSound(Gdx.files.internal("data/bonus.ogg")));
-		
+		sounds.put(Type.LOOSE,
+				Gdx.audio.newSound(Gdx.files.internal("data/loose.ogg")));
+		sounds.put(Type.WIN,
+				Gdx.audio.newSound(Gdx.files.internal("data/bonus.ogg")));
+
 	}
 
 	public static void dispose() {
