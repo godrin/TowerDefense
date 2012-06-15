@@ -331,7 +331,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	// "towergame"
 	public void restart() {
 		game.setScreen(Screen.MENU_SCREEN);
-		
 		campaign.restart();
 		
 		setLevel(campaign.getNextLevel(this));

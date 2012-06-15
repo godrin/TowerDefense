@@ -313,16 +313,16 @@ public class Level {
 		money += enemyUnit.getMoney();
 		points += enemyUnit.getPoints();
 		bonus += enemyUnit.getBonus();
-		if (bonus == 100) {
+		if (bonus == 50) {
 			health += 1;
 			SoundFX.play(Type.WIN);
 
 		}
-		if (bonus == 250) {
+		if (bonus == 75) {
 			health += 1;
 			SoundFX.play(Type.WIN);
 		}
-		if (bonus == 500) {
+		if (bonus == 100) {
 			health += 1;
 			SoundFX.play(Type.WIN);
 		}

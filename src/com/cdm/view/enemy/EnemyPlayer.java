@@ -27,7 +27,7 @@ public class EnemyPlayer {
 	private float timeInWave = 0.0f;
 	private SortedSet<EnemyDef> defs = new TreeSet<EnemyDef>();
 	private boolean alreadySent = false;
-	private Integer maxLevel = 20;
+	private Integer maxLevel = 26;
 	private LevelFinishedListener levelFinishedListener;
 	private Random random = new Random();
 
