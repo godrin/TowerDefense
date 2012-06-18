@@ -7,7 +7,7 @@ import com.cdm.view.elements.Grid;
 import com.cdm.view.elements.Level;
 
 public class Campaign {
-	private int levelNo = 0;
+	private int levelNo = 6;
 	private List<Grid> levels;
 
 	public Campaign(String campaignFile) {
