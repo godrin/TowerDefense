@@ -23,8 +23,8 @@ public class AnimText extends Widget {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		time = time % texts.size();
-		float i = time * 0.3f;
+		float i = time * 0.7f;
+		i = i % texts.size();
 		int t = (int) i;
 		float delta = i - t - 0.5f;
 		float size = 0;
