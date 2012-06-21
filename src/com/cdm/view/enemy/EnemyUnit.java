@@ -2,6 +2,8 @@ package com.cdm.view.enemy;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
+import com.cdm.gui.effects.SoundFX;
+import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.paths.PathPos;
@@ -88,6 +90,7 @@ public abstract class EnemyUnit extends Unit {
 
 	public void wasHitBy(MovingShot shot) {
 		getShakingLines().shake();
+		SoundFX.play(Type.HIT2);
 		Class<? extends MovingShot> type = shot.getClass();
 		float impact = getImpact(type, shot.getImpact());
 		// FIXME: randomize impact

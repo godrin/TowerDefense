@@ -130,6 +130,8 @@ public class Cannon extends RotatingUnit implements Element {
 
 	@Override
 	protected void setValue(String key, Float value) {
+
+		System.out.println("SETVALUE    " + key + "  " + value);
 		if ("distance".equals(key))
 			maxDist = value;
 		else if ("frequency".equals(key))

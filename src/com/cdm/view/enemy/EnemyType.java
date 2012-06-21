@@ -30,7 +30,7 @@ public enum EnemyType {
 			s = 2.5f;
 			break;
 		case ROCKET:
-			s = 20.5f;
+			s = 25.5f;
 			break;
 		case TRUCK:
 			s = 10.5f;

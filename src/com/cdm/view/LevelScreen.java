@@ -209,6 +209,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 						System.out.println("PLAYER UNIT FOUND " + selectedUnit);
 						upgradeView.setPosition(selectedUnit.getPosition());
 						upgradeView.setVisible(true);
+						upgradeView.setTargetUnit(selectedUnit);
+
 						selectedUnit.selected(true);
 					}
 				}
@@ -334,7 +336,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	// "towergame"
 	public void restart() {
 		game.setScreen(Screen.MENU_SCREEN);
-
 		campaign.restart();
 
 		setLevel(campaign.getNextLevel(this));
