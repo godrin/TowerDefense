@@ -34,7 +34,7 @@ public class Cannon extends RotatingUnit implements Element {
 	private double startingRadius = 0.4f;
 	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
 	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
-	private int impact = 1;
+	private float impact = 1;
 
 	public Cannon(Position p) {
 		super(p);
@@ -138,8 +138,8 @@ public class Cannon extends RotatingUnit implements Element {
 			shotFrequency = value;
 		else if ("coolingSpeed".equals(key))
 			coolingSpeed = value;
-		else if ("impact".equals(key))
-			impact = value.intValue();
+		else if ("power".equals(key))
+			impact = value;
 	}
 
 }

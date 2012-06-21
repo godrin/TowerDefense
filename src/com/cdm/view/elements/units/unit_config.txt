@@ -5,7 +5,7 @@ shot=0.5:2
 power=0.3:2
 ==2
 distance=5:2
-shot=1:2
+shot=.3:2
 power=0.5:2
 =Stunner
 ==1

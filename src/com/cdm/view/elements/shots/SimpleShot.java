@@ -14,7 +14,7 @@ public class SimpleShot extends MovingShot {
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 
-	public SimpleShot(Position from, Position to, Level plevel, int impact) {
+	public SimpleShot(Position from, Position to, Level plevel, float impact) {
 		super(from, to, plevel, impact);
 		Vector3 a = new Vector3(-0.75f, 0.4f, 0);
 		Vector3 b = new Vector3(0.75f, 0.0f, 0);
