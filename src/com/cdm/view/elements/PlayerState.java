@@ -48,6 +48,8 @@ public class PlayerState {
 	public void reset() {
 		setHealth(3);
 		setMoney(10);
+		setBonus(0);
+		setPoints(0);
 	}
 
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
