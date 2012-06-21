@@ -12,8 +12,9 @@ public class RocketShot extends MovingShot {
 	public static float speed = 1.5f;
 	private PolySprite sprite = null;
 
-	public RocketShot(Position from, Position to, Level plevel) {
-		super(from, to, plevel);
+	// impact was 5
+	public RocketShot(Position from, Position to, Level plevel,int pImpact) {
+		super(from, to, plevel,pImpact);
 		if (sprite == null) {
 			sprite = new PolySprite();
 			sprite.fillRectangle(-0.75f, -0.2f, 1.5f, 0.4f, new Color(0.7f,
@@ -48,9 +49,6 @@ public class RocketShot extends MovingShot {
 		return speed;
 	}
 
-	public float getLevel() {
-		return 5;
-	}
 
 	@Override
 	public void drawAfter(IRenderer renderer) {

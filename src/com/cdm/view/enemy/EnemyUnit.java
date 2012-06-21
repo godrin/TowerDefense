@@ -92,7 +92,7 @@ public abstract class EnemyUnit extends Unit {
 		getShakingLines().shake();
 		SoundFX.play(Type.HIT2);
 		Class<? extends MovingShot> type = shot.getClass();
-		float impact = getImpact(type, shot.getLevel());
+		float impact = getImpact(type, shot.getImpact());
 		// FIXME: randomize impact
 		energy -= impact;
 		if (energy <= 0.0f) {

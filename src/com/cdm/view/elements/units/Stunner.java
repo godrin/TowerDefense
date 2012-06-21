@@ -125,4 +125,12 @@ public class Stunner extends RotatingUnit implements Element {
 		return 0;
 	}
 
+	@Override
+	protected void setValue(String key, Float value) {
+		if ("distance".equals(key))
+			maxDist = value;
+		else if ("frequency".equals(key))
+			shotFrequency = value;
+	}
+
 }

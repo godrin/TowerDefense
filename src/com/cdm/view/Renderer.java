@@ -2,6 +2,8 @@ package com.cdm.view;
 
 import java.util.List;
 
+import javax.xml.bind.JAXBElement.GlobalScope;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -137,6 +139,7 @@ public class Renderer implements IRenderer {
 	}
 
 	public void drawText(int i, int j, String string, Color c, float scale) {
+		Gdx.gl10.glPushMatrix();
 		spriteBatch.begin();
 		font.setScale(scale + 0.001f);
 
@@ -149,6 +152,8 @@ public class Renderer implements IRenderer {
 		// 160 + bounds.height / 2,
 				bounds.width, HAlignment.CENTER);
 		spriteBatch.end();
+
+		Gdx.gl10.glPopMatrix();
 
 	}
 

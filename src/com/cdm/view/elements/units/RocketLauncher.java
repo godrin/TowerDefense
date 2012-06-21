@@ -20,6 +20,7 @@ public class RocketLauncher extends RotatingUnit implements Element {
 	float lastShot = 0.0f;
 	private float maxDist = 4.5f;
 	private double startingRadius = 0.01f;
+	private int impact = 5;
 	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
 	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
 
@@ -95,7 +96,7 @@ public class RocketLauncher extends RotatingUnit implements Element {
 				getLevel().addShot(
 						new RocketShot(startingPos, anticipatePosition(
 								startingPos, enemy, RocketShot.speed),
-								getLevel()));
+								getLevel(), impact));
 				SoundFX.play(Type.SHOT);
 
 			}
@@ -107,4 +108,14 @@ public class RocketLauncher extends RotatingUnit implements Element {
 	public int getZLayer() {
 		return 0;
 	}
+	@Override
+	protected void setValue(String key, Float value) {
+		if ("distance".equals(key))
+			maxDist = value;
+		else if ("frequency".equals(key))
+			shotFrequency = value;
+		else if ("impact".equals(key))
+			impact = value.intValue();
+	}
+
 }

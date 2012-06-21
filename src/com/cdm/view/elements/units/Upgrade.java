@@ -1,17 +1,15 @@
 package com.cdm.view.elements.units;
 
-import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.PolySprite;
 import com.cdm.view.SpriteReader;
 
 public abstract class Upgrade {
+
 	private PolySprite sprite = null;
 
-	public abstract Vector3 menuPos();
-
-	public abstract int upgradeLevel(PlayerUnit u);
-
 	public abstract String spriteFile();
+
+	public abstract String valueName();
 
 	public PolySprite getSprite() {
 		if (sprite == null) {
@@ -21,6 +19,16 @@ public abstract class Upgrade {
 		return sprite;
 	}
 
-	public abstract int viewType();
+	public void upgrade(PlayerUnit selectedUnit) {
+		selectedUnit.incLevel(this);
+	}
+
+	public abstract Integer getCostForNext();
+
+	public abstract Integer getCurrentLevel();
+
+	public abstract Upgrade getNextUprade();
+
+	public abstract Float value();
 
 }

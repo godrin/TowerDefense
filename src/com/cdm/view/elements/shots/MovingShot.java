@@ -19,11 +19,13 @@ public abstract class MovingShot implements Element, DisplayEffect {
 	float angle;
 	private Level level;
 	private Vector3 deltaV = new Vector3();
+	private float impact;
 
-	public MovingShot(Position from, Position to, Level plevel) {
+	public MovingShot(Position from, Position to, Level plevel, float pImpact) {
 		pos = new Position(from);
 		target = new Position(to);
 		level = plevel;
+		impact = pImpact;
 
 		angle = MathTools.angle(from.to(to));
 
@@ -62,9 +64,10 @@ public abstract class MovingShot implements Element, DisplayEffect {
 
 	}
 
-	public float getLevel() {
-		return 1;
+	public float getImpact() {
+		return impact;
 	}
+
 	@Override
 	public int compareTo(Element arg0) {
 		return arg0.hashCode() - this.hashCode();
