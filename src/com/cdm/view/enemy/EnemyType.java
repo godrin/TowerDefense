@@ -10,6 +10,7 @@ public enum EnemyType {
 		double r = Math.random();
 
 		return EnemyType.values()[((int) (r * 500)) % EnemyType.values().length];
+		
 	}
 
 	public float getEnergy(int levelNo) {

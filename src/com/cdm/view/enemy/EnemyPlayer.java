@@ -9,6 +9,7 @@ import com.cdm.view.Position;
 import com.cdm.view.elements.EnemyUnits;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.LevelFinishedListener;
+import com.cdm.view.elements.PlayerState;
 import com.cdm.view.elements.paths.PathPos;
 
 public class EnemyPlayer {
@@ -20,14 +21,14 @@ public class EnemyPlayer {
 	};
 
 	private Mode mode = Mode.WAIT;
-	private int levelNo = 1;
+	private int levelNo = 0;
 	private float enemyStrength = 3.0f;
 	private Level level;
 	private float timeToNextWave = WAITING_TIME;
 	private float timeInWave = 0.0f;
 	private SortedSet<EnemyDef> defs = new TreeSet<EnemyDef>();
 	private boolean alreadySent = false;
-	private Integer maxLevel = 26;
+	private Integer maxLevel = 11;
 	private LevelFinishedListener levelFinishedListener;
 	private Random random = new Random();
 

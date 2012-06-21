@@ -42,10 +42,7 @@ public abstract class AirMovingEnemy extends EnemyUnit {
 				
 				return;
 			}
-
-			if (getPosition().x >= 20) {
-				getLevel().enemyReachedEnd(this);
-			}
+			
 			Position nuPos = new Position(getPosition());
 
 			diff.set(getPosition().to(nextStep));
