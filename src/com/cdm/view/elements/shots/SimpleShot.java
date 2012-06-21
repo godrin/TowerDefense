@@ -14,8 +14,8 @@ public class SimpleShot extends MovingShot {
 	private List<Vector3> lines;
 	private List<Vector3> poly;
 
-	public SimpleShot(Position from, Position to, Level plevel) {
-		super(from, to, plevel);
+	public SimpleShot(Position from, Position to, Level plevel, int impact) {
+		super(from, to, plevel, impact);
 		Vector3 a = new Vector3(-0.75f, 0.4f, 0);
 		Vector3 b = new Vector3(0.75f, 0.0f, 0);
 		Vector3 c = new Vector3(-0.75f, -0.4f, 0);
@@ -41,7 +41,7 @@ public class SimpleShot extends MovingShot {
 	@Override
 	public void drawAfter(IRenderer renderer) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

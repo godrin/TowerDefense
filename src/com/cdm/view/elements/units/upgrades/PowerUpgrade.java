@@ -29,4 +29,9 @@ public class PowerUpgrade extends Upgrade {
 		return GL10.GL_TRIANGLES;
 	}
 
+	@Override
+	public String valueName() {
+		return "power";
+	}
+
 }

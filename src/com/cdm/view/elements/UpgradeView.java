@@ -79,4 +79,10 @@ public class UpgradeView implements Element {
 		}
 	}
 
+	public Upgrade getSelectedUpgrade() {
+		return selectedUpgrade;
+	}
+	
+	
+
 }

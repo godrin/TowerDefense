@@ -16,7 +16,7 @@ import com.cdm.view.enemy.EnemyUnit;
 
 public class Cannon extends RotatingUnit implements Element {
 
-	private static final float COOLING_SPEED = 0.3f;
+	private float coolingSpeed = 0.3f;
 	private static final float HOT_PER_SHOT = 0.4f;
 	private static final float TOO_HOT = 0.6f;
 	private static List<Vector3> lines = null;
@@ -34,6 +34,7 @@ public class Cannon extends RotatingUnit implements Element {
 	private double startingRadius = 0.4f;
 	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
 	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
+	private int impact = 1;
 
 	public Cannon(Position p) {
 		super(p);
@@ -82,7 +83,7 @@ public class Cannon extends RotatingUnit implements Element {
 				getLevel().addShot(
 						new SimpleShot(startingPos, anticipatePosition(
 								startingPos, enemy, SimpleShot.SPEED),
-								getLevel()));
+								getLevel(), impact));
 				SoundFX.play(Type.SHOT2);
 				hot += HOT_PER_SHOT;
 				if (hot > TOO_HOT)
@@ -105,7 +106,7 @@ public class Cannon extends RotatingUnit implements Element {
 	@Override
 	public void move(float time) {
 		super.move(time);
-		hot -= time * COOLING_SPEED;
+		hot -= time * coolingSpeed;
 		if (hot < 0) {
 			hot = 0;
 			mode = Mode.SHOOTING;
@@ -125,6 +126,18 @@ public class Cannon extends RotatingUnit implements Element {
 	@Override
 	public int getZLayer() {
 		return 0;
+	}
+
+	@Override
+	protected void setValue(String key, Float value) {
+		if ("distance".equals(key))
+			maxDist = value;
+		else if ("frequency".equals(key))
+			shotFrequency = value;
+		else if ("coolingSpeed".equals(key))
+			coolingSpeed = value;
+		else if ("impact".equals(key))
+			impact = value.intValue();
 	}
 
 }

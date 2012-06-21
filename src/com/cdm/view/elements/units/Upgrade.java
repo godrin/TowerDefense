@@ -5,6 +5,7 @@ import com.cdm.view.PolySprite;
 import com.cdm.view.SpriteReader;
 
 public abstract class Upgrade {
+
 	private PolySprite sprite = null;
 
 	public abstract Vector3 menuPos();
@@ -12,6 +13,8 @@ public abstract class Upgrade {
 	public abstract int upgradeLevel(PlayerUnit u);
 
 	public abstract String spriteFile();
+
+	public abstract String valueName();
 
 	public PolySprite getSprite() {
 		if (sprite == null) {
@@ -22,5 +25,9 @@ public abstract class Upgrade {
 	}
 
 	public abstract int viewType();
+
+	public void upgrade(PlayerUnit selectedUnit) {
+		selectedUnit.incLevel(this);
+	}
 
 }

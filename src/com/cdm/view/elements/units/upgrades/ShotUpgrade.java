@@ -29,4 +29,9 @@ public class ShotUpgrade extends Upgrade {
 		return GL10.GL_LINES;
 	}
 
+	@Override
+	public String valueName() {
+		return "shot";
+	}
+
 }

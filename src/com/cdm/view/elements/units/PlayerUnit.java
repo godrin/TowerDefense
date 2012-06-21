@@ -1,11 +1,16 @@
 package com.cdm.view.elements.units;
 
+import java.util.List;
+import java.util.Map;
+import java.util.TreeMap;
+
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.cdm.view.IRenderer;
 import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.SpriteReader;
+import com.cdm.view.elements.units.upgrades.UpgradeConfig;
 
 public abstract class PlayerUnit extends Unit {
 
@@ -17,6 +22,7 @@ public abstract class PlayerUnit extends Unit {
 	private static PolySprite distance = null;
 	private static PolySprite highlight = null;
 	private Position tmpPos = new Position(0, 0, Position.LEVEL_REF);
+	private Map<String, Integer> levels = new TreeMap<String, Integer>();
 
 	public PlayerUnit(Position p) {
 		super(p);
@@ -35,9 +41,13 @@ public abstract class PlayerUnit extends Unit {
 		}
 
 		circle = new PolySprite();
-		circle.fillCircle(0, 0, 1 , new Color(0, 0, 1, 0.3f), new Color(0,
-				0, 0, 0), 32);
+		circle.fillCircle(0, 0, 1, new Color(0, 0, 1, 0.3f), new Color(0, 0, 0,
+				0), 32);
 		circle.init();
+	}
+
+	public void init() {
+		loadConfig();
 	}
 
 	public void draw(IRenderer renderer) {
@@ -75,6 +85,41 @@ public abstract class PlayerUnit extends Unit {
 
 	public void selected(boolean b) {
 		selected = b;
+	}
+
+	public void loadConfig() {
+		List<Map<String, Float>> values = UpgradeConfig.getConfig(this
+				.getClass());
+		if (values == null || values.size() == 0) {
+			System.out
+					.println("WARNING: No Config for this " + this.getClass());
+			return;
+		}
+		if (levels.size() == 0) {
+			// load initial config
+			for (String valueName : values.get(0).keySet()) {
+				levels.put(valueName, 0); // set everything to zero
+			}
+		}
+
+		for (Map.Entry<String, Integer> e : levels.entrySet()) {
+			if (e.getValue() < values.size()) {
+				Float val = values.get(e.getValue()).get(e.getKey());
+				if (val != null)
+					setValue(e.getKey(), val);
+			}
+		}
 
 	}
+
+	public void incLevel(Upgrade upgrade) {
+
+		Integer oldLevel = levels.get(upgrade.valueName());
+		if (oldLevel != null) {
+			levels.put(upgrade.valueName(), oldLevel + 1);
+			loadConfig();
+		}
+	}
+
+	protected abstract void setValue(String key, Float value);
 }

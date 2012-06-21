@@ -1,0 +1,6 @@
+=Cannon
+==1
+distance=3
+shot=0.5
+power=0.3
+==2
