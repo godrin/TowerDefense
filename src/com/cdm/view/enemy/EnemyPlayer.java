@@ -9,7 +9,6 @@ import com.cdm.view.Position;
 import com.cdm.view.elements.EnemyUnits;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.LevelFinishedListener;
-import com.cdm.view.elements.PlayerState;
 import com.cdm.view.elements.paths.PathPos;
 
 public class EnemyPlayer {

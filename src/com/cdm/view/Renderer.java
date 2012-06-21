@@ -2,8 +2,6 @@ package com.cdm.view;
 
 import java.util.List;
 
-import javax.xml.bind.JAXBElement.GlobalScope;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;

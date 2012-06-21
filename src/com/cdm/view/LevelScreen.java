@@ -12,7 +12,6 @@ import com.cdm.gui.IUnitTypeSelected;
 import com.cdm.gui.UnitTypeButton;
 import com.cdm.gui.WidgetContainer;
 import com.cdm.view.elements.Elements;
-import com.cdm.view.elements.Grid;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.LevelFinishedListener;
 import com.cdm.view.elements.UpgradeView;
