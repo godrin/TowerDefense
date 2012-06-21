@@ -91,8 +91,8 @@ public class UpgradeView implements Element {
 					Integer level = u.getCurrentLevel();
 					if (level != null) {
 
-						renderer.render(u.getSprite(), tmpPos, 0.5f, 0.0f,
-								GL10.GL_TRIANGLES);
+						renderer.render(u.getSprite(), tmpPos, 0.5f, 0.0f, u
+								.getSprite().getPrimitiveType());
 						if (selectedUpgrade == u) {
 							renderer.render(highlight, tmpPos, 0.5f, 0.0f,
 									GL10.GL_TRIANGLES);
