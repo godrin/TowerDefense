@@ -5,10 +5,12 @@ import java.util.List;
 
 import com.cdm.view.elements.Grid;
 import com.cdm.view.elements.Level;
+import com.cdm.view.elements.PlayerState;
 
 public class Campaign {
 	private int levelNo = 0;
 	private List<Grid> levels;
+	PlayerState playerState = new PlayerState();
 
 	public Campaign(String campaignFile) {
 		levels = new ArrayList<Grid>();
@@ -22,16 +24,15 @@ public class Campaign {
 		if (plevel >= levels.size()) {
 			plevel = levels.size() - 1;
 		}
-
-		level = new Level(levels.get(plevel), screen);
+		level = new Level(new Grid(levels.get(plevel)), screen, playerState);
 		levelNo += 1;
 		return level;
 	}
 
 	public void restart() {
 		levelNo = 0;
+		playerState = new PlayerState();
 	}
-	
 
 	public int getLevelNo() {
 		return levelNo;

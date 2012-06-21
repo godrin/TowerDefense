@@ -31,12 +31,9 @@ public class Level {
 	private Selector selector = null;
 	private EnemyPlayer player;
 	private float speedFactor = 2.0f;
-	private int health = 3;
-	private int money = 10;
-	private int points = 0;
-	private int bonus = 0;
 	private List<Unit> units = new ArrayList<Unit>();
 	private Set<Unit> unitsToRemove = new TreeSet<Unit>();
+	private PlayerState playerState;
 
 	private List<DisplayEffect> displayEffects = new ArrayList<DisplayEffect>();
 	private List<DisplayEffect> displayEffectsToRemove = new ArrayList<DisplayEffect>();
@@ -45,8 +42,8 @@ public class Level {
 	private LevelFinishedListener levelFinishedListener;
 	private Random random = new Random();
 
-	public Level(Grid pGrid, LevelScreen pfinishedListener) {
-
+	public Level(Grid pGrid, LevelScreen pfinishedListener, PlayerState pState) {
+		playerState = pState;
 		grid = pGrid;
 		Position.LEVEL_REF.setWidth(grid.getW());
 		Position.LEVEL_REF.setHeight(grid.getH());
@@ -235,7 +232,7 @@ public class Level {
 	public boolean isFreeForNewUnit(PathPos pos) {
 		List<PathPos> from = getEnemyStartPosition();
 		List<PathPos> to = getEnemyEndPosition();
-	
+
 		if (!grid.isFree(pos))
 			return false;
 
@@ -291,10 +288,7 @@ public class Level {
 	}
 
 	public void enemyReachedEnd(EnemyUnit enemyUnit) {
-		SoundFX.play(Type.HURT);
-		health -= 1;
-		if (health < 1)
-			SoundFX.play(Type.LOOSE);
+		playerState.hurt();
 		shake();
 		// removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		unitsToRemove.add(enemyUnit);
@@ -310,22 +304,7 @@ public class Level {
 		displayEffectsToAdd.add(new Explosion(enemyUnit.getPosition(),
 				enemyUnit.getSize(), this));
 		unitsToRemove.add(enemyUnit);
-		money += enemyUnit.getMoney();
-		points += enemyUnit.getPoints();
-		bonus += enemyUnit.getBonus();
-		if (bonus == 50) {
-			health += 1;
-			SoundFX.play(Type.WIN);
-
-		}
-		if (bonus == 75) {
-			health += 1;
-			SoundFX.play(Type.WIN);
-		}
-		if (bonus == 100) {
-			health += 1;
-			SoundFX.play(Type.WIN);
-		}
+		playerState.enemyDestroyed(enemyUnit);
 	}
 
 	public void removeShot(DisplayEffect shot) {
@@ -377,37 +356,35 @@ public class Level {
 	}
 
 	public int getMoney() {
-		return money;
+		return playerState.getMoney();
 	}
 
 	public void setMoney(int money) {
-		this.money = money;
+		playerState.setMoney(money);
 	}
 
 	public void setHealth(int health) {
-		this.health = health;
+		playerState.setHealth(health);
 	}
 
 	public int getBonus() {
-		return bonus;
+		return playerState.getBonus();
 	}
 
 	public int getPoints() {
-		return points;
+		return playerState.getPoints();
 	}
 
 	public void setBonus(int bonus) {
-		this.bonus = bonus;
+		playerState.setBonus(bonus);
 	}
 
 	public int getHealth() {
-		if (health <= 0)
-			health = 0;
-		return health;
+		return playerState.getHealth();
 	}
 
 	public boolean gameover() {
-		return health < 1;
+		return playerState.gameover();
 	}
 
 	public void unitDestroyed(Position position, Unit unit) {

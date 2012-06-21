@@ -1,5 +1,6 @@
 package com.cdm.view.elements;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
@@ -31,6 +32,16 @@ public class Grid {
 			e = new TreeSet<Element>();
 			distToEnd = -1;
 			distToUnit = -1;
+
+		}
+
+		public GridElement(GridElement gridElement) {
+			this.x = gridElement.x;
+			this.y = gridElement.y;
+			e = new TreeSet<Element>();
+			distToEnd = -1;
+			distToUnit = -1;
+			cellType = gridElement.cellType;
 		}
 
 		public Set<Element> getList() {
@@ -153,6 +164,21 @@ public class Grid {
 				cells[x + y * w] = new GridElement(x, y);
 	}
 
+	public Grid(Grid grid) {
+		w = grid.w;
+		h = grid.h;
+
+		cells = new GridElement[w * h];
+		int x, y;
+		for (x = 0; x < w; x++)
+			for (y = 0; y < h; y++)
+				cells[x + y * w] = new GridElement(grid.cells[x + y * w]);
+		startPositions = new ArrayList<PathPos>();
+		endPositions = new ArrayList<PathPos>();
+		startPositions.addAll(grid.startPositions);
+		endPositions.addAll(grid.endPositions);
+	}
+
 	public int getW() {
 		return w;
 	}
@@ -212,8 +238,9 @@ public class Grid {
 
 	public boolean isFree(PathPos p) {
 		if (getElement(p) != null)
-		return getElement(p).isFree() && !getEnemyEndPosition().contains(p);
-		else return false;
+			return getElement(p).isFree() && !getEnemyEndPosition().contains(p);
+		else
+			return false;
 	}
 
 	private GridElement getElement(PathPos p) {
