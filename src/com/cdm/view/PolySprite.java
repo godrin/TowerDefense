@@ -12,13 +12,22 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 public class PolySprite {
-	Mesh mesh = null;
-	List<Vector3> vs = new ArrayList<Vector3>();
-	List<Color> cs = new ArrayList<Color>();
+	private Mesh mesh = null;
+	private List<Vector3> vs = new ArrayList<Vector3>();
+	private List<Color> cs = new ArrayList<Color>();
+	private int primitiveType;
 
 	public void addVertex(Vector3 v, Color c) {
 		vs.add(v);
 		cs.add(c);
+	}
+
+	public int getPrimitiveType() {
+		return primitiveType;
+	}
+
+	public void setPrimitiveType(int primitiveType) {
+		this.primitiveType = primitiveType;
 	}
 
 	public void init() {
@@ -65,12 +74,13 @@ public class PolySprite {
 		addVertex(c, color);
 		addVertex(d, color);
 	}
-	
-	public void makeThickRectangle(float d,float x,float y, float w, float h, Color color) {
+
+	public void makeThickRectangle(float d, float x, float y, float w, float h,
+			Color color) {
 		fillRectangle(x, y, w, d, color);
-		fillRectangle(x+w-d, y, d, h, color);
+		fillRectangle(x + w - d, y, d, h, color);
 		fillRectangle(x, y, d, h, color);
-		fillRectangle(x, y+h-d, w, d, color);
+		fillRectangle(x, y + h - d, w, d, color);
 	}
 
 	public void makeRectangle(float x, float y, float w, float h, Color color) {
@@ -90,7 +100,7 @@ public class PolySprite {
 
 	public void fillCircle(float x, float y, float r, Color c, int segments) {
 		float step = 3.1415f * 2 / segments;
-		for (float a = 0.0f; a < 2 * 3.1415f-0.001f; a += step) {
+		for (float a = 0.0f; a < 2 * 3.1415f - 0.001f; a += step) {
 			Vector3 v0 = new Vector3(x + (float) Math.sin(a) * r, y
 					+ (float) Math.cos(a) * r, 0);
 			Vector3 v1 = new Vector3(x + (float) Math.sin(a + step) * r, y
@@ -101,9 +111,11 @@ public class PolySprite {
 			addVertex(v2, c);
 		}
 	}
-	public void fillCircle(float x, float y, float r, Color c,Color middleColor, int segments) {
+
+	public void fillCircle(float x, float y, float r, Color c,
+			Color middleColor, int segments) {
 		float step = 3.1415f * 2 / segments;
-		for (float a = 0.0f; a < 2 * 3.1415f-0.001f; a += step) {
+		for (float a = 0.0f; a < 2 * 3.1415f - 0.001f; a += step) {
 			Vector3 v0 = new Vector3(x + (float) Math.sin(a) * r, y
 					+ (float) Math.cos(a) * r, 0);
 			Vector3 v1 = new Vector3(x + (float) Math.sin(a + step) * r, y

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector3;
 
 public class SpriteReader {
@@ -38,6 +39,7 @@ public class SpriteReader {
 							Float.parseFloat(args[2]) + ty,
 							Float.parseFloat(args[3]),
 							Float.parseFloat(args[4]), parseColor(args[5]));
+					sprite.setPrimitiveType(GL10.GL_TRIANGLES);
 				} else if (line.matches("^r:.*$")) {
 					String[] args = line.split(":");
 					sprite.makeThickRectangle(Float.parseFloat(args[1]),
@@ -45,6 +47,7 @@ public class SpriteReader {
 							Float.parseFloat(args[3]) + ty,
 							Float.parseFloat(args[4]),
 							Float.parseFloat(args[5]), parseColor(args[6]));
+					sprite.setPrimitiveType(GL10.GL_TRIANGLES);
 				} else if (line.matches("^l:.*$")) {
 					String[] args = line.split(":");
 					Color c = parseColor(args[5]);
@@ -54,12 +57,14 @@ public class SpriteReader {
 					sprite.addVertex(
 							new Vector3(Float.parseFloat(args[3]) + tx, Float
 									.parseFloat(args[4]) + ty, 0), c);
+					sprite.setPrimitiveType(GL10.GL_LINES);
 				} else if (line.matches("^c:.*$")) {
 					String[] args = line.split(":");
 					sprite.fillCircle(Float.parseFloat(args[2]) + tx,
 							Float.parseFloat(args[3]) + ty,
 							Float.parseFloat(args[1]), parseColor(args[4]),
 							parseColor(args[5]), Integer.parseInt(args[6]));
+					sprite.setPrimitiveType(GL10.GL_TRIANGLES);
 				} else if (line.matches("^t:.*$")) {
 					String[] args = line.split(":");
 					tx = Float.parseFloat(args[1]);
