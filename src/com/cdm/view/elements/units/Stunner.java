@@ -18,7 +18,8 @@ public class Stunner extends RotatingUnit implements Element {
 
 	private static List<Vector3> lines = null;
 	private static List<Vector3> poly = null;
-	float shotFrequency = 2.5f;
+	float coolingTime = 1.0f;
+	float shotLength = 1.5f;
 	float lastShot = 0.0f;
 	float maxDist = 3.0f;
 	DisplayEffect currentShot = null;
@@ -78,12 +79,12 @@ public class Stunner extends RotatingUnit implements Element {
 	void shoot(EnemyUnit enemy) {
 		if (enemy != null) {
 
-			if (lastShot > shotFrequency) {
+			if (lastShot > coolingTime + shotLength) {
 				lastShot = 0.0f;
 				Position startingPos = new Position(getPosition());
 
 				getLevel().addShot(
-						currentShot = new StunRay(1.5f, startingPos,
+						currentShot = new StunRay(shotLength, startingPos,
 								getLevel(), enemy));
 				SoundFX.play(Type.STUNRAY);
 
@@ -129,8 +130,12 @@ public class Stunner extends RotatingUnit implements Element {
 	protected void setValue(String key, Float value) {
 		if ("distance".equals(key))
 			maxDist = value;
-		else if ("frequency".equals(key))
-			shotFrequency = value;
+		else if ("shot".equals(key))
+			shotLength = value;
+		else if ("cooling".equals(key))
+			coolingTime = value;
+		else if ("rotation".equals(key))
+			setTurningSpeed(value);
 	}
 
 }
