@@ -136,7 +136,7 @@ public class Cannon extends RotatingUnit implements Element {
 			maxDist = value;
 		else if ("shot".equals(key))
 			shotFrequency = value;
-		else if ("coolingSpeed".equals(key))
+		else if ("cooling".equals(key))
 			coolingSpeed = value;
 		else if ("power".equals(key))
 			impact = value;
