@@ -9,6 +9,11 @@ distance=5:2
 shot=0.5:2
 power=0.3:2
 cooling=0.2:2
+==3
+distance=6:20
+shot=0.3:20
+power=0.4:20
+cooling=0.15:20
 =Stunner
 ==1
 distance=3:2
