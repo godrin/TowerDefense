@@ -35,11 +35,7 @@ public abstract class Unit implements Element {
 	private int speed;
 	private int unitenergy = 3;
 
-	private static int idCounter = 0;
-	private int id;
-
 	public Unit(Position p) {
-		id = (idCounter++);
 		pos = p;
 		size = 0.4f;
 		level = null;
@@ -48,6 +44,7 @@ public abstract class Unit implements Element {
 	public abstract void move(float time);
 
 	public abstract void draw(IRenderer renderer);
+
 	public abstract void drawAfter(IRenderer renderer);
 
 	@Override
@@ -139,5 +136,10 @@ public abstract class Unit implements Element {
 	@Override
 	public int compareTo(Element arg0) {
 		return arg0.hashCode() - this.hashCode();
+	}
+
+	public void drawInLayer(int zLayer, IRenderer renderer) {
+		if (getZLayer() == zLayer)
+			draw(renderer);
 	}
 }

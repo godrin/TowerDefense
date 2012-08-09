@@ -114,8 +114,7 @@ public class Level {
 		for (int zLayer = 0; zLayer < 10; zLayer++) {
 			for (Unit unit : units) {
 				if (unit != null)
-					if (unit.getZLayer() == zLayer)
-						unit.draw(renderer);
+					unit.drawInLayer(zLayer, renderer);
 			}
 		}
 		for (Unit unit : units) {
@@ -188,9 +187,6 @@ public class Level {
 	}
 
 	public void removeMeFromGrid(Position p, Unit unit) {
-		int x0 = Math.round(p.x);
-		int y0 = Math.round(p.y);
-
 		GridElement gridElement = grid.get(p);
 		if (gridElement != null) {
 			if (gridElement.contains(unit)) {

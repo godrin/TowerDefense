@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.cdm.Game;
-import com.cdm.SString;
 import com.cdm.gui.BigButton;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.WidgetContainer;
@@ -32,25 +31,19 @@ public class SoundScreen extends Screen implements IButtonPressed {
 		music = music1;
 		game = pgame;
 		gui.add(new BigButton(Gdx.graphics.getWidth() / 3 + 50, 300,
-				Gdx.graphics.getWidth() / 6, 50, "music on", SString
-						.create("on"), this));
+				Gdx.graphics.getWidth() / 6, 50, "music on", "on", this));
 		gui.add(new BigButton(Gdx.graphics.getWidth() / 3 + 200, 300,
-				Gdx.graphics.getWidth() / 6, 50, "MusiC off", SString
-						.create("off"), this));
+				Gdx.graphics.getWidth() / 6, 50, "MusiC off", "off", this));
 		gui.add(new BigButton(Gdx.graphics.getWidth() / 3 + 50, 240,
-				Gdx.graphics.getWidth() / 6, 50, "Vol up",
-				SString.create("up"), this));
+				Gdx.graphics.getWidth() / 6, 50, "Vol up", "up", this));
 		gui.add(new BigButton(Gdx.graphics.getWidth() / 3 + 200, 240,
-				Gdx.graphics.getWidth() / 6, 50, "Vol down", SString
-						.create("down"), this));
+				Gdx.graphics.getWidth() / 6, 50, "Vol down", "down", this));
 		gui.add(new BigButton(Gdx.graphics.getWidth() / 3 + 50, 180,
-				Gdx.graphics.getWidth() / 6, 50, "FX up", SString
-						.create("FXup"), this));
+				Gdx.graphics.getWidth() / 6, 50, "FX up", "FXup", this));
 		gui.add(new BigButton(Gdx.graphics.getWidth() / 3 + 200, 180,
-				Gdx.graphics.getWidth() / 6, 50, "Fx down", SString
-						.create("FXdown"), this));
+				Gdx.graphics.getWidth() / 6, 50, "Fx down", "FXdown", this));
 		gui.add(new BigButton(Gdx.graphics.getWidth() / 2, 100, Gdx.graphics
-				.getWidth() / 6, 50, "back", SString.create("back"), this));
+				.getWidth() / 6, 50, "back", "back", this));
 	}
 
 	@Override
@@ -68,24 +61,24 @@ public class SoundScreen extends Screen implements IButtonPressed {
 	}
 
 	@Override
-	public void buttonPressed(SString buttonName) {
-		if (buttonName.equals(SString.create("back")))
+	public void buttonPressed(String buttonName) {
+		if (buttonName.equals("back"))
 			game.setScreen(Screen.MENU_SCREEN);
-		else if (buttonName.equals(SString.create("up"))) {
+		else if (buttonName.equals("up")) {
 			if (music != null) {
 				vol += 0.1f;
 				if (vol >= 1)
 					vol = 1;
 				music.setVolume(vol);
 			}
-		} else if (buttonName.equals(SString.create("down"))) {
+		} else if (buttonName.equals("down")) {
 			if (music != null) {
 				vol -= 0.1;
 				if (vol <= 0)
 					vol = 0;
 				music.setVolume(vol);
 			}
-		} else if (buttonName.equals(SString.create("on"))) {
+		} else if (buttonName.equals("on")) {
 			if (music != null) {
 				music.setVolume(vol);
 				music.setLooping(true);
@@ -93,7 +86,7 @@ public class SoundScreen extends Screen implements IButtonPressed {
 				if (!music.isPlaying())
 					music.play();
 			}
-		} else if (buttonName.equals(SString.create("off"))) {
+		} else if (buttonName.equals("off")) {
 			if (music.isPlaying())
 				music.stop();
 			if (song <= 2) {
@@ -107,14 +100,14 @@ public class SoundScreen extends Screen implements IButtonPressed {
 			if (song == 3)
 				music = music2;
 
-		} else if (buttonName.equals(SString.create("FXup"))) {
+		} else if (buttonName.equals("FXup")) {
 			if (music != null) {
 				FXvol += 0.1f;
 				if (FXvol >= 1)
 					FXvol = 1;
 				SoundFX.play(Type.KLICK);
 			}
-		} else if (buttonName.equals(SString.create("FXdown"))) {
+		} else if (buttonName.equals("FXdown")) {
 			if (music != null) {
 				FXvol -= 0.1;
 				if (FXvol <= 0)

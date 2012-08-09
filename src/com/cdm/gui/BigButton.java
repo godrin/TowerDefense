@@ -1,7 +1,6 @@
 package com.cdm.gui;
 
 import com.badlogic.gdx.graphics.Color;
-import com.cdm.SString;
 import com.cdm.gui.anim.Animation;
 import com.cdm.gui.anim.AnimationList;
 import com.cdm.view.IRenderer;
@@ -14,12 +13,12 @@ public class BigButton extends Widget {
 	private Color textColor = new Color(0, 0, 0, 0.4f);
 	private Rectangle topBox;
 	private String caption;
-	private SString name;
+	private String name;
 	private IButtonPressed buttonPressedListener;
 	private AnimationList animation = new AnimationList();
 
 	public BigButton(int mx, int my, int w, int h, String text,
-			SString buttonName, IButtonPressed listener) {
+			String buttonName, IButtonPressed listener) {
 		caption = text;
 		buttonPressedListener = listener;
 		name = buttonName;

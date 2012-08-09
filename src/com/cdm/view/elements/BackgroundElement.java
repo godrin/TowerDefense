@@ -106,7 +106,6 @@ public class BackgroundElement implements Element {
 		float g2 = 0.2f + 0.4f * v2;
 		float b2 = 0.4f + 0.8f * v2;
 
-		float k = 0.3f;
 		c0.set(r, g, b, 1.0f);
 		c1.set(r2, g2, b2, 1.0f);
 		// c1.set(0.5f, 0.5f, 0.8f, 0.2f);
@@ -167,8 +166,7 @@ public class BackgroundElement implements Element {
 
 	@Override
 	public void drawAfter(IRenderer renderer) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

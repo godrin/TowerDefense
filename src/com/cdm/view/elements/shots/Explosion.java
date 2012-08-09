@@ -30,7 +30,7 @@ public class Explosion implements DisplayEffect {
 	private Position pos;
 	private List<Splinter> splinters = new ArrayList<Splinter>();
 	private Level level;
-	private Color tmpColor = new Color(1,1,1,1);
+	private Color tmpColor = new Color(1, 1, 1, 1);
 
 	public Explosion(Position pos, float pSize, Level level) {
 		this.pos = new Position(pos);
@@ -100,18 +100,12 @@ public class Explosion implements DisplayEffect {
 			if (splinter.size >= 1.0f)
 				splinter.size = 0.95f;
 			if (splinter.size > 0) {
-				if (false) {
-					if (Math.sin(splinter.colorAngle) < 0)
-						tmpColor.set(Color.WHITE);
-					else
-						tmpColor.set(splinter.color);
-				} else {
-					float factor = (float) Math.sin(splinter.colorAngle) * 0.5f + 0.5f;
-					tmpColor.r = (splinter.color.r) * factor + 1 * (1 - factor);
-					tmpColor.g = (splinter.color.g) * factor + 1 * (1 - factor);
-					tmpColor.b = (splinter.color.b) * factor + 1 * (1 - factor);
 
-				}
+				float factor = (float) Math.sin(splinter.colorAngle) * 0.5f + 0.5f;
+				tmpColor.r = (splinter.color.r) * factor + 1 * (1 - factor);
+				tmpColor.g = (splinter.color.g) * factor + 1 * (1 - factor);
+				tmpColor.b = (splinter.color.b) * factor + 1 * (1 - factor);
+
 				renderer.drawPoly(splinter.currentPosition, splinterPoly,
 						splinter.currentAngle, tmpColor, splinter.size);
 			}
@@ -136,7 +130,6 @@ public class Explosion implements DisplayEffect {
 		// shrink
 		size -= time * 0.4f;
 		if (splinters.size() <= 0) {
-			// FIXME: remove from level
 			level.removeShot(this);
 		}
 

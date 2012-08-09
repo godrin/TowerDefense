@@ -50,7 +50,6 @@ public class SingleBox implements Element {
 	}
 
 	public void move(float time) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -66,8 +65,7 @@ public class SingleBox implements Element {
 
 	@Override
 	public void drawAfter(IRenderer renderer) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

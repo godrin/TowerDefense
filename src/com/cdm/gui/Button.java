@@ -1,7 +1,6 @@
 package com.cdm.gui;
 
 import com.badlogic.gdx.graphics.Color;
-import com.cdm.SString;
 import com.cdm.gui.effects.AnimatedColor;
 import com.cdm.gui.effects.AnimatedRect;
 import com.cdm.gui.effects.AnimatorSin;
@@ -18,7 +17,7 @@ public class Button extends Widget {
 
 	private AnimatedRect rect;
 
-	private SString buttonName;
+	private String buttonName;
 
 	private boolean enabled = true;
 	private Color currentColor = new Color(1, 1, 0, 0.7f);
@@ -66,11 +65,11 @@ public class Button extends Widget {
 		rect.addTime(t);
 	}
 
-	public SString getButtonName() {
+	public String getButtonName() {
 		return buttonName;
 	}
 
-	public void setButtonName(SString buttonName) {
+	public void setButtonName(String buttonName) {
 		this.buttonName = buttonName;
 	}
 

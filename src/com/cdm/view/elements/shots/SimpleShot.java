@@ -40,8 +40,6 @@ public class SimpleShot extends MovingShot {
 
 	@Override
 	public void drawAfter(IRenderer renderer) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
