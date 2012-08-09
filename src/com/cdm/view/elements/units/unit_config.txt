@@ -1,10 +1,12 @@
 =Cannon
 ==1
+# first level, cost is ignored, the values are used at the beginning
 distance=3:2
 shot=0.5:2
 power=0.3:2
 cooling=0.3:2
 ==2
+# this is the second level, being activated after the first upgrade
 distance=5:2
 shot=0.5:2
 power=0.3:2
