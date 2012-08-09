@@ -3,6 +3,7 @@ package com.cdm.view;
 import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.GL10;
 import com.cdm.Game;
 import com.cdm.gui.AnimText;
 import com.cdm.gui.BigButton;
@@ -18,6 +19,8 @@ public class MenuScreen extends Screen implements IButtonPressed {
 	private Game game;
 	private float animX = 0;
 	private long oldMicros = 0;
+	private PolySprite sprite;
+	private Position spritePos = new Position(Gdx.graphics.getWidth()/4, Gdx.graphics.getHeight()/2, Position.SCREEN_REF);
 
 	public MenuScreen(Game pgame) {
 		game = pgame;
@@ -32,10 +35,12 @@ public class MenuScreen extends Screen implements IButtonPressed {
 		gui.add(b2 = new BigButton(-200, 100, Gdx.graphics.getWidth() / 4, 50,
 				"quit", "quit", this));
 		gui.add(new AnimText(150, 150, 400, 100, Arrays.asList(new String[] {
-				"/dev/tal", "proudly", "presents" })));
+				"godrin", "undermink", "proudly", "present" })));
 		b0.add(new MoveAnimation(Easings.QUAD, 1.5f, middle, b0.getY(), b0));
 		b1.add(new MoveAnimation(Easings.QUAD, 2.0f, middle, b1.getY(), b1));
 		b2.add(new MoveAnimation(Easings.QUAD, 2.5f, middle, b2.getY(), b2));
+
+		sprite = SpriteReader.read("/com/cdm/view/elements/units/power.sprite");
 	}
 
 	@Override
@@ -52,7 +57,13 @@ public class MenuScreen extends Screen implements IButtonPressed {
 		renderer.initGlSettings();
 		gui.addTime(delta);
 
+		renderBg();
+
 		gui.draw(renderer);
+	}
+
+	private void renderBg() {
+		renderer.render(sprite, spritePos, Gdx.graphics.getWidth()/4, 0, GL10.GL_TRIANGLES);
 	}
 
 	@Override
