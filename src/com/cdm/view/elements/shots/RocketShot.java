@@ -13,15 +13,16 @@ public class RocketShot extends MovingShot {
 	private PolySprite sprite = null;
 
 	// impact was 5
-	public RocketShot(Position from, Position to, Level plevel,int pImpact) {
-		super(from, to, plevel,pImpact);
+	public RocketShot(Position from, Position to, Level plevel, int pImpact) {
+		super(from, to, plevel, pImpact);
 		if (sprite == null) {
 			sprite = new PolySprite();
 			sprite.fillRectangle(-0.75f, -0.2f, 1.5f, 0.4f, new Color(0.7f,
 					0.5f, 0.2f, 0.9f));
 			sprite.fillRectangle(-0.75f, -0.3f, 0.6f, 0.6f, new Color(0.4f,
 					0.2f, 0.08f, 0.9f));
-			sprite.fillRectangle(0.75f,-0.1f, 0.2f, 0.2f, new Color(0.0f,0,0,0.9f));
+			sprite.fillRectangle(0.75f, -0.1f, 0.2f, 0.2f, new Color(0.0f, 0,
+					0, 0.9f));
 			sprite.init();
 		}
 	}
@@ -33,15 +34,7 @@ public class RocketShot extends MovingShot {
 
 	@Override
 	public void draw(IRenderer renderer) {
-
-
-		/*renderer.drawPoly(getPosition(), poly, angle,
-				new Color(1, 0, 0, 1.0f), getSize());
-		renderer.drawLines(getPosition(), lines, angle,
-				new Color(1, 0.7f, 1, 1.0f), getSize());
-		*/
 		renderer.render(sprite, pos, getSize(), angle, GL10.GL_TRIANGLES);
-
 	}
 
 	@Override
@@ -49,11 +42,9 @@ public class RocketShot extends MovingShot {
 		return speed;
 	}
 
-
 	@Override
 	public void drawAfter(IRenderer renderer) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

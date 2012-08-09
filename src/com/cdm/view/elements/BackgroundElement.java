@@ -166,7 +166,6 @@ public class BackgroundElement implements Element {
 
 	@Override
 	public void drawAfter(IRenderer renderer) {
-		// TODO Auto-generated method stub
 
 	}
 

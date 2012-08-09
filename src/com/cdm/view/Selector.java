@@ -50,7 +50,6 @@ public class Selector implements Element {
 
 	@Override
 	public void move(float time) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -61,8 +60,7 @@ public class Selector implements Element {
 
 	@Override
 	public void drawAfter(IRenderer renderer) {
-		// TODO Auto-generated method stub
-		
+
 	}
 
 }

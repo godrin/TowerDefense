@@ -11,16 +11,14 @@ public class Screen extends InputAdapter {
 	public static final String OPTIONS_SCREEN = "optionsScreen";
 
 	public final void removed() {
-		
+
 	}
 
 	public void wait(TowerGame towerGame) {
-		// TODO Auto-generated method stub
 
 	}
 
 	public void tick(Input input) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -33,8 +31,6 @@ public class Screen extends InputAdapter {
 	}
 
 	public void move(float delta) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

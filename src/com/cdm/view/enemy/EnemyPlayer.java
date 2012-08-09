@@ -64,10 +64,9 @@ public class EnemyPlayer {
 					EnemyDef def = defs.first();
 					defs.remove(def);
 					alreadySent = true;
-					// FIXME: add more than 1 start position
+
 					List<PathPos> pp = level.getEnemyStartPosition();
 					int nextInt = random.nextInt(pp.size());
-					System.out.println("next" + nextInt);
 					Position x = new Position(pp.get(nextInt),
 							Position.LEVEL_REF);
 					EnemyUnit e = EnemyUnits.create(def.type, x, levelNo);

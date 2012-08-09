@@ -10,6 +10,7 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
+import com.cdm.view.elements.MathTools;
 import com.cdm.view.enemy.EnemyUnit;
 
 public class SmallShip extends EnemyUnit implements Element {
@@ -43,6 +44,7 @@ public class SmallShip extends EnemyUnit implements Element {
 	private static final float RAY_DISTANCE = 0.5f;
 	private static final float RAY_LENGTH = RAY_DISTANCE * 4;
 	private float raySpeed;
+	private Position endPosition;
 	private static final Color BG_COLOR = new Color(0, 0, 0, 0.6f);
 
 	public SmallShip(Position position) {
@@ -68,11 +70,23 @@ public class SmallShip extends EnemyUnit implements Element {
 				getSize());
 	}
 
+	// fly diagonal to end position
 	@Override
 	public void move(float time) {
 		super.move(time);
+
+		if (endPosition == null)
+			endPosition = getLevel().getSomeEnemyEndPosition();
+
 		Position p = getPosition();
-		p.x += time * getSpeed();
+		
+		Vector3 delta = p.to(endPosition);
+		delta.nor();
+		
+		angle=MathTools.angle(delta);
+		float speed = getSpeed();
+		p.x+=delta.x*speed*time;
+		p.y+=delta.y*speed*time;
 		setPosition(p); // react to position change
 
 		rayPhase += raySpeed * time;

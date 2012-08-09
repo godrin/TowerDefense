@@ -70,7 +70,6 @@ public class SpriteReader {
 				}
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		sprite.init();
