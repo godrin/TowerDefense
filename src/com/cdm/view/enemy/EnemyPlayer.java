@@ -20,7 +20,7 @@ public class EnemyPlayer {
 	};
 
 	private Mode mode = Mode.WAIT;
-	private int levelNo = 0;
+	private int waveNo = 0;
 	private float enemyStrength = 3.0f;
 	private Level level;
 	private float timeToNextWave = WAITING_TIME;
@@ -48,7 +48,7 @@ public class EnemyPlayer {
 	}
 
 	public int getLevelNo() {
-		return levelNo;
+		return waveNo;
 	}
 
 	public void setLevel(Level level) {
@@ -69,7 +69,7 @@ public class EnemyPlayer {
 					int nextInt = random.nextInt(pp.size());
 					Position x = new Position(pp.get(nextInt),
 							Position.LEVEL_REF);
-					EnemyUnit e = EnemyUnits.create(def.type, x, levelNo);
+					EnemyUnit e = EnemyUnits.create(def.type, x, waveNo,level.getLevelNo());
 					level.add(e);
 
 				}
@@ -85,8 +85,8 @@ public class EnemyPlayer {
 	}
 
 	private void startWait() {
-		levelNo += 1;
-		if (levelNo >= maxLevel)
+		waveNo += 1;
+		if (waveNo >= maxLevel)
 			levelFinishedListener.levelFinished();
 		mode = Mode.WAIT;
 		timeToNextWave = WAITING_TIME;
