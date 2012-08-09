@@ -114,8 +114,7 @@ public class Level {
 		for (int zLayer = 0; zLayer < 10; zLayer++) {
 			for (Unit unit : units) {
 				if (unit != null)
-					if (unit.getZLayer() == zLayer)
-						unit.draw(renderer);
+					unit.drawInLayer(zLayer, renderer);
 			}
 		}
 		for (Unit unit : units) {

@@ -48,6 +48,7 @@ public abstract class Unit implements Element {
 	public abstract void move(float time);
 
 	public abstract void draw(IRenderer renderer);
+
 	public abstract void drawAfter(IRenderer renderer);
 
 	@Override
@@ -139,5 +140,10 @@ public abstract class Unit implements Element {
 	@Override
 	public int compareTo(Element arg0) {
 		return arg0.hashCode() - this.hashCode();
+	}
+
+	public void drawInLayer(int zLayer, IRenderer renderer) {
+		if (getZLayer() == zLayer)
+			draw(renderer);
 	}
 }

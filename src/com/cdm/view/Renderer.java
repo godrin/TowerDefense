@@ -94,6 +94,10 @@ public class Renderer implements IRenderer {
 
 	@Override
 	public void drawRect(float x0, float y0, float x1, float y1, Color c) {
+		
+		
+		
+		
 		Gdx.gl10.glLineWidth(3);
 		initGlSettings();
 		renderer.begin(GL10.GL_LINE_LOOP);
@@ -112,6 +116,7 @@ public class Renderer implements IRenderer {
 
 	@Override
 	public void fillRect(float x0, float y0, float x1, float y1, Color c) {
+		
 		renderer.begin(GL10.GL_TRIANGLES);
 		initGlSettings();
 

@@ -12,6 +12,8 @@ import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 
 public class PolySprite {
+	private static final Color OUTER_COLOR = new Color(0, 0, 0, 0);
+	private static final float PI = 3.1415f;
 	private Mesh mesh = null;
 	private List<Vector3> vs = new ArrayList<Vector3>();
 	private List<Color> cs = new ArrayList<Color>();
@@ -75,12 +77,120 @@ public class PolySprite {
 		addVertex(d, color);
 	}
 
+	public void makeArc(float x, float y, float radius, float startAngle,
+			float angle, int sections, Color inner, Color outer) {
+		for (int i = 0; i < sections; i++) {
+			addVertex(new Vector3(x, y, 0), inner);
+			addVertex(
+					new Vector3(x
+							+ radius
+							* (float) Math.sin(startAngle + angle * i
+									/ sections), y
+							+ radius
+							* (float) Math.cos(startAngle + angle * i
+									/ sections), 0), outer);
+			addVertex(
+					new Vector3(x
+							+ radius
+							* (float) Math.sin(startAngle + angle * (i + 1)
+									/ sections), y
+							+ radius
+							* (float) Math.cos(startAngle + angle * (i + 1)
+									/ sections), 0), outer);
+
+		}
+	}
+
+	public void makeNiceRectangle(float d, float x, float y, float w, float h,
+			Color inner, Color outer) {
+
+		makeArc(x, y, d, PI, PI / 2, 4, inner, outer);
+		makeArc(x + w, y, d, PI / 2, PI / 2, 4, inner, outer);
+		makeArc(x + w, y + h, d, 0, PI / 2, 4, inner, outer);
+		makeArc(x, y + h, d, PI * 3 / 2, PI / 2, 4, inner, outer);
+	}
+
+	public void makeNiceRectangleOld(float d, float x, float y, float w,
+			float h, Color inner, Color outer) {
+		List<Vector3> vs = new ArrayList<Vector3>();
+		vs.add(new Vector3(x - d, y - d, 0));
+		vs.add(new Vector3(x, y, 0));
+		vs.add(new Vector3(x + d, y + d, 0));
+
+		vs.add(new Vector3(x + w + d, y - d, 0));
+		vs.add(new Vector3(x + w, y, 0));
+		vs.add(new Vector3(x + w - d, y + d, 0));
+
+		vs.add(new Vector3(x + w + d, y + h + d, 0));
+		vs.add(new Vector3(x + w, y + h, 0));
+		vs.add(new Vector3(x + w - d, y + h - d, 0));
+
+		vs.add(new Vector3(x - d, y + h + d, 0));
+		vs.add(new Vector3(x, y + h, 0));
+		vs.add(new Vector3(x + d, y + h - d, 0));
+
+		// upper
+		addVertex(vs.get(0), outer);
+		addVertex(vs.get(3), outer);
+		addVertex(vs.get(1), inner);
+		addVertex(vs.get(3), outer);
+		addVertex(vs.get(4), inner);
+		addVertex(vs.get(1), inner);
+
+		addVertex(vs.get(1), inner);
+		addVertex(vs.get(4), inner);
+		addVertex(vs.get(2), outer);
+		addVertex(vs.get(2), outer);
+		addVertex(vs.get(4), inner);
+		addVertex(vs.get(5), outer);
+
+		// left
+
+		addVertex(vs.get(0), outer);
+		addVertex(vs.get(1), inner);
+		addVertex(vs.get(9), outer);
+		addVertex(vs.get(1), inner);
+		addVertex(vs.get(10), inner);
+		addVertex(vs.get(9), outer);
+
+		addVertex(vs.get(1), inner);
+		addVertex(vs.get(2), outer);
+		addVertex(vs.get(10), inner);
+		addVertex(vs.get(2), outer);
+		addVertex(vs.get(11), outer);
+		addVertex(vs.get(10), inner);
+
+		// lower
+		addVertex(vs.get(9), outer);
+		addVertex(vs.get(6), outer);
+		addVertex(vs.get(10), inner);
+		addVertex(vs.get(10), inner);
+		addVertex(vs.get(6), outer);
+		addVertex(vs.get(7), inner);
+
+		addVertex(vs.get(10), inner);
+		addVertex(vs.get(7), inner);
+		addVertex(vs.get(11), outer);
+		addVertex(vs.get(7), inner);
+		addVertex(vs.get(11), outer);
+		addVertex(vs.get(8), outer);
+
+	}
+
 	public void makeThickRectangle(float d, float x, float y, float w, float h,
 			Color color) {
-		fillRectangle(x, y, w, d, color);
-		fillRectangle(x + w - d, y, d, h, color);
-		fillRectangle(x, y, d, h, color);
-		fillRectangle(x, y + h - d, w, d, color);
+
+		if (true) {
+			Color c = new Color(color);
+			c.a *= 0.25f;
+			makeNiceRectangle(d * 4, x, y, w, h, c, OUTER_COLOR);
+
+		} else {
+			fillRectangle(x, y, w, d, color);
+			fillRectangle(x + w - d, y, d, h, color);
+			fillRectangle(x, y, d, h, color);
+			fillRectangle(x, y + h - d, w, d, color);
+		}
 	}
 
 	public void makeRectangle(float x, float y, float w, float h, Color color) {
