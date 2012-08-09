@@ -13,7 +13,7 @@ import com.cdm.view.enemy.types.Tank2;
 import com.cdm.view.enemy.types.Truck;
 
 public class EnemyUnits {
-	public static EnemyUnit create(EnemyType t, Position position, int levelNo) {
+	public static EnemyUnit create(EnemyType t, Position position, int waveNo) {
 		EnemyUnit u = null;
 		if (EnemyType.BIG_SHIP.equals(t)) {
 			u = new BigShip(position);
@@ -25,6 +25,7 @@ public class EnemyUnits {
 			u = new Tank(position);
 		}
 		if (EnemyType.ROCKET.equals(t)) {
+			//if ( >= 3)
 			u = new Rocket(position);
 		}
 		if (EnemyType.TRUCK.equals(t)) {
@@ -40,7 +41,7 @@ public class EnemyUnits {
 			u = new Bug(position);
 		}
 		if (u != null)
-			u.setEnergy(t.getEnergy(levelNo));
+			u.setEnergy(t.getEnergy(waveNo));
 		return u;
 	}
 }
