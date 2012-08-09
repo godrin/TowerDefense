@@ -344,6 +344,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	@Override
 	public void levelFinished() {
 		setLevel(campaign.getNextLevel(this));
+		level.setMoney(level.getMoney()+10);
 	}
 
 	private void setLevel(Level nextLevel) {
