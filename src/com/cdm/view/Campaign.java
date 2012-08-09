@@ -26,6 +26,7 @@ public class Campaign {
 		}
 		level = new Level(new Grid(levels.get(plevel)), screen, playerState);
 		levelNo += 1;
+		level.setLevelNo(levelNo);
 		return level;
 	}
 

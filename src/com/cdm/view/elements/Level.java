@@ -41,6 +41,7 @@ public class Level {
 	private GridDrawing gridDrawing;
 	private LevelFinishedListener levelFinishedListener;
 	private Random random = new Random();
+	private int levelNo;
 
 	public Level(Grid pGrid, LevelScreen pfinishedListener, PlayerState pState) {
 		playerState = pState;
@@ -408,6 +409,14 @@ public class Level {
 		return new Position(getEnemyEndPosition().get(
 				random.nextInt(getEnemyEndPosition().size())),
 				Position.LEVEL_REF);
+	}
+
+	public void setLevelNo(int levelNo) {
+		this.levelNo=levelNo;
+	}
+
+	public int getLevelNo() {
+		return levelNo;
 	}
 
 }
