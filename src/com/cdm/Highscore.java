@@ -15,6 +15,7 @@ import org.json.JSONTokener;
 
 public class Highscore {
 	private static final int BUFSIZE = 1024 * 100;
+	private String url = "http://0.0.0.0:9292";
 
 	public static class HighscoreAccessException extends Exception {
 
@@ -47,11 +48,15 @@ public class Highscore {
 		System.out.println(vals);
 	}
 
+	public void setUrl(String pUrl) {
+		url = pUrl;
+	}
+
 	public List<Entry> post(Entry entry) throws HighscoreAccessException {
 		try {
-			String url = "http://0.0.0.0:9292/save?score=" + entry.value
-					+ "&xname=" + URLEncoder.encode(entry.name, "utf8");
-			InputStream response = new URL(url).openStream();
+			String curl = url + "/save?score=" + entry.value + "&xname="
+					+ URLEncoder.encode(entry.name, "utf8");
+			InputStream response = new URL(curl).openStream();
 
 			return readFromInputStream(response);
 
@@ -63,7 +68,6 @@ public class Highscore {
 
 	public List<Entry> read() throws HighscoreAccessException {
 		try {
-			String url = "http://0.0.0.0:9292";
 			InputStream response = new URL(url).openStream();
 
 			return readFromInputStream(response);

@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
 import com.cdm.Game;
-import com.cdm.SString;
 import com.cdm.gui.AnimText;
 import com.cdm.gui.BigButton;
 import com.cdm.gui.IButtonPressed;
@@ -18,7 +17,7 @@ public class MenuScreen extends Screen implements IButtonPressed {
 	private Renderer renderer = new Renderer();
 	private Game game;
 	private float animX = 0;
-	private long oldMicros=0;
+	private long oldMicros = 0;
 
 	public MenuScreen(Game pgame) {
 		game = pgame;
@@ -27,11 +26,11 @@ public class MenuScreen extends Screen implements IButtonPressed {
 		float middle = Gdx.graphics.getWidth() / 2;
 
 		gui.add(b0 = new BigButton(-200, 300, Gdx.graphics.getWidth() / 4, 50,
-				"start game", SString.create("startGame"), this));
+				"start game", "startGame", this));
 		gui.add(b1 = new BigButton(-200, 200, Gdx.graphics.getWidth() / 4, 50,
-				"options", SString.create("options"), this));
+				"options", "options", this));
 		gui.add(b2 = new BigButton(-200, 100, Gdx.graphics.getWidth() / 4, 50,
-				"quit", SString.create("quit"), this));
+				"quit", "quit", this));
 		gui.add(new AnimText(150, 150, 400, 100, Arrays.asList(new String[] {
 				"/dev/tal", "proudly", "presents" })));
 		b0.add(new MoveAnimation(Easings.QUAD, 1.5f, middle, b0.getY(), b0));
@@ -48,7 +47,6 @@ public class MenuScreen extends Screen implements IButtonPressed {
 		}
 		oldMicros = micro;
 
-		
 		animX -= delta;
 		super.render(delta);
 		renderer.initGlSettings();
@@ -58,12 +56,12 @@ public class MenuScreen extends Screen implements IButtonPressed {
 	}
 
 	@Override
-	public void buttonPressed(SString buttonName) {
-		if (buttonName.equals(SString.create("quit")))
+	public void buttonPressed(String buttonName) {
+		if (buttonName.equals("quit"))
 			Gdx.app.exit();
-		else if (buttonName.equals(SString.create("startGame"))) {
+		else if (buttonName.equals("startGame")) {
 			game.setScreen(Screen.LEVEL_SCREEN);
-		} else if (buttonName.equals(SString.create("options")))
+		} else if (buttonName.equals("options"))
 			game.setScreen(Screen.OPTIONS_SCREEN);
 
 	}

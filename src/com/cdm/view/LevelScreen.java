@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.cdm.Game;
-import com.cdm.SString;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.IUnitTypeSelected;
 import com.cdm.gui.UnitTypeButton;
@@ -322,13 +321,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	@Override
-	public void buttonPressed(SString buttonName) {
+	public void buttonPressed(String buttonName) {
 
-		if (!level.gameover()) {
-			if (buttonName.equals(SString.SIZE_BUTTON)) {
-				// FIXME
-			}
-		}
 	}
 
 	// FIXME move this function is a "Campaign" or game-control class, maybe
@@ -344,7 +338,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	@Override
 	public void levelFinished() {
 		setLevel(campaign.getNextLevel(this));
-		level.setMoney(level.getMoney()+10);
+		level.setMoney(level.getMoney() + 10);
 	}
 
 	private void setLevel(Level nextLevel) {
