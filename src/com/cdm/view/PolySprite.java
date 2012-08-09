@@ -108,6 +108,32 @@ public class PolySprite {
 		makeArc(x + w, y, d, PI / 2, PI / 2, 4, inner, outer);
 		makeArc(x + w, y + h, d, 0, PI / 2, 4, inner, outer);
 		makeArc(x, y + h, d, PI * 3 / 2, PI / 2, 4, inner, outer);
+		
+		makeGradient(x,y-d,w,d,outer,outer,inner,inner);
+		makeGradient(x+w,y,d,h,inner,outer,outer,inner);
+		makeGradient(x,y+h,w,d,inner,inner,outer,outer);
+		makeGradient(x-d,y,d,h,outer,inner,inner,outer);
+		
+		
+	}
+
+	private void makeGradient(float x, float y, float w, float h, Color topleft,
+			Color topright, Color bottomright, Color bottomleft) {
+		
+		List<Vector3> vs = new ArrayList<Vector3>();
+		vs.add(new Vector3(x,y,0)); // top left
+		vs.add(new Vector3(x+w,y,0)); // top right
+		vs.add(new Vector3(x,y+h,0)); // bottom left 
+		vs.add(new Vector3(x+w,y+h,0)); // bottom right
+
+		addVertex(vs.get(0), topleft);
+		addVertex(vs.get(1), topright);
+		addVertex(vs.get(3), bottomright);
+
+		addVertex(vs.get(0), topleft);
+		addVertex(vs.get(3), bottomright);
+		addVertex(vs.get(2), bottomleft);
+
 	}
 
 	public void makeNiceRectangleOld(float d, float x, float y, float w,
