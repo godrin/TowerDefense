@@ -187,9 +187,6 @@ public class Level {
 	}
 
 	public void removeMeFromGrid(Position p, Unit unit) {
-		int x0 = Math.round(p.x);
-		int y0 = Math.round(p.y);
-
 		GridElement gridElement = grid.get(p);
 		if (gridElement != null) {
 			if (gridElement.contains(unit)) {

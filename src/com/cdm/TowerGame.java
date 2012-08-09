@@ -15,13 +15,13 @@ public class TowerGame implements ApplicationListener, Game {
 
 	private boolean running = false;
 	private Screen screen;
-	private Screen prevScreen = null;
-	private boolean started = false;
 	private float accum = 0;
 	boolean stop = false;
 	private LevelScreen levelScreen;
 	private MenuScreen menuScreen;
 	private SoundScreen optionsScreen;
+
+	private long oldMicros = 0;
 
 	public void create() {
 		running = true;
@@ -34,7 +34,6 @@ public class TowerGame implements ApplicationListener, Game {
 	}
 
 	public void pause() {
-		// FIXME
 		running = false;
 	}
 
@@ -45,9 +44,6 @@ public class TowerGame implements ApplicationListener, Game {
 	public void setScreen(Screen newScreen) {
 		if (screen != null)
 			screen.removed();
-
-		if (false)
-			prevScreen = screen;
 
 		screen = newScreen;
 
@@ -63,10 +59,37 @@ public class TowerGame implements ApplicationListener, Game {
 		while (accum > 1.0f / 60.0f) {
 			accum -= 1.0f / 60.0f;
 		}
+		move();
 		screen.render(accum);
-		if (prevScreen != null)
-			prevScreen.render(accum);
 
+	}
+
+	private void move() {
+		if (!running)
+			return;
+		long millis = System.currentTimeMillis();
+		long micro = System.nanoTime() / 1000 + millis * 1000;
+		float delta = 0;
+		if (oldMicros > 0) {
+			delta = (micro - oldMicros) * 0.000001f;
+			mywait(delta);
+			screen.move(delta);
+		}
+		oldMicros = micro;
+
+	}
+
+	private void mywait(float delta) {
+		try {
+			Integer ms = (int) (delta * 1000);
+
+			int wait = 15 - ms;
+			if (wait > 5) {
+				Thread.sleep(wait);
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override

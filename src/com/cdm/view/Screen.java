@@ -32,4 +32,9 @@ public class Screen extends InputAdapter {
 
 	}
 
+	public void move(float delta) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

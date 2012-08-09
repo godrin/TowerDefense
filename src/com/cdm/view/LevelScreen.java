@@ -71,7 +71,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		}
 	}
 
-	private Long oldMicros = 0L;
 	private boolean dragging = false;
 
 	@Override
@@ -83,8 +82,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 			renderer.initGlSettings();
 			rendering = true;
 			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-
-			delta = move(delta);
 
 			draw(delta);
 			rendering = false;
@@ -98,25 +95,11 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		hud.draw(renderer);
 	}
 
-	private void drawBackground() {
-
-		spriteBatch.begin();
-		for (int x = 0; x < 16; x++)
-			for (int y = 0; y < 16; y++)
-				draw(bg, x * 128, y * 128);
-
-		spriteBatch.end();
-	}
-
-	private float move(float delta) {
-		long millis = System.currentTimeMillis();
-		long micro = System.nanoTime() / 1000 + millis * 1000;
-		if (oldMicros > 0) {
-			delta = (micro - oldMicros) * 0.000001f;
+	public void move(float delta) {
+		if (delta > 0) {
+			level.move(delta);
 		}
-		oldMicros = micro;
-		mywait(delta);
-		return delta;
+
 	}
 
 	private void modCam(int dx, int dy) {
@@ -124,9 +107,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	private void drawLineBased(float delta) {
-		if (delta > 0) {
-			level.move(delta);
-		}
+
 		if (Gdx.gl10 != null)
 			Gdx.gl10.glPushMatrix();
 		Position.LEVEL_REF.apply();
@@ -149,19 +130,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 			Gdx.gl10.glPopMatrix();
 
-	}
-
-	private void mywait(float delta) {
-		try {
-			Integer ms = (int) (delta * 1000);
-
-			int wait = 15 - ms;
-			if (wait > 5) {
-				Thread.sleep(wait);
-			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 	}
 
 	public void draw(TextureRegion region, int x, int y) {
@@ -325,7 +293,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	}
 
-	// FIXME move this function is a "Campaign" or game-control class, maybe
+	// FIXME move this function in a "Campaign" or game-control class, maybe
 	// "towergame"
 	public void restart() {
 		game.setScreen(Screen.MENU_SCREEN);

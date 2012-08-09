@@ -35,11 +35,7 @@ public abstract class Unit implements Element {
 	private int speed;
 	private int unitenergy = 3;
 
-	private static int idCounter = 0;
-	private int id;
-
 	public Unit(Position p) {
-		id = (idCounter++);
 		pos = p;
 		size = 0.4f;
 		level = null;

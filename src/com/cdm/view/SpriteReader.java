@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
-import java.util.ArrayList;
-import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
@@ -26,7 +24,6 @@ public class SpriteReader {
 		LineNumberReader lir = new LineNumberReader(isr);
 		String line;
 
-		List<String> gridBuffer = new ArrayList<String>();
 		PolySprite sprite = new PolySprite();
 
 		float tx = 0, ty = 0;
