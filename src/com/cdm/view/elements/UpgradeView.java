@@ -5,6 +5,7 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.cdm.view.IRenderer;
+import com.cdm.view.LevelScreen;
 import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.SpriteReader;
@@ -19,6 +20,11 @@ public class UpgradeView implements Element {
 			.read("/com/cdm/view/elements/units/highlight.sprite");
 	private Upgrade selectedUpgrade = null;
 	private PlayerUnit targetUnit;
+	private LevelScreen screen;
+
+	public UpgradeView(LevelScreen screen) {
+		this.screen = screen;
+	}
 
 	public boolean isVisible() {
 		return visible;
@@ -97,12 +103,16 @@ public class UpgradeView implements Element {
 							renderer.render(highlight, tmpPos, 0.5f, 0.0f,
 									GL10.GL_TRIANGLES);
 						}
+						Color color = Color.WHITE;
+						if (screen.getLevel().getMoney() < u.getCostForNext()) {
+							color = Color.RED;
+						}
 						renderer.drawText(tmpPos.to(Position.SCREEN_REF),
-								level.toString(), Color.WHITE);
+								level.toString(), color);
 						tmpPos.x += dx - 0.25f;
 						tmpPos.y += dy + 0.25f;
 						renderer.drawText(tmpPos.to(Position.SCREEN_REF), "$"
-								+ u.getCostForNext(), Color.WHITE);
+								+ u.getCostForNext(), color);
 					}
 				}
 			}
@@ -114,6 +124,7 @@ public class UpgradeView implements Element {
 	}
 
 	public void hover(final Position dragPosition) {
+		selectedUpgrade = null;
 		doWithAllUpgrades(new UpgradeWithPosition() {
 
 			@Override
@@ -122,7 +133,8 @@ public class UpgradeView implements Element {
 						Position.LEVEL_REF);
 				float dx2 = dragPosition.x - tmpPos.x;
 				float dy2 = dragPosition.y - tmpPos.y;
-				if (dx2 * dx2 + dy2 * dy2 < 1) {
+				if (dx2 * dx2 + dy2 * dy2 < 0.5f
+						&& screen.getLevel().getMoney() >= u.getCostForNext()) {
 					selectedUpgrade = u;
 				}
 

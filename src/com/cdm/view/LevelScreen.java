@@ -34,7 +34,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private Position oldDragPosition = new Position(0, 0, Position.SCREEN_REF);
 	private Position checkPosition = new Position(0, 0, Position.SCREEN_REF);
 	private PlayerUnit selectedUnit = null;
-	private UpgradeView upgradeView = new UpgradeView();
+	private UpgradeView upgradeView = new UpgradeView(this);
 
 	private Game game;
 	private Campaign campaign;
@@ -198,6 +198,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 			Upgrade selectedUprade = upgradeView.getSelectedUpgrade();
 			if (selectedUprade != null && selectedUnit != null) {
 				selectedUprade.upgrade(selectedUnit);
+				int price = selectedUprade.getCostForNext();
+				level.setMoney(level.getMoney() - price);
 			}
 
 			// FIXME: check if an upgrade was selected
@@ -314,5 +316,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		hud.setLevel(level);
 		// recreate, so that buttons have nu level
 		createUnitButtons();
+	}
+
+	public Level getLevel() {
+		return level;
 	}
 }
