@@ -1,7 +1,6 @@
 package com.cdm.view.elements;
 
 import com.cdm.view.Position;
-import com.cdm.view.elements.units.Unit;
 import com.cdm.view.enemy.EnemyType;
 import com.cdm.view.enemy.EnemyUnit;
 import com.cdm.view.enemy.types.BigShip;
@@ -17,6 +16,7 @@ public class EnemyUnits {
 	public static EnemyUnit create(EnemyType t, Position position, int waveNo, int levelNo) {
 		EnemyUnit u = null;
 		if (EnemyType.BIG_SHIP.equals(t)) {
+			if (levelNo != 2)
 			u = new BigShip(position);
 		}
 		if (EnemyType.SMALL_SHIP.equals(t)) {
@@ -36,6 +36,7 @@ public class EnemyUnits {
 			u = new Tank2(position);
 		}
 		if (EnemyType.ROTOR.equals(t)){
+			if (levelNo>=4)
 			u = new Rotor(position);
 		}
 		if (EnemyType.BUG.equals(t)){

@@ -64,7 +64,7 @@ public class LevelDisplays {
 			renderer.drawText(220, 300, "Game OveR", color,3);
 			renderer.drawText(260, 330,
 					"You've got " + Integer.toString(level.getPoints())
-							+ " Points", moneyColor);
+							+ " Points \nand " + Integer.toString(level.getBonus()) +" Bonus POiNts", moneyColor);
 			renderer.drawText(235, 200, "click to go back to menu", moneyColor);
 		}
 		if (level.getBonus() >= 50 && level.getBonus() <= 52) {

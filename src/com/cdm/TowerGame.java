@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.cdm.gui.effects.SoundFX;
 import com.cdm.view.Campaign;
+import com.cdm.view.HighScoreScreen;
 import com.cdm.view.LevelScreen;
 import com.cdm.view.MenuScreen;
 import com.cdm.view.Screen;
@@ -20,6 +21,7 @@ public class TowerGame implements ApplicationListener, Game {
 	private LevelScreen levelScreen;
 	private MenuScreen menuScreen;
 	private SoundScreen optionsScreen;
+	private HighScoreScreen highscoreScreen;
 
 	private long oldMicros = 0;
 
@@ -30,6 +32,7 @@ public class TowerGame implements ApplicationListener, Game {
 		levelScreen = new LevelScreen(this, c);
 		optionsScreen = new SoundScreen(this);
 		setScreen(menuScreen = new MenuScreen(this));
+		highscoreScreen = new HighScoreScreen(this);
 		SoundFX.Initialize();
 	}
 
@@ -114,6 +117,8 @@ public class TowerGame implements ApplicationListener, Game {
 			setScreen(optionsScreen);
 		else if (Screen.MENU_SCREEN.equals(string))
 			setScreen(menuScreen);
+		else if (Screen.HIGHSCORE_SCREEN.equals(string))
+			setScreen(highscoreScreen);
 
 	}
 }

@@ -13,9 +13,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
+import com.cdm.view.Renderer;
+
 public class Highscore {
 	private static final int BUFSIZE = 1024 * 100;
 	private String url = "http://0.0.0.0:9292";
+	private Renderer renderer = new Renderer();
 
 	public static class HighscoreAccessException extends Exception {
 
@@ -41,11 +44,13 @@ public class Highscore {
 		public Integer value;
 	}
 
-	public static void main(String[] args) throws HighscoreAccessException {
+	public static List<Entry> main(String[] args) throws HighscoreAccessException {
 		Highscore s = new Highscore();
 		Entry n = new Entry("HI", 999);
 		List<Entry> vals = s.post(n);
 		System.out.println(vals);
+		return vals;
+		
 	}
 
 	public void setUrl(String pUrl) {
@@ -54,7 +59,7 @@ public class Highscore {
 
 	public List<Entry> post(Entry entry) throws HighscoreAccessException {
 		try {
-			String curl = url + "/save?score=" + entry.value + "&xname="
+			String curl = url + "/save?score=" + entry.value + "&name="
 					+ URLEncoder.encode(entry.name, "utf8");
 			InputStream response = new URL(curl).openStream();
 

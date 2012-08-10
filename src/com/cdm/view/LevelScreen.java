@@ -298,7 +298,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	// FIXME move this function in a "Campaign" or game-control class, maybe
 	// "towergame"
 	public void restart() {
-		game.setScreen(Screen.MENU_SCREEN);
+		game.setScreen(Screen.HIGHSCORE_SCREEN);
 		campaign.restart();
 
 		setLevel(campaign.getNextLevel(this));

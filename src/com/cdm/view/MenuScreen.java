@@ -73,7 +73,7 @@ public class MenuScreen extends Screen implements IButtonPressed {
 		else if (buttonName.equals("startGame")) {
 			game.setScreen(Screen.LEVEL_SCREEN);
 		} else if (buttonName.equals("options"))
-			game.setScreen(Screen.OPTIONS_SCREEN);
+			game.setScreen(Screen.HIGHSCORE_SCREEN);
 
 	}
 

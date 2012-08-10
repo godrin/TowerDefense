@@ -69,7 +69,8 @@ public class EnemyPlayer {
 					int nextInt = random.nextInt(pp.size());
 					Position x = new Position(pp.get(nextInt),
 							Position.LEVEL_REF);
-					EnemyUnit e = EnemyUnits.create(def.type, x, waveNo,level.getLevelNo());
+					EnemyUnit e = EnemyUnits.create(def.type, x, waveNo,
+							level.getLevelNo());
 					level.add(e);
 
 				}
