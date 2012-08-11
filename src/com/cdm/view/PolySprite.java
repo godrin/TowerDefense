@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
+import com.cdm.view.elements.MathTools;
 
 public class PolySprite {
 	private static final Color OUTER_COLOR = new Color(0, 0, 0, 0);
@@ -108,23 +109,22 @@ public class PolySprite {
 		makeArc(x + w, y, d, PI / 2, PI / 2, 4, inner, outer);
 		makeArc(x + w, y + h, d, 0, PI / 2, 4, inner, outer);
 		makeArc(x, y + h, d, PI * 3 / 2, PI / 2, 4, inner, outer);
-		
-		makeGradient(x,y-d,w,d,outer,outer,inner,inner);
-		makeGradient(x+w,y,d,h,inner,outer,outer,inner);
-		makeGradient(x,y+h,w,d,inner,inner,outer,outer);
-		makeGradient(x-d,y,d,h,outer,inner,inner,outer);
-		
-		
+
+		makeGradient(x, y - d, w, d, outer, outer, inner, inner);
+		makeGradient(x + w, y, d, h, inner, outer, outer, inner);
+		makeGradient(x, y + h, w, d, inner, inner, outer, outer);
+		makeGradient(x - d, y, d, h, outer, inner, inner, outer);
+
 	}
 
-	private void makeGradient(float x, float y, float w, float h, Color topleft,
-			Color topright, Color bottomright, Color bottomleft) {
-		
+	private void makeGradient(float x, float y, float w, float h,
+			Color topleft, Color topright, Color bottomright, Color bottomleft) {
+
 		List<Vector3> vs = new ArrayList<Vector3>();
-		vs.add(new Vector3(x,y,0)); // top left
-		vs.add(new Vector3(x+w,y,0)); // top right
-		vs.add(new Vector3(x,y+h,0)); // bottom left 
-		vs.add(new Vector3(x+w,y+h,0)); // bottom right
+		vs.add(new Vector3(x, y, 0)); // top left
+		vs.add(new Vector3(x + w, y, 0)); // top right
+		vs.add(new Vector3(x, y + h, 0)); // bottom left
+		vs.add(new Vector3(x + w, y + h, 0)); // bottom right
 
 		addVertex(vs.get(0), topleft);
 		addVertex(vs.get(1), topright);
@@ -278,5 +278,50 @@ public class PolySprite {
 
 	public void render(int renderMode) {
 		mesh.render(renderMode);
+	}
+
+	public void drawClosedPolyWithBorder(Vector3[] vector3s, Color light,
+			Color low, float width) {
+		//light = Color.RED;
+		//low = Color.BLACK;
+		Vector3 z = new Vector3(0, 0, -1);
+		for (int i = 0; i < vector3s.length; i++) {
+			Vector3 a = vector3s[i];
+			Vector3 b = vector3s[(i + 1) % vector3s.length];
+			Vector3 d = new Vector3(b);
+			d.sub(a);
+			d.nor();
+			Vector3 normal = new Vector3(d);
+			normal.crs(z);
+			Vector3 shift = new Vector3(normal);
+			shift.mul(width);
+			Vector3 a2 = new Vector3(a);
+			a2.add(shift);
+			Vector3 b2 = new Vector3(b);
+			b2.add(shift);
+
+			if (true) {
+				addVertex(a, light);
+				addVertex(a2, low);
+				addVertex(b2, low);
+
+				addVertex(a, light);
+				addVertex(b2, low);
+				addVertex(b, light);
+			}
+
+			Vector3 c = vector3s[(i + 2) % vector3s.length];
+
+			Vector3 d2 = new Vector3(b);
+			d2.sub(c);
+			d2.nor();
+
+			float angle0 = -MathTools.angle(d2) * PI / 180.0f + PI * 2;// -PI/2+PI;
+			float angle1 = -MathTools.angle(d) * PI / 180.0f + PI;
+			float dangle = angle1 - angle0;
+			if (dangle < 0 && dangle>-PI)
+				makeArc(b.x, b.y, width * -1, angle0, dangle, 16, light, low);
+		}
+
 	}
 }

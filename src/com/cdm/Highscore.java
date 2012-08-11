@@ -42,6 +42,16 @@ public class Highscore {
 
 		public String name;
 		public Integer value;
+		
+		public String toString() {
+			String s=name;
+			while(s.length()<20)
+				s+=" ";
+			s+=value;
+			while(s.length()<24)
+				s+=" ";
+			return s;
+		}
 	}
 
 	public static List<Entry> main(String[] args) throws HighscoreAccessException {

@@ -58,8 +58,14 @@ public class TranslatingRenderer implements IRenderer {
 	}
 
 	@Override
+	public void render(PolySprite sprite, Position pos, float size,
+			float angle, int glTriangles, Color color) {
+		orig.render(sprite, pos, size, angle, glTriangles, color);
+	}
+
+	@Override
 	public void drawText(int i, int j, String string, Color c, float scale) {
-		orig.drawText(i,j,string,c,scale);
+		orig.drawText(i, j, string, c, scale);
 	}
 
 }

@@ -79,14 +79,14 @@ public class SmallShip extends EnemyUnit implements Element {
 			endPosition = getLevel().getSomeEnemyEndPosition();
 
 		Position p = getPosition();
-		
+
 		Vector3 delta = p.to(endPosition);
 		delta.nor();
-		
-		angle=MathTools.angle(delta);
+
+		angle = MathTools.angle(delta);
 		float speed = getSpeed();
-		p.x+=delta.x*speed*time;
-		p.y+=delta.y*speed*time;
+		p.x += delta.x * speed * time;
+		p.y += delta.y * speed * time;
 		setPosition(p); // react to position change
 
 		rayPhase += raySpeed * time;
@@ -140,30 +140,16 @@ public class SmallShip extends EnemyUnit implements Element {
 			if (bg == null) {
 				bg = new PolySprite();
 
-				Vector3 v0 = new Vector3(-1.5f, 0.8f, 0);
-				Vector3 v1 = new Vector3(1.5f, 0.0f, 0);
-				Vector3 v2 = new Vector3(-1.5f, -0.8f, 0);
-				Vector3 v3 = new Vector3(-0.5f, 0, 0);
-				Vector3 n = new Vector3(0, 0, 0);
 				Color c0 = new Color(0.7f, 0, 0, 0.8f);
 				Color c1 = new Color(0, 0, 0, 0);
 
-				bg.addVertex(v0, c1);
-				bg.addVertex(v1, c1);
-				bg.addVertex(n, c0);
-				bg.addVertex(v1, c1);
-				bg.addVertex(v2, c1);
-				bg.addVertex(n, c0);
-
-				bg.addVertex(v2, c1);
-				bg.addVertex(v3, c1);
-				bg.addVertex(n, c0);
-
+				bg.drawClosedPolyWithBorder(new Vector3[] { a, b, c, d }, c0,
+						c1, 0.5f);
 				bg.init();
 
 			}
 			renderer.render(bg, getPosition(), getSize(), angle,
-					GL10.GL_TRIANGLES);
+					GL10.GL_TRIANGLES, new Color(0, 0, 0, 0));
 		}
 	}
 }

@@ -17,15 +17,26 @@ public class Bug extends GroundMovingEnemy {
 	private Leg leg = new Leg();
 	private float delta = 0;
 	private Color outlineColor = new Color(1.0f, 0f, 0.1f, 1.0f);
+	private Color outerColor = new Color(0, 0, 0, 0);
 
 	public Bug(Position pos) {
 		super(pos);
 		setSize(0.2f);
 		if (sprite == null) {
 			sprite = new PolySprite();
-			sprite.fillRectangle(-0.5f, -0.3f, 1.0f, 0.6f, torsoColor); // torso
-			sprite.fillRectangle(-1.1f, -0.5f, 0.7f, 1.0f, headColor); // head
-			sprite.fillRectangle(0.3f, -0.6f, 1.7f, 1.2f, headColor); // end
+			if (false) {
+				sprite.fillRectangle(-0.5f, -0.3f, 1.0f, 0.6f, torsoColor); // torso
+				sprite.fillRectangle(-1.1f, -0.5f, 0.7f, 1.0f, headColor); // head
+				sprite.fillRectangle(0.3f, -0.6f, 1.7f, 1.2f, headColor); // end
+			} else {
+				sprite.makeNiceRectangle(0.3f, -0.5f, -0.3f, 1.0f, 0.6f,
+						torsoColor, outerColor); // torso
+				sprite.makeNiceRectangle(0.3f, -1.1f, -0.5f, 0.7f, 1.0f,
+						headColor, outerColor); // head
+				sprite.makeNiceRectangle(0.3f, 0.3f, -0.6f, 1.7f, 1.2f,
+						headColor, outerColor); // end
+
+			}
 			sprite.init();
 		}
 		if (outlineSprite == null) {

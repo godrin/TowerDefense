@@ -68,4 +68,10 @@ public class UnitRenderer implements IRenderer {
 		r.drawText(i, j, string, c, scale);
 	}
 
+	@Override
+	public void render(PolySprite sprite, Position pos, float size,
+			float angle, int glTriangles, Color color) {
+		r.render(sprite, pos, size, angle, glTriangles, color);
+	}
+
 }

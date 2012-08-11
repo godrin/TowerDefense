@@ -39,7 +39,10 @@ public class HighScoreScreen extends Screen implements IButtonPressed {
 		gui.addTime(delta);
 		gui.draw(renderer);
 		renderer.drawText(150, 480, "Highscores:", white, 3);
-		renderer.drawText(150, 350, ""+vals.get(0)+"\n" + vals.get(1) + "\n"+vals.get(2)+"\n"+vals.get(3)+"\n"+vals.get(4)+"\n"+vals.get(5)+"\n"+vals.get(6)+"\n"+vals.get(7)+"\n"+vals.get(8)+"\n"+vals.get(9)+"\n", white);
+		renderer.drawText(150, 350, "" + vals.get(0) + "\n" + vals.get(1)
+				+ "\n" + vals.get(2) + "\n" + vals.get(3) + "\n" + vals.get(4)
+				+ "\n" + vals.get(5) + "\n" + vals.get(6) + "\n" + vals.get(7)
+				+ "\n" + vals.get(8) + "\n" + vals.get(9) + "\n", white);
 
 	}
 
