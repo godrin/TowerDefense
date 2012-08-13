@@ -18,6 +18,7 @@ public class HighScoreScreen extends Screen implements IButtonPressed {
 	private Renderer renderer = new Renderer();
 	private Game game;
 	private List<Entry> vals;
+	int ypsilon = 380;
 	Color white = new Color(1, 1, 1, 1);
 
 	public HighScoreScreen(Game pgame) {
@@ -39,11 +40,11 @@ public class HighScoreScreen extends Screen implements IButtonPressed {
 		gui.addTime(delta);
 		gui.draw(renderer);
 		renderer.drawText(150, 480, "HIGHSCORES:", white, 3);
-		renderer.drawText(115, 380, "" + vals.get(0) + "Points"  + "\n" + vals.get(1) + "Points"
-				+ "\n" + vals.get(2) + "Points"  + "\n" + vals.get(3) + "Points" + "\n" + vals.get(4) + "Points" 
-				+ "\n" + vals.get(5)  + "Points" + "\n" + vals.get(6) + "Points"  + "\n" + vals.get(7) + "Points"
-				+ "\n" + vals.get(8) + "Points"  + "\n" + vals.get(9) + "Points" + "\n", white,1.25f);
-
+		renderer.drawText(115, ypsilon , "\n" + vals.get(0) + "Points"  + "\n" + vals.get(1) + "Points"
+					+ "\n" + vals.get(2) + "Points"  + "\n" + vals.get(3) + "Points" + "\n" + vals.get(4) + "Points" 
+					+ "\n" + vals.get(5)  + "Points" + "\n" + vals.get(6) + "Points"  + "\n" + vals.get(7) + "Points"
+					+ "\n" + vals.get(8) + "Points"  + "\n" + vals.get(9) + "Points" + "\n", white,1.25f);
+		
 	}
 
 	@Override
