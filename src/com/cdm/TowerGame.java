@@ -97,7 +97,6 @@ public class TowerGame implements ApplicationListener, Game {
 
 	@Override
 	public void resize(int width, int height) {
-		// TODO Auto-generated method stub
 
 	}
 

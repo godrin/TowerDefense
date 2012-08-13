@@ -202,7 +202,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 				level.setMoney(level.getMoney() - price);
 			}
 
-			// FIXME: check if an upgrade was selected
 			selectedUnit.selected(false);
 			selectedUnit = null;
 			upgradeView.setVisible(false);

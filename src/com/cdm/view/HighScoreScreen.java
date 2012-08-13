@@ -6,8 +6,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.cdm.Game;
 import com.cdm.Highscore;
-import com.cdm.Highscore.Entry;
-import com.cdm.Highscore.HighscoreAccessException;
+import com.cdm.HighscoreServer;
+import com.cdm.HighscoreServer.Entry;
+import com.cdm.HighscoreServer.HighscoreAccessException;
 import com.cdm.gui.BigButton;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.WidgetContainer;
@@ -18,33 +19,39 @@ public class HighScoreScreen extends Screen implements IButtonPressed {
 	private Renderer renderer = new Renderer();
 	private Game game;
 	private List<Entry> vals;
-	int ypsilon = 380;
+	private Highscore highscoreServer;
 	Color white = new Color(1, 1, 1, 1);
 
 	public HighScoreScreen(Game pgame) {
 
 		game = pgame;
-		gui.add(new BigButton(Gdx.graphics.getWidth() / 2, 50, Gdx.graphics
-				.getWidth() / 3, 50, "back", "back", this));
-		try {
-			vals = Highscore.main(null);
-		} catch (HighscoreAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		gui.add(new BigButton(Gdx.graphics.getWidth() / 2, 100, Gdx.graphics
+				.getWidth() / 6, 50, "back", "back", this));
+		highscoreServer = new HighscoreServer();
+
 	}
 
 	@Override
 	public void render(float delta) {
+		if (vals == null) {
+			try {
+				vals = highscoreServer.read();
+			} catch (HighscoreAccessException e) {
+			}
+		}
 		super.render(delta);
 		gui.addTime(delta);
 		gui.draw(renderer);
 		renderer.drawText(150, 480, "HIGHSCORES:", white, 3);
-		renderer.drawText(115, ypsilon , "\n" + vals.get(0) + "Points"  + "\n" + vals.get(1) + "Points"
-					+ "\n" + vals.get(2) + "Points"  + "\n" + vals.get(3) + "Points" + "\n" + vals.get(4) + "Points" 
-					+ "\n" + vals.get(5)  + "Points" + "\n" + vals.get(6) + "Points"  + "\n" + vals.get(7) + "Points"
-					+ "\n" + vals.get(8) + "Points"  + "\n" + vals.get(9) + "Points" + "\n", white,1.25f);
-		
+		if (vals != null) {
+			StringBuilder sb = new StringBuilder();
+			for (Entry entry : vals) {
+				sb.append(entry.toString());
+				sb.append("\n");
+			}
+			renderer.drawText(220, 350, sb.toString(), white);
+		}
 	}
 
 	@Override
