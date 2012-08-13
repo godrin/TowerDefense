@@ -48,9 +48,9 @@ public class HighScoreScreen extends Screen implements IButtonPressed {
 			StringBuilder sb = new StringBuilder();
 			for (Entry entry : vals) {
 				sb.append(entry.toString());
-				sb.append("\n");
+				sb.append(" Points\n");
 			}
-			renderer.drawText(220, 350, sb.toString(), white);
+			renderer.drawText(110, 350, sb.toString(), white,1.25f);
 		}
 	}
 
