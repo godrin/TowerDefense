@@ -26,8 +26,8 @@ public class HighScoreScreen extends Screen implements IButtonPressed {
 
 		game = pgame;
 
-		gui.add(new BigButton(Gdx.graphics.getWidth() / 2, 100, Gdx.graphics
-				.getWidth() / 6, 50, "back", "back", this));
+		gui.add(new BigButton(Gdx.graphics.getWidth() / 2, 50, Gdx.graphics
+				.getWidth() / 3, 50, "back", "back", this));
 		highscoreServer = new HighscoreServer();
 
 	}
@@ -50,7 +50,7 @@ public class HighScoreScreen extends Screen implements IButtonPressed {
 				sb.append(entry.toString());
 				sb.append(" Points\n");
 			}
-			renderer.drawText(110, 350, sb.toString(), white,1.25f);
+			renderer.drawText(110, 380, sb.toString(), white,1.25f);
 		}
 	}
 
