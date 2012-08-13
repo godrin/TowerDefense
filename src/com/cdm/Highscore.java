@@ -56,7 +56,7 @@ public class Highscore {
 
 	public static List<Entry> main(String[] args) throws HighscoreAccessException {
 		Highscore s = new Highscore();
-		Entry n = new Entry("HI", 999);
+		Entry n = new Entry("Nobody", 199);
 		List<Entry> vals = s.post(n);
 		System.out.println(vals);
 		return vals;

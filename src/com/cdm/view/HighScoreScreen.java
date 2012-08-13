@@ -23,8 +23,8 @@ public class HighScoreScreen extends Screen implements IButtonPressed {
 	public HighScoreScreen(Game pgame) {
 
 		game = pgame;
-		gui.add(new BigButton(Gdx.graphics.getWidth() / 2, 100, Gdx.graphics
-				.getWidth() / 6, 50, "back", "back", this));
+		gui.add(new BigButton(Gdx.graphics.getWidth() / 2, 50, Gdx.graphics
+				.getWidth() / 3, 50, "back", "back", this));
 		try {
 			vals = Highscore.main(null);
 		} catch (HighscoreAccessException e) {
@@ -38,11 +38,11 @@ public class HighScoreScreen extends Screen implements IButtonPressed {
 		super.render(delta);
 		gui.addTime(delta);
 		gui.draw(renderer);
-		renderer.drawText(150, 480, "Highscores:", white, 3);
-		renderer.drawText(220, 350, "" + vals.get(0) + "\n" + vals.get(1)
-				+ "\n" + vals.get(2) + "\n" + vals.get(3) + "\n" + vals.get(4)
-				+ "\n" + vals.get(5) + "\n" + vals.get(6) + "\n" + vals.get(7)
-				+ "\n" + vals.get(8) + "\n" + vals.get(9) + "\n", white);
+		renderer.drawText(150, 480, "HIGHSCORES:", white, 3);
+		renderer.drawText(115, 380, "" + vals.get(0) + "Points"  + "\n" + vals.get(1) + "Points"
+				+ "\n" + vals.get(2) + "Points"  + "\n" + vals.get(3) + "Points" + "\n" + vals.get(4) + "Points" 
+				+ "\n" + vals.get(5)  + "Points" + "\n" + vals.get(6) + "Points"  + "\n" + vals.get(7) + "Points"
+				+ "\n" + vals.get(8) + "Points"  + "\n" + vals.get(9) + "Points" + "\n", white,1.25f);
 
 	}
 
