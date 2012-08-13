@@ -75,6 +75,7 @@ public class Explosion implements DisplayEffect {
 			splinters.add(splinter);
 		}
 
+		level.addShot(new CircleDecal(pos));
 	}
 
 	private float getSize() {

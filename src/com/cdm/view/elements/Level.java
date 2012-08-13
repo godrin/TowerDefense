@@ -1,6 +1,7 @@
 package com.cdm.view.elements;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -42,6 +43,7 @@ public class Level {
 	private LevelFinishedListener levelFinishedListener;
 	private Random random = new Random();
 	private int levelNo;
+	private List<DisplayEffect> shotsToAdd = new ArrayList<DisplayEffect>();
 
 	public Level(Grid pGrid, LevelScreen pfinishedListener, PlayerState pState) {
 		playerState = pState;
@@ -95,6 +97,8 @@ public class Level {
 		for (DisplayEffect shot : displayEffects) {
 			shot.move(time);
 		}
+		displayEffects.addAll(shotsToAdd);
+		shotsToAdd.clear();
 		for (Unit unit : unitsToRemove) {
 			units.remove(unit);
 			removeMeFromGrid(unit.getPosition(), unit);
@@ -324,7 +328,8 @@ public class Level {
 	}
 
 	public void addShot(DisplayEffect abstractShot) {
-		displayEffects.add(abstractShot);
+		shotsToAdd.add(abstractShot);
+		//displayEffects.add(abstractShot);
 	}
 
 	public EnemyUnit getEnemyAt(Position target) {
@@ -412,7 +417,7 @@ public class Level {
 	}
 
 	public void setLevelNo(int levelNo) {
-		this.levelNo=levelNo;
+		this.levelNo = levelNo;
 	}
 
 	public int getLevelNo() {
