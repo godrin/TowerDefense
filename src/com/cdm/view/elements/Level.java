@@ -313,7 +313,7 @@ public class Level {
 		// removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		SoundFX.play(Type.HIT);
 		displayEffectsToAdd.add(new Explosion(enemyUnit.getPosition(),
-				enemyUnit.getSize(), this));
+				enemyUnit.getSize(), this, 12, true));
 		unitsToRemove.add(enemyUnit);
 		playerState.enemyDestroyed(enemyUnit);
 	}
@@ -401,14 +401,14 @@ public class Level {
 
 	public void unitDestroyed(Position position, Unit unit) {
 		SoundFX.play(Type.HIT);
-		displayEffectsToAdd.add(new Explosion(position, unit.getSize(), this));
+		displayEffectsToAdd.add(new Explosion(position, unit.getSize(), this,
+				20, true));
 		unitsToRemove.add(unit);
 		List<PathPos> playerUnitPositions = new ArrayList<PathPos>();
 		for (Unit unit1 : units) {
 			if (!(unit1 instanceof EnemyUnit)) {
 				playerUnitPositions.add(new PathPos(unit1.getPosition()));
 			}
-
 		}
 		PathFinder.breadthSearch(grid, PathFinder.UNITDIST_ACCESSOR,
 				(PathPos) null, playerUnitPositions, null, false);

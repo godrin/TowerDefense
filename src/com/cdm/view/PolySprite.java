@@ -378,4 +378,12 @@ public class PolySprite {
 		
 
 	}
+
+	public void fillPoly(Vector3[] bpoly, Color outerColor) {
+		for(int i=1;i<bpoly.length-1;i++) {
+			addVertex(bpoly[0],outerColor);
+			addVertex(bpoly[i],outerColor);
+			addVertex(bpoly[i+1],outerColor);
+		}
+	}
 }

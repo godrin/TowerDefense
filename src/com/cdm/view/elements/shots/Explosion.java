@@ -33,11 +33,14 @@ public class Explosion implements DisplayEffect {
 	private Level level;
 	private Color tmpColor = new Color(1, 1, 1, 1);
 	private final static Random rnd = new Random();
+	private boolean innerAnimation;
 
-	public Explosion(Position pos, float pSize, Level level) {
+	public Explosion(Position pos, float pSize, Level level, int splinterCount,
+			boolean pInnerAnim) {
 		this.pos = new Position(pos);
 		this.size = pSize;
 		this.level = level;
+		innerAnimation = pInnerAnim;
 
 		Vector3 a = new Vector3(-1, -1, 0);
 		Vector3 a1 = new Vector3(0, -0.5f, 0);
@@ -59,7 +62,7 @@ public class Explosion implements DisplayEffect {
 
 		splinterPoly = Arrays.asList(new Vector3[] { s1, s2, s3 });
 
-		for (int i = 0; i < 12; i++) {
+		for (int i = 0; i < splinterCount; i++) {
 			Splinter splinter = new Splinter();
 			splinter.currentPosition = new Position(getPosition());
 			splinter.currentAngle = (float) Math.random() * 180.0f;
@@ -91,7 +94,7 @@ public class Explosion implements DisplayEffect {
 	public void draw(IRenderer renderer) {
 		if (size >= 0.9f)
 			size = 0.8f;
-		if (size >= 0.0f) {
+		if (size >= 0.0f && innerAnimation) {
 
 			Color outerColor = new Color(0.5f, 0.5f, 0, 1.0f);
 
@@ -139,6 +142,5 @@ public class Explosion implements DisplayEffect {
 		if (splinters.size() <= 0) {
 			level.removeShot(this);
 		}
-
 	}
 }
