@@ -4,10 +4,12 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
+import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.MathTools;
@@ -35,6 +37,7 @@ public class Cannon extends RotatingUnit implements Element {
 	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
 	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
 	private float impact = 1;
+	private static PolySprite shadow;
 
 	public Cannon(Position p) {
 		super(p);
@@ -54,6 +57,13 @@ public class Cannon extends RotatingUnit implements Element {
 					e, e, f, f, g, g, h, h, i, i, a });
 			poly = Arrays.asList(new Vector3[] { a, b, c, a, c, d, i, d, h, d,
 					h, d2, g, f, d2, f, d2, e });
+			if (shadow == null) {
+				shadow = new PolySprite();
+				shadow.drawClosedPolyWithBorder(new Vector3[] { a, b, c, d, d2,
+						e, f, g, h, i }, innerColor, new Color(0, 0, 0, 0),
+						0.4f);
+				shadow.init();
+			}
 		}
 
 	}
@@ -61,11 +71,16 @@ public class Cannon extends RotatingUnit implements Element {
 	@Override
 	public void draw(IRenderer renderer) {
 		super.draw(renderer);
-		innerColor.b = 0.6f - hot;
-		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
-				getSize());
-		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
-				getSize());
+		if (true)
+			renderer.render(shadow, getPosition(), getSize(), getAngle(),
+					GL10.GL_TRIANGLES);
+		if (true) {
+			innerColor.b = 0.6f - hot;
+			renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
+					getSize());
+			renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
+					getSize());
+		}
 	}
 
 	void shoot(EnemyUnit enemy) {

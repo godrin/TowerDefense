@@ -7,6 +7,7 @@ import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.paths.PathPos;
+import com.cdm.view.elements.shots.Explosion;
 import com.cdm.view.elements.shots.MovingShot;
 import com.cdm.view.elements.units.Unit;
 
@@ -98,6 +99,9 @@ public abstract class EnemyUnit extends Unit {
 		if (energy <= 0.0f) {
 			getLevel().enemyDestroyed(this);
 		}
+		getLevel().addShot(
+				new Explosion(getPosition(), getSize()*0.5f, getLevel(), 2, false));
+
 	}
 
 	public void freeze(float time) {
