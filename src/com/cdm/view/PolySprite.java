@@ -46,7 +46,7 @@ public class PolySprite {
 		float[] vertices = new float[vs.size() * 8 * vertexSize];
 		short[] indexes = new short[vs.size()];
 
-		for (short u = 0; u < vertices.length; u++)
+		for (int u = 0; u < vertices.length; u++)
 			vertices[u] = 1;
 
 		for (short i = 0; i < vs.size(); i++) {
@@ -78,25 +78,35 @@ public class PolySprite {
 		addVertex(d, color);
 	}
 
+	public List<Vector3> makeArcVecs(float startAngle, float angleLen,
+			int sections, float radius) {
+		List<Vector3> vs = new ArrayList<Vector3>();
+		for (int i = 0; i <= sections; i++) {
+			float a = startAngle + angleLen * i / sections;
+			vs.add(new Vector3((float) Math.sin(a), (float) Math.cos(a), 0));
+		}
+		return vs;
+	}
+
 	public void makeArc(float x, float y, float radius, float startAngle,
-			float angle, int sections, Color inner, Color outer) {
+			float angleLen, int sections, Color inner, Color outer) {
 		for (int i = 0; i < sections; i++) {
 			addVertex(new Vector3(x, y, 0), inner);
 			addVertex(
 					new Vector3(x
 							+ radius
-							* (float) Math.sin(startAngle + angle * i
+							* (float) Math.sin(startAngle + angleLen * i
 									/ sections), y
 							+ radius
-							* (float) Math.cos(startAngle + angle * i
+							* (float) Math.cos(startAngle + angleLen * i
 									/ sections), 0), outer);
 			addVertex(
 					new Vector3(x
 							+ radius
-							* (float) Math.sin(startAngle + angle * (i + 1)
+							* (float) Math.sin(startAngle + angleLen * (i + 1)
 									/ sections), y
 							+ radius
-							* (float) Math.cos(startAngle + angle * (i + 1)
+							* (float) Math.cos(startAngle + angleLen * (i + 1)
 									/ sections), 0), outer);
 
 		}
@@ -282,8 +292,8 @@ public class PolySprite {
 
 	public void drawClosedPolyWithBorder(Vector3[] vector3s, Color light,
 			Color low, float width) {
-		//light = Color.RED;
-		//low = Color.BLACK;
+		// light = Color.RED;
+		// low = Color.BLACK;
 		Vector3 z = new Vector3(0, 0, -1);
 		for (int i = 0; i < vector3s.length; i++) {
 			Vector3 a = vector3s[i];
@@ -319,7 +329,7 @@ public class PolySprite {
 			float angle0 = -MathTools.angle(d2) * PI / 180.0f + PI * 2;// -PI/2+PI;
 			float angle1 = -MathTools.angle(d) * PI / 180.0f + PI;
 			float dangle = angle1 - angle0;
-			if (dangle < 0 && dangle>-PI)
+			if (dangle < 0 && dangle > -PI)
 				makeArc(b.x, b.y, width * -1, angle0, dangle, 16, light, low);
 		}
 
