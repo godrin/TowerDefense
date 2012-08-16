@@ -1,6 +1,7 @@
 package com.cdm.view.elements;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
@@ -16,6 +17,9 @@ public class BackgroundElement implements Element {
 
 	private List<Vector3> boxes = new ArrayList<Vector3>();
 	private List<Vector3> boxes0 = new ArrayList<Vector3>();
+
+	private List<Vector3> lines = Arrays.asList(new Vector3[] {
+			new Vector3(-0.7f, -0.7f, 0), new Vector3(0.7f, -0.7f, 0) });
 
 	private float size = .5f;
 	private Position pos;
@@ -144,6 +148,8 @@ public class BackgroundElement implements Element {
 		renderer.drawPoly(pos, boxes, 0, c0, size);
 
 		renderer.drawPoly(pos, boxes0, 0, c1, size);
+
+		renderer.drawLines(pos, lines, 0, c0, size);
 	}
 
 	@Override
