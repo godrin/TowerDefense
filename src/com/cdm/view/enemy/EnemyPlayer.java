@@ -47,7 +47,7 @@ public class EnemyPlayer {
 		return level;
 	}
 
-	public int getLevelNo() {
+	public int getWaveNo() {
 		return waveNo;
 	}
 
@@ -101,14 +101,14 @@ public class EnemyPlayer {
 		defs.clear();
 
 		// strength-based randomized enemy creation
-		enemyStrength += (1.5f * (float) getLevelNo());
+		enemyStrength += (1.5f * (float) getWaveNo());
 		Float currentStrength = enemyStrength;
 		Float lastTime = 0.0f;
 		int trials = MAX_TRIALS; // don' run endlessly
 
 		while (currentStrength > 0 && trials > 0) {
 			EnemyType t = EnemyType.random();
-			float strength = t.getStrength(getLevelNo());
+			float strength = t.getStrength(getWaveNo());
 
 			if (strength < currentStrength + EnemyType.STRENGTH_THRESHOLD) {
 				currentStrength -= strength;

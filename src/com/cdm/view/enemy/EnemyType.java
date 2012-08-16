@@ -31,7 +31,7 @@ public enum EnemyType {
 			s = 2.5f;
 			break;
 		case ROCKET:
-			s = 13.5f;
+			s = 10.5f;
 			break;
 		case TRUCK:
 			s = 10.5f;
@@ -40,7 +40,7 @@ public enum EnemyType {
 			s = 10.0f;
 			break;
 		case ROTOR:
-			s = 12.5f;
+			s = 10.5f;
 			break;
 		}
 		return s * (1.0f + (waveNo - 1) * FACTOR);
