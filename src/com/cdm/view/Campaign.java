@@ -26,14 +26,14 @@ public class Campaign {
 		}
 		level = new Level(new Grid(levels.get(plevel)), screen, playerState);
 		levelNo += 1;
-		if (levelNo>= 10) 
-			
+		if (levelNo>= 11) 
+			levelNo=0;
 		level.setLevelNo(levelNo);
 		return level;
 	}
 
 	public void restart() {
-		levelNo = 0;
+		levelNo =0;
 		playerState = new PlayerState();
 	}
 
