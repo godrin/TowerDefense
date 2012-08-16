@@ -4,10 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
+import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.shots.DisplayEffect;
@@ -25,6 +27,7 @@ public class Stunner extends RotatingUnit implements Element {
 	DisplayEffect currentShot = null;
 	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
 	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
+	private static PolySprite shadow;
 
 	public Stunner(Position p) {
 		super(p);
@@ -63,6 +66,11 @@ public class Stunner extends RotatingUnit implements Element {
 				poly.add(circle[(index + 1) % l]);
 				poly.add(new Vector3(0, 0, 0));
 			}
+
+			shadow = new PolySprite();
+			shadow.drawClosedPolyWithBorder(new Vector3[] { q3, q2, q1, q0 },
+					innerColor, new Color(0, 0, 0, 0), 0.6f);
+			shadow.init();
 		}
 		setTurningSpeed(15.0f);
 	}
@@ -70,6 +78,8 @@ public class Stunner extends RotatingUnit implements Element {
 	@Override
 	public void draw(IRenderer renderer) {
 		super.draw(renderer);
+		renderer.render(shadow, getPosition(), getSize(), getAngle(),
+				GL10.GL_TRIANGLES);
 		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
 				getSize());
 		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,

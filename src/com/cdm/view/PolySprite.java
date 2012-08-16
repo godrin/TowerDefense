@@ -328,10 +328,54 @@ public class PolySprite {
 
 			float angle0 = -MathTools.angle(d2) * PI / 180.0f + PI * 2;// -PI/2+PI;
 			float angle1 = -MathTools.angle(d) * PI / 180.0f + PI;
+
 			float dangle = angle1 - angle0;
+			if (dangle < -2 * PI)
+				dangle += 2 * PI;
 			if (dangle < 0 && dangle > -PI)
 				makeArc(b.x, b.y, width * -1, angle0, dangle, 16, light, low);
 		}
+
+	}
+
+	public void drawThickLine(Vector3 last, Vector3 current, float thickLast,
+			float thickCurrent, Color innerColor, Color outerColor) {
+		Vector3 delta = new Vector3(last);
+		Vector3 z = new Vector3(0, 0, -1);
+		delta.sub(current);
+		delta.nor();
+		Vector3 n = new Vector3(delta);
+		n.crs(z);
+		
+
+		Vector3 tmp = new Vector3();
+		tmp.set(n).mul(thickLast);
+		Vector3 a = new Vector3(last);
+		a.add(tmp);
+		Vector3 b = new Vector3(last);
+		b.sub(tmp);
+		tmp.set(n).mul(thickCurrent);
+		Vector3 c = new Vector3(current);
+		c.sub(tmp);
+		Vector3 d = new Vector3(current);
+		d.add(tmp);
+
+		addVertex(last, innerColor);
+		addVertex(a, outerColor);
+		addVertex(d, outerColor);
+
+		addVertex(last, innerColor);
+		addVertex(current, innerColor);
+		addVertex(d, outerColor);
+		
+		addVertex(last,innerColor);
+		addVertex(b,outerColor);
+		addVertex(c,outerColor);
+
+		addVertex(last,innerColor);
+		addVertex(c,outerColor);
+		addVertex(current,innerColor);
+		
 
 	}
 }

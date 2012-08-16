@@ -3,6 +3,7 @@ package com.cdm.view.elements.shots;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
@@ -31,6 +32,7 @@ public class Explosion implements DisplayEffect {
 	private List<Splinter> splinters = new ArrayList<Splinter>();
 	private Level level;
 	private Color tmpColor = new Color(1, 1, 1, 1);
+	private final static Random rnd = new Random();
 
 	public Explosion(Position pos, float pSize, Level level) {
 		this.pos = new Position(pos);
@@ -74,8 +76,12 @@ public class Explosion implements DisplayEffect {
 					- maxSpeed * 0.5f, 0);
 			splinters.add(splinter);
 		}
-
-		level.addShot(new CircleDecal(pos));
+		if (false) {
+			if (rnd.nextFloat() < 0.2f && false)
+				level.addDecal(new CircleDecal(pos));
+			else
+				level.addDecal(new CrackDecal(pos));
+		}
 	}
 
 	private float getSize() {

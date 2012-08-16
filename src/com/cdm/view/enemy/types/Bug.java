@@ -31,9 +31,9 @@ public class Bug extends GroundMovingEnemy {
 			} else {
 				sprite.makeNiceRectangle(0.3f, -0.5f, -0.3f, 1.0f, 0.6f,
 						torsoColor, outerColor); // torso
-				sprite.makeNiceRectangle(0.3f, -1.1f, -0.5f, 0.7f, 1.0f,
+				sprite.makeNiceRectangle(0.4f, -1.1f, -0.5f, 0.7f, 1.0f,
 						headColor, outerColor); // head
-				sprite.makeNiceRectangle(0.3f, 0.3f, -0.6f, 1.7f, 1.2f,
+				sprite.makeNiceRectangle(0.9f, 0.3f, -0.6f, 1.7f, 1.2f,
 						headColor, outerColor); // end
 
 			}

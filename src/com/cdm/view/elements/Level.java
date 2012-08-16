@@ -17,6 +17,8 @@ import com.cdm.view.Selector;
 import com.cdm.view.elements.Grid.GridElement;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
+import com.cdm.view.elements.shots.CircleDecal;
+import com.cdm.view.elements.shots.Decal;
 import com.cdm.view.elements.shots.DisplayEffect;
 import com.cdm.view.elements.shots.Explosion;
 import com.cdm.view.elements.shots.Shake;
@@ -44,6 +46,7 @@ public class Level {
 	private Random random = new Random();
 	private int levelNo;
 	private List<DisplayEffect> shotsToAdd = new ArrayList<DisplayEffect>();
+	private List<Decal> decals = new ArrayList<Decal>();
 
 	public Level(Grid pGrid, LevelScreen pfinishedListener, PlayerState pState) {
 		playerState = pState;
@@ -97,6 +100,9 @@ public class Level {
 		for (DisplayEffect shot : displayEffects) {
 			shot.move(time);
 		}
+		for (Decal decal : decals) {
+			decal.move(time);
+		}
 		displayEffects.addAll(shotsToAdd);
 		shotsToAdd.clear();
 		for (Unit unit : unitsToRemove) {
@@ -115,6 +121,10 @@ public class Level {
 
 	public void draw(IRenderer renderer) {
 		drawBox(renderer);
+
+		for (DisplayEffect decal : decals) {
+			decal.draw(renderer);
+		}
 
 		for (int zLayer = 0; zLayer < 10; zLayer++) {
 			for (Unit unit : units) {
@@ -329,7 +339,7 @@ public class Level {
 
 	public void addShot(DisplayEffect abstractShot) {
 		shotsToAdd.add(abstractShot);
-		//displayEffects.add(abstractShot);
+		// displayEffects.add(abstractShot);
 	}
 
 	public EnemyUnit getEnemyAt(Position target) {
@@ -422,6 +432,10 @@ public class Level {
 
 	public int getLevelNo() {
 		return levelNo;
+	}
+
+	public void addDecal(Decal decal) {
+		decals.add(decal);
 	}
 
 }
