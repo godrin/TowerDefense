@@ -24,11 +24,13 @@ public class InputScreen extends Screen implements IButtonPressed {
 	private Highscore highscoreServer;
 	public String name = "";
 	private int points;
+	private Campaign campaign;
 	Color white = new Color(1, 1, 1, 1);
 
 	public InputScreen(Game pgame, Campaign c) {
 
 		game = pgame;
+		campaign = c;
 		points=c.playerState.getPoints();
 		gui.add(new BigButton(Gdx.graphics.getWidth() / 2, 50, Gdx.graphics
 				.getWidth() / 3, 50, "commit", "commit", this));
@@ -54,6 +56,7 @@ public class InputScreen extends Screen implements IButtonPressed {
 		gui.draw(renderer);
 		renderer.drawText(150, 480, "ENTER YOUR NAME:", white, 2);
 		renderer.drawText(250, 300,name, white,2);
+		
 		if (vals != null) {
 			StringBuilder sb = new StringBuilder();
 			for (Entry entry : vals) {
@@ -67,8 +70,8 @@ public class InputScreen extends Screen implements IButtonPressed {
 	@Override
 	public void buttonPressed(String buttonName) {
 		if (buttonName.equals("commit")){
-		
-			Entry n = new Entry(name, points );
+			
+			Entry n = new Entry(name, getPoints() );
 			try {
 				highscoreServer.post(n);
 			} catch (HighscoreAccessException e) {
@@ -96,6 +99,11 @@ public class InputScreen extends Screen implements IButtonPressed {
 			return true;
 		}
 		return false;
+	}
+	public int getPoints(){
+		points = campaign.playerState.getPoints();
+		return points;
+		
 	}
 
 }
