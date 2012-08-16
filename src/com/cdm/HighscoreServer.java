@@ -35,7 +35,7 @@ public class HighscoreServer implements Highscore {
 
 	public static class Entry {
 
-		Entry(String pName, Integer pValue) {
+		public Entry(String pName, Integer pValue) {
 			name = pName;
 			value = pValue;
 		}

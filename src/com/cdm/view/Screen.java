@@ -10,6 +10,7 @@ public class Screen extends InputAdapter {
 	public static final String MENU_SCREEN = "menuScreen";
 	public static final String OPTIONS_SCREEN = "optionsScreen";
 	public static final String HIGHSCORE_SCREEN = "highscoreScreen";
+	public static final String INPUT_SCREEN = "inputScreen";
 
 	public final void removed() {
 

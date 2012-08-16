@@ -69,6 +69,22 @@ public class PlayerState {
 			health += 1;
 			SoundFX.play(Type.WIN);
 		}
+		if (bonus == 125) {
+			health += 1;
+			SoundFX.play(Type.WIN);
+		}
+		if (bonus == 150) {
+			health += 1;
+			SoundFX.play(Type.WIN);
+		}
+		if (bonus == 175) {
+			health += 1;
+			SoundFX.play(Type.WIN);
+		}
+		if (bonus == 200) {
+			health += 1;
+			SoundFX.play(Type.WIN);
+		}
 
 	}
 

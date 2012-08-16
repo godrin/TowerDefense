@@ -75,7 +75,18 @@ public class LevelDisplays {
 		}
 		if (level.getBonus() >= 100 && level.getBonus() <= 102) {
 			renderer.drawText(350, 300, "1 up!", color,2);
-			
+		}
+		if (level.getBonus() >= 125 && level.getBonus() <= 127) {
+			renderer.drawText(350, 300, "1 up!", color,2);
+		}
+		if (level.getBonus() >= 150 && level.getBonus() <= 152) {
+			renderer.drawText(350, 300, "1 up!", color,2);
+		}
+		if (level.getBonus() >= 175 && level.getBonus() <= 177) {
+			renderer.drawText(350, 300, "1 up!", color,2);
+		}
+		if (level.getBonus() >= 200 && level.getBonus() <= 202) {
+			renderer.drawText(350, 300, "1 up!", color,2);
 		}
 	}
 }
