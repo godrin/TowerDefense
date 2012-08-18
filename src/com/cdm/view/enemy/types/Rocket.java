@@ -45,7 +45,7 @@ public class Rocket extends EnemyUnit implements Element {
 
 	public Rocket(Position position) {
 		super(position);
-		setEnergy(45);
+		setEnergy(23);
 		setSize(0.5f);
 
 	}

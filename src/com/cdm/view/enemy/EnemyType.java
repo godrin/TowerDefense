@@ -40,7 +40,7 @@ public enum EnemyType {
 			s = 10.0f;
 			break;
 		case ROTOR:
-			s = 10.5f;
+			s = 9.0f;
 			break;
 		}
 		return s * (1.0f + (waveNo - 1) * FACTOR);

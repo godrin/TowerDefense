@@ -11,12 +11,12 @@ cooling=0.3:2
 distance=5:2
 shot=0.4:2
 power=0.4:2
-cooling=0.2:2
+cooling=0.4:2
 ==3
 distance=6:20
 shot=0.3:20
 power=0.5:20
-cooling=0.15:20
+cooling=0.6:20
 =Stunner
 ==1
 distance=3:2
@@ -25,8 +25,8 @@ cooling=1.0:2
 rotation=45.0:2
 ==2
 distance=4:2
-shot=1.7:2
-cooling=0.5:2
+shot=2.5:2
+cooling=1.5:2
 rotation=90.0:2
 =RocketLauncher
 ==1

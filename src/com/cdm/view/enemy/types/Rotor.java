@@ -54,7 +54,7 @@ public class Rotor extends AirMovingEnemy {
 		}
 		setSize(0.4f);
 		setTurningSpeed2(90);
-		setEnergy(25);
+		setEnergy(20);
 	}
 
 	@Override

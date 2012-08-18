@@ -18,9 +18,12 @@ public class EnemyUnits {
 		if (EnemyType.BIG_SHIP.equals(t)) {
 			if (levelNo != 2)
 			u = new BigShip(position);
+			else u = new Bug(position);
 		}
 		if (EnemyType.SMALL_SHIP.equals(t)) {
+			if (levelNo != 2)
 			u = new SmallShip(position);
+			else u = new Tank(position);
 		}
 		if (EnemyType.TANK.equals(t)) {
 			u = new Tank(position);
@@ -28,6 +31,7 @@ public class EnemyUnits {
 		if (EnemyType.ROCKET.equals(t)) {
 			if (  levelNo>= 3)
 			u = new Rocket(position);
+			else u = new Tank2(position);
 		}
 		if (EnemyType.TRUCK.equals(t)) {
 			u = new Truck(position);
@@ -36,8 +40,9 @@ public class EnemyUnits {
 			u = new Tank2(position);
 		}
 		if (EnemyType.ROTOR.equals(t)){
-			if (levelNo>=4)
+			if (levelNo>=5)
 			u = new Rotor(position);
+			else u = new Bug(position);
 		}
 		if (EnemyType.BUG.equals(t)){
 			u = new Bug(position);
