@@ -57,6 +57,8 @@ public class SimpleShot extends MovingShot {
 		renderer.drawLines(getPosition(), lines, angle, OUTER_COLOR, getSize());
 		renderer.render(backray, getPosition(), getSize(), angle,
 				GL10.GL_TRIANGLES);
+		drawBurn(renderer);
+
 	}
 
 	@Override

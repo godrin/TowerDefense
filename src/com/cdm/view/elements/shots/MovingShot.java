@@ -1,6 +1,13 @@
 package com.cdm.view.elements.shots;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector3;
+import com.cdm.view.IRenderer;
+import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.Level;
@@ -28,6 +35,7 @@ public abstract class MovingShot implements Element, DisplayEffect {
 	private final static Vector3 a = new Vector3();
 	private final static Vector3 b = new Vector3();
 	private final static Vector3 c = new Vector3();
+	private List<Vector3> raySprites = new ArrayList<Vector3>();
 
 	public MovingShot(Position pfrom, Position to, Level plevel, float pImpact) {
 
@@ -86,19 +94,71 @@ public abstract class MovingShot implements Element, DisplayEffect {
 			c.set(a.x * g1 + b.x * g, a.y * g1 + b.y * g, 0);
 			pos.x = c.x;
 			pos.y = c.y;
-			
-			if(!deltaV.isZero()) {
-				a.set(pos.x-deltaV.x,pos.y-deltaV.y,0);
-				angle=MathTools.angle(a);
+
+			if (!deltaV.isZero()) {
+				a.set(pos.x - deltaV.x, pos.y - deltaV.y, 0);
+				angle = MathTools.angle(a);
 			}
-			deltaV.set(pos.x,pos.y,0);
-			
-			
+			deltaV.set(pos.x, pos.y, 0);
+
 		}
 		afterMove(pos);
 	}
 
-	protected void afterMove(Position pos2) {
+	protected void afterMove(Position ppos) {
+		Vector3 pos = new Vector3(ppos.toVector());
+
+		Vector3 last = null;
+		if (raySprites.size() > 0) {
+			last = raySprites.get(raySprites.size() - 1);
+
+			Vector3 dist = new Vector3(pos);
+			dist.sub(last);
+			if (dist.len() > 0.3f) {
+				raySprites.add(pos);
+			}
+		} else
+			raySprites.add(pos);
+
+	}
+
+	protected void drawBurn(IRenderer renderer) {
+		if (true)
+			return;
+		PolySprite s = new PolySprite();
+		Vector3 ln = null;
+		for (int i = 0; i < raySprites.size() - 1; i++) {
+			Vector3 xa = raySprites.get(i);
+			Vector3 xb = raySprites.get(i + 1);
+			Vector3 delta = new Vector3(xb.x - xa.x, xb.y - xa.y, 0);
+			Vector3 n = new Vector3(delta);
+			n.nor();
+			n.crs(0, 0, -1);
+			n.mul(0.2f);
+			if (ln == null)
+				ln = n;
+
+			float s0 = 0.2f + (i * 0.5f / raySprites.size());
+			float s1 = 0.2f + ((i + 1) * 0.5f / raySprites.size());
+			Vector3 a = new Vector3(xa.x - ln.x * s0, xa.y - ln.y * s0, 0);
+			Vector3 b = new Vector3(xa.x + ln.x * s0, xa.y + ln.y * s0, 0);
+			Vector3 c = new Vector3(xb.x + n.x * s1, xb.y + n.y * s1, 0);
+			Vector3 d = new Vector3(xb.x - n.x * s1, xb.y - n.y * s1, 0);
+			Color c0 = new Color(1, 0, 0, 0.5f);
+			Color c1 = new Color(0, 0, 1, 0.5f);
+			s.addVertex(a, c0);
+			s.addVertex(b, c1);
+			s.addVertex(c, c1);
+
+			s.addVertex(a, c0);
+			s.addVertex(c, c1);
+			s.addVertex(d, c0);
+			ln = n;
+
+		}
+		s.init();
+		renderer.render(s, Position.NULL, 1, 0, GL10.GL_TRIANGLES);
+
 	}
 
 	public void moveOld(float time) {
