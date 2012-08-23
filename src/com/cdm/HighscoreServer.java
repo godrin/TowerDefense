@@ -17,7 +17,7 @@ import com.cdm.view.Renderer;
 
 public class HighscoreServer implements Highscore {
 	private static final int BUFSIZE = 1024 * 100;
-	private String url = "http://0.0.0.0:9292";
+	private String url = "http://aqueous-sea-7768.herokuapp.com";
 	private Renderer renderer = new Renderer();
 
 	public static class HighscoreAccessException extends Exception {
