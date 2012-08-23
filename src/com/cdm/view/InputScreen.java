@@ -31,18 +31,19 @@ public class InputScreen extends Screen implements IButtonPressed {
 
 		game = pgame;
 		campaign = c;
-		points=c.playerState.getPoints();
+		points = c.playerState.getPoints();
 		gui.add(new BigButton(Gdx.graphics.getWidth() / 2, 50, Gdx.graphics
 				.getWidth() / 3, 50, "commit", "commit", this));
 		highscoreServer = new HighscoreServer();
 
 	}
-	public boolean keyTyped (char character) {
-	 char c = character;
-	 name+= c;
-	 return false;
+
+	public boolean keyTyped(char character) {
+		char c = character;
+		name += c;
+		return false;
 	}
-	
+
 	@Override
 	public void render(float delta) {
 		if (vals == null) {
@@ -55,33 +56,33 @@ public class InputScreen extends Screen implements IButtonPressed {
 		gui.addTime(delta);
 		gui.draw(renderer);
 		renderer.drawText(150, 480, "ENTER YOUR NAME:", white, 2);
-		renderer.drawText(250, 300,name, white,2);
-		
+		renderer.drawText(250, 300, name, white, 2);
+
 		if (vals != null) {
 			StringBuilder sb = new StringBuilder();
 			for (Entry entry : vals) {
 				sb.append(entry.toString());
 				sb.append(" Points\n");
 			}
-			//renderer.drawText(110, 380, sb.toString(), white,1.25f);
+			// renderer.drawText(110, 380, sb.toString(), white,1.25f);
 		}
 	}
 
 	@Override
 	public void buttonPressed(String buttonName) {
-		if (buttonName.equals("commit")){
-			
-			Entry n = new Entry(name, getPoints() );
+		if (buttonName.equals("commit")) {
+
+			Entry n = new Entry(name, getPoints());
 			try {
 				highscoreServer.post(n);
 			} catch (HighscoreAccessException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			name="";
+			name = "";
 			game.setScreen(Screen.HIGHSCORE_SCREEN);
 			campaign.restart();
-			}
+		}
 	}
 
 	public boolean touchDown(int x, int y, int pointer, int button) {
@@ -101,10 +102,11 @@ public class InputScreen extends Screen implements IButtonPressed {
 		}
 		return false;
 	}
-	public int getPoints(){
+
+	public int getPoints() {
 		points = campaign.playerState.getPoints();
 		return points;
-		
+
 	}
 
 }

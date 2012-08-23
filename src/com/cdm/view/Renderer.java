@@ -1,7 +1,6 @@
 package com.cdm.view;
 
 import java.util.List;
-import java.util.Random;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
@@ -95,10 +94,7 @@ public class Renderer implements IRenderer {
 
 	@Override
 	public void drawRect(float x0, float y0, float x1, float y1, Color c) {
-		
-		
-		
-		
+
 		Gdx.gl10.glLineWidth(3);
 		initGlSettings();
 		renderer.begin(GL10.GL_LINE_LOOP);
@@ -117,7 +113,7 @@ public class Renderer implements IRenderer {
 
 	@Override
 	public void fillRect(float x0, float y0, float x1, float y1, Color c) {
-		
+
 		renderer.begin(GL10.GL_TRIANGLES);
 		initGlSettings();
 
@@ -169,12 +165,12 @@ public class Renderer implements IRenderer {
 	@Override
 	public void render(PolySprite sprite, Position pos, float size,
 			float angle, int renderMode) {
-		render(sprite,pos,size,angle,renderMode,Color.WHITE);
+		render(sprite, pos, size, angle, renderMode, Color.WHITE);
 	}
 
 	@Override
 	public void render(PolySprite sprite, Position pos, float size,
-			float angle, int renderMode,Color color) {
+			float angle, int renderMode, Color color) {
 		if (Gdx.gl10 != null) {
 
 			Gdx.gl10.glPushMatrix();

@@ -13,6 +13,7 @@ import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.MathTools;
+import com.cdm.view.elements.shots.RocketShot;
 import com.cdm.view.elements.shots.SimpleShot;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -95,10 +96,17 @@ public class Cannon extends RotatingUnit implements Element {
 						* startingRadius;
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
-				getLevel().addShot(
-						new SimpleShot(startingPos, anticipatePosition(
-								startingPos, enemy, SimpleShot.SPEED),
-								getLevel(), impact));
+
+				if (true)
+					getLevel().addShot(
+							new SimpleShot(startingPos, anticipatePosition(
+									startingPos, enemy, SimpleShot.SPEED),
+									getLevel(), impact));
+				else
+					getLevel().addShot(
+							new RocketShot(startingPos, anticipatePosition(
+									startingPos, enemy, SimpleShot.SPEED),
+									getLevel(), (int)impact));
 				SoundFX.play(Type.SHOT2);
 				hot += HOT_PER_SHOT;
 				if (hot > TOO_HOT)

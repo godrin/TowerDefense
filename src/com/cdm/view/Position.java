@@ -5,11 +5,13 @@ import com.cdm.view.elements.paths.PathPos;
 
 public class Position {
 
+
 	private CoordSystem system;
 
 	public static CoordSystem SCREEN_REF = new CoordSystem(0, 0, 1);
 	public static CoordSystem BUTTON_REF = new CoordSystem(0, 0, 1);
 	public static CoordSystem LEVEL_REF = new CoordSystem(0, 0, 48);
+	public static final Position NULL = new Position(0,0,LEVEL_REF);
 
 	public float x;
 	public float y;
@@ -117,5 +119,11 @@ public class Position {
 
 	public boolean valid() {
 		return x >= 0 && y >= 0;
+	}
+
+	public float lengthTo(Position target) {
+		float dx = x - target.x;
+		float dy = y - target.y;
+		return (float) Math.sqrt(dx * dx + dy * dy);
 	}
 }
