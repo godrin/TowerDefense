@@ -3,11 +3,13 @@ package com.cdm.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Matrix4;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.cdm.view.elements.MathTools;
@@ -19,6 +21,7 @@ public class PolySprite {
 	private List<Vector3> vs = new ArrayList<Vector3>();
 	private List<Color> cs = new ArrayList<Color>();
 	private int primitiveType;
+	private static ShaderProgram meshShader = null;
 
 	public void addVertex(Vector3 v, Color c) {
 		vs.add(v);
@@ -62,6 +65,11 @@ public class PolySprite {
 		mesh.setAutoBind(true);
 		mesh.setVertices(vertices);
 		mesh.setIndices(indexes);
+
+		if (Gdx.gl20 != null && meshShader == null) {
+			meshShader = SimpleShader.createShader(Gdx.graphics, "colored");
+
+		}
 
 	}
 
@@ -346,7 +354,6 @@ public class PolySprite {
 		delta.nor();
 		Vector3 n = new Vector3(delta);
 		n.crs(z);
-		
 
 		Vector3 tmp = new Vector3();
 		tmp.set(n).mul(thickLast);
@@ -367,23 +374,26 @@ public class PolySprite {
 		addVertex(last, innerColor);
 		addVertex(current, innerColor);
 		addVertex(d, outerColor);
-		
-		addVertex(last,innerColor);
-		addVertex(b,outerColor);
-		addVertex(c,outerColor);
 
-		addVertex(last,innerColor);
-		addVertex(c,outerColor);
-		addVertex(current,innerColor);
-		
+		addVertex(last, innerColor);
+		addVertex(b, outerColor);
+		addVertex(c, outerColor);
+
+		addVertex(last, innerColor);
+		addVertex(c, outerColor);
+		addVertex(current, innerColor);
 
 	}
 
 	public void fillPoly(Vector3[] bpoly, Color outerColor) {
-		for(int i=1;i<bpoly.length-1;i++) {
-			addVertex(bpoly[0],outerColor);
-			addVertex(bpoly[i],outerColor);
-			addVertex(bpoly[i+1],outerColor);
+		for (int i = 1; i < bpoly.length - 1; i++) {
+			addVertex(bpoly[0], outerColor);
+			addVertex(bpoly[i], outerColor);
+			addVertex(bpoly[i + 1], outerColor);
 		}
+	}
+
+	public void render(Matrix4 projMatrix, int renderMode) {
+		mesh.render(meshShader, renderMode);
 	}
 }

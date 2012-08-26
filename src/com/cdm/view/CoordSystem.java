@@ -21,6 +21,8 @@ public class CoordSystem {
 			Gdx.gl10.glLineWidth(scale * 0.04f);
 		} else {
 			Gdx.gl20.glLineWidth(scale * 0.04f);
+			Renderer.scaleMatrix(scale,scale,scale);
+			Renderer.translateMatrix(x,y,0);
 		}
 	}
 

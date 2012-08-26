@@ -110,6 +110,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 		if (Gdx.gl10 != null)
 			Gdx.gl10.glPushMatrix();
+		else {
+			Renderer.pushMatrix();
+		}
 		Position.LEVEL_REF.apply();
 
 		level.draw(unitRenderer);
@@ -121,6 +124,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (Gdx.gl10 != null) {
 			Gdx.gl10.glPopMatrix();
 			Gdx.gl10.glPushMatrix();
+		} else {
+			Renderer.popMatrix();
+			Renderer.pushMatrix();
 		}
 		Position.SCREEN_REF.apply();
 
@@ -129,6 +135,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (Gdx.gl10 != null)
 
 			Gdx.gl10.glPopMatrix();
+		else
+			Renderer.popMatrix();
 
 	}
 
@@ -297,13 +305,12 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	// FIXME move this function in a "Campaign" or game-control class, maybe
 	// "towergame"
 	public void restart() {
-		if (campaign.playerState.getPoints()>=100){
+		if (campaign.playerState.getPoints() >= 100) {
 			game.setScreen(Screen.INPUT_SCREEN);
-		}
-		else{
-		game.setScreen(Screen.HIGHSCORE_SCREEN);
-		campaign.restart();
-		setLevel(campaign.getNextLevel(this));
+		} else {
+			game.setScreen(Screen.HIGHSCORE_SCREEN);
+			campaign.restart();
+			setLevel(campaign.getNextLevel(this));
 		}
 	}
 
