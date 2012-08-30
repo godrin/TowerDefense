@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Mesh;
 import com.badlogic.gdx.graphics.VertexAttribute;
 import com.badlogic.gdx.graphics.VertexAttributes.Usage;
@@ -62,14 +63,13 @@ public class PolySprite {
 			vertices[b + colorOffset] = Color.toFloatBits(c.r, c.g, c.b, c.a);
 			indexes[i] = i;
 		}
-		mesh.setAutoBind(true);
 		mesh.setVertices(vertices);
 		mesh.setIndices(indexes);
 
 		if (Gdx.gl20 != null && meshShader == null) {
 			meshShader = SimpleShader.createShader(Gdx.graphics, "colored");
-
-		}
+		} else
+			mesh.setAutoBind(true);
 
 	}
 
@@ -394,6 +394,10 @@ public class PolySprite {
 	}
 
 	public void render(Matrix4 projMatrix, int renderMode) {
+		meshShader.begin();
+		meshShader.setUniformMatrix("world", projMatrix);
+
 		mesh.render(meshShader, renderMode);
+		meshShader.end();
 	}
 }
