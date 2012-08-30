@@ -12,13 +12,11 @@ import com.cdm.HighscoreServer.HighscoreAccessException;
 import com.cdm.gui.BigButton;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.WidgetContainer;
-import com.cdm.view.elements.Level;
 
 public class InputScreen extends Screen implements IButtonPressed {
 
 	private WidgetContainer gui = new WidgetContainer();
 	private Renderer renderer = new Renderer();
-	private Level level;
 	private Game game;
 	private List<Entry> vals;
 	private Highscore highscoreServer;

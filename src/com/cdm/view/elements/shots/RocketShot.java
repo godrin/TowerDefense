@@ -1,11 +1,7 @@
 package com.cdm.view.elements.shots;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.PolySprite;
 import com.cdm.view.Position;

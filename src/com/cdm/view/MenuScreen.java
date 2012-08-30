@@ -17,7 +17,6 @@ public class MenuScreen extends Screen implements IButtonPressed {
 	private WidgetContainer gui = new WidgetContainer();
 	private Renderer renderer = new Renderer();
 	private Game game;
-	private float animX = 0;
 	private long oldMicros = 0;
 	private PolySprite sprite;
 	private Position spritePos = new Position(Gdx.graphics.getWidth() / 4,
@@ -56,7 +55,6 @@ public class MenuScreen extends Screen implements IButtonPressed {
 		}
 		oldMicros = micro;
 
-		animX -= delta;
 		super.render(delta);
 		renderer.initGlSettings();
 		gui.addTime(delta);
