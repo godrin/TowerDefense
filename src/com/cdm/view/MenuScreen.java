@@ -3,7 +3,14 @@ package com.cdm.view;
 import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Mesh;
+import com.badlogic.gdx.graphics.VertexAttribute;
+import com.badlogic.gdx.graphics.VertexAttributes.Usage;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
+import com.badlogic.gdx.math.Matrix4;
 import com.cdm.Game;
 import com.cdm.gui.AnimText;
 import com.cdm.gui.BigButton;
@@ -44,6 +51,7 @@ public class MenuScreen extends Screen implements IButtonPressed {
 		b3.add(new MoveAnimation(Easings.QUAD, 3.0f, middle, b3.getY(), b3));
 
 		sprite = SpriteReader.read("/com/cdm/view/elements/units/power.sprite");
+
 	}
 
 	@Override
