@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.HAlignment;
 import com.badlogic.gdx.graphics.g2d.BitmapFont.TextBounds;
@@ -134,13 +135,36 @@ public class Renderer implements IRenderer {
 			p.trn(pos.x, pos.y, 0);
 			x.mul(p);
 			x.mul(s);
-			renderer20.begin(x, GL10.GL_TRIANGLES);
-			for (Vector3 v : lines) {
-				renderer20.color(color.r, color.g, color.b, color.a);
-				renderer20.vertex(v.x, v.y, v.z);
-			}
+			if (true) {
+				renderer20.begin(x, GL20.GL_TRIANGLES);
+				for (Vector3 v : lines) {
+					// FIXME: ensure from outside !
+					float r = color.r;
+					float g = color.g;
+					float b = color.b;
+					float a = color.a;
+					if (r > 1)
+						r = 1;
+					if (r < 0)
+						r = 0;
+					if (g > 1)
+						g = 1;
+					if (g < 0)
+						g = 0;
+					if (b > 1)
+						b = 1;
+					if (b < 0)
+						b = 0;
+					if (a > 1)
+						a = 1;
+					if (a < 0)
+						a = 0;
+					renderer20.color(r, g, b, a);
+					renderer20.vertex(v.x, v.y, v.z);
+				}
 
-			renderer20.end();
+				renderer20.end();
+			}
 		}
 
 	}
@@ -276,27 +300,26 @@ public class Renderer implements IRenderer {
 			Gdx.gl10.glPopMatrix();
 		} else {
 			/*
-			Matrix4 p = new Matrix4();
-
-			p.setToRotation(Vector3.Z, angle);
-			p.trn(pos.x, pos.y, 0);
-			p.mul(projMatrix);
-			*/
+			 * Matrix4 p = new Matrix4();
+			 * 
+			 * p.setToRotation(Vector3.Z, angle); p.trn(pos.x, pos.y, 0);
+			 * p.mul(projMatrix);
+			 */
 			initGlSettings();
 			Matrix4 p = new Matrix4();
 			Matrix4 s = new Matrix4();
 			Matrix4 x = new Matrix4(projMatrix);
-			//size*=pos.getSystem().getScale();
+			// size*=pos.getSystem().getScale();
 			s.setToScaling(size, size, size);
 			p.setToRotation(Vector3.Z, angle);
 			p.trn(pos.x, pos.y, 0);
 			x.mul(p);
 			x.mul(s);
 
-			//Gdx.gl20.glBlendColor(color.r, color.g, color.b, color.a);
-			//Gdx.gl20.glScalef(size, size, size);
+			// Gdx.gl20.glBlendColor(color.r, color.g, color.b, color.a);
+			// Gdx.gl20.glScalef(size, size, size);
 			Gdx.gl20.glLineWidth(pos.getSystem().getScale() * 0.04f);
-//			x=new Matrix4();
+			// x=new Matrix4();
 
 			sprite.render(x, renderMode);
 		}
@@ -315,8 +338,8 @@ public class Renderer implements IRenderer {
 	public static void scaleMatrix(float x, float y, float z) {
 		Matrix4 m = new Matrix4();
 		m.setToScaling(x, y, z);
-		//m.mul(projMatrix);
-		//projMatrix = m;
+		// m.mul(projMatrix);
+		// projMatrix = m;
 		projMatrix.mul(m);
 	}
 
