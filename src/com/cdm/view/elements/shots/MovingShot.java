@@ -37,14 +37,14 @@ public abstract class MovingShot implements Element, DisplayEffect {
 	private final static Vector3 c = new Vector3();
 	private List<Vector3> raySprites = new ArrayList<Vector3>();
 
-	public MovingShot(Position pfrom, Position to, Level plevel, float pImpact) {
+	public MovingShot(Position pfrom, Position to, Level plevel, float pImpact,
+			Vector3 movingDir) {
 
 		from = new Position(pfrom);
 		pos = new Position(pfrom);
-		a.set(to.x - from.x, to.y - from.y, 0);
-		a.nor();
-		a.crs(0, 0, -1);
-		a.mul(0.5f);
+
+		a.set(movingDir).nor();
+		a.scale(-1, -1, -1);
 
 		inbetween = new Position(a.x + (to.x * 0.75f + from.x * 0.25f), a.y
 				+ (to.y * 0.75f + from.y * 0.25f), Position.LEVEL_REF);

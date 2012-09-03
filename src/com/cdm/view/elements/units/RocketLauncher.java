@@ -93,10 +93,12 @@ public class RocketLauncher extends RotatingUnit implements Element {
 						* startingRadius;
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
-				getLevel().addShot(
-						new RocketShot(startingPos, anticipatePosition(
-								startingPos, enemy, RocketShot.speed),
-								getLevel(), impact));
+				getLevel()
+						.addShot(
+								new RocketShot(startingPos, anticipatePosition(
+										startingPos, enemy, RocketShot.speed),
+										getLevel(), impact, enemy
+												.getMovingDirection()));
 				SoundFX.play(Type.SHOT);
 
 			}
@@ -108,6 +110,7 @@ public class RocketLauncher extends RotatingUnit implements Element {
 	public int getZLayer() {
 		return 0;
 	}
+
 	@Override
 	protected void setValue(String key, Float value) {
 		if ("distance".equals(key))
