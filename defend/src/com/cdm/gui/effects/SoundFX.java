@@ -21,7 +21,7 @@ public class SoundFX {
 		 sounds.put(Type.KLICK,
 				 Gdx.audio.newSound(Gdx.files.internal("data/klick01.ogg")));
 		sounds.put(Type.HIT2,
-				Gdx.audio.newSound(Gdx.files.internal("data/hit.ogg")));
+				Gdx.audio.newSound(Gdx.files.internal("data/hit.mp3")));
 		sounds.put(Type.SHOT,
 				Gdx.audio.newSound(Gdx.files.internal("data/shot01.ogg")));
 		sounds.put(Type.SHOT2,

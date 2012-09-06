@@ -1,7 +1,6 @@
 package com.cdm.view.elements;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Random;
 import java.util.Set;
@@ -17,7 +16,6 @@ import com.cdm.view.Selector;
 import com.cdm.view.elements.Grid.GridElement;
 import com.cdm.view.elements.paths.PathFinder;
 import com.cdm.view.elements.paths.PathPos;
-import com.cdm.view.elements.shots.CircleDecal;
 import com.cdm.view.elements.shots.Decal;
 import com.cdm.view.elements.shots.DisplayEffect;
 import com.cdm.view.elements.shots.Explosion;
