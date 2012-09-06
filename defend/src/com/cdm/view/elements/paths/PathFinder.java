@@ -103,8 +103,8 @@ public class PathFinder {
 		checkTodoBuffer(grid);
 
 		cleanGrid(grid, accessor);
-		//boolean found = false;
-		List<PathPos> found=new ArrayList<PathPos>();
+		// boolean found = false;
+		List<PathPos> found = new ArrayList<PathPos>();
 		for (int i = 0; i < to.size(); i++)
 			todoBuffer.add(to.get(i));
 		for (int i = 0; i < from.size(); i++) {
@@ -118,18 +118,12 @@ public class PathFinder {
 
 		while (todoBuffer.size() > 0) {
 			PathPos current = todoBuffer.first();
-			if (current.x == 0 && current.y == 8) {
-				System.out.println("FOUND");
-			}
 
 			todoBuffer.removeFirst();
 
-			System.out.print(from);
-			System.out.print(":");
-			System.out.println(current);
 			if (from.contains(current) && !found.contains(current)) {
 				found.add(current);
-				if (fastOut && found.size()==from.size())
+				if (fastOut && found.size() == from.size())
 					return true;
 			}
 			if (current.value > 0)
@@ -144,9 +138,6 @@ public class PathFinder {
 			} else
 				currentValue = 0;
 			for (PathPos next : current.next()) {
-				if (next.x == 0 && next.y == 8) {
-					System.out.println("FOUND");
-				}
 				if (next.equals(ignoreThis))
 					continue;
 				GridElement ge = grid.get(next.tmp());
@@ -159,8 +150,7 @@ public class PathFinder {
 				}
 			}
 		}
-		System.out.println("Accessor " + accessor.getClass());
 		grid.print();
-		return found.size()==from.size();
+		return found.size() == from.size();
 	}
 }

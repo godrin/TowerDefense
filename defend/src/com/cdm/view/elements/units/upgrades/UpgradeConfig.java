@@ -40,7 +40,6 @@ public class UpgradeConfig {
 		checkData();
 		List<String> l = new ArrayList<String>();
 
-		System.out.println(unitName);
 		l.addAll(data.get(unitName).get(0).keySet());
 
 		return l;
@@ -59,12 +58,12 @@ public class UpgradeConfig {
 			return new UpgradeImpl(getSprite(upgradeType), upgradeType,
 					c.priceForNext, level, unitName, c.value);
 		}
-		System.out
-				.println("NO LEVEL FOUND FOR " + unitName + " level:" + level);
 		return null;
 	}
 
 	private static void printData() {
+		if(true)
+			return;
 		for (Map.Entry<String, List<Map<String, SingleUpgradeConfig>>> e : data
 				.entrySet()) {
 			System.out.println("UNIT " + e.getKey());

@@ -13,7 +13,6 @@ import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.MathTools;
-import com.cdm.view.elements.shots.RocketShot;
 import com.cdm.view.elements.shots.SimpleShot;
 import com.cdm.view.enemy.EnemyUnit;
 
@@ -150,7 +149,6 @@ public class Cannon extends RotatingUnit implements Element {
 	@Override
 	protected void setValue(String key, Float value) {
 
-		System.out.println("SETVALUE    " + key + "  " + value);
 		if ("distance".equals(key))
 			maxDist = value;
 		else if ("shot".equals(key))

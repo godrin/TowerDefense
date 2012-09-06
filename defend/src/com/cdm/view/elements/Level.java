@@ -193,8 +193,6 @@ public class Level {
 				grid.print();
 
 				return true;
-			} else {
-				System.out.println("NOT EMPTY!");
 			}
 		return false;
 	}

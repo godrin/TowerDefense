@@ -180,7 +180,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 					if (tmp.distance(selectedUnit.getPosition()) > 0.3f) {
 						selectedUnit = null;
 					} else {
-						System.out.println("PLAYER UNIT FOUND " + selectedUnit);
 						upgradeView.setPosition(selectedUnit.getPosition());
 						upgradeView.setVisible(true);
 						upgradeView.setTargetUnit(selectedUnit);

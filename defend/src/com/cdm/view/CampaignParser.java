@@ -45,7 +45,6 @@ public class CampaignParser {
 						gridBuffer.add(line);
 					}
 				}
-				System.out.println(line);
 			}
 		} catch (IOException e) {
 		}
@@ -59,7 +58,6 @@ public class CampaignParser {
 	}
 
 	private static Grid parseLevel(List<String> gridBuffer) {
-		System.out.println("PARSING....");
 		int h = gridBuffer.size();
 		int w = 0;
 		List<PathPos> start = new ArrayList<PathPos>();

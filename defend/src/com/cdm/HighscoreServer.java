@@ -58,7 +58,6 @@ public class HighscoreServer implements Highscore {
 		Highscore s = new HighscoreServer();
 		Entry n = new Entry("HI", 999);
 		List<Entry> vals = s.post(n);
-		System.out.println(vals);
 		return 0;
 
 	}
