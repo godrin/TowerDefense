@@ -10,7 +10,7 @@ import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.SpriteReader;
 import com.cdm.view.elements.units.PlayerUnit;
-import com.cdm.view.elements.units.Upgrade;
+import com.cdm.view.elements.units.UnitAction;
 
 public class UpgradeView implements Element {
 	private boolean visible = false;
@@ -18,7 +18,7 @@ public class UpgradeView implements Element {
 	private Position tmpPos = new Position(0, 0, Position.LEVEL_REF);
 	private PolySprite highlight = SpriteReader
 			.read("/com/cdm/view/elements/units/highlight.sprite");
-	private Upgrade selectedUpgrade = null;
+	private UnitAction selectedUpgrade = null;
 	private PlayerUnit targetUnit;
 	private LevelScreen screen;
 
@@ -65,17 +65,17 @@ public class UpgradeView implements Element {
 	}
 
 	private interface UpgradeWithPosition {
-		void run(Upgrade upgrade, float dx, float dy);
+		void run(UnitAction upgrade, float dx, float dy);
 	}
 
 	private void doWithAllUpgrades(UpgradeWithPosition callback) {
 		if (visible && targetUnit != null) {
 
-			List<Upgrade> upgrades = targetUnit.getPossibleUpgrades();
+			List<UnitAction> upgrades = targetUnit.getPossibleUpgrades();
 			float a = 3.1415f * 2 / upgrades.size();
 			int i = 0;
 			float radius = 1.0f;
-			for (Upgrade u : upgrades) {
+			for (UnitAction u : upgrades) {
 				i++;
 				float dx = (float) Math.sin(i * a) * radius;
 				float dy = (float) Math.cos(i * a) * radius;
@@ -90,22 +90,22 @@ public class UpgradeView implements Element {
 		doWithAllUpgrades(new UpgradeWithPosition() {
 
 			@Override
-			public void run(Upgrade u, float dx, float dy) {
+			public void run(UnitAction u, float dx, float dy) {
 				tmpPos.set(getPosition().x + dx, getPosition().y + dy,
 						Position.LEVEL_REF);
 				if (targetUnit != null) {
 					Integer level = u.getCurrentLevel();
 					if (level != null) {
+						Color color = Color.WHITE;
+						if (screen.getLevel().getMoney() < u.getCostForNext()) {
+							color = Color.RED;
+						}
 
 						renderer.render(u.getSprite(), tmpPos, 0.5f, 0.0f, u
 								.getSprite().getPrimitiveType());
 						if (selectedUpgrade == u) {
 							renderer.render(highlight, tmpPos, 0.5f, 0.0f,
 									GL10.GL_TRIANGLES);
-						}
-						Color color = Color.WHITE;
-						if (screen.getLevel().getMoney() < u.getCostForNext()) {
-							color = Color.RED;
 						}
 						renderer.drawText(tmpPos.to(Position.SCREEN_REF),
 								level.toString(), color);
@@ -128,7 +128,7 @@ public class UpgradeView implements Element {
 		doWithAllUpgrades(new UpgradeWithPosition() {
 
 			@Override
-			public void run(Upgrade u, float dx, float dy) {
+			public void run(UnitAction u, float dx, float dy) {
 				tmpPos.set(getPosition().x + dx, getPosition().y + dy,
 						Position.LEVEL_REF);
 				float dx2 = dragPosition.x - tmpPos.x;
@@ -143,7 +143,7 @@ public class UpgradeView implements Element {
 
 	}
 
-	public Upgrade getSelectedUpgrade() {
+	public UnitAction getSelectedUpgrade() {
 		return selectedUpgrade;
 	}
 

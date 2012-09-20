@@ -8,13 +8,15 @@ import com.badlogic.gdx.graphics.GL10;
 import com.cdm.view.IRenderer;
 import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
+import com.cdm.view.elements.units.upgrades.SellAction;
 import com.cdm.view.elements.units.upgrades.UpgradeConfig;
 
 public abstract class PlayerUnit extends Unit {
 
 	private PolySprite circle;
 	private boolean selected = false;
-	private List<Upgrade> possibleUpgrades = new ArrayList<Upgrade>();
+	private List<UnitAction> possibleUpgrades = new ArrayList<UnitAction>();
+	private int currentValue;
 
 	public PlayerUnit(Position p) {
 		super(p);
@@ -44,28 +46,29 @@ public abstract class PlayerUnit extends Unit {
 
 	public void loadConfig() {
 		String unitName = getClass().getSimpleName();
-		List<String> upgradeNames = UpgradeConfig.getUpradeTypes(unitName);
-		for (String names : upgradeNames) {
-			Upgrade u = UpgradeConfig.getUpgrade(unitName, 0, names);
-			apply(u);
-			Upgrade next = u.getNextUprade();
-			if (next != null)
-				possibleUpgrades.add(next);
-		}
+		UnitAction u = UpgradeConfig.getUpgrade(unitName, 0);
+		apply(u);
+		UnitAction next = u.getNextUprade();
+		if (next != null)
+			possibleUpgrades.add(next);
+
+		possibleUpgrades.add(new SellAction(this));
 
 	}
 
-	private void apply(Upgrade upgrade) {
-		setValue(upgrade.valueName(), upgrade.value());
+	private void apply(UnitAction upgrade) {
+		upgrade.apply(this);
+		// setValue(upgrade.valueName(), upgrade.value());
 	}
 
-	public void incLevel(Upgrade upgrade) {
+	public void incLevel(UnitAction upgrade) {
 		if (upgrade != null) {
-			Upgrade next = upgrade.getNextUprade();
+			UnitAction next = upgrade.getNextUprade();
+
 			apply(upgrade);
 			possibleUpgrades.remove(upgrade);
 			if (next != null) {
-				possibleUpgrades.add(next);
+				possibleUpgrades.add(0, next);
 			}
 		}
 	}
@@ -77,8 +80,17 @@ public abstract class PlayerUnit extends Unit {
 
 	}
 
-	public List<Upgrade> getPossibleUpgrades() {
+	public List<UnitAction> getPossibleUpgrades() {
 		return possibleUpgrades;
+	}
+
+	public void setValue(int round) {
+		currentValue = round;
+
+	}
+
+	public Integer getCurrentValue() {
+		return currentValue;
 	}
 
 }

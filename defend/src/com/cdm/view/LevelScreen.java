@@ -17,7 +17,7 @@ import com.cdm.view.elements.UpgradeView;
 import com.cdm.view.elements.units.PlayerUnit;
 import com.cdm.view.elements.units.Unit;
 import com.cdm.view.elements.units.Unit.UnitType;
-import com.cdm.view.elements.units.Upgrade;
+import com.cdm.view.elements.units.UnitAction;
 
 public class LevelScreen extends Screen implements IUnitTypeSelected,
 		IButtonPressed, LevelFinishedListener {
@@ -202,9 +202,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	public boolean touchUp(int x, int y, int pointer, int button) {
 		if (selectedUnit != null) {
-			Upgrade selectedUprade = upgradeView.getSelectedUpgrade();
+			UnitAction selectedUprade = upgradeView.getSelectedUpgrade();
 			if (selectedUprade != null && selectedUnit != null) {
-				selectedUprade.upgrade(selectedUnit);
+				selectedUprade.doAction(selectedUnit);
 				int price = selectedUprade.getCostForNext();
 				level.setMoney(level.getMoney() - price);
 			}
