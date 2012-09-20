@@ -37,6 +37,9 @@ public class UnitTypeButton extends Button {
 	}
 
 	public void touchDown(int x, int y, int pointer, int button) {
+		if(level.getMoney() < cost)
+			return;
+
 		super.touchDown(x, y, pointer, button);
 		if (listener != null && isEnabled())
 			listener.unitTypeSelected(type, new Position(x, y,
@@ -54,6 +57,9 @@ public class UnitTypeButton extends Button {
 	@Override
 	public void draw(IRenderer renderer) {
 		setEnabled(level.getMoney() >= cost);
+		if(level.getMoney() < cost)
+			return;
+		
 
 		super.draw(renderer);
 		Position.BUTTON_REF.setScale(getRadius() * 2);
