@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 
+// review1
 public class SimpleShader {
 	public static ShaderProgram createShader(Graphics graphics, String name) {
 

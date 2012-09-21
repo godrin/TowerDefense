@@ -4,18 +4,28 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.util.Map;
+import java.util.TreeMap;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector3;
 
+// review1
 public class SpriteReader {
 	private static final Color BLUE = new Color(0, 0, 1, 0.8f);
 	private static final Color SOLID_BLUE = new Color(0, 0, 1, 1f);
 	private static final Color WHITE = new Color(1, 1, 1, 1);
 	private static final Color TRANSPARENT = new Color(0, 0, 0, 0);
 
+	private static Map<String, PolySprite> cache = new TreeMap<String, PolySprite>();
+
 	public static PolySprite read(String filename) {
+
+		if (cache.containsKey(filename)) {
+			return cache.get(filename);
+		}
+
 		InputStream is = SpriteReader.class.getResourceAsStream(filename);
 		if (is == null)
 			throw new RuntimeException("File " + filename + " not found!");
@@ -73,6 +83,8 @@ public class SpriteReader {
 			e.printStackTrace();
 		}
 		sprite.init();
+
+		cache.put(filename, sprite);
 
 		return sprite;
 	}

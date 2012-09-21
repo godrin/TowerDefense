@@ -13,12 +13,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 
-import com.cdm.view.Renderer;
-
+// review1
 public class HighscoreServer implements Highscore {
 	private static final int BUFSIZE = 1024 * 100;
 	private String url = "http://aqueous-sea-7768.herokuapp.com";
-	private Renderer renderer = new Renderer();
 
 	public static class HighscoreAccessException extends Exception {
 
@@ -26,9 +24,6 @@ public class HighscoreServer implements Highscore {
 			super(e);
 		}
 
-		/**
-		 * 
-		 */
 		private static final long serialVersionUID = -4486188937322255607L;
 
 	}
@@ -52,14 +47,6 @@ public class HighscoreServer implements Highscore {
 				s += " ";
 			return s;
 		}
-	}
-
-	public static int main(String[] args) throws HighscoreAccessException {
-		Highscore s = new HighscoreServer();
-		Entry n = new Entry("HI", 999);
-		List<Entry> vals = s.post(n);
-		return 0;
-
 	}
 
 	public void setUrl(String pUrl) {
