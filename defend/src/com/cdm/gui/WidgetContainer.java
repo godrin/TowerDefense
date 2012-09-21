@@ -10,22 +10,22 @@ public class WidgetContainer extends Widget {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		for (Widget w : widgets) {
-			w.draw(renderer);
+		for (int i = 0; i < widgets.size(); i++) {
+			widgets.get(i).draw(renderer);
 		}
 	}
 
 	@Override
 	public void addTime(float t) {
 		super.addTime(t);
-		for (Widget w : widgets) {
-			w.addTime(t);
+		for (int i = 0; i < widgets.size(); i++) {
+			widgets.get(i).addTime(t);
 		}
 	}
 
 	public void add(Widget widget) {
 		if (widgets.size() == 0)
-			setBBox(widget.getBBox().copy());
+			setBBox(widget.getBBox());
 		else
 			getBBox().add(widget.getBBox());
 		widgets.add(widget);
@@ -37,7 +37,8 @@ public class WidgetContainer extends Widget {
 
 	@Override
 	public boolean opaque(int x, int y) {
-		for (Widget w : widgets) {
+		for (int i = 0; i < widgets.size(); i++) {
+			Widget w = widgets.get(i);
 			if (w.getBBox().contains(x, y))
 				if (w.opaque(x, y))
 					return true;
@@ -65,6 +66,7 @@ public class WidgetContainer extends Widget {
 
 	}
 
+	//FIXME (?)
 	private List<Widget> widgetsOf(int x, int y) {
 		List<Widget> ws = new ArrayList<Widget>();
 		for (Widget w : widgets) {

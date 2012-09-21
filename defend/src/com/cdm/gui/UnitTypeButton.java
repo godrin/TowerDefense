@@ -7,6 +7,7 @@ import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.units.Unit;
 
+// review1
 public class UnitTypeButton extends Button {
 
 	private Unit.UnitType type;
@@ -60,11 +61,11 @@ public class UnitTypeButton extends Button {
 		if(level.getMoney() < cost)
 			return;
 		
-
 		super.draw(renderer);
 		Position.BUTTON_REF.setScale(getRadius() * 2);
 		caption.draw(renderer);
 
+		// FIXME (?)
 		String money = "$" + cost;
 		
 		renderer.drawText(pos, money, moneyColor);

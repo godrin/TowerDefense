@@ -9,6 +9,7 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.Rectangle;
 
+// review1
 public class Button extends Widget {
 	private int x, y, radius;
 	private Position position;
@@ -16,18 +17,21 @@ public class Button extends Widget {
 	private IButtonPressed pressedListener;
 
 	private AnimatedRect rect;
+	private AnimatedRect rectEnabled;
+	private AnimatedRect rectDisabled;
 
 	private String buttonName;
 
 	private boolean enabled = true;
 	private Color currentColor = new Color(1, 1, 0, 0.7f);
+	private Rectangle checkRectangle = new Rectangle(-1, -1, -1, -1);
 
 	public Button(int px, int py, int pradius) {
 		x = px;
 		y = py;
 		position = new Position(x, y, Position.SCREEN_REF);
 		radius = pradius;
-		setBBox(new Rectangle(x - radius, y - radius, 2 * radius, 2 * radius));
+		setBBox(x - radius, y - radius, 2 * radius, 2 * radius);
 		initAnimation();
 	}
 
@@ -43,20 +47,30 @@ public class Button extends Widget {
 	}
 
 	private void initAnimation() {
-
 		AnimatedColor c;
-		if (enabled)
+		if (rectEnabled == null) {
 			c = new AnimatedColor(new AnimatorStatic(0.9f), new AnimatorStatic(
 					0.9f), new AnimatorStatic(0), new AnimatorSin(0.7f, 0.1f,
 					1.0f, 0.0f));
-		else
+			rectEnabled = new AnimatedRect(new AnimatorStatic(x),
+					new AnimatorStatic(y), new AnimatorSin(radius,
+							radius * 0.1f, 1.4f, 0), new AnimatorSin(radius,
+							radius * 0.1f, 1.4f, 3.14f), c);
+		}
+		if (rectDisabled == null) {
 			c = new AnimatedColor(new AnimatorStatic(0.8f), new AnimatorStatic(
 					0.8f), new AnimatorStatic(0.8f), new AnimatorSin(0.7f,
 					0.1f, 1.0f, 0.0f));
 
-		rect = new AnimatedRect(new AnimatorStatic(x), new AnimatorStatic(y),
-				new AnimatorSin(radius, radius * 0.1f, 1.4f, 0),
-				new AnimatorSin(radius, radius * 0.1f, 1.4f, 3.14f), c);
+			rectDisabled = new AnimatedRect(new AnimatorStatic(x),
+					new AnimatorStatic(y), new AnimatorSin(radius,
+							radius * 0.1f, 1.4f, 0), new AnimatorSin(radius,
+							radius * 0.1f, 1.4f, 3.14f), c);
+		}
+		if (enabled)
+			rect = rectEnabled;
+		else
+			rect = rectDisabled;
 	}
 
 	@Override
@@ -82,11 +96,10 @@ public class Button extends Widget {
 
 	@Override
 	public boolean opaque(int x, int y) {
-		if(!isEnabled())
+		if (!isEnabled())
 			return false;
-		Rectangle r = new Rectangle(x - radius, y - radius, x + radius, y
-				+ radius);
-		return r.contains(x, y);
+		checkRectangle.set(x - radius, y - radius, x + radius, y + radius);
+		return checkRectangle.contains(x, y);
 	}
 
 	@Override

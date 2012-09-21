@@ -6,12 +6,13 @@ import com.cdm.gui.anim.AnimationList;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Rectangle;
 
+// review1
 public class BigButton extends Widget {
 
 	private Color bg = new Color(0.7f, 0.7f, 0.0f, 0.7f);
 	private Color bg2 = new Color(0.7f, 0.7f, 0.0f, 0.9f);
 	private Color textColor = new Color(0, 0, 0, 0.4f);
-	private Rectangle topBox;
+	private Rectangle topBox = new Rectangle(-1, -1, -1, -1);
 	private String caption;
 	private String name;
 	private IButtonPressed buttonPressedListener;
@@ -27,8 +28,8 @@ public class BigButton extends Widget {
 	}
 
 	public void setPos(float mx, float my, float w, float h) {
-		setBBox(new Rectangle(mx - w / 2, my - h / 2, w, h));
-		topBox = new Rectangle(mx - w / 2 + 5, my - h / 2 + 5, w - 10, 10);
+		setBBox(mx - w / 2, my - h / 2, w, h);
+		topBox.set(mx - w / 2 + 5, my - h / 2 + 5, w - 10, 10);
 	}
 
 	public float getX() {

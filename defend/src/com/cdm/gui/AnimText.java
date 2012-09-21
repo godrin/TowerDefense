@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
 import com.cdm.view.IRenderer;
-import com.cdm.view.Rectangle;
 
+// review1
 public class AnimText extends Widget {
 
 	private List<String> texts;
@@ -18,7 +18,7 @@ public class AnimText extends Widget {
 	}
 
 	public void setPos(float mx, float my, float w, float h) {
-		setBBox(new Rectangle(mx - w / 2, my - h / 2, w, h));
+		setBBox(mx - w / 2, my - h / 2, w, h);
 	}
 
 	@Override
