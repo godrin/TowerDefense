@@ -40,6 +40,14 @@ public class DefendGame implements ApplicationListener, Game {
 		inputScreen = new InputScreen(this, c);
 		SoundFX.Initialize();
 	}
+	
+	public boolean backButtonPressed() {
+		if(screen!=menuScreen) {
+			setScreen(menuScreen);
+			return false;
+		}
+		return true;
+	}
 
 	public void pause() {
 		running = false;

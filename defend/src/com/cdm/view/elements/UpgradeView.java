@@ -93,7 +93,7 @@ public class UpgradeView implements Element {
 			public void run(UnitAction u, float dx, float dy) {
 				tmpPos.set(getPosition().x + dx, getPosition().y + dy,
 						Position.LEVEL_REF);
-				if (targetUnit != null) {
+				if (targetUnit != null && u!=null) {
 					Integer level = u.getCurrentLevel();
 					if (level != null) {
 						Color color = Color.WHITE;
