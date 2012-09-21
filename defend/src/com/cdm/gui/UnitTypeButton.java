@@ -55,6 +55,7 @@ public class UnitTypeButton extends Button {
 		this.listener = listener;
 	}
 
+	private static StringBuilder textBuilder=new StringBuilder(); 
 	@Override
 	public void draw(IRenderer renderer) {
 		setEnabled(level.getMoney() >= cost);
@@ -66,9 +67,10 @@ public class UnitTypeButton extends Button {
 		caption.draw(renderer);
 
 		// FIXME (?)
-		String money = "$" + cost;
 		
-		renderer.drawText(pos, money, moneyColor);
+		textBuilder.setLength(0);
+		textBuilder.append("$").append(cost);
+		renderer.drawText(pos, textBuilder, moneyColor);
 	}
 
 }

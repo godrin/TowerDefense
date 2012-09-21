@@ -56,6 +56,7 @@ public abstract class MovingShot implements Element, DisplayEffect {
 		impact = pImpact;
 
 		angle = MathTools.angle(from.to(to));
+		if(false)
 		{
 			Vector3 x0 = new Vector3(from.toVector());
 			Vector3 x1 = new Vector3(from.toVector());
@@ -141,7 +142,7 @@ public abstract class MovingShot implements Element, DisplayEffect {
 
 	protected void drawBurn(IRenderer renderer) {
 		if (true) {
-			renderer.render(s, getPosition(), getSize(), 0, GL20.GL_TRIANGLES);
+			//renderer.render(s, getPosition(), getSize(), 0, GL20.GL_TRIANGLES);
 			return;
 		}
 		PolySprite s = new PolySprite();

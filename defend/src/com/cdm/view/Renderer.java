@@ -86,8 +86,8 @@ public class Renderer implements IRenderer {
 			x.mul(p);
 			x.mul(s);
 			renderer20.begin(x, GL10.GL_LINES);
-			for(int i=0;i<lines.size();i++) {
-				Vector3 v=lines.get(i);
+			for (int i = 0; i < lines.size(); i++) {
+				Vector3 v = lines.get(i);
 				renderer20.color(color.r, color.g, color.b, color.a);
 				renderer20.vertex(v.x, v.y, v.z);
 			}
@@ -121,8 +121,8 @@ public class Renderer implements IRenderer {
 			Gdx.gl10.glScalef(size, size, size);
 
 			renderer.begin(GL10.GL_TRIANGLES);
-			for(int i=0;i<lines.size();i++) {
-				Vector3 v=lines.get(i);
+			for (int i = 0; i < lines.size(); i++) {
+				Vector3 v = lines.get(i);
 				renderer.color(color.r, color.g, color.b, color.a);
 				renderer.vertex(v);
 			}
@@ -142,8 +142,8 @@ public class Renderer implements IRenderer {
 			x.mul(s);
 			if (true) {
 				renderer20.begin(x, GL20.GL_TRIANGLES);
-				for(int i=0;i<lines.size();i++) {
-					Vector3 v=lines.get(i);
+				for (int i = 0; i < lines.size(); i++) {
+					Vector3 v = lines.get(i);
 					// FIXME: ensure from outside !
 					float r = color.r;
 					float g = color.g;
@@ -252,11 +252,11 @@ public class Renderer implements IRenderer {
 	}
 
 	@Override
-	public void drawText(int i, int j, String string, Color c) {
+	public void drawText(int i, int j, CharSequence string, Color c) {
 		drawText(i, j, string, c, 1);
 	}
 
-	public void drawText(int i, int j, String string, Color c, float scale) {
+	public void drawText(int i, int j, CharSequence string, Color c, float scale) {
 		if (renderer != null)
 			Gdx.gl10.glPushMatrix();
 		spriteBatch.begin();
@@ -277,7 +277,7 @@ public class Renderer implements IRenderer {
 	}
 
 	@Override
-	public void drawText(Position position, String money, Color moneyColor) {
+	public void drawText(Position position, CharSequence money, Color moneyColor) {
 		drawText((int) position.x, (int) position.y, money, moneyColor);
 	}
 
@@ -306,7 +306,7 @@ public class Renderer implements IRenderer {
 			Gdx.gl10.glPopMatrix();
 		} else {
 			initGlSettings();
-			//FIXME: new
+			// FIXME: new
 			Matrix4 p = new Matrix4();
 			Matrix4 s = new Matrix4();
 			Matrix4 x = new Matrix4(projMatrix);

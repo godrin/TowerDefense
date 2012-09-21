@@ -318,18 +318,23 @@ public class Level {
 		displayEffectsToRemove.add(shot);
 	}
 
-	public EnemyUnit getNextEnemy(Position position) {
+	private static DistanceComparator nextEnemyComparator = new DistanceComparator();
+	private static SortedSet<EnemyUnit> nextEnemySet = new TreeSet<EnemyUnit>(
+			nextEnemyComparator);
 
-		SortedSet<EnemyUnit> s = new TreeSet<EnemyUnit>(new DistanceComparator(
-				position));
-		for (Unit u : units) {
+	public EnemyUnit getNextEnemy(Position position) {
+		nextEnemySet.clear();
+		nextEnemyComparator.setPosition(position);
+		for (int i = 0; i < units.size(); i++) {
+			Unit u = units.get(i);
+
 			if (u instanceof EnemyUnit) {
-				s.add((EnemyUnit) u);
+				nextEnemySet.add((EnemyUnit) u);
 			}
 		}
 
-		if (s.size() > 0)
-			return s.first();
+		if (nextEnemySet.size() > 0)
+			return nextEnemySet.first();
 		return null;
 	}
 

@@ -8,6 +8,7 @@ import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Level;
 
+// review1
 public class RocketShot extends MovingShot {
 
 	public static float speed = 1.5f;

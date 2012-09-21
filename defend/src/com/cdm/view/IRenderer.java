@@ -17,11 +17,11 @@ public interface IRenderer {
 	void drawPoly(Position pos, List<Vector3> lines, float angle, Color color,
 			float size);
 
-	void drawText(int i, int j, String string, Color c);
+	void drawText(int i, int j, CharSequence charSequence, Color c);
 
-	void drawText(Position position, String money, Color moneyColor);
+	void drawText(Position position, CharSequence money, Color moneyColor);
 
-	public void drawText(int i, int j, String string, Color c, float scale);
+	public void drawText(int i, int j, CharSequence string, Color c, float scale);
 
 	public void render(PolySprite sprite, Position pos, float size,
 			float angle, int glTriangles);

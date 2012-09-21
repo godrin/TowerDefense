@@ -14,6 +14,9 @@ public class DistanceComparator implements Comparator<EnemyUnit> {
 		base = position;
 	}
 
+	public DistanceComparator() {
+	}
+
 	@Override
 	public int compare(EnemyUnit arg0, EnemyUnit arg1) {
 		Position a = arg0.getPosition();
@@ -40,5 +43,10 @@ public class DistanceComparator implements Comparator<EnemyUnit> {
 		if (distA > distB)
 			return 1;
 		return 0;
+	}
+
+	public void setPosition(Position position) {
+		base = position;
+
 	}
 }
