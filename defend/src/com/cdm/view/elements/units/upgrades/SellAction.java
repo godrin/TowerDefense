@@ -41,7 +41,9 @@ public class SellAction extends UnitAction {
 
 	@Override
 	public Integer getCurrentLevel() {
+		if (getUpgradeAction().getCurrentLevel()!=null)
 		return getUpgradeAction().getCurrentLevel();
+		else return 3;
 	}
 
 	@Override
