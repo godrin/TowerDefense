@@ -10,6 +10,8 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Grid.GridElement;
 
+// review1
+
 public class BackgroundElement implements Element {
 
 	private List<Vector3> vecsOuter = new ArrayList<Vector3>();
@@ -40,7 +42,6 @@ public class BackgroundElement implements Element {
 		pos = p;
 		rotatingSpeed = ((p.x + p.y) * 0.3f + 5) * 0.1f;
 		gridElement = e;
-		// if (boxes == null) {
 
 		vecsOuter.add(new Vector3());
 		vecsOuter.add(new Vector3());
@@ -66,7 +67,7 @@ public class BackgroundElement implements Element {
 		boxes0.add(vecsInner.get(3));
 
 		setVecs();
-		// }
+
 	}
 
 	public void move(float t) {
@@ -112,8 +113,6 @@ public class BackgroundElement implements Element {
 
 		c0.set(r, g, b, 1.0f);
 		c1.set(r2, g2, b2, 1.0f);
-		// c1.set(0.5f, 0.5f, 0.8f, 0.2f);
-
 	}
 
 	private void setVecs() {

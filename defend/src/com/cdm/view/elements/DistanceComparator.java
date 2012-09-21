@@ -5,6 +5,7 @@ import java.util.Comparator;
 import com.cdm.view.Position;
 import com.cdm.view.enemy.EnemyUnit;
 
+// review1
 public class DistanceComparator implements Comparator<EnemyUnit> {
 
 	private Position base;

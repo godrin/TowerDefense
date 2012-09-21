@@ -2,7 +2,7 @@ package com.cdm.view.elements;
 
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
-
+// review1
 public interface Element extends Comparable<Element>{
 	void draw(IRenderer renderer);
 
