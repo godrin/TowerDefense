@@ -35,6 +35,7 @@ public class DefendGame implements ApplicationListener, Game {
 		Campaign c = new Campaign("/com/cdm/view/campaign1.txt");
 		levelScreen = new LevelScreen(this, c);
 		optionsScreen = new SoundScreen(this);
+		optionsScreen.playSong(1);
 		setScreen(menuScreen = new MenuScreen(this));
 		highscoreScreen = new HighScoreScreen(this);
 		inputScreen = new InputScreen(this, c);
@@ -60,8 +61,13 @@ public class DefendGame implements ApplicationListener, Game {
 	public void setScreen(Screen newScreen) {
 		if (screen != null)
 			screen.removed();
+		
+
 
 		screen = newScreen;
+		if(screen==levelScreen) {
+			optionsScreen.playSong(2);
+		}
 
 		if (screen != null) {
 			Gdx.input.setInputProcessor(screen);

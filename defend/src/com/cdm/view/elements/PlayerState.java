@@ -2,6 +2,7 @@ package com.cdm.view.elements;
 
 import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
+import com.cdm.view.SoundScreen;
 import com.cdm.view.enemy.EnemyUnit;
 
 public class PlayerState {
@@ -91,8 +92,11 @@ public class PlayerState {
 	public void hurt() {
 		SoundFX.play(Type.HURT);
 		health -= 1;
-		if (health < 1)
+		if (health < 1) {
 			SoundFX.play(Type.LOOSE);
+			SoundScreen.playSong(0);
+
+		}
 
 	}
 

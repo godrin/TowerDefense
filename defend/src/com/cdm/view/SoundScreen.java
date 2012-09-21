@@ -16,13 +16,13 @@ public class SoundScreen extends Screen implements IButtonPressed {
 	private WidgetContainer gui = new WidgetContainer();
 	private Renderer renderer = new Renderer();
 	private Game game;
-	public Music music, music0, music1, music2;
-	private int song = 2;
-	boolean stop = true;
-	Color white = new Color(1, 1, 1, 1);
-	String Smusic = "Not Playing...";
-	private float vol = 0.7f;
-	public static float FXvol = 0.5f;
+	private static Music music, music0, music1, music2;
+	private static int song = 2;
+	private static boolean stop = false;
+	private Color white = new Color(1, 1, 1, 1);
+	private String Smusic = "Not Playing...";
+	private static float vol = 0.5f;
+	public static float FXvol = 0.6f;
 
 	public SoundScreen(Game pgame) {
 
@@ -88,6 +88,7 @@ public class SoundScreen extends Screen implements IButtonPressed {
 					music.play();
 			}
 		} else if (buttonName.equals("off")) {
+			stop=true;
 			if (music.isPlaying())
 				music.stop();
 			if (song <= 2) {
@@ -134,6 +135,21 @@ public class SoundScreen extends Screen implements IButtonPressed {
 			return true;
 		}
 		return false;
+	}
+	public static void playSong(int id) {
+		if(stop)
+			return;
+		if(music!=null)
+			music.stop();
+		song=(id%3)+1;
+		if (song == 1)
+			music = music0;
+		if (song == 2)
+			music = music1;
+		if (song == 3)
+			music = music2;
+		music.setVolume(vol);
+		music.play();
 	}
 
 }
