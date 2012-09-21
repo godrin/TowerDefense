@@ -1,5 +1,6 @@
 package com.cdm.gui.effects;
 
+// review1
 public class AnimatorSin implements Animator {
 	float mean, radius, speed, start;
 

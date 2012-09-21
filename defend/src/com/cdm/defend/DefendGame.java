@@ -13,6 +13,8 @@ import com.cdm.view.MenuScreen;
 import com.cdm.view.Screen;
 import com.cdm.view.SoundScreen;
 
+// review1
+
 public class DefendGame implements ApplicationListener, Game {
 	private static final long serialVersionUID = 1L;
 
@@ -87,7 +89,7 @@ public class DefendGame implements ApplicationListener, Game {
 
 	private void mywait(float delta) {
 		try {
-			Integer ms = (int) (delta * 1000);
+			int ms = (int) (delta * 1000);
 
 			int wait = 15 - ms;
 			if (wait > 5) {

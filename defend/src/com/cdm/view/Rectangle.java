@@ -1,5 +1,6 @@
 package com.cdm.view;
 
+// review1
 public class Rectangle {
 	private float x, y, w, h;
 

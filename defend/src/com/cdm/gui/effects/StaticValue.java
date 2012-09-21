@@ -1,5 +1,6 @@
 package com.cdm.gui.effects;
 
+// review1
 public class StaticValue implements SingleValue {
 
 	private float value;

@@ -7,19 +7,18 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.cdm.view.SoundScreen;
 
+// review1
 public class SoundFX {
 
 	public enum Type {
-
 		KLICK, SHOT, SHOT2, HIT, HIT2, HURT, STUNRAY, LOOSE, WIN
-
 	};
 
 	private static Map<Type, Sound> sounds = new TreeMap<Type, Sound>();
 
 	public static void Initialize() {
-		 sounds.put(Type.KLICK,
-				 Gdx.audio.newSound(Gdx.files.internal("data/klick01.ogg")));
+		sounds.put(Type.KLICK,
+				Gdx.audio.newSound(Gdx.files.internal("data/klick01.ogg")));
 		sounds.put(Type.HIT2,
 				Gdx.audio.newSound(Gdx.files.internal("data/hit.mp3")));
 		sounds.put(Type.SHOT,
