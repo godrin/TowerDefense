@@ -13,7 +13,7 @@ public class MainActivity extends AndroidApplication {
 		super.onCreate(savedInstanceState);
 
 		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-		cfg.useGL20 = true;
+		cfg.useGL20 = false;
 		
 		//AndroidApplicationConfiguration settings = new AndroidApplicationConfiguration();
         //settings.resolutionStrategy = new FillResolutionStrategy();
