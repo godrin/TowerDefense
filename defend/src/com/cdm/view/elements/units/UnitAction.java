@@ -21,8 +21,6 @@ public abstract class UnitAction {
 
 	public abstract Integer getCostForNext();
 
-	public abstract Integer getCurrentLevel();
-
 	public abstract UnitAction getNextUprade();
 
 	public abstract void apply(PlayerUnit playerUnit);

@@ -25,8 +25,6 @@ public class Stunner extends RotatingUnit implements Element {
 	float lastShot = 0.0f;
 	float maxDist = 3.0f;
 	DisplayEffect currentShot = null;
-	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
-	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
 	private static PolySprite shadow;
 
 	public Stunner(Position p) {
@@ -69,7 +67,7 @@ public class Stunner extends RotatingUnit implements Element {
 
 			shadow = new PolySprite();
 			shadow.drawClosedPolyWithBorder(new Vector3[] { q3, q2, q1, q0 },
-					innerColor, new Color(0, 0, 0, 0), 0.6f);
+					INNER_PLAYER_COLOR, new Color(0, 0, 0, 0), 0.6f);
 			shadow.init();
 		}
 		setTurningSpeed(15.0f);
@@ -80,10 +78,16 @@ public class Stunner extends RotatingUnit implements Element {
 		super.draw(renderer);
 		renderer.render(shadow, getPosition(), getSize(), getAngle(),
 				GL10.GL_TRIANGLES);
-		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
+		renderer.drawPoly(getPosition(), poly, getAngle(), INNER_PLAYER_COLOR,
 				getSize());
-		renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
-				getSize());
+		renderer.drawLines(getPosition(), lines, getAngle(),
+				OUTER_PLAYER_COLOR, getSize());
+		if (getUnitLevel() > 1)
+			renderer.drawLines(getPosition(), lines, getAngle(),
+					LEVEL2_PLAYER_COLOR, getSize() * 1.1f);
+		if (getUnitLevel() > 2)
+			renderer.drawLines(getPosition(), lines, getAngle(),
+					LEVEL3_PLAYER_COLOR, getSize() * 0.7f);
 	}
 
 	void shoot(EnemyUnit enemy) {

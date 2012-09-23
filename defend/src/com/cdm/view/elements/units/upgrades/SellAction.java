@@ -40,11 +40,6 @@ public class SellAction extends UnitAction {
 	}
 
 	@Override
-	public Integer getCurrentLevel() {
-		return getUpgradeAction().getCurrentLevel();
-	}
-
-	@Override
 	public UnitAction getNextUprade() {
 		return new SellAction(unit);
 	}

@@ -94,7 +94,7 @@ public class UpgradeView implements Element {
 				tmpPos.set(getPosition().x + dx, getPosition().y + dy,
 						Position.LEVEL_REF);
 				if (targetUnit != null && u!=null) {
-					Integer level = u.getCurrentLevel();
+					Integer level = targetUnit.getUnitLevel();
 					if (level != null) {
 						Color color = Color.WHITE;
 						if (screen.getLevel().getMoney() < u.getCostForNext()) {

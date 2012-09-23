@@ -62,7 +62,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		UnitTypeButton tb;
 		for (UnitType t : new UnitType[] { UnitType.CANNON, UnitType.STUNNER,
 				UnitType.ROCKET_THROWER }) {
-			tb = new UnitTypeButton((int) pos, 400, 30, t, level);
+			tb = new UnitTypeButton((int) pos, 400, 30, t, level, this);
 			tb.setListener(this);
 			tb.setCost(t.getCost());
 			gui.add(tb);
@@ -232,6 +232,10 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	}
 
+	public boolean isDragging() {
+		return dragElement != null;
+	}
+
 	private void stopDragging() {
 		if (level.gameover())
 			return;
@@ -329,4 +333,14 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public Level getLevel() {
 		return level;
 	}
+
+	public boolean keyDown(int keycode) {
+		if (keycode == 131) {
+			game.setScreen(Screen.MENU_SCREEN);
+
+		}
+		System.out.println("KEYCODE " + keycode);
+		return false;
+	}
+
 }

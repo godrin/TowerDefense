@@ -15,7 +15,7 @@ public class UpgradeAction extends UnitAction {
 
 	public UpgradeAction(Integer levelNo, String unitName,
 			Map<String, Float> pValues) {
-		
+
 		costs = Math.round(pValues.get("price"));
 		sellPrice = Math.round(pValues.get("sellPrice"));
 		this.levelNo = levelNo;
@@ -37,11 +37,6 @@ public class UpgradeAction extends UnitAction {
 	@Override
 	public Integer getCostForNext() {
 		return costs;
-	}
-
-	@Override
-	public Integer getCurrentLevel() {
-		return levelNo;
 	}
 
 	@Override

@@ -34,8 +34,6 @@ public class Cannon extends RotatingUnit implements Element {
 	private float lastShot = 0.0f;
 	private float maxDist = 3.0f;
 	private double startingRadius = 0.4f;
-	Color innerColor = new Color(0, 0, 0.6f, 1.0f);
-	Color outerColor = new Color(0.2f, 0.2f, 1.0f, 1.0f);
 	private float impact = 1;
 	private static PolySprite shadow;
 
@@ -60,7 +58,7 @@ public class Cannon extends RotatingUnit implements Element {
 			if (shadow == null) {
 				shadow = new PolySprite();
 				shadow.drawClosedPolyWithBorder(new Vector3[] { a, b, c, d, d2,
-						e, f, g, h, i }, innerColor, new Color(0, 0, 0, 0),
+						e, f, g, h, i }, INNER_PLAYER_COLOR, new Color(0, 0, 0, 0),
 						0.4f);
 				shadow.init();
 			}
@@ -75,11 +73,18 @@ public class Cannon extends RotatingUnit implements Element {
 			renderer.render(shadow, getPosition(), getSize(), getAngle(),
 					GL10.GL_TRIANGLES);
 		if (true) {
-			innerColor.b = 0.6f - hot;
-			renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
+			INNER_PLAYER_COLOR.b = 0.6f - hot;
+			renderer.drawPoly(getPosition(), poly, getAngle(), INNER_PLAYER_COLOR,
 					getSize());
-			renderer.drawLines(getPosition(), lines, getAngle(), outerColor,
+			renderer.drawLines(getPosition(), lines, getAngle(), OUTER_PLAYER_COLOR,
 					getSize());
+			if(getUnitLevel()>1)
+				renderer.drawLines(getPosition(), lines, getAngle(), LEVEL2_PLAYER_COLOR,
+						getSize()*1.1f);
+			if(getUnitLevel()>2)
+				renderer.drawLines(getPosition(), lines, getAngle(), LEVEL3_PLAYER_COLOR,
+						getSize()*0.8f);
+
 		}
 	}
 

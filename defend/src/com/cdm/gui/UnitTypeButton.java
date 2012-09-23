@@ -2,6 +2,7 @@ package com.cdm.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.cdm.view.IRenderer;
+import com.cdm.view.LevelScreen;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
@@ -17,10 +18,12 @@ public class UnitTypeButton extends Button {
 	private Level level;
 	private int cost = 2;
 	private Position pos = getPosition();
+	private LevelScreen levelScreen;
 	
 	public UnitTypeButton(int px, int py, int pradius, Unit.UnitType ptype,
-			Level plevel) {
+			Level plevel,LevelScreen screen) {
 		super(px, py, pradius);
+		levelScreen=screen;
 		type = ptype;
 		level = plevel;
 		caption = Elements.getElementBy(ptype, new Position(px, py,
@@ -60,6 +63,8 @@ public class UnitTypeButton extends Button {
 	public void draw(IRenderer renderer) {
 		setEnabled(level.getMoney() >= cost);
 		if(level.getMoney() < cost)
+			return;
+		if(levelScreen.isDragging())
 			return;
 		
 		super.draw(renderer);
