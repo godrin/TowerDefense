@@ -72,6 +72,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	private boolean dragging = false;
+	private int dragDisplacement=32;
 
 	@Override
 	public synchronized void render(float delta) {
@@ -254,6 +255,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 			dragPosition.set(x, y, Position.SCREEN_REF);
 			if (dragElement != null) {
+				dragPosition.y+=dragDisplacement;
 				dragPosition.set(dragPosition.to(Position.LEVEL_REF)
 						.alignedToGrid());
 
