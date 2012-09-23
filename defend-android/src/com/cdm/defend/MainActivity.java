@@ -13,8 +13,17 @@ public class MainActivity extends AndroidApplication {
 		super.onCreate(savedInstanceState);
 
 		AndroidApplicationConfiguration cfg = new AndroidApplicationConfiguration();
-		cfg.useGL20 = false;
+		cfg.useGL20 = true;
+		
+		//AndroidApplicationConfiguration settings = new AndroidApplicationConfiguration();
+        //settings.resolutionStrategy = new FillResolutionStrategy();
+        cfg.touchSleepTime = 0;
+        //settings.useAccelerometer = true;
+        //settings.useCompass = true;
+        //settings.useGL20 = true;
+        cfg.useWakelock = false;
 
+		
 		initialize(game = new DefendGame(), cfg);
 	}
 
