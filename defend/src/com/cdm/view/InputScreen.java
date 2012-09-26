@@ -43,15 +43,15 @@ public class InputScreen extends Screen implements IButtonPressed {
 	}
 
 	@Override
-	public void render(float delta) {
+	public void render() {
 		if (vals == null) {
 			try {
 				vals = highscoreServer.read();
 			} catch (HighscoreAccessException e) {
 			}
 		}
-		super.render(delta);
-		gui.addTime(delta);
+		super.render();
+
 		gui.draw(renderer);
 		renderer.drawText(150, 480, "ENTER YOUR NAME:", white, 2);
 		renderer.drawText(250, 300, name, white, 2);
@@ -64,6 +64,12 @@ public class InputScreen extends Screen implements IButtonPressed {
 			}
 			// renderer.drawText(110, 380, sb.toString(), white,1.25f);
 		}
+	}
+
+	@Override
+	public void move(float delta) {
+		super.move(delta);
+		gui.addTime(delta);
 	}
 
 	@Override

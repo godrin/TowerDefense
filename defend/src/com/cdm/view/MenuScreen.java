@@ -17,7 +17,6 @@ public class MenuScreen extends Screen implements IButtonPressed {
 	private WidgetContainer gui = new WidgetContainer();
 	private Renderer renderer = new Renderer();
 	private Game game;
-	private long oldMicros = 0;
 	private PolySprite sprite;
 	private Position spritePos = new Position(Gdx.graphics.getWidth() / 4,
 			Gdx.graphics.getHeight() / 2, Position.SCREEN_REF);
@@ -37,7 +36,8 @@ public class MenuScreen extends Screen implements IButtonPressed {
 		gui.add(b3 = new BigButton(-200, 100, Gdx.graphics.getWidth() / 4, 50,
 				"quit", "quit", this));
 		gui.add(new AnimText(150, 150, 400, 100, Arrays.asList(new String[] {
-				"godrin", "undermink", "proudly", "present" })));
+				"v-defend","2012","presented","by",
+				"godrin", "and","undermink",})));
 		b0.add(new MoveAnimation(Easings.QUAD, 1.5f, middle, b0.getY(), b0));
 		b1.add(new MoveAnimation(Easings.QUAD, 2.0f, middle, b1.getY(), b1));
 		b2.add(new MoveAnimation(Easings.QUAD, 2.5f, middle, b2.getY(), b2));
@@ -48,21 +48,20 @@ public class MenuScreen extends Screen implements IButtonPressed {
 	}
 
 	@Override
-	public void render(float delta) {
-		long millis = System.currentTimeMillis();
-		long micro = System.nanoTime() / 1000 + millis * 1000;
-		if (oldMicros > 0) {
-			delta = (micro - oldMicros) * 0.000001f;
-		}
-		oldMicros = micro;
-
-		super.render(delta);
+	public void render() {
+		super.render();
 		renderer.initGlSettings();
-		gui.addTime(delta);
 
 		renderBg();
 
 		gui.draw(renderer);
+	}
+	
+	@Override
+	public void move(float delta) {
+		// TODO Auto-generated method stub
+		super.move(delta);
+		gui.addTime(delta);
 	}
 
 	private void renderBg() {

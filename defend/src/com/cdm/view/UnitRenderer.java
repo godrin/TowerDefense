@@ -45,7 +45,7 @@ public class UnitRenderer implements IRenderer {
 	}
 
 	@Override
-	public void drawText(int i, int j, CharSequence string, Color c) {
+	public void drawText(float i, float j, CharSequence string, Color c) {
 		r.drawText(i, j, string, c);
 	}
 
@@ -65,7 +65,7 @@ public class UnitRenderer implements IRenderer {
 	}
 
 	@Override
-	public void drawText(int i, int j, CharSequence string, Color c, float scale) {
+	public void drawText(float i, float j, CharSequence string, Color c, float scale) {
 		r.drawText(i, j, string, c, scale);
 	}
 

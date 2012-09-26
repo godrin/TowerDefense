@@ -105,8 +105,7 @@ public class Cannon extends RotatingUnit implements Element {
 						.addShot(
 								new SimpleShot(startingPos, anticipatePosition(
 										startingPos, enemy, SimpleShot.SPEED),
-										getLevel(), impact, enemy
-												.getMovingDirection()));
+										getLevel(), impact, enemy));
 				SoundFX.play(Type.SHOT2);
 				hot += HOT_PER_SHOT;
 				if (hot > TOO_HOT)

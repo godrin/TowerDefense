@@ -4,7 +4,7 @@ import com.cdm.view.Position;
 
 public class BigShip extends SmallShip {
 
-	private float speed = 0.4f;
+	private static final float SPEED = 0.4f;
 
 	public BigShip(Position position) {
 		super(position);
@@ -15,7 +15,7 @@ public class BigShip extends SmallShip {
 
 	@Override
 	public float getOriginalSpeed() {
-		return speed;
+		return SPEED;
 	}
 
 }

@@ -25,7 +25,7 @@ public class Screen extends InputAdapter {
 
 	}
 
-	public void render(float accum) {
+	public void render() {
 
 	}
 

@@ -21,8 +21,8 @@ public class SpriteReader {
 	private static Map<String, PolySprite> cache = new TreeMap<String, PolySprite>();
 
 	public static PolySprite read(String filename) {
-
 		if (cache.containsKey(filename)) {
+			cache.get(filename).init();
 			return cache.get(filename);
 		}
 

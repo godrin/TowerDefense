@@ -2,11 +2,11 @@ package com.cdm.view.elements.shots;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Level;
+import com.cdm.view.enemy.EnemyUnit;
 
 // review1
 public class RocketShot extends MovingShot {
@@ -15,8 +15,8 @@ public class RocketShot extends MovingShot {
 	private PolySprite sprite = null;
 
 	public RocketShot(Position from, Position to, Level plevel, int pImpact,
-			Vector3 enemyMovingDir) {
-		super(from, to, plevel, pImpact, enemyMovingDir);
+			EnemyUnit enemy) {
+		super(from, to, plevel, pImpact, enemy);
 		if (sprite == null) {
 			sprite = new PolySprite();
 			sprite.fillRectangle(-0.75f, -0.2f, 1.5f, 0.4f, new Color(0.7f,

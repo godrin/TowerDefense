@@ -93,12 +93,10 @@ public class RocketLauncher extends RotatingUnit implements Element {
 						* startingRadius;
 				startingPos.y -= Math.sin(angle * MathTools.M_PI / 180.0f)
 						* startingRadius;
-				getLevel()
-						.addShot(
-								new RocketShot(startingPos, anticipatePosition(
-										startingPos, enemy, RocketShot.speed),
-										getLevel(), impact, enemy
-												.getMovingDirection()));
+				getLevel().addShot(
+						new RocketShot(startingPos, anticipatePosition(
+								startingPos, enemy, RocketShot.speed),
+								getLevel(), impact, enemy));
 				SoundFX.play(Type.SHOT);
 
 			}

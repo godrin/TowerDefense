@@ -20,7 +20,6 @@ public class DefendGame implements ApplicationListener, Game {
 
 	private boolean running = false;
 	private Screen screen;
-	private float accum = 0;
 	boolean stop = false;
 	private LevelScreen levelScreen;
 	private MenuScreen menuScreen;
@@ -40,6 +39,8 @@ public class DefendGame implements ApplicationListener, Game {
 		highscoreScreen = new HighScoreScreen(this);
 		inputScreen = new InputScreen(this, c);
 		SoundFX.Initialize();
+		Gdx.graphics.setVSync(true);
+
 	}
 	
 	public boolean backButtonPressed() {
@@ -75,12 +76,9 @@ public class DefendGame implements ApplicationListener, Game {
 
 	public void render() {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		accum += Gdx.graphics.getDeltaTime();
-		while (accum > 1.0f / 60.0f) {
-			accum -= 1.0f / 60.0f;
-		}
+		
 		move();
-		screen.render(accum);
+		screen.render();
 
 	}
 
@@ -100,6 +98,8 @@ public class DefendGame implements ApplicationListener, Game {
 	}
 
 	private void mywait(float delta) {
+		if(true)
+			return;
 		try {
 			int ms = (int) (delta * 1000);
 

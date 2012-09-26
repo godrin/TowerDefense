@@ -7,6 +7,7 @@ import com.cdm.view.elements.Level;
 
 public class ZoomInEffect implements DisplayEffect {
 
+	private static final int DEFAULT_SCALE = 64;
 	private static final float SPEED = 3;
 	private float scale = 1;
 	private Level level;
@@ -18,8 +19,8 @@ public class ZoomInEffect implements DisplayEffect {
 	@Override
 	public void move(float time) {
 		scale += time * scale * SPEED;
-		if (scale > 48) {
-			scale = 48;
+		if (scale > DEFAULT_SCALE) {
+			scale = DEFAULT_SCALE;
 
 			level.removeShot(this);
 		}

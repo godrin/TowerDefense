@@ -48,9 +48,8 @@ public class SoundScreen extends Screen implements IButtonPressed {
 	}
 
 	@Override
-	public void render(float delta) {
-		super.render(delta);
-		gui.addTime(delta);
+	public void render() {
+		super.render();
 		gui.draw(renderer);
 		renderer.drawText(280, 400, "Song " + song + " selected", white);
 		float Svol = vol * 100;
@@ -59,6 +58,11 @@ public class SoundScreen extends Screen implements IButtonPressed {
 				"Music volume: " + Integer.toString((int) Svol), white);
 		renderer.drawText(260, 360,
 				"SoundFX volume: " + Integer.toString((int) Fvol), white);
+	}
+	@Override
+	public void move(float delta) {
+		super.move(delta);
+		gui.addTime(delta);
 	}
 
 	@Override

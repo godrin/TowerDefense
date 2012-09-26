@@ -252,11 +252,11 @@ public class Renderer implements IRenderer {
 	}
 
 	@Override
-	public void drawText(int i, int j, CharSequence string, Color c) {
+	public void drawText(float i, float j, CharSequence string, Color c) {
 		drawText(i, j, string, c, 1);
 	}
 
-	public void drawText(int i, int j, CharSequence string, Color c, float scale) {
+	public void drawText(float i, float j, CharSequence string, Color c, float scale) {
 		if (renderer != null)
 			Gdx.gl10.glPushMatrix();
 		spriteBatch.begin();
@@ -278,7 +278,7 @@ public class Renderer implements IRenderer {
 
 	@Override
 	public void drawText(Position position, CharSequence money, Color moneyColor) {
-		drawText((int) position.x, (int) position.y, money, moneyColor);
+		drawText(position.x, position.y, money, moneyColor);
 	}
 
 	@Override
@@ -353,4 +353,5 @@ public class Renderer implements IRenderer {
 		projMatrix.mul(m);
 
 	}
+
 }

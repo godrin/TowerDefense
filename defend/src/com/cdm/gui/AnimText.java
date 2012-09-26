@@ -27,6 +27,14 @@ public class AnimText extends Widget {
 		i = i % texts.size();
 		int t = (int) i;
 		float delta = i - t - 0.5f;
+		float x=300-delta*delta*Math.signum(delta)*2600;
+		renderer.drawText(x, 50.0f, texts.get(t), Color.WHITE,  2.f);
+	}
+	public void drawOld(IRenderer renderer) {
+		float i = time * 0.7f;
+		i = i % texts.size();
+		int t = (int) i;
+		float delta = i - t - 0.5f;
 		float size = 0;
 		if (delta < 0) {
 			if (delta < -0.4f) {

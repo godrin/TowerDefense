@@ -72,10 +72,10 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	private boolean dragging = false;
-	private int dragDisplacement=32;
+	private int dragDisplacement = 32;
 
 	@Override
-	public synchronized void render(float delta) {
+	public synchronized void render() {
 		if (rendering)
 			return;
 		synchronized (this) {
@@ -84,15 +84,15 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 			rendering = true;
 			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
-			draw(delta);
+			draw();
 			rendering = false;
 		}
 	}
 
-	private void draw(float delta) {
+	private void draw() {
 		// drawBackground();
 
-		drawLineBased(delta);
+		drawLineBased();
 		hud.draw(renderer);
 	}
 
@@ -100,6 +100,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (delta > 0) {
 			level.move(delta);
 		}
+		gui.addTime(delta);
 
 	}
 
@@ -107,7 +108,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		Position.LEVEL_REF.moveBy(dx, dy);
 	}
 
-	private void drawLineBased(float delta) {
+	private void drawLineBased() {
 
 		if (Gdx.gl10 != null)
 			Gdx.gl10.glPushMatrix();
@@ -131,7 +132,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		}
 		Position.SCREEN_REF.apply();
 
-		gui.addTime(delta);
 		gui.draw(unitRenderer);
 		if (Gdx.gl10 != null)
 
@@ -255,7 +255,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 			dragPosition.set(x, y, Position.SCREEN_REF);
 			if (dragElement != null) {
-				dragPosition.y+=dragDisplacement;
+				dragPosition.y += dragDisplacement;
 				dragPosition.set(dragPosition.to(Position.LEVEL_REF)
 						.alignedToGrid());
 
