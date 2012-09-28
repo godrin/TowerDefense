@@ -11,7 +11,7 @@ public enum EnemyType {
 	}
 
 	public static EnemyType random() {
-		if (true)
+		if (false)
 			return ROCKET;
 		double r = Math.random();
 
