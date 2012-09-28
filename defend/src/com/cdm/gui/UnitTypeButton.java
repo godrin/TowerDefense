@@ -2,11 +2,13 @@ package com.cdm.gui;
 
 import com.badlogic.gdx.graphics.Color;
 import com.cdm.view.IRenderer;
+import com.cdm.view.LevelScreen;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.units.Unit;
 
+// review1
 public class UnitTypeButton extends Button {
 
 	private Unit.UnitType type;
@@ -16,10 +18,12 @@ public class UnitTypeButton extends Button {
 	private Level level;
 	private int cost = 2;
 	private Position pos = getPosition();
+	private LevelScreen levelScreen;
 	
 	public UnitTypeButton(int px, int py, int pradius, Unit.UnitType ptype,
-			Level plevel) {
+			Level plevel,LevelScreen screen) {
 		super(px, py, pradius);
+		levelScreen=screen;
 		type = ptype;
 		level = plevel;
 		caption = Elements.getElementBy(ptype, new Position(px, py,
@@ -54,20 +58,24 @@ public class UnitTypeButton extends Button {
 		this.listener = listener;
 	}
 
+	private static StringBuilder textBuilder=new StringBuilder(); 
 	@Override
 	public void draw(IRenderer renderer) {
 		setEnabled(level.getMoney() >= cost);
 		if(level.getMoney() < cost)
 			return;
+		if(levelScreen.isDragging())
+			return;
 		
-
 		super.draw(renderer);
 		Position.BUTTON_REF.setScale(getRadius() * 2);
 		caption.draw(renderer);
 
-		String money = "$" + cost;
+		// FIXME (?)
 		
-		renderer.drawText(pos, money, moneyColor);
+		textBuilder.setLength(0);
+		textBuilder.append("$").append(cost);
+		renderer.drawText(pos, textBuilder, moneyColor);
 	}
 
 }

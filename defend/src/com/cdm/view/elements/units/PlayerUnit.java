@@ -17,6 +17,12 @@ public abstract class PlayerUnit extends Unit {
 	private boolean selected = false;
 	private List<UnitAction> possibleUpgrades = new ArrayList<UnitAction>();
 	private int currentValue;
+	private Integer unitLevel=1;
+
+	protected static Color INNER_PLAYER_COLOR = new Color(0, 0, 0.6f, 1.0f);
+	protected static Color OUTER_PLAYER_COLOR = new Color(0.2f, 0.2f, 1.0f, 1.0f);
+	protected static Color LEVEL2_PLAYER_COLOR = new Color(0.8f, 0.7f, 0.0f, 0.7f);
+	protected static Color LEVEL3_PLAYER_COLOR = new Color(0.9f, 0.8f, 0.0f, 0.8f);
 
 	public PlayerUnit(Position p) {
 		super(p);
@@ -63,6 +69,7 @@ public abstract class PlayerUnit extends Unit {
 
 	public void incLevel(UnitAction upgrade) {
 		if (upgrade != null) {
+			unitLevel++;
 			UnitAction next = upgrade.getNextUprade();
 
 			apply(upgrade);
@@ -91,6 +98,10 @@ public abstract class PlayerUnit extends Unit {
 
 	public Integer getCurrentValue() {
 		return currentValue;
+	}
+
+	public Integer getUnitLevel() {
+		return unitLevel;
 	}
 
 }

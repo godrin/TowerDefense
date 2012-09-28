@@ -2,6 +2,7 @@ package com.cdm.gui.effects;
 
 import com.badlogic.gdx.graphics.Color;
 
+// review1
 public class AnimatedColor {
 	private SingleValue r, g, b, a;
 	private Color c = new Color();

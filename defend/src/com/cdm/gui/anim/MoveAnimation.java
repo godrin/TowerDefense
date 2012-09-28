@@ -2,13 +2,15 @@ package com.cdm.gui.anim;
 
 import com.cdm.gui.BigButton;
 
+//review1
+
 public class MoveAnimation implements Animation {
 
-	float t, interval;
-	Easing ease;
-	BigButton button;
-	float tx, ty;
-	float x0, y0;
+	private float t, interval;
+	private Easing ease;
+	private BigButton button;
+	private float tx, ty;
+	private float x0, y0;
 
 	public MoveAnimation(Easing easing, float pinterval, float px, float py,
 			BigButton b) {

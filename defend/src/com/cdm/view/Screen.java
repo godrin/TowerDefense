@@ -4,6 +4,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.cdm.defend.DefendGame;
 
+// review1
 public class Screen extends InputAdapter {
 
 	public static final String LEVEL_SCREEN = "levelScreen";
@@ -24,7 +25,7 @@ public class Screen extends InputAdapter {
 
 	}
 
-	public void render(float accum) {
+	public void render() {
 
 	}
 

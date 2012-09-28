@@ -22,6 +22,7 @@ public abstract class EnemyUnit extends Unit {
 	private float frozenTime = 0.0f;
 	private float speed = -10.0f;
 	private ShakingLines shaking = new ShakingLines();
+	private boolean destroyed = false;
 
 	public EnemyUnit(Position pos) {
 		super(pos);
@@ -51,7 +52,8 @@ public abstract class EnemyUnit extends Unit {
 		/*
 		 * if (true) return;
 		 */
-		drawEnergyBar(renderer);
+		if (!destroyed)
+			drawEnergyBar(renderer);
 	}
 
 	public void drawAfter(IRenderer renderer) {
@@ -96,12 +98,31 @@ public abstract class EnemyUnit extends Unit {
 		float impact = getImpact(type, shot.getImpact());
 		// FIXME: randomize impact
 		energy -= impact;
-		if (energy <= 0.0f) {
+		if (energy <= 0.0f && !destroyed) {
 			getLevel().enemyDestroyed(this);
+			if (false)
+				getLevel().remove(this);
+			destroyed = true;
+			onDestruction();
 		}
-		getLevel().addShot(
-				new Explosion(getPosition(), getSize()*0.5f, getLevel(), 2, false));
+		if (!destroyed)
+			getLevel().addShot(
+					new Explosion(getPosition(), getSize() * 0.5f, getLevel(),
+							2, false));
 
+	}
+
+	protected void onDestruction() {
+		removeMe();
+	}
+
+	protected void removeMe() {
+		getLevel().remove(this);
+
+	}
+
+	public boolean destroyed() {
+		return destroyed;
 	}
 
 	public void freeze(float time) {

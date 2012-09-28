@@ -1,5 +1,6 @@
 package com.cdm.view;
 
+// review1
 public class Rectangle {
 	private float x, y, w, h;
 
@@ -57,16 +58,27 @@ public class Rectangle {
 		h = y1 - y0;
 	}
 
-	public Rectangle copy() {
-		return new Rectangle(x, y, w, h);
-	}
-
 	public float getXMiddle() {
 		return x + w / 2;
 	}
 
 	public float getYMiddle() {
 		return y + h / 2;
+	}
+
+	public void set(float x2, float y2, float w2, float h2) {
+		x = x2;
+		y = y2;
+		w = w2;
+		h = h2;
+	}
+
+	public void set(Rectangle box) {
+		x=box.x;
+		y=box.y;
+		w=box.w;
+		h=box.h;
+		
 	}
 
 }

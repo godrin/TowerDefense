@@ -1,5 +1,6 @@
 package com.cdm.gui.anim;
 
+// review1
 public class QuadEasing implements Easing {
 
 	@Override

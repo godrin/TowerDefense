@@ -11,7 +11,7 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Level;
 
-public class Explosion implements DisplayEffect {
+public class Explosion extends PositionedDisplayEffect {
 
 	public static class Splinter {
 		Position currentPosition;
@@ -34,6 +34,8 @@ public class Explosion implements DisplayEffect {
 	private Color tmpColor = new Color(1, 1, 1, 1);
 	private final static Random rnd = new Random();
 	private boolean innerAnimation;
+	private static Color outerColor = new Color(0.5f, 0.5f, 0, 1.0f);
+	private static Color innerColor = new Color(1, 0, 0, 1);
 
 	public Explosion(Position pos, float pSize, Level level, int splinterCount,
 			boolean pInnerAnim) {
@@ -96,17 +98,14 @@ public class Explosion implements DisplayEffect {
 			size = 0.8f;
 		if (size >= 0.0f && innerAnimation) {
 
-			Color outerColor = new Color(0.5f, 0.5f, 0, 1.0f);
-
 			// @undermink: this is how it was meant ??
 			renderer.drawLines(getPosition(), lines, 180, outerColor, size);
 
-			Color innerColor = new Color(1, 0, 0, 1);
 			renderer.drawLines(getPosition(), lines, 180 - 45, innerColor, size);
 			renderer.drawPoly(getPosition(), poly, 180, outerColor, size);
 		}
-
-		for (Splinter splinter : splinters) {
+		for (int i = 0; i < splinters.size(); i++) {
+			Splinter splinter = splinters.get(i);
 			if (splinter.size >= 1.0f)
 				splinter.size = 0.95f;
 			if (splinter.size > 0) {
@@ -122,12 +121,13 @@ public class Explosion implements DisplayEffect {
 		}
 	}
 
-	private Position getPosition() {
+	public Position getPosition() {
 		return pos;
 	}
 
 	public void move(float time) {
-		for (Splinter splinter : splinters) {
+		for (int i = 0; i < splinters.size(); i++) {
+			Splinter splinter = splinters.get(i);
 
 			splinter.currentPosition.x += splinter.speed.x * time;
 			splinter.currentPosition.y += splinter.speed.y * time;

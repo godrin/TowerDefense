@@ -13,12 +13,13 @@ import com.cdm.view.MenuScreen;
 import com.cdm.view.Screen;
 import com.cdm.view.SoundScreen;
 
+// review1
+
 public class DefendGame implements ApplicationListener, Game {
 	private static final long serialVersionUID = 1L;
 
 	private boolean running = false;
 	private Screen screen;
-	private float accum = 0;
 	boolean stop = false;
 	private LevelScreen levelScreen;
 	private MenuScreen menuScreen;
@@ -33,10 +34,21 @@ public class DefendGame implements ApplicationListener, Game {
 		Campaign c = new Campaign("/com/cdm/view/campaign1.txt");
 		levelScreen = new LevelScreen(this, c);
 		optionsScreen = new SoundScreen(this);
+		SoundScreen.playSong(1);
 		setScreen(menuScreen = new MenuScreen(this));
 		highscoreScreen = new HighScoreScreen(this);
 		inputScreen = new InputScreen(this, c);
 		SoundFX.Initialize();
+		Gdx.graphics.setVSync(true);
+
+	}
+	
+	public boolean backButtonPressed() {
+		if(screen!=menuScreen) {
+			setScreen(menuScreen);
+			return false;
+		}
+		return true;
 	}
 
 	public void pause() {
@@ -52,6 +64,9 @@ public class DefendGame implements ApplicationListener, Game {
 			screen.removed();
 
 		screen = newScreen;
+		if(screen==levelScreen) {
+			SoundScreen.playSong(2);
+		}
 
 		if (screen != null) {
 			Gdx.input.setInputProcessor(screen);
@@ -61,12 +76,9 @@ public class DefendGame implements ApplicationListener, Game {
 
 	public void render() {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		accum += Gdx.graphics.getDeltaTime();
-		while (accum > 1.0f / 60.0f) {
-			accum -= 1.0f / 60.0f;
-		}
+		
 		move();
-		screen.render(accum);
+		screen.render();
 
 	}
 
@@ -86,11 +98,13 @@ public class DefendGame implements ApplicationListener, Game {
 	}
 
 	private void mywait(float delta) {
+		if(false)
+			return;
 		try {
-			Integer ms = (int) (delta * 1000);
+			int ms = (int) (delta * 1000);
 
-			int wait = 15 - ms;
-			if (wait > 5) {
+			int wait = (1000/60) - ms;
+			if (wait > 2) {
 				Thread.sleep(wait);
 			}
 		} catch (InterruptedException e) {

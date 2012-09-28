@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
 import com.cdm.view.IRenderer;
-import com.cdm.view.Rectangle;
 
+// review1
 public class AnimText extends Widget {
 
 	private List<String> texts;
@@ -18,11 +18,19 @@ public class AnimText extends Widget {
 	}
 
 	public void setPos(float mx, float my, float w, float h) {
-		setBBox(new Rectangle(mx - w / 2, my - h / 2, w, h));
+		setBBox(mx - w / 2, my - h / 2, w, h);
 	}
 
 	@Override
 	public void draw(IRenderer renderer) {
+		float i = time * 0.7f;
+		i = i % texts.size();
+		int t = (int) i;
+		float delta = i - t - 0.5f;
+		float x=300-delta*delta*Math.signum(delta)*2600;
+		renderer.drawText(x, 50.0f, texts.get(t), Color.WHITE,  2.f);
+	}
+	public void drawOld(IRenderer renderer) {
 		float i = time * 0.7f;
 		i = i % texts.size();
 		int t = (int) i;

@@ -11,6 +11,7 @@ import com.cdm.view.elements.units.PlayerUnit;
 import com.cdm.view.elements.units.Unit;
 import com.cdm.view.enemy.EnemyUnit;
 
+// review1
 public class Grid {
 	public enum CellType {
 		FREE, BLOCK, EMPTY
@@ -18,10 +19,10 @@ public class Grid {
 
 	public class GridElement {
 
-		private Set<Element> e;
-		private int distToEnd;
-		private int tempValue;
-		private int distToUnit;
+		private Set<Element> currentElements;
+		private int distanceToEnd;
+		private int computationValue;
+		private int distanceToNextUnit;
 
 		private CellType cellType = CellType.EMPTY;
 		int x, y;
@@ -29,43 +30,43 @@ public class Grid {
 		public GridElement(int x, int y) {
 			this.x = x;
 			this.y = y;
-			e = new TreeSet<Element>();
-			distToEnd = -1;
-			distToUnit = -1;
+			currentElements = new TreeSet<Element>();
+			distanceToEnd = -1;
+			distanceToNextUnit = -1;
 
 		}
 
 		public GridElement(GridElement gridElement) {
 			this.x = gridElement.x;
 			this.y = gridElement.y;
-			e = new TreeSet<Element>();
-			distToEnd = -1;
-			distToUnit = -1;
+			currentElements = new TreeSet<Element>();
+			distanceToEnd = -1;
+			distanceToNextUnit = -1;
 			cellType = gridElement.cellType;
 		}
 
 		public Set<Element> getList() {
-			return e;
+			return currentElements;
 		}
 
 		public int getTempValue() {
-			return tempValue;
+			return computationValue;
 		}
 
 		public void setTempValue(int tempValue) {
-			this.tempValue = tempValue;
+			this.computationValue = tempValue;
 		}
 
 		public int getDistToEnd() {
-			return distToEnd;
+			return distanceToEnd;
 		}
 
 		public int getDistToUnit() {
-			return distToUnit;
+			return distanceToNextUnit;
 		}
 
 		public void setDistToEnd(int distToEnd) {
-			this.distToEnd = distToEnd;
+			this.distanceToEnd = distToEnd;
 		}
 
 		public CellType getCellType() {
@@ -81,15 +82,16 @@ public class Grid {
 		}
 
 		public void setDistToUnit(int distToUnit) {
-			this.distToUnit = distToUnit;
+			this.distanceToNextUnit = distToUnit;
 		}
 
 		public boolean isPassable() {
-			if (e == null)
+			if (currentElements == null)
 				return false;
 			if (!isFree())
 				return false;
-			for (Element ce : e) {
+			// FIXME (?)
+			for (Element ce : currentElements) {
 				if (!(ce instanceof EnemyUnit))
 					return false;
 			}
@@ -98,26 +100,27 @@ public class Grid {
 		}
 
 		public boolean isEmpty() {
-			return e.isEmpty();
+			return currentElements.isEmpty();
 		}
 
 		public boolean contains(Unit unit) {
-			return e.contains(unit);
+			return currentElements.contains(unit);
 		}
 
 		public void remove(Unit unit) {
 			if (unit != null)
-				e.remove(unit);
+				currentElements.remove(unit);
 		}
 
 		public void add(Unit unit) {
-			e.add(unit);
-			if (!e.contains(unit))
+			currentElements.add(unit);
+			if (!currentElements.contains(unit))
 				throw new RuntimeException("adding failed");
 		}
 
 		public EnemyUnit getFirstEnemyUnit() {
-			for (Element u : e) {
+			// FIXME (?)
+			for (Element u : currentElements) {
 				if (u instanceof EnemyUnit) {
 					return (EnemyUnit) u;
 				}
@@ -130,7 +133,8 @@ public class Grid {
 		}
 
 		public PlayerUnit getPlayerUnit() {
-			for (Element u : e) {
+			// FIXME (?)
+			for (Element u : currentElements) {
 				if (u instanceof PlayerUnit) {
 					return (PlayerUnit) u;
 				}
@@ -139,7 +143,8 @@ public class Grid {
 		}
 
 		public Unit getFirstUnit(Class<? extends Unit> klass) {
-			for (Element u : e) {
+			// FIXME (?)
+			for (Element u : currentElements) {
 				if (klass.isAssignableFrom(u.getClass())) {
 					return (Unit) u;
 				}

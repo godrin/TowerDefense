@@ -1,17 +1,20 @@
 package com.cdm.view;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.elements.paths.PathPos;
 
+// review1
 public class Position {
-
 
 	private CoordSystem system;
 
 	public static CoordSystem SCREEN_REF = new CoordSystem(0, 0, 1);
 	public static CoordSystem BUTTON_REF = new CoordSystem(0, 0, 1);
 	public static CoordSystem LEVEL_REF = new CoordSystem(0, 0, 48);
-	public static final Position NULL = new Position(0,0,LEVEL_REF);
+	public static final Position NULL = new Position(0, 0, LEVEL_REF);
+
+	private static final int CLIP_THRES = 150;
 
 	public float x;
 	public float y;
@@ -126,4 +129,12 @@ public class Position {
 		float dy = y - target.y;
 		return (float) Math.sqrt(dx * dx + dy * dy);
 	}
+
+	public boolean onScreen() {
+		Position checkPos = to(Position.SCREEN_REF);
+		return checkPos.x >= -CLIP_THRES && checkPos.y >= -CLIP_THRES
+				&& checkPos.x < Gdx.graphics.getWidth() + CLIP_THRES
+				&& checkPos.y < Gdx.graphics.getHeight() + CLIP_THRES;
+	}
+
 }

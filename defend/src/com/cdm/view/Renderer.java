@@ -62,7 +62,10 @@ public class Renderer implements IRenderer {
 			Gdx.gl10.glLineWidth(pos.getSystem().getScale() * 0.04f);
 
 			renderer.begin(GL10.GL_LINES);
-			for (Vector3 v : lines) {
+
+			for (int i = 0; i < lines.size(); i++) {
+				Vector3 v = lines.get(i);
+
 				renderer.color(color.r, color.g, color.b, color.a);
 				renderer.vertex(v);
 			}
@@ -83,7 +86,8 @@ public class Renderer implements IRenderer {
 			x.mul(p);
 			x.mul(s);
 			renderer20.begin(x, GL10.GL_LINES);
-			for (Vector3 v : lines) {
+			for (int i = 0; i < lines.size(); i++) {
+				Vector3 v = lines.get(i);
 				renderer20.color(color.r, color.g, color.b, color.a);
 				renderer20.vertex(v.x, v.y, v.z);
 			}
@@ -117,7 +121,8 @@ public class Renderer implements IRenderer {
 			Gdx.gl10.glScalef(size, size, size);
 
 			renderer.begin(GL10.GL_TRIANGLES);
-			for (Vector3 v : lines) {
+			for (int i = 0; i < lines.size(); i++) {
+				Vector3 v = lines.get(i);
 				renderer.color(color.r, color.g, color.b, color.a);
 				renderer.vertex(v);
 			}
@@ -137,7 +142,8 @@ public class Renderer implements IRenderer {
 			x.mul(s);
 			if (true) {
 				renderer20.begin(x, GL20.GL_TRIANGLES);
-				for (Vector3 v : lines) {
+				for (int i = 0; i < lines.size(); i++) {
+					Vector3 v = lines.get(i);
 					// FIXME: ensure from outside !
 					float r = color.r;
 					float g = color.g;
@@ -246,11 +252,12 @@ public class Renderer implements IRenderer {
 	}
 
 	@Override
-	public void drawText(int i, int j, String string, Color c) {
+	public void drawText(float i, float j, CharSequence string, Color c) {
 		drawText(i, j, string, c, 1);
 	}
 
-	public void drawText(int i, int j, String string, Color c, float scale) {
+	public void drawText(float i, float j, CharSequence string, Color c,
+			float scale) {
 		if (renderer != null)
 			Gdx.gl10.glPushMatrix();
 		spriteBatch.begin();
@@ -271,8 +278,8 @@ public class Renderer implements IRenderer {
 	}
 
 	@Override
-	public void drawText(Position position, String money, Color moneyColor) {
-		drawText((int) position.x, (int) position.y, money, moneyColor);
+	public void drawText(Position position, CharSequence money, Color moneyColor) {
+		drawText(position.x, position.y, money, moneyColor);
 	}
 
 	@Override
@@ -299,17 +306,12 @@ public class Renderer implements IRenderer {
 
 			Gdx.gl10.glPopMatrix();
 		} else {
-			/*
-			 * Matrix4 p = new Matrix4();
-			 * 
-			 * p.setToRotation(Vector3.Z, angle); p.trn(pos.x, pos.y, 0);
-			 * p.mul(projMatrix);
-			 */
 			initGlSettings();
+			// FIXME: new
 			Matrix4 p = new Matrix4();
 			Matrix4 s = new Matrix4();
 			Matrix4 x = new Matrix4(projMatrix);
-			// size*=pos.getSystem().getScale();
+
 			s.setToScaling(size, size, size);
 			p.setToRotation(Vector3.Z, angle);
 			p.trn(pos.x, pos.y, 0);
@@ -325,7 +327,29 @@ public class Renderer implements IRenderer {
 		}
 	}
 
+	public void render(WorldCallback callback, Position pos, float size,
+			float angle) {
+		initGlSettings();
+		// FIXME: new
+		Matrix4 p = new Matrix4();
+		Matrix4 s = new Matrix4();
+		Matrix4 x = new Matrix4(projMatrix);
+
+		s.setToScaling(size, size, size);
+		p.setToRotation(Vector3.Z, angle);
+		p.trn(pos.x, pos.y, 0);
+		x.mul(p);
+		x.mul(s);
+
+		// Gdx.gl20.glBlendColor(color.r, color.g, color.b, color.a);
+		// Gdx.gl20.glScalef(size, size, size);
+		Gdx.gl20.glLineWidth(pos.getSystem().getScale() * 0.04f);
+		// x=new Matrix4();
+		callback.callback(x);
+	}
+
 	public static void pushMatrix() {
+		// FIXME: new
 		matrixStack.add(new Matrix4(projMatrix));
 
 	}
@@ -336,6 +360,7 @@ public class Renderer implements IRenderer {
 	}
 
 	public static void scaleMatrix(float x, float y, float z) {
+		// FIXME: new
 		Matrix4 m = new Matrix4();
 		m.setToScaling(x, y, z);
 		// m.mul(projMatrix);
@@ -344,9 +369,11 @@ public class Renderer implements IRenderer {
 	}
 
 	public static void translateMatrix(float x, float y, float z) {
+		// FIXME: new
 		Matrix4 m = new Matrix4();
 		m.setToTranslation(x, y, z);
 		projMatrix.mul(m);
 
 	}
+
 }

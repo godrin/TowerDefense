@@ -5,12 +5,16 @@ import java.util.Comparator;
 import com.cdm.view.Position;
 import com.cdm.view.enemy.EnemyUnit;
 
+// review1
 public class DistanceComparator implements Comparator<EnemyUnit> {
 
 	private Position base;
 
 	public DistanceComparator(Position position) {
 		base = position;
+	}
+
+	public DistanceComparator() {
 	}
 
 	@Override
@@ -39,5 +43,10 @@ public class DistanceComparator implements Comparator<EnemyUnit> {
 		if (distA > distB)
 			return 1;
 		return 0;
+	}
+
+	public void setPosition(Position position) {
+		base = position;
+
 	}
 }

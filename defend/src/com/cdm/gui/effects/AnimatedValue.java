@@ -1,5 +1,6 @@
 package com.cdm.gui.effects;
 
+// review1
 public class AnimatedValue implements SingleValue {
 	private AnimationValueStore s;
 	private Animator modified;

@@ -68,4 +68,9 @@ public class SingleBox implements Element {
 
 	}
 
+	@Override
+	public Position getPosition() {
+		return pos;
+	}
+
 }

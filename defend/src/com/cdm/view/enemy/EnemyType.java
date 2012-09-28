@@ -3,10 +3,12 @@ package com.cdm.view.enemy;
 public enum EnemyType {
 	SMALL_SHIP, TANK, BIG_SHIP, BIG_SHIP2, ROCKET, TRUCK, TANK2, ROTOR, BUG;
 
-	public static final Float STRENGTH_THRESHOLD = 1.1f;
+	public static final Float STRENGTH_THRESHOLD = -1.1f;
 	public static final Float FACTOR = 0.4f;
 
 	public static EnemyType random() {
+		if(false)
+		return BIG_SHIP;
 		double r = Math.random();
 
 		return EnemyType.values()[((int) (r * 500)) % EnemyType.values().length];
@@ -17,7 +19,7 @@ public enum EnemyType {
 		return getStrength(levelNo);
 	}
 
-	public float getStrength(int waveNo) {
+	public float getStrength(int levelNo) {
 		float s = 1.0f;
 		switch (this) {
 		case SMALL_SHIP:
@@ -43,6 +45,6 @@ public enum EnemyType {
 			s = 9.0f;
 			break;
 		}
-		return s * (1.0f + (waveNo - 1) * FACTOR);
+		return s * (1.0f + (levelNo - 1) * FACTOR);
 	}
 }

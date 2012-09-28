@@ -2,13 +2,14 @@ package com.cdm.gui.effects;
 
 import com.cdm.view.IRenderer;
 
+// review1
 public class AnimatedRect implements Effect {
 
-	SingleValue mx;
-	SingleValue my;
-	SingleValue pw;
-	SingleValue ph;
-	AnimatedColor c;
+	private SingleValue mx;
+	private SingleValue my;
+	private SingleValue pw;
+	private SingleValue ph;
+	private AnimatedColor c;
 
 	public AnimatedRect(Animator mx, Animator my, Animator pw, Animator ph,
 			AnimatedColor c) {

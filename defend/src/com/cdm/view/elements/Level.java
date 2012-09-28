@@ -19,6 +19,7 @@ import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.Decal;
 import com.cdm.view.elements.shots.DisplayEffect;
 import com.cdm.view.elements.shots.Explosion;
+import com.cdm.view.elements.shots.MoneyBubble;
 import com.cdm.view.elements.shots.Shake;
 import com.cdm.view.elements.shots.ZoomInEffect;
 import com.cdm.view.elements.units.PlayerUnit;
@@ -121,22 +122,26 @@ public class Level {
 		drawBox(renderer);
 
 		for (DisplayEffect decal : decals) {
-			decal.draw(renderer);
+			if (decal.onScreen())
+				decal.draw(renderer);
 		}
 
 		for (int zLayer = 0; zLayer < 10; zLayer++) {
 			for (Unit unit : units) {
 				if (unit != null)
-					unit.drawInLayer(zLayer, renderer);
+					if (unit.getPosition().onScreen())
+						unit.drawInLayer(zLayer, renderer);
 			}
 		}
 		for (Unit unit : units) {
-			if (unit != null)
-				unit.drawAfter(renderer);
+			if (unit != null && !unit.destroyed())
+				if (unit.getPosition().onScreen())
+					unit.drawAfter(renderer);
 		}
 
 		for (DisplayEffect shot : displayEffects) {
-			shot.draw(renderer);
+			if (shot.onScreen())
+				shot.draw(renderer);
 		}
 		if (selector != null)
 			selector.draw(renderer);
@@ -306,30 +311,39 @@ public class Level {
 	}
 
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
+
 		// removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		SoundFX.play(Type.HIT);
 		displayEffectsToAdd.add(new Explosion(enemyUnit.getPosition(),
 				enemyUnit.getSize(), this, 12, true));
-		unitsToRemove.add(enemyUnit);
+
+		// unitsToRemove.add(enemyUnit);
 		playerState.enemyDestroyed(enemyUnit);
+		addShot(new MoneyBubble(enemyUnit.getMoney(), enemyUnit.getPosition(),
+				this));
 	}
 
 	public void removeShot(DisplayEffect shot) {
 		displayEffectsToRemove.add(shot);
 	}
 
-	public EnemyUnit getNextEnemy(Position position) {
+	private static DistanceComparator nextEnemyComparator = new DistanceComparator();
+	private static SortedSet<EnemyUnit> nextEnemySet = new TreeSet<EnemyUnit>(
+			nextEnemyComparator);
 
-		SortedSet<EnemyUnit> s = new TreeSet<EnemyUnit>(new DistanceComparator(
-				position));
-		for (Unit u : units) {
-			if (u instanceof EnemyUnit) {
-				s.add((EnemyUnit) u);
+	public EnemyUnit getNextEnemy(Position position) {
+		nextEnemySet.clear();
+		nextEnemyComparator.setPosition(position);
+		for (int i = 0; i < units.size(); i++) {
+			Unit u = units.get(i);
+
+			if (u instanceof EnemyUnit && !u.destroyed()) {
+				nextEnemySet.add((EnemyUnit) u);
 			}
 		}
 
-		if (s.size() > 0)
-			return s.first();
+		if (nextEnemySet.size() > 0)
+			return nextEnemySet.first();
 		return null;
 	}
 

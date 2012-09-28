@@ -63,11 +63,14 @@ public class SmallShip extends EnemyUnit implements Element {
 	public void draw(IRenderer renderer) {
 		super.draw(renderer);
 
-		renderer.drawPoly(getPosition(), poly, angle, BG_COLOR, getSize() * 1f);
-		getShakingLines().draw(renderer, getPosition(), lines, angle,
-				lineColor, getSize());
-		getShakingLines().draw(renderer, getPosition(), ray, angle, lineColor,
-				getSize());
+		if (!destroyed()) {
+			renderer.drawPoly(getPosition(), poly, angle, BG_COLOR,
+					getSize() * 1f);
+			getShakingLines().draw(renderer, getPosition(), lines, angle,
+					lineColor, getSize());
+			getShakingLines().draw(renderer, getPosition(), ray, angle,
+					lineColor, getSize());
+		}
 	}
 
 	// fly diagonal to end position
@@ -136,7 +139,7 @@ public class SmallShip extends EnemyUnit implements Element {
 
 	public void drawInLayer(int zLayer, IRenderer renderer) {
 		super.drawInLayer(zLayer, renderer);
-		if (zLayer == 1) {
+		if (zLayer == 1 && !destroyed()) {
 			if (bg == null) {
 				bg = new PolySprite();
 

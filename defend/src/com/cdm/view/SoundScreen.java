@@ -10,18 +10,19 @@ import com.cdm.gui.WidgetContainer;
 import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 
+// review1
 public class SoundScreen extends Screen implements IButtonPressed {
 
 	private WidgetContainer gui = new WidgetContainer();
 	private Renderer renderer = new Renderer();
 	private Game game;
-	public Music music, music0, music1, music2;
-	private int song = 2;
-	boolean stop = true;
-	Color white = new Color(1, 1, 1, 1);
-	String Smusic = "Not Playing...";
-	private float vol = 0.7f;
-	public static float FXvol = 0.5f;
+	private static Music music, music0, music1, music2;
+	private static int song = 2;
+	private static boolean stop = false;
+	private Color white = new Color(1, 1, 1, 1);
+	private String Smusic = "Not Playing...";
+	private static float vol = 0.5f;
+	public static float FXvol = 0.6f;
 
 	public SoundScreen(Game pgame) {
 
@@ -47,9 +48,8 @@ public class SoundScreen extends Screen implements IButtonPressed {
 	}
 
 	@Override
-	public void render(float delta) {
-		super.render(delta);
-		gui.addTime(delta);
+	public void render() {
+		super.render();
 		gui.draw(renderer);
 		renderer.drawText(280, 400, "Song " + song + " selected", white);
 		float Svol = vol * 100;
@@ -58,6 +58,11 @@ public class SoundScreen extends Screen implements IButtonPressed {
 				"Music volume: " + Integer.toString((int) Svol), white);
 		renderer.drawText(260, 360,
 				"SoundFX volume: " + Integer.toString((int) Fvol), white);
+	}
+	@Override
+	public void move(float delta) {
+		super.move(delta);
+		gui.addTime(delta);
 	}
 
 	@Override
@@ -87,6 +92,7 @@ public class SoundScreen extends Screen implements IButtonPressed {
 					music.play();
 			}
 		} else if (buttonName.equals("off")) {
+			stop=true;
 			if (music.isPlaying())
 				music.stop();
 			if (song <= 2) {
@@ -133,6 +139,21 @@ public class SoundScreen extends Screen implements IButtonPressed {
 			return true;
 		}
 		return false;
+	}
+	public static void playSong(int id) {
+		if(stop)
+			return;
+		if(music!=null)
+			music.stop();
+		song=(id%3)+1;
+		if (song == 1)
+			music = music0;
+		if (song == 2)
+			music = music1;
+		if (song == 3)
+			music = music2;
+		music.setVolume(vol);
+		music.play();
 	}
 
 }

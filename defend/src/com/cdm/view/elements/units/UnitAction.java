@@ -9,8 +9,6 @@ public abstract class UnitAction {
 
 	public abstract String spriteFile();
 
-	//public abstract String valueName();
-
 	public PolySprite getSprite() {
 		if (sprite == null) {
 			sprite = SpriteReader.read("/com/cdm/view/elements/units/"
@@ -23,12 +21,8 @@ public abstract class UnitAction {
 
 	public abstract Integer getCostForNext();
 
-	public abstract Integer getCurrentLevel();
-
 	public abstract UnitAction getNextUprade();
 
 	public abstract void apply(PlayerUnit playerUnit);
-
-	//public abstract Float value();
 
 }

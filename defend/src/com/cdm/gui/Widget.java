@@ -7,12 +7,17 @@ import com.badlogic.gdx.Gdx;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Rectangle;
 
+// review1
 public abstract class Widget {
-	private Rectangle bbox;
+	private Rectangle bbox = new Rectangle(-1, -1, -1, -1);
 	private BitSet touching = new BitSet(20); // too much ;)
 
 	public void setBBox(Rectangle box) {
-		bbox = box;
+		bbox.set(box);
+	}
+
+	public void setBBox(float x, float y, float w, float h) {
+		bbox.set(x, y, w, h);
 	}
 
 	public Rectangle getBBox() {
@@ -34,14 +39,24 @@ public abstract class Widget {
 	public void touchDown(int x, int y, int pointer, int button) {
 		int id = getPointerId(pointer, button);
 		touching.set(id);
+		onTouchDown();
 	}
 
 	public void clicked(int x, int y, int pointer, int button) {
 
 	}
 
+	protected void onTouchDown() {
+
+	}
+
+	protected void onTouchUp() {
+
+	}
+
 	public void touchUp(int x, int y, int pointer, int button) {
 		int id = getPointerId(pointer, button);
+		onTouchUp();
 		if (touching.get(id)) {
 			clicked(x, y, pointer, button);
 		}

@@ -20,18 +20,20 @@ import com.cdm.view.enemy.EnemyUnit;
  * 
  *         abstract base class of all shots
  */
-public abstract class MovingShot implements Element, DisplayEffect {
+public abstract class MovingShot extends PositionedDisplayEffect implements
+		Element {
 
-	Position from;
-	Position pos;
-	Position target;
-	Position inbetween;
-	float angle;
+	private Position from;
+	protected Position pos;
+	private Position target;
+	private Position inbetween;
+	protected float angle;
 	private Level level;
 	private Vector3 deltaV = new Vector3();
 	private float impact;
 	private float allTime = -1;
 	private float curTime = 0;
+	private EnemyUnit enemy;
 
 	private final static Vector3 a = new Vector3();
 	private final static Vector3 b = new Vector3();
@@ -41,13 +43,16 @@ public abstract class MovingShot implements Element, DisplayEffect {
 	PolySprite s = new PolySprite();
 
 	public MovingShot(Position pfrom, Position to, Level plevel, float pImpact,
-			Vector3 movingDir) {
-
+			EnemyUnit penemy) {
+		enemy = penemy;
 		from = new Position(pfrom);
 		pos = new Position(pfrom);
 
-		a.set(movingDir).nor();
+		a.set(penemy.getMovingDirection()).nor();
 		a.scale(-1, -1, -1);
+
+		float scale = from.distance(to) / 8.0f;
+		a.scale(scale, scale, scale);
 
 		inbetween = new Position(a.x + (to.x * 0.75f + from.x * 0.25f), a.y
 				+ (to.y * 0.75f + from.y * 0.25f), Position.LEVEL_REF);
@@ -56,7 +61,7 @@ public abstract class MovingShot implements Element, DisplayEffect {
 		impact = pImpact;
 
 		angle = MathTools.angle(from.to(to));
-		{
+		if (false) {
 			Vector3 x0 = new Vector3(from.toVector());
 			Vector3 x1 = new Vector3(from.toVector());
 			Vector3 x2 = new Vector3(target.toVector());
@@ -77,7 +82,7 @@ public abstract class MovingShot implements Element, DisplayEffect {
 		return 0.15f;
 	}
 
-	protected Position getPosition() {
+	public Position getPosition() {
 		return pos;
 	}
 
@@ -89,6 +94,7 @@ public abstract class MovingShot implements Element, DisplayEffect {
 	public abstract float getSpeed();
 
 	public void move(float time) {
+		target = enemy.getPosition();
 		if (allTime < 0) {
 			allTime = from.lengthTo(target) / getSpeed();
 		}
@@ -141,7 +147,8 @@ public abstract class MovingShot implements Element, DisplayEffect {
 
 	protected void drawBurn(IRenderer renderer) {
 		if (true) {
-			renderer.render(s, getPosition(), getSize(), 0, GL20.GL_TRIANGLES);
+			// renderer.render(s, getPosition(), getSize(), 0,
+			// GL20.GL_TRIANGLES);
 			return;
 		}
 		PolySprite s = new PolySprite();

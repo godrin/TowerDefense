@@ -10,7 +10,7 @@ import com.cdm.view.Position;
 import com.cdm.view.elements.Level;
 import com.cdm.view.enemy.EnemyUnit;
 
-public class StunRay implements DisplayEffect {
+public class StunRay extends PositionedDisplayEffect {
 
 	private static final float M_PI = 3.1415f;
 	private static final float RADIUS = 0.06f;
@@ -23,8 +23,8 @@ public class StunRay implements DisplayEffect {
 	private Vector3 t = new Vector3();
 	private Vector3 delta = new Vector3();
 	private Vector3 dir = new Vector3();
-	private Vector3 normal= new Vector3();
-	private Color color=new Color();
+	private Vector3 normal = new Vector3();
+	private Color color = new Color();
 
 	public StunRay(float pTime, Position from, Level plevel, EnemyUnit enemy) {
 		time = pTime;
@@ -49,7 +49,7 @@ public class StunRay implements DisplayEffect {
 	@Override
 	public void draw(IRenderer renderer) {
 		f.set(fromPos.toVector());
-		 t.set( enemyUnit.getPosition().toVector());
+		t.set(enemyUnit.getPosition().toVector());
 
 		delta.set(t);
 		delta.sub(f);
@@ -103,5 +103,11 @@ public class StunRay implements DisplayEffect {
 			renderer.drawLines(fromPos, vs, 0, color, 1.0f);
 
 		}
+	}
+
+	@Override
+	public Position getPosition() {
+		// FIXME
+		return fromPos;
 	}
 }

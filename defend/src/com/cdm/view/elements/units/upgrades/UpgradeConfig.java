@@ -81,7 +81,6 @@ public class UpgradeConfig {
 				if (line.matches("^==.*")) {
 					if (values.size() > 0) {
 						levels.add(values);
-						System.out.println("ADD VALUES TO LEVELS");
 					}
 					values = new TreeMap<String, Float>();
 
@@ -92,8 +91,6 @@ public class UpgradeConfig {
 					}
 					if (levels.size() > 0 && unitName != null) {
 						data.put(unitName, levels);
-						System.out
-								.println("ADD LEVELS to data for " + unitName);
 					}
 					levels = new ArrayList<Map<String, Float>>();
 					unitName = line.substring(1);
