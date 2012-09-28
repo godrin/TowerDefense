@@ -27,7 +27,7 @@ public class Cloud {
 	private float[] px = new float[4];
 	private float size = 0.0f;
 	private int sizing = 1;
-	private float opacity=1.0f;
+	private float opacity = 1.0f;
 
 	public Cloud(float mean, float delta, int segments) {
 		radii = new ArrayList<Float>(segments);
@@ -125,23 +125,27 @@ public class Cloud {
 
 		mesh.setVertices(vs);
 
-		meshShader = SimpleShader.createShader(Gdx.graphics, "cloud");
+		if (Gdx.gl20 != null)
+			meshShader = SimpleShader.createShader(Gdx.graphics, "cloud");
 	}
 
 	public void draw(Matrix4 world) {
-		meshShader.begin();
-		meshShader.setUniformf("u_time", currentTime);
-		meshShader.setUniformf("u_size", size);
-		meshShader.setUniformf("u_opacity", opacity);
-		px[0] = pos.x;
-		px[1] = pos.y;
-		px[2] = 0;
-		px[3] = 1;
-		meshShader.setUniformMatrix("world", world);
-		meshShader.setUniform4fv("u_position", px, 0, 4);
+		if (Gdx.gl20 != null) {
 
-		mesh.render(meshShader, GL20.GL_TRIANGLES);
-		meshShader.end();
+			meshShader.begin();
+			meshShader.setUniformf("u_time", currentTime);
+			meshShader.setUniformf("u_size", size);
+			meshShader.setUniformf("u_opacity", opacity);
+			px[0] = pos.x;
+			px[1] = pos.y;
+			px[2] = 0;
+			px[3] = 1;
+			meshShader.setUniformMatrix("world", world);
+			meshShader.setUniform4fv("u_position", px, 0, 4);
+
+			mesh.render(meshShader, GL20.GL_TRIANGLES);
+			meshShader.end();
+		}
 	}
 
 	public interface ShrinkedCallback {
@@ -161,9 +165,9 @@ public class Cloud {
 		if (sizing != 0) {
 
 			size += sizing * t * SKRINK_SPEED;
-			if(sizing<0) {
+			if (sizing < 0) {
 				size += sizing * t * SKRINK_SPEED;
-				opacity+= sizing * t * SKRINK_SPEED*3;
+				opacity += sizing * t * SKRINK_SPEED * 3;
 			}
 			if (size < 0) {
 				size = 0;

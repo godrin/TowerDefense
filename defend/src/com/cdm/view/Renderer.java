@@ -329,6 +329,8 @@ public class Renderer implements IRenderer {
 
 	public void render(WorldCallback callback, Position pos, float size,
 			float angle) {
+		if(Gdx.gl20==null)
+			return;
 		initGlSettings();
 		// FIXME: new
 		Matrix4 p = new Matrix4();

@@ -8,7 +8,7 @@ public class Main {
 	public static void main(String[] args) {
 		LwjglApplicationConfiguration cfg = new LwjglApplicationConfiguration();
 		cfg.title = "defend";
-		cfg.useGL20 = true;
+		cfg.useGL20 = false;
 		cfg.width = 800;
 		cfg.height = 480;
 		
