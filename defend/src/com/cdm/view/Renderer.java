@@ -256,7 +256,8 @@ public class Renderer implements IRenderer {
 		drawText(i, j, string, c, 1);
 	}
 
-	public void drawText(float i, float j, CharSequence string, Color c, float scale) {
+	public void drawText(float i, float j, CharSequence string, Color c,
+			float scale) {
 		if (renderer != null)
 			Gdx.gl10.glPushMatrix();
 		spriteBatch.begin();
@@ -324,6 +325,27 @@ public class Renderer implements IRenderer {
 
 			sprite.render(x, renderMode);
 		}
+	}
+
+	public void render(WorldCallback callback, Position pos, float size,
+			float angle) {
+		initGlSettings();
+		// FIXME: new
+		Matrix4 p = new Matrix4();
+		Matrix4 s = new Matrix4();
+		Matrix4 x = new Matrix4(projMatrix);
+
+		s.setToScaling(size, size, size);
+		p.setToRotation(Vector3.Z, angle);
+		p.trn(pos.x, pos.y, 0);
+		x.mul(p);
+		x.mul(s);
+
+		// Gdx.gl20.glBlendColor(color.r, color.g, color.b, color.a);
+		// Gdx.gl20.glScalef(size, size, size);
+		Gdx.gl20.glLineWidth(pos.getSystem().getScale() * 0.04f);
+		// x=new Matrix4();
+		callback.callback(x);
 	}
 
 	public static void pushMatrix() {

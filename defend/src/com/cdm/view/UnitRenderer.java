@@ -65,7 +65,8 @@ public class UnitRenderer implements IRenderer {
 	}
 
 	@Override
-	public void drawText(float i, float j, CharSequence string, Color c, float scale) {
+	public void drawText(float i, float j, CharSequence string, Color c,
+			float scale) {
 		r.drawText(i, j, string, c, scale);
 	}
 
@@ -73,6 +74,12 @@ public class UnitRenderer implements IRenderer {
 	public void render(PolySprite sprite, Position pos, float size,
 			float angle, int glTriangles, Color color) {
 		r.render(sprite, pos, size, angle, glTriangles, color);
+	}
+
+	@Override
+	public void render(WorldCallback callback, Position pos, float size,
+			float angle) {
+		r.render(callback, pos, size, angle);
 	}
 
 }

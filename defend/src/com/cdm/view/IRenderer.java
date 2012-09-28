@@ -28,5 +28,7 @@ public interface IRenderer {
 
 	public void render(PolySprite sprite, Position pos, float size,
 			float angle, int glTriangles, Color color);
+	public void render(WorldCallback callback, Position pos, float size,
+			float angle);
 
 }

@@ -19,6 +19,7 @@ import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.shots.Decal;
 import com.cdm.view.elements.shots.DisplayEffect;
 import com.cdm.view.elements.shots.Explosion;
+import com.cdm.view.elements.shots.MoneyBubble;
 import com.cdm.view.elements.shots.Shake;
 import com.cdm.view.elements.shots.ZoomInEffect;
 import com.cdm.view.elements.units.PlayerUnit;
@@ -131,7 +132,7 @@ public class Level {
 			}
 		}
 		for (Unit unit : units) {
-			if (unit != null)
+			if (unit != null && !unit.destroyed())
 				unit.drawAfter(renderer);
 		}
 
@@ -306,12 +307,16 @@ public class Level {
 	}
 
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
+		
 		// removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		SoundFX.play(Type.HIT);
 		displayEffectsToAdd.add(new Explosion(enemyUnit.getPosition(),
 				enemyUnit.getSize(), this, 12, true));
-		unitsToRemove.add(enemyUnit);
+
+		// unitsToRemove.add(enemyUnit);
 		playerState.enemyDestroyed(enemyUnit);
+		addShot(new MoneyBubble(enemyUnit.getMoney(), enemyUnit.getPosition(),
+				this));
 	}
 
 	public void removeShot(DisplayEffect shot) {
@@ -328,7 +333,7 @@ public class Level {
 		for (int i = 0; i < units.size(); i++) {
 			Unit u = units.get(i);
 
-			if (u instanceof EnemyUnit) {
+			if (u instanceof EnemyUnit && !u.destroyed()) {
 				nextEnemySet.add((EnemyUnit) u);
 			}
 		}

@@ -98,13 +98,13 @@ public class DefendGame implements ApplicationListener, Game {
 	}
 
 	private void mywait(float delta) {
-		if(true)
+		if(false)
 			return;
 		try {
 			int ms = (int) (delta * 1000);
 
-			int wait = 15 - ms;
-			if (wait > 5) {
+			int wait = (1000/60) - ms;
+			if (wait > 2) {
 				Thread.sleep(wait);
 			}
 		} catch (InterruptedException e) {

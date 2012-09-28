@@ -40,6 +40,9 @@ public abstract class Unit implements Element {
 		size = 0.4f;
 		level = null;
 	}
+	public boolean destroyed() {
+		return false;
+	}
 
 	public abstract void move(float time);
 
