@@ -6,13 +6,17 @@ public enum EnemyType {
 	public static final Float STRENGTH_THRESHOLD = -1.1f;
 	public static final Float FACTOR = 0.4f;
 
+	public static int linearRandom(int max) {
+		return 0;
+	}
+
 	public static EnemyType random() {
-		if(false)
-		return BIG_SHIP;
+		if (false)
+			return BIG_SHIP;
 		double r = Math.random();
 
 		return EnemyType.values()[((int) (r * 500)) % EnemyType.values().length];
-		
+
 	}
 
 	public float getEnergy(int levelNo) {
@@ -25,21 +29,21 @@ public enum EnemyType {
 		case SMALL_SHIP:
 			s = 1.0f;
 			break;
+		case TRUCK:
+			s = 3.5f;
+			break;
 		case BUG:
 		case TANK:
-			s = 1.5f;
+			s = 5.5f;
 			break;
 		case BIG_SHIP:
-			s = 2.5f;
+			s = 6.5f;
 			break;
 		case ROCKET:
 			s = 10.5f;
 			break;
-		case TRUCK:
-			s = 10.5f;
-			break;
 		case TANK2:
-			s = 10.0f;
+			s = 20.0f;
 			break;
 		case ROTOR:
 			s = 9.0f;

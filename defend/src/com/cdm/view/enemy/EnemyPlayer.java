@@ -101,18 +101,23 @@ public class EnemyPlayer {
 		defs.clear();
 
 		// strength-based randomized enemy creation
-		enemyStrength += (1.5f * (float) getWaveNo());
+		enemyStrength += (4 + 2f * (float) getWaveNo());
+		System.out.println("Strength " + enemyStrength);
 		Float currentStrength = enemyStrength;
 		Float lastTime = 0.0f;
 		int trials = MAX_TRIALS; // don' run endlessly
 
 		while (currentStrength > 0 && trials > 0) {
 			EnemyType t = EnemyType.random();
-			float strength = t.getStrength(getWaveNo());
+			float strength = t.getStrength(getLevel().getLevelNo());
 
-			if (strength < currentStrength + EnemyType.STRENGTH_THRESHOLD) {
+			if (strength < enemyStrength / 2
+					&& strength < currentStrength
+							+ EnemyType.STRENGTH_THRESHOLD) {
+				System.out.println("Took " + t + " " + strength + " curr:"
+						+ currentStrength);
 				currentStrength -= strength;
-				lastTime += (float) Math.random() * 5.0f + 0.6f;
+				lastTime += (float) Math.random() * (5.0f - waveNo / 4) + 0.6f;
 				defs.add(new EnemyDef(t, lastTime));
 				trials = MAX_TRIALS;
 			} else

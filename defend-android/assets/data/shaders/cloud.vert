@@ -10,11 +10,10 @@ uniform float u_opacity;
 
 void main()
 {                            
-   //v_Color = vec4(1,0,0,0.5);
    v_Color=a_mycolor;
    v_Color.a*=u_opacity;
    vec4 a_position=u_position;
-   float d=(1+sin(u_time+a_distance+a_angle)*0.1)*a_distance;
+   float d=(1.0f+sin(u_time+a_distance+a_angle)*0.1f)*a_distance;
    vec4 delta=vec4(sin(a_angle),cos(a_angle),0,0)*d*u_size;
    a_position+=delta;
    gl_Position=world*a_position;
