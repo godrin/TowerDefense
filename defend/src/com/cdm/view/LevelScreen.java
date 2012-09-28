@@ -73,6 +73,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	private boolean dragging = false;
 	private int dragDisplacement = 32;
+	private boolean paused = false;
 
 	@Override
 	public synchronized void render() {
@@ -97,7 +98,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public void move(float delta) {
-		if (delta > 0) {
+		if (delta > 0 && !paused) {
 			level.move(delta);
 		}
 		gui.addTime(delta);
@@ -339,7 +340,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public boolean keyDown(int keycode) {
 		if (keycode == 131) {
 			game.setScreen(Screen.MENU_SCREEN);
-
+		}
+		if (keycode == 44) {
+			paused = !paused;
 		}
 		System.out.println("KEYCODE " + keycode);
 		return false;

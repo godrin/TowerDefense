@@ -106,6 +106,7 @@ public abstract class MovingShot extends PositionedDisplayEffect implements
 			if (unit != null)
 				unit.wasHitBy(this);
 			level.removeShot(this);
+			explode();
 		} else {
 			float g = curTime / allTime;
 			float g1 = 1 - g;
@@ -126,6 +127,10 @@ public abstract class MovingShot extends PositionedDisplayEffect implements
 
 		}
 		afterMove(pos);
+	}
+
+	protected void explode() {
+		
 	}
 
 	protected void afterMove(Position ppos) {
@@ -187,21 +192,6 @@ public abstract class MovingShot extends PositionedDisplayEffect implements
 
 	}
 
-	public void moveOld(float time) {
-		deltaV.set(pos.to(target));
-		float distance = time * getSpeed();
-		if (distance > deltaV.len()) {
-			pos = target;
-			EnemyUnit unit = level.getEnemyAt(target);
-			if (unit != null)
-				unit.wasHitBy(this);
-			level.removeShot(this);
-		} else {
-			Vector3 nu = deltaV.nor().mul(distance);
-			pos.x += nu.x;
-			pos.y += nu.y;
-		}
-	}
 
 	public float getImpact() {
 		return impact;
@@ -210,6 +200,10 @@ public abstract class MovingShot extends PositionedDisplayEffect implements
 	@Override
 	public int compareTo(Element arg0) {
 		return arg0.hashCode() - this.hashCode();
+	}
+	
+	public Level getLevel() {
+		return level;
 	}
 
 }

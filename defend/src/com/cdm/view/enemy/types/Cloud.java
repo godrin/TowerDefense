@@ -18,7 +18,7 @@ import com.cdm.view.SimpleShader;
 public class Cloud {
 	private List<Float> radii;
 	private static final Random random = new Random();
-	private static final float M_PI = 3.141519f;
+	public static final float M_PI = 3.141519f;
 	private static final float SKRINK_SPEED = 0.3f;
 	private ShaderProgram meshShader;
 	private Mesh mesh;
