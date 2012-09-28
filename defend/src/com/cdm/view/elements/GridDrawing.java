@@ -36,10 +36,16 @@ public class GridDrawing {
 	}
 
 	public void draw(IRenderer renderer) {
-		for (int i = 0; i < es.size(); i++)
-			es.get(i).draw(renderer);
-		for (int i = 0; i < es.size(); i++)
-			es.get(i).drawAfter(renderer);
+		for (int i = 0; i < es.size(); i++) {
+			Element e = es.get(i);
+			if (e.getPosition().onScreen())
+				e.draw(renderer);
+		}
+		for (int i = 0; i < es.size(); i++) {
+			Element e = es.get(i);
+			if (e.getPosition().onScreen())
+				e.drawAfter(renderer);
+		}
 
 	}
 

@@ -119,7 +119,7 @@ public class UpgradeView implements Element {
 		});
 	}
 
-	private Position getPosition() {
+	public Position getPosition() {
 		return position;
 	}
 

@@ -8,4 +8,6 @@ public interface DisplayEffect {
 
 	void draw(IRenderer renderer);
 
+	boolean onScreen();
+
 }

@@ -35,4 +35,9 @@ public class ZoomInEffect implements DisplayEffect {
 
 	}
 
+	@Override
+	public boolean onScreen() {
+		return true;
+	}
+
 }

@@ -11,5 +11,7 @@ public interface Element extends Comparable<Element>{
 	void move(float time);
 
 	void drawAfter(IRenderer renderer);
+	
+	Position getPosition();
 
 }

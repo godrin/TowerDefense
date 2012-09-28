@@ -67,4 +67,9 @@ public class Selector implements Element {
 
 	}
 
+	@Override
+	public Position getPosition() {
+		return pos;
+	}
+
 }

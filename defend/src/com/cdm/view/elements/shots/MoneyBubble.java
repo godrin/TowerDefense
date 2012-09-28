@@ -5,12 +5,12 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Level;
 
-public class MoneyBubble implements DisplayEffect {
+public class MoneyBubble extends PositionedDisplayEffect {
 
-	private static final float TIME =4;
+	private static final float TIME = 4;
 	private static final float SPEED = 32;
-	private static final float FADING_SPEED = 1/TIME;
-	private static final float SCALING_SPEED = 0.75f/TIME;
+	private static final float FADING_SPEED = 1 / TIME;
+	private static final float SCALING_SPEED = 0.75f / TIME;
 	private Position pos;
 	private Color color = new Color(1, 1, 1, 1);
 	private float accTime = 0;
@@ -22,7 +22,7 @@ public class MoneyBubble implements DisplayEffect {
 		level = pLevel;
 		text = Integer.toString(money);
 		pos = new Position(p.to(Position.SCREEN_REF));
-		pos.y+=32;
+		pos.y += 32;
 	}
 
 	@Override
@@ -39,5 +39,10 @@ public class MoneyBubble implements DisplayEffect {
 	@Override
 	public void draw(IRenderer renderer) {
 		renderer.drawText(pos.x, pos.y, text, color, scale);
+	}
+
+	@Override
+	public Position getPosition() {
+		return pos;
 	}
 }

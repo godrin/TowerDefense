@@ -122,22 +122,26 @@ public class Level {
 		drawBox(renderer);
 
 		for (DisplayEffect decal : decals) {
-			decal.draw(renderer);
+			if (decal.onScreen())
+				decal.draw(renderer);
 		}
 
 		for (int zLayer = 0; zLayer < 10; zLayer++) {
 			for (Unit unit : units) {
 				if (unit != null)
-					unit.drawInLayer(zLayer, renderer);
+					if (unit.getPosition().onScreen())
+						unit.drawInLayer(zLayer, renderer);
 			}
 		}
 		for (Unit unit : units) {
 			if (unit != null && !unit.destroyed())
-				unit.drawAfter(renderer);
+				if (unit.getPosition().onScreen())
+					unit.drawAfter(renderer);
 		}
 
 		for (DisplayEffect shot : displayEffects) {
-			shot.draw(renderer);
+			if (shot.onScreen())
+				shot.draw(renderer);
 		}
 		if (selector != null)
 			selector.draw(renderer);
@@ -307,7 +311,7 @@ public class Level {
 	}
 
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
-		
+
 		// removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
 		SoundFX.play(Type.HIT);
 		displayEffectsToAdd.add(new Explosion(enemyUnit.getPosition(),

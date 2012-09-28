@@ -174,4 +174,9 @@ public class BackgroundElement implements Element {
 
 	}
 
+	@Override
+	public Position getPosition() {
+		return pos;
+	}
+
 }

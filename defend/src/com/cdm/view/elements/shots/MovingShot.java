@@ -20,7 +20,8 @@ import com.cdm.view.enemy.EnemyUnit;
  * 
  *         abstract base class of all shots
  */
-public abstract class MovingShot implements Element, DisplayEffect {
+public abstract class MovingShot extends PositionedDisplayEffect implements
+		Element {
 
 	private Position from;
 	protected Position pos;
@@ -49,9 +50,9 @@ public abstract class MovingShot implements Element, DisplayEffect {
 
 		a.set(penemy.getMovingDirection()).nor();
 		a.scale(-1, -1, -1);
-		
-		float scale=from.distance(to)/8.0f;
-		a.scale(scale,scale,scale);
+
+		float scale = from.distance(to) / 8.0f;
+		a.scale(scale, scale, scale);
 
 		inbetween = new Position(a.x + (to.x * 0.75f + from.x * 0.25f), a.y
 				+ (to.y * 0.75f + from.y * 0.25f), Position.LEVEL_REF);
@@ -81,7 +82,7 @@ public abstract class MovingShot implements Element, DisplayEffect {
 		return 0.15f;
 	}
 
-	protected Position getPosition() {
+	public Position getPosition() {
 		return pos;
 	}
 
@@ -93,7 +94,7 @@ public abstract class MovingShot implements Element, DisplayEffect {
 	public abstract float getSpeed();
 
 	public void move(float time) {
-		target=enemy.getPosition();
+		target = enemy.getPosition();
 		if (allTime < 0) {
 			allTime = from.lengthTo(target) / getSpeed();
 		}

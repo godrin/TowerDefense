@@ -11,7 +11,7 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Level;
 
-public class Explosion implements DisplayEffect {
+public class Explosion extends PositionedDisplayEffect {
 
 	public static class Splinter {
 		Position currentPosition;
@@ -121,7 +121,7 @@ public class Explosion implements DisplayEffect {
 		}
 	}
 
-	private Position getPosition() {
+	public Position getPosition() {
 		return pos;
 	}
 

@@ -25,7 +25,7 @@ public abstract class Unit implements Element {
 			}
 			return 0;
 		}
-	};
+	}
 
 	private Position pos = new Position(0, 0, Position.LEVEL_REF),
 			oldpos = new Position(1, 1, Position.LEVEL_REF);
@@ -40,6 +40,7 @@ public abstract class Unit implements Element {
 		size = 0.4f;
 		level = null;
 	}
+
 	public boolean destroyed() {
 		return false;
 	}
@@ -94,6 +95,7 @@ public abstract class Unit implements Element {
 	public float getSize() {
 		return size;
 	}
+
 
 	public int getCost() {
 		return cost;
