@@ -38,8 +38,10 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	private Game game;
 	private Campaign campaign;
+	private boolean readonly;
 
-	public LevelScreen(Game pGame, Campaign c) {
+	public LevelScreen(Game pGame, Campaign c, boolean pReadonly) {
+		readonly = pReadonly;
 		campaign = c;
 		game = pGame;
 		level = campaign.getNextLevel(this);
@@ -73,6 +75,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	private boolean dragging = false;
 	private int dragDisplacement = 32;
+	private boolean paused = false;
 
 	@Override
 	public synchronized void render() {
@@ -93,11 +96,12 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		// drawBackground();
 
 		drawLineBased();
-		hud.draw(renderer);
+		if (!readonly)
+			hud.draw(renderer);
 	}
 
 	public void move(float delta) {
-		if (delta > 0) {
+		if (delta > 0 && !paused) {
 			level.move(delta);
 		}
 		gui.addTime(delta);
@@ -132,7 +136,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		}
 		Position.SCREEN_REF.apply();
 
-		gui.draw(unitRenderer);
+		if (!readonly)
+			gui.draw(unitRenderer);
 		if (Gdx.gl10 != null)
 
 			Gdx.gl10.glPopMatrix();
@@ -339,7 +344,9 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public boolean keyDown(int keycode) {
 		if (keycode == 131) {
 			game.setScreen(Screen.MENU_SCREEN);
-
+		}
+		if (keycode == 44) {
+			paused = !paused;
 		}
 		System.out.println("KEYCODE " + keycode);
 		return false;

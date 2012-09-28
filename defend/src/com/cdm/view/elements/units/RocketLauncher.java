@@ -2,6 +2,8 @@ package com.cdm.view.elements.units;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
@@ -40,6 +42,17 @@ public class RocketLauncher extends RotatingUnit implements Element {
 			sprite.fillRectangle(-0.5f, 0.3f, 1.0f, 0.2f, highlightColor);
 			sprite.fillRectangle(-0.5f, 0.1f, 1.0f, 0.1f, highlight2Color);
 			sprite.fillRectangle(-0.5f, -0.2f, 1.0f, 0.1f, highlight2Color);
+			{
+
+				Vector3 a = new Vector3(-0.7f, -0.7f, 0);
+				Vector3 b = new Vector3(0.6f, -0.7f, 0);
+				Vector3 c = new Vector3(0.6f, 0.7f, 0);
+				Vector3 d = new Vector3(-0.7f, 0.7f, 0);
+				sprite.drawClosedPolyWithBorder(new Vector3[] { d, c, b, a },
+						INNER_PLAYER_COLOR, new Color(0, 0, 0,
+
+						0), 0.4f);
+			}
 			sprite.init();
 
 			lines = new PolySprite();

@@ -22,6 +22,7 @@ public class DefendGame implements ApplicationListener, Game {
 	private Screen screen;
 	boolean stop = false;
 	private LevelScreen levelScreen;
+	private LevelScreen demoScreen;
 	private MenuScreen menuScreen;
 	private SoundScreen optionsScreen;
 	private HighScoreScreen highscoreScreen;
@@ -32,19 +33,23 @@ public class DefendGame implements ApplicationListener, Game {
 		running = true;
 
 		Campaign c = new Campaign("/com/cdm/view/campaign1.txt");
-		levelScreen = new LevelScreen(this, c);
+		levelScreen = new LevelScreen(this, c, false);
+
+		Campaign demoCampaign = new Campaign("/com/cdm/view/demo.txt");
+		demoScreen = new LevelScreen(new DemoGame(), demoCampaign, true);
+
 		optionsScreen = new SoundScreen(this);
 		SoundScreen.playSong(1);
-		setScreen(menuScreen = new MenuScreen(this));
+		setScreen(menuScreen = new MenuScreen(this, demoScreen));
 		highscoreScreen = new HighScoreScreen(this);
 		inputScreen = new InputScreen(this, c);
 		SoundFX.Initialize();
 		Gdx.graphics.setVSync(true);
 
 	}
-	
+
 	public boolean backButtonPressed() {
-		if(screen!=menuScreen) {
+		if (screen != menuScreen) {
 			setScreen(menuScreen);
 			return false;
 		}
@@ -64,7 +69,7 @@ public class DefendGame implements ApplicationListener, Game {
 			screen.removed();
 
 		screen = newScreen;
-		if(screen==levelScreen) {
+		if (screen == levelScreen) {
 			SoundScreen.playSong(2);
 		}
 
@@ -76,7 +81,7 @@ public class DefendGame implements ApplicationListener, Game {
 
 	public void render() {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		
+
 		move();
 		screen.render();
 
@@ -98,12 +103,12 @@ public class DefendGame implements ApplicationListener, Game {
 	}
 
 	private void mywait(float delta) {
-		if(false)
+		if (false)
 			return;
 		try {
 			int ms = (int) (delta * 1000);
 
-			int wait = (1000/60) - ms;
+			int wait = (1000 / 60) - ms;
 			if (wait > 2) {
 				Thread.sleep(wait);
 			}

@@ -34,6 +34,10 @@ public class RocketShot extends MovingShot {
 		return 0.3f;
 	}
 
+	protected void explode() {
+		getLevel().addShot(new RoundExplosion(getPosition(), getLevel()));
+	}
+
 	@Override
 	public void draw(IRenderer renderer) {
 		renderer.render(sprite, pos, getSize(), angle, GL10.GL_TRIANGLES);

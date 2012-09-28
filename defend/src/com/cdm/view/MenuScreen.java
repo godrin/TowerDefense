@@ -3,6 +3,7 @@ package com.cdm.view;
 import java.util.Arrays;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.cdm.Game;
 import com.cdm.gui.AnimText;
@@ -14,6 +15,7 @@ import com.cdm.gui.anim.MoveAnimation;
 
 public class MenuScreen extends Screen implements IButtonPressed {
 
+	private static final Color BLACK_TRANSLUCENT = new Color(0, 0, 0, 0.5f);
 	private WidgetContainer gui = new WidgetContainer();
 	private Renderer renderer = new Renderer();
 	private Game game;
@@ -21,7 +23,9 @@ public class MenuScreen extends Screen implements IButtonPressed {
 	private Position spritePos = new Position(Gdx.graphics.getWidth() / 4,
 			Gdx.graphics.getHeight() / 2, Position.SCREEN_REF);
 
-	public MenuScreen(Game pgame) {
+	private LevelScreen bgScreen;
+
+	public MenuScreen(Game pgame, LevelScreen demoScreen) {
 		game = pgame;
 		BigButton b0, b1, b2, b3;
 
@@ -36,8 +40,8 @@ public class MenuScreen extends Screen implements IButtonPressed {
 		gui.add(b3 = new BigButton(-200, 100, Gdx.graphics.getWidth() / 4, 50,
 				"quit", "quit", this));
 		gui.add(new AnimText(150, 150, 400, 100, Arrays.asList(new String[] {
-				"v-defend","2012","presented","by",
-				"godrin", "and","undermink",})));
+				"v-defend", "2012", "presented", "by", "godrin", "and",
+				"undermink", })));
 		b0.add(new MoveAnimation(Easings.QUAD, 1.5f, middle, b0.getY(), b0));
 		b1.add(new MoveAnimation(Easings.QUAD, 2.0f, middle, b1.getY(), b1));
 		b2.add(new MoveAnimation(Easings.QUAD, 2.5f, middle, b2.getY(), b2));
@@ -45,6 +49,7 @@ public class MenuScreen extends Screen implements IButtonPressed {
 
 		sprite = SpriteReader.read("/com/cdm/view/elements/units/power.sprite");
 
+		bgScreen = demoScreen;
 	}
 
 	@Override
@@ -53,15 +58,19 @@ public class MenuScreen extends Screen implements IButtonPressed {
 		renderer.initGlSettings();
 
 		renderBg();
+		bgScreen.render();
+		renderer.fillRect(0, 0, Gdx.graphics.getWidth(),
+				Gdx.graphics.getHeight(), BLACK_TRANSLUCENT);
 
 		gui.draw(renderer);
 	}
-	
+
 	@Override
 	public void move(float delta) {
 		// TODO Auto-generated method stub
 		super.move(delta);
 		gui.addTime(delta);
+		bgScreen.move(delta);
 	}
 
 	private void renderBg() {

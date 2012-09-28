@@ -11,7 +11,9 @@ import java.util.TreeMap;
 
 import com.cdm.view.elements.Grid;
 import com.cdm.view.elements.Grid.CellType;
+import com.cdm.view.elements.PlayerUnitDef;
 import com.cdm.view.elements.paths.PathPos;
+import com.cdm.view.elements.units.Unit.UnitType;
 
 public class CampaignParser {
 	public static Map<Integer, Grid> getGrids(String campaignFile) {
@@ -19,8 +21,7 @@ public class CampaignParser {
 
 		Integer level = null;
 
-		InputStream is = CampaignParser.class
-				.getResourceAsStream(campaignFile);
+		InputStream is = CampaignParser.class.getResourceAsStream(campaignFile);
 
 		InputStreamReader isr = new InputStreamReader(is);
 
@@ -41,7 +42,7 @@ public class CampaignParser {
 				} else {
 					if (line.matches("^#.*")) {
 						// comment - ignore
-					} else if(line.length()>0){
+					} else if (line.length() > 0) {
 						gridBuffer.add(line);
 					}
 				}
@@ -73,6 +74,21 @@ public class CampaignParser {
 			for (x = 0; x < l.length(); x++) {
 				char c = l.charAt(x);
 				switch (c) {
+				case 'C':
+					g.getElement(x, y).setCellType(CellType.FREE);
+					g.addDef(new PlayerUnitDef(new Position(x, y,
+							Position.LEVEL_REF), UnitType.CANNON));
+					break;
+				case 'R':
+					g.getElement(x, y).setCellType(CellType.FREE);
+					g.addDef(new PlayerUnitDef(new Position(x, y,
+							Position.LEVEL_REF), UnitType.ROCKET_THROWER));
+					break;
+				case 'T':
+					g.getElement(x, y).setCellType(CellType.FREE);
+					g.addDef(new PlayerUnitDef(new Position(x, y,
+							Position.LEVEL_REF), UnitType.STUNNER));
+					break;
 				case 'S':
 					start.add(new PathPos(x, y, 0));
 					g.getElement(x, y).setCellType(CellType.FREE);
