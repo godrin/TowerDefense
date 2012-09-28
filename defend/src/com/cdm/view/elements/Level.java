@@ -61,11 +61,15 @@ public class Level {
 		PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
 				getEnemyStartPosition(), getEnemyEndPosition(), null, false);
 		displayEffects.add(new ZoomInEffect(this));
+		for (PlayerUnitDef def : pGrid.getDefs()) {
+			add(def.pos, def.type);
+		}
 	}
 
 	public void add(Position pos, UnitType type) {
-		units.add(Elements.getElementBy(type, pos.to(Position.LEVEL_REF)
-				.alignedToGrid()));
+		Unit x = Elements.getElementBy(type, pos.to(Position.LEVEL_REF)
+				.alignedToGrid());
+		add(x);
 	}
 
 	public EnemyPlayer getPlayer() {

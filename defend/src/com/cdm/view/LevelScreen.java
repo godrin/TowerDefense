@@ -38,8 +38,10 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	private Game game;
 	private Campaign campaign;
+	private boolean readonly;
 
-	public LevelScreen(Game pGame, Campaign c) {
+	public LevelScreen(Game pGame, Campaign c, boolean pReadonly) {
+		readonly = pReadonly;
 		campaign = c;
 		game = pGame;
 		level = campaign.getNextLevel(this);
@@ -94,7 +96,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		// drawBackground();
 
 		drawLineBased();
-		hud.draw(renderer);
+		if (!readonly)
+			hud.draw(renderer);
 	}
 
 	public void move(float delta) {
@@ -133,7 +136,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		}
 		Position.SCREEN_REF.apply();
 
-		gui.draw(unitRenderer);
+		if (!readonly)
+			gui.draw(unitRenderer);
 		if (Gdx.gl10 != null)
 
 			Gdx.gl10.glPopMatrix();

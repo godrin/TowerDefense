@@ -158,6 +158,7 @@ public class Grid {
 	private int w, h;
 	private List<PathPos> startPositions;
 	private List<PathPos> endPositions;
+	private List<PlayerUnitDef> playerUnitDef = new ArrayList<PlayerUnitDef>();
 
 	public Grid(int w2, int h2) {
 		w = w2;
@@ -182,6 +183,7 @@ public class Grid {
 		endPositions = new ArrayList<PathPos>();
 		startPositions.addAll(grid.startPositions);
 		endPositions.addAll(grid.endPositions);
+		playerUnitDef.addAll(grid.playerUnitDef);
 	}
 
 	public int getW() {
@@ -250,6 +252,14 @@ public class Grid {
 
 	private GridElement getElement(PathPos p) {
 		return getElement(p.x, p.y);
+	}
+
+	public void addDef(PlayerUnitDef playerUnitDef2) {
+		playerUnitDef.add(playerUnitDef2);
+	}
+
+	public List<PlayerUnitDef> getDefs() {
+		return playerUnitDef;
 	}
 
 }
