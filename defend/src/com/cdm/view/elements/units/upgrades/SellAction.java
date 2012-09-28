@@ -39,8 +39,7 @@ public class SellAction extends UnitAction {
 
 	}
 
-	@Override
-	public UnitAction getNextUprade() {
+		public UnitAction getNextUprade() {
 		return new SellAction(unit);
 	}
 
