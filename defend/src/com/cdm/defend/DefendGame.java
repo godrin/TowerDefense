@@ -109,7 +109,7 @@ public class DefendGame implements ApplicationListener, Game {
 			int ms = (int) (delta * 1000);
 
 			int wait = (1000 / 60) - ms;
-			if (wait > 2) {
+			if (wait > 15) {
 				Thread.sleep(wait);
 			}
 		} catch (InterruptedException e) {
