@@ -71,7 +71,7 @@ public class Rocket extends EnemyUnit implements Element {
 
 		Vector3 delta = p.to(endPosition);
 		delta.nor();
-		//angle = MathTools.angle(delta);
+		angle = MathTools.angle(delta)+180;
 		float speed = getSpeed();
 		p.x += delta.x * speed * time;
 		p.y += delta.y * speed * time;

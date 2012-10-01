@@ -30,6 +30,7 @@ public class SoundScreen extends Screen implements IButtonPressed {
 		music1 = Gdx.audio.newMusic(Gdx.files.internal("data/level02.ogg"));
 		music2 = Gdx.audio.newMusic(Gdx.files.internal("data/level03.ogg"));
 		music = music1;
+		music.setLooping(true);
 		game = pgame;
 		gui.add(new BigButton(Gdx.graphics.getWidth() / 3 + 50, 300,
 				Gdx.graphics.getWidth() / 6, 50, "music on", "on", this));
@@ -153,6 +154,7 @@ public class SoundScreen extends Screen implements IButtonPressed {
 		if (song == 3)
 			music = music2;
 		music.setVolume(vol);
+		music.setLooping(true);
 		music.play();
 	}
 
