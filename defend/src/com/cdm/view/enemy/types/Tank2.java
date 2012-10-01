@@ -6,6 +6,7 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
+import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.enemy.Chain;
 import com.cdm.view.enemy.GroundMovingEnemy;
@@ -37,7 +38,7 @@ public class Tank2 extends GroundMovingEnemy {
 	private static final Vector3 x1 = new Vector3(0.8f, 1.5f, 0);
 	private static final Vector3 x2 = new Vector3(0.8f, 1.1f, 0);
 	private static final Vector3 x3 = new Vector3(-0.9f, 1.1f, 0);
-
+	private static PolySprite sprite = null;
 	private static final List<Vector3> lines = Arrays.asList(new Vector3[] {
 			c0, c1, c1, c2, c2, c3, c3, c0, d0, d1, d1, d2, d2, d3, d3, d0, r1,
 			r2, r3, r4, k0, k1, k1, k2, k2, k3, k3, k0, x0, x1, x1, x2, x2, x3,
@@ -62,6 +63,14 @@ public class Tank2 extends GroundMovingEnemy {
 
 	@Override
 	public void draw(IRenderer renderer) {
+		
+		if (sprite == null) {
+			sprite = new PolySprite();
+			sprite.makeNiceRectangle(1f, -1f, -1f, 2f, 2f, outerColor, new Color(
+					0f, 0f, 0f, 0f));
+			sprite.init();
+		}
+		
 		renderer.drawPoly(getPosition(), poly, getAngle(), innerColor,
 				getSize());
 		getShakingLines().draw(renderer,getPosition(), lines, getAngle(), outerColor,
