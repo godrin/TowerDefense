@@ -97,8 +97,8 @@ public class Renderer implements IRenderer {
 			Gdx.gl10.glEnable(GL10.GL_BLEND);
 			Gdx.gl10.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
 		} else if (Gdx.gl20 != null) {
-			if (mySettingsSet) {
-				mySettingsSet = true;
+			if (!mySettingsSet) {
+				//mySettingsSet = true;
 
 				Gdx.gl20.glEnable(GL10.GL_LINE_SMOOTH);
 				Gdx.gl20.glEnable(GL10.GL_BLEND);
