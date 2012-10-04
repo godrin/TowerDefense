@@ -92,20 +92,24 @@ public class Renderer implements IRenderer {
 	private static boolean mySettingsSet = false;
 
 	public void initGlSettings() {
+		if (!mySettingsSet) {
+			mySettingsSet = true;
+			initGlSettingsExplicit();
+		}
+	}
+
+	public void initGlSettingsExplicit() {
 		if (Gdx.gl10 != null) {
 			Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 			Gdx.gl10.glEnable(GL10.GL_BLEND);
 			Gdx.gl10.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
 		} else if (Gdx.gl20 != null) {
-			if (!mySettingsSet) {
-				//mySettingsSet = true;
 
-				Gdx.gl20.glEnable(GL10.GL_LINE_SMOOTH);
-				Gdx.gl20.glEnable(GL10.GL_BLEND);
-				Gdx.gl20.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
-			}
-
+			Gdx.gl20.glEnable(GL10.GL_LINE_SMOOTH);
+			Gdx.gl20.glEnable(GL10.GL_BLEND);
+			Gdx.gl20.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
 		}
+
 	}
 
 	@Override
@@ -282,6 +286,7 @@ public class Renderer implements IRenderer {
 		spriteBatch.end();
 		if (renderer != null)
 			Gdx.gl10.glPopMatrix();
+		mySettingsSet = false;
 
 	}
 

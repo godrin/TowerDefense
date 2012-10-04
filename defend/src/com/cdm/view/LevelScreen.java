@@ -83,7 +83,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 			return;
 		synchronized (this) {
 
-			renderer.initGlSettings();
+			renderer.initGlSettingsExplicit();
 			rendering = true;
 			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 

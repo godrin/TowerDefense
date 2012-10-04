@@ -87,6 +87,7 @@ public class DefendGame implements ApplicationListener, Game {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		move();
+		
 		screen.render();
 
 	}
