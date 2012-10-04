@@ -76,15 +76,8 @@ public class Renderer implements IRenderer {
 		} else {
 			initGlSettings();
 
-			Gdx.gl20.glLineWidth(pos.getSystem().getScale() * 0.04f);
-			Matrix4 p = new Matrix4();
-			Matrix4 s = new Matrix4();
-			Matrix4 x = new Matrix4(projMatrix);
-			s.setToScaling(size, size, size);
-			p.setToRotation(Vector3.Z, angle);
-			p.trn(pos.x, pos.y, 0);
-			x.mul(p);
-			x.mul(s);
+			setGL20LineWidth(pos);
+			Matrix4 x = computeMVProjMatrix(pos, angle, size);
 			renderer20.begin(x, GL10.GL_LINES);
 			for (int i = 0; i < lines.size(); i++) {
 				Vector3 v = lines.get(i);
@@ -96,17 +89,27 @@ public class Renderer implements IRenderer {
 		}
 	}
 
+	private static boolean mySettingsSet = false;
+
 	public void initGlSettings() {
+		if (!mySettingsSet) {
+			mySettingsSet = true;
+			initGlSettingsExplicit();
+		}
+	}
+
+	public void initGlSettingsExplicit() {
 		if (Gdx.gl10 != null) {
 			Gdx.gl10.glEnable(GL10.GL_LINE_SMOOTH);
 			Gdx.gl10.glEnable(GL10.GL_BLEND);
 			Gdx.gl10.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
 		} else if (Gdx.gl20 != null) {
+
 			Gdx.gl20.glEnable(GL10.GL_LINE_SMOOTH);
 			Gdx.gl20.glEnable(GL10.GL_BLEND);
 			Gdx.gl20.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
-
 		}
+
 	}
 
 	@Override
@@ -131,40 +134,33 @@ public class Renderer implements IRenderer {
 
 			Gdx.gl10.glPopMatrix();
 		} else {
-			Gdx.gl20.glLineWidth(pos.getSystem().getScale() * 0.04f);
-			Matrix4 p = new Matrix4();
-			Matrix4 s = new Matrix4();
-			Matrix4 x = new Matrix4(projMatrix);
-			s.setToScaling(size, size, size);
-			p.setToRotation(Vector3.Z, angle);
-			p.trn(pos.x, pos.y, 0);
-			x.mul(p);
-			x.mul(s);
+			setGL20LineWidth(pos);
+			Matrix4 mvProj = computeMVProjMatrix(pos, angle, size);
 			if (true) {
-				renderer20.begin(x, GL20.GL_TRIANGLES);
+				float r = color.r;
+				float g = color.g;
+				float b = color.b;
+				float a = color.a;
+				if (r > 1)
+					r = 1;
+				if (r < 0)
+					r = 0;
+				if (g > 1)
+					g = 1;
+				if (g < 0)
+					g = 0;
+				if (b > 1)
+					b = 1;
+				if (b < 0)
+					b = 0;
+				if (a > 1)
+					a = 1;
+				if (a < 0)
+					a = 0;
+
+				renderer20.begin(mvProj, GL20.GL_TRIANGLES);
 				for (int i = 0; i < lines.size(); i++) {
 					Vector3 v = lines.get(i);
-					// FIXME: ensure from outside !
-					float r = color.r;
-					float g = color.g;
-					float b = color.b;
-					float a = color.a;
-					if (r > 1)
-						r = 1;
-					if (r < 0)
-						r = 0;
-					if (g > 1)
-						g = 1;
-					if (g < 0)
-						g = 0;
-					if (b > 1)
-						b = 1;
-					if (b < 0)
-						b = 0;
-					if (a > 1)
-						a = 1;
-					if (a < 0)
-						a = 0;
 					renderer20.color(r, g, b, a);
 					renderer20.vertex(v.x, v.y, v.z);
 				}
@@ -173,6 +169,22 @@ public class Renderer implements IRenderer {
 			}
 		}
 
+	}
+
+	private static Matrix4 p = new Matrix4();
+	private static Matrix4 s = new Matrix4();
+	private static Matrix4 x = new Matrix4();
+
+	private Matrix4 computeMVProjMatrix(Position pos, float angle, float size) {
+		p.idt();
+		s.idt();
+		x.set(projMatrix);
+		s.setToScaling(size, size, size);
+		p.setToRotation(Vector3.Z, angle);
+		p.trn(pos.x, pos.y, 0);
+		x.mul(p);
+		x.mul(s);
+		return x;
 	}
 
 	@Override
@@ -274,6 +286,7 @@ public class Renderer implements IRenderer {
 		spriteBatch.end();
 		if (renderer != null)
 			Gdx.gl10.glPopMatrix();
+		mySettingsSet = false;
 
 	}
 
@@ -307,21 +320,9 @@ public class Renderer implements IRenderer {
 			Gdx.gl10.glPopMatrix();
 		} else {
 			initGlSettings();
-			// FIXME: new
-			Matrix4 p = new Matrix4();
-			Matrix4 s = new Matrix4();
-			Matrix4 x = new Matrix4(projMatrix);
+			Matrix4 x = computeMVProjMatrix(pos, angle, size);
 
-			s.setToScaling(size, size, size);
-			p.setToRotation(Vector3.Z, angle);
-			p.trn(pos.x, pos.y, 0);
-			x.mul(p);
-			x.mul(s);
-
-			// Gdx.gl20.glBlendColor(color.r, color.g, color.b, color.a);
-			// Gdx.gl20.glScalef(size, size, size);
-			Gdx.gl20.glLineWidth(pos.getSystem().getScale() * 0.04f);
-			// x=new Matrix4();
+			setGL20LineWidth(pos);
 
 			sprite.render(x, renderMode);
 		}
@@ -329,25 +330,26 @@ public class Renderer implements IRenderer {
 
 	public void render(WorldCallback callback, Position pos, float size,
 			float angle) {
-		if(Gdx.gl20==null)
+		if (Gdx.gl20 == null)
 			return;
 		initGlSettings();
-		// FIXME: new
-		Matrix4 p = new Matrix4();
-		Matrix4 s = new Matrix4();
-		Matrix4 x = new Matrix4(projMatrix);
-
-		s.setToScaling(size, size, size);
-		p.setToRotation(Vector3.Z, angle);
-		p.trn(pos.x, pos.y, 0);
-		x.mul(p);
-		x.mul(s);
+		Matrix4 x = computeMVProjMatrix(pos, angle, size);
 
 		// Gdx.gl20.glBlendColor(color.r, color.g, color.b, color.a);
 		// Gdx.gl20.glScalef(size, size, size);
-		Gdx.gl20.glLineWidth(pos.getSystem().getScale() * 0.04f);
+		setGL20LineWidth(pos);
 		// x=new Matrix4();
 		callback.callback(x);
+	}
+
+	private static float lineWidth = -1;
+
+	private void setGL20LineWidth(Position pos) {
+		float lw = pos.getSystem().getScale() * 0.04f;
+		if (lw != lineWidth) {
+			Gdx.gl20.glLineWidth(lw);
+			lineWidth = lw;
+		}
 	}
 
 	public static void pushMatrix() {

@@ -22,7 +22,7 @@ public class CoordSystem {
 			Gdx.gl10.glTranslatef(x, y, 0);
 			Gdx.gl10.glLineWidth(scale * 0.04f);
 		} else {
-			Gdx.gl20.glLineWidth(scale * 0.04f);
+			//Gdx.gl20.glLineWidth(scale * 0.04f);
 			Renderer.scaleMatrix(scale,scale,scale);
 			Renderer.translateMatrix(x,y,0);
 		}

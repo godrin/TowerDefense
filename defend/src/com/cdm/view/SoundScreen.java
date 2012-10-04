@@ -112,14 +112,14 @@ public class SoundScreen extends Screen implements IButtonPressed {
 				FXvol += 0.1f;
 				if (FXvol >= 1)
 					FXvol = 1;
-				SoundFX.play(Type.KLICK);
+				game.play(Type.KLICK);
 			}
 		} else if (buttonName.equals("FXdown")) {
 			if (music != null) {
 				FXvol -= 0.1;
 				if (FXvol <= 0)
 					FXvol = 0;
-				SoundFX.play(Type.KLICK);
+				game.play(Type.KLICK);
 			}
 		}
 	}

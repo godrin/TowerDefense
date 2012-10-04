@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.cdm.Game;
 import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
@@ -46,8 +47,11 @@ public class Level {
 	private int levelNo;
 	private List<DisplayEffect> shotsToAdd = new ArrayList<DisplayEffect>();
 	private List<Decal> decals = new ArrayList<Decal>();
+	private Game game;
 
-	public Level(Grid pGrid, LevelScreen pfinishedListener, PlayerState pState) {
+	public Level(Game pGame, Grid pGrid, LevelScreen pfinishedListener,
+			PlayerState pState) {
+		game = pGame;
 		playerState = pState;
 		grid = pGrid;
 		Position.LEVEL_REF.setWidth(grid.getW());
@@ -317,7 +321,7 @@ public class Level {
 	public void enemyDestroyed(EnemyUnit enemyUnit) {
 
 		// removeMeFromGrid(enemyUnit.getPosition(), enemyUnit);
-		SoundFX.play(Type.HIT);
+		game.play(Type.HIT);
 		displayEffectsToAdd.add(new Explosion(enemyUnit.getPosition(),
 				enemyUnit.getSize(), this, 12, true));
 
@@ -414,7 +418,7 @@ public class Level {
 	}
 
 	public void unitDestroyed(Position position, Unit unit) {
-		SoundFX.play(Type.HIT);
+		game.play(Type.HIT);
 		displayEffectsToAdd.add(new Explosion(position, unit.getSize(), this,
 				20, true));
 		unitsToRemove.add(unit);
@@ -450,6 +454,10 @@ public class Level {
 
 	public void addDecal(Decal decal) {
 		decals.add(decal);
+	}
+
+	public void play(Type hit2) {
+		game.play(hit2);
 	}
 
 }
