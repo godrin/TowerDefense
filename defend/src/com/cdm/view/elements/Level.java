@@ -156,7 +156,7 @@ public class Level {
 
 	}
 
-	private void drawBox(IRenderer renderer) {
+	public void drawBox(IRenderer renderer) {
 		gridDrawing.draw(renderer);
 	}
 

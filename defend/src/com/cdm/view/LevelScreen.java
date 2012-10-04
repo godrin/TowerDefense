@@ -1,6 +1,7 @@
 package com.cdm.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -76,6 +77,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private boolean dragging = false;
 	private int dragDisplacement = 32;
 	private boolean paused = false;
+	private boolean gettingReady = true;
 
 	@Override
 	public synchronized void render() {
@@ -95,12 +97,47 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private void draw() {
 		// drawBackground();
 
-		drawLineBased();
-		if (!readonly)
-			hud.draw(renderer);
+		if (gettingReady && !readonly)
+			drawGetReady();
+		else {
+			drawLineBased();
+			if (!readonly)
+				hud.draw(renderer);
+		}
+	}
+
+	float textPhase = 0;
+
+	public void drawGetReady() {
+		renderer.drawText(Gdx.graphics.getWidth() / 2,
+				Gdx.graphics.getHeight() / 2, "LEVEL " + campaign.getLevelNo(),
+				Color.WHITE, 1, true, true);
+		renderer.drawText(Gdx.graphics.getWidth() / 2,
+				Gdx.graphics.getHeight() / 2 - 30, "GET READY", Color.WHITE,
+				1.5f + (float) Math.sin(textPhase * 3) * 0.2f, true, true);
+
+		if (true)
+			return;
+		if (Gdx.gl10 != null)
+			Gdx.gl10.glPushMatrix();
+		else {
+			Renderer.pushMatrix();
+		}
+		Position.LEVEL_REF.apply();
+
+		level.drawBox(unitRenderer);
+		if (Gdx.gl10 != null) {
+			Gdx.gl10.glPopMatrix();
+		} else {
+			Renderer.popMatrix();
+		}
 	}
 
 	public void move(float delta) {
+		if (gettingReady && !readonly) {
+			textPhase += delta;
+			return;
+		}
 		if (delta > 0 && !paused) {
 			level.move(delta);
 		}
@@ -161,6 +198,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchDown(int x, int y, int pointer, int button) {
+		if (gettingReady)
+			return false;
 		synchronized (this) {
 
 			if (level.gameover()) {
@@ -207,6 +246,12 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchUp(int x, int y, int pointer, int button) {
+
+		if (gettingReady) {
+			gettingReady = false;
+			return false;
+		}
+
 		if (selectedUnit != null) {
 			UnitAction selectedUprade = upgradeView.getSelectedUpgrade();
 			if (selectedUprade != null && selectedUnit != null) {
@@ -252,6 +297,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchDragged(int x, int y, int pointer) {
+		if (gettingReady)
+			return false;
 		synchronized (this) {
 
 			if (level.gameover())
@@ -290,6 +337,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	@Override
 	public boolean scrolled(int amount) {
+		if (gettingReady)
+			return false;
 		synchronized (this) {
 
 			int nu = (int) (Position.LEVEL_REF.getScale() + amount);
@@ -328,6 +377,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public void levelFinished() {
 		setLevel(campaign.getNextLevel(game, this));
 		level.setMoney(level.getMoney() + 10);
+		gettingReady = true;
 	}
 
 	private void setLevel(Level nextLevel) {

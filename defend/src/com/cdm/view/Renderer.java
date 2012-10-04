@@ -109,7 +109,6 @@ public class Renderer implements IRenderer {
 			Gdx.gl20.glEnable(GL10.GL_BLEND);
 			Gdx.gl20.glHint(GL10.GL_LINE_SMOOTH_HINT, GL10.GL_NICEST);
 		}
-
 	}
 
 	@Override
@@ -270,6 +269,11 @@ public class Renderer implements IRenderer {
 
 	public void drawText(float i, float j, CharSequence string, Color c,
 			float scale) {
+		drawText(i, j, string, c, scale, false, false);
+	}
+
+	public void drawText(float i, float j, CharSequence string, Color c,
+			float scale, boolean positionCenter, boolean positionMiddle) {
 		if (renderer != null)
 			Gdx.gl10.glPushMatrix();
 		spriteBatch.begin();
@@ -280,6 +284,10 @@ public class Renderer implements IRenderer {
 		// spriteBatch.setBlendFunction(GL10.GL_ONE,
 		// GL10.GL_ONE_MINUS_SRC_ALPHA);
 		font.setColor(c);
+		if (positionCenter)
+			i -= bounds.width / 2;
+		if (positionMiddle)
+			j += bounds.height / 2;
 		font.drawMultiLine(spriteBatch, string, i, j,
 		// 160 + bounds.height / 2,
 				bounds.width, HAlignment.CENTER);
@@ -335,10 +343,8 @@ public class Renderer implements IRenderer {
 		initGlSettings();
 		Matrix4 x = computeMVProjMatrix(pos, angle, size);
 
-		// Gdx.gl20.glBlendColor(color.r, color.g, color.b, color.a);
-		// Gdx.gl20.glScalef(size, size, size);
 		setGL20LineWidth(pos);
-		// x=new Matrix4();
+
 		callback.callback(x);
 	}
 
@@ -367,8 +373,6 @@ public class Renderer implements IRenderer {
 		// FIXME: new
 		Matrix4 m = new Matrix4();
 		m.setToScaling(x, y, z);
-		// m.mul(projMatrix);
-		// projMatrix = m;
 		projMatrix.mul(m);
 	}
 

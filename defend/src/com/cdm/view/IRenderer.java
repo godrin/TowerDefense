@@ -21,13 +21,18 @@ public interface IRenderer {
 
 	void drawText(Position position, CharSequence money, Color moneyColor);
 
-	public void drawText(float i, float j, CharSequence string, Color c, float scale);
+	public void drawText(float i, float j, CharSequence string, Color c,
+			float scale);
+
+	public void drawText(float i, float j, CharSequence string, Color c,
+			float scale, boolean positionCenter, boolean positionMiddle);
 
 	public void render(PolySprite sprite, Position pos, float size,
 			float angle, int glTriangles);
 
 	public void render(PolySprite sprite, Position pos, float size,
 			float angle, int glTriangles, Color color);
+
 	public void render(WorldCallback callback, Position pos, float size,
 			float angle);
 
