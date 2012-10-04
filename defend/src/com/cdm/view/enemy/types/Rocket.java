@@ -8,6 +8,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
+import com.cdm.view.elements.MathTools;
 import com.cdm.view.enemy.EnemyUnit;
 
 public class Rocket extends EnemyUnit implements Element {
@@ -31,7 +32,7 @@ public class Rocket extends EnemyUnit implements Element {
 	public static final Vector3 m = new Vector3(1.0f, 0.5f, 0);
 	public static final Vector3 n = new Vector3(0.65f, -0.5f, 0);
 	public static final Vector3 o = new Vector3(1.0f, -0.5f, 0);
-
+	private Position endPosition;
 	private static List<Vector3> lines = Arrays.asList(new Vector3[] { a, b, b,
 			c, c, d, d, d2, d2, e, e, f, f, g, g, h, h, i, i, a, j, k, l, m, n,
 			o });
@@ -62,8 +63,20 @@ public class Rocket extends EnemyUnit implements Element {
 	@Override
 	public void move(float time) {
 		super.move(time);
+		
+		if (endPosition == null)
+			endPosition = getLevel().getSomeEnemyEndPosition();
+
 		Position p = getPosition();
-		p.x += time * getSpeed();
+
+		Vector3 delta = p.to(endPosition);
+		delta.nor();
+		//angle = MathTools.angle(delta);
+		float speed = getSpeed();
+		p.x += delta.x * speed * time;
+		p.y += delta.y * speed * time;
+		
+		//p.x += time * getSpeed();
 		setPosition(p); // react to position change
 		
 		
