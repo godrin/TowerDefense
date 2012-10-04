@@ -110,7 +110,7 @@ public class RocketLauncher extends RotatingUnit implements Element {
 						new RocketShot(startingPos, anticipatePosition(
 								startingPos, enemy, RocketShot.speed),
 								getLevel(), impact, enemy));
-				SoundFX.play(Type.SHOT);
+				getLevel().play(Type.SHOT);
 
 			}
 

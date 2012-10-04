@@ -46,7 +46,7 @@ public class SoundFX {
 		sounds.clear();
 	}
 
-	public static void play(Type type) {
+	public void play(Type type) {
 		Sound s = sounds.get(type);
 		if (s != null)
 			s.play(SoundScreen.FXvol);

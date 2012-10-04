@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.cdm.Game;
 import com.cdm.gui.effects.SoundFX;
+import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.Campaign;
 import com.cdm.view.HighScoreScreen;
 import com.cdm.view.InputScreen;
@@ -29,14 +30,17 @@ public class DefendGame implements ApplicationListener, Game {
 	private InputScreen inputScreen;
 	private long oldMicros = 0;
 
+	private SoundFX soundFx = new SoundFX();
+
 	public void create() {
 		running = true;
 
-		Campaign c = new Campaign("/com/cdm/view/campaign1.txt");
+		Campaign c = new Campaign("/com/cdm/view/campaign1.txt", this);
 		levelScreen = new LevelScreen(this, c, false);
 
-		Campaign demoCampaign = new Campaign("/com/cdm/view/demo.txt");
-		demoScreen = new LevelScreen(new DemoGame(), demoCampaign, true);
+		DemoGame demoGame = new DemoGame();
+		Campaign demoCampaign = new Campaign("/com/cdm/view/demo.txt", demoGame);
+		demoScreen = new LevelScreen(demoGame, demoCampaign, true);
 
 		optionsScreen = new SoundScreen(this);
 		SoundScreen.playSong(1);
@@ -142,5 +146,10 @@ public class DefendGame implements ApplicationListener, Game {
 			setScreen(highscoreScreen);
 		else if (Screen.INPUT_SCREEN.equals(string))
 			setScreen(inputScreen);
+	}
+
+	@Override
+	public void play(Type soundType) {
+		soundFx.play(soundType);
 	}
 }

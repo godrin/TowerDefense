@@ -44,7 +44,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		readonly = pReadonly;
 		campaign = c;
 		game = pGame;
-		level = campaign.getNextLevel(this);
+		level = campaign.getNextLevel(pGame, this);
 		hud.setLevel(level);
 		hud.setCampaign(c);
 		bg = load("data/bg_stars2.png", 128, 128);
@@ -319,14 +319,14 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 			game.setScreen(Screen.INPUT_SCREEN);
 		} else {
 			game.setScreen(Screen.HIGHSCORE_SCREEN);
-			campaign.restart();
-			setLevel(campaign.getNextLevel(this));
+			campaign.restart(game);
+			setLevel(campaign.getNextLevel(game, this));
 		}
 	}
 
 	@Override
 	public void levelFinished() {
-		setLevel(campaign.getNextLevel(this));
+		setLevel(campaign.getNextLevel(game, this));
 		level.setMoney(level.getMoney() + 10);
 	}
 

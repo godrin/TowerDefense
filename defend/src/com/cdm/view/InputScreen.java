@@ -85,7 +85,7 @@ public class InputScreen extends Screen implements IButtonPressed {
 			}
 			name = "";
 			game.setScreen(Screen.HIGHSCORE_SCREEN);
-			campaign.restart();
+			campaign.restart(game);
 		}
 	}
 

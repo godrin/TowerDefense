@@ -1,6 +1,6 @@
 package com.cdm.view.elements;
 
-import com.cdm.gui.effects.SoundFX;
+import com.cdm.Game;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.SoundScreen;
 import com.cdm.view.enemy.EnemyUnit;
@@ -11,6 +11,11 @@ public class PlayerState {
 	private int money = 100;
 	private int points = 0;
 	private int bonus = 0;
+	private Game game;
+
+	public PlayerState(Game pGame) {
+		game = pGame;
+	}
 
 	public int getHealth() {
 		if (health > 0)
@@ -59,41 +64,41 @@ public class PlayerState {
 		bonus += enemyUnit.getBonus();
 		if (bonus == 50) {
 			health += 1;
-			SoundFX.play(Type.WIN);
+			game.play(Type.WIN);
 
 		}
 		if (bonus == 75) {
 			health += 1;
-			SoundFX.play(Type.WIN);
+			game.play(Type.WIN);
 		}
 		if (bonus == 100) {
 			health += 1;
-			SoundFX.play(Type.WIN);
+			game.play(Type.WIN);
 		}
 		if (bonus == 125) {
 			health += 1;
-			SoundFX.play(Type.WIN);
+			game.play(Type.WIN);
 		}
 		if (bonus == 150) {
 			health += 1;
-			SoundFX.play(Type.WIN);
+			game.play(Type.WIN);
 		}
 		if (bonus == 175) {
 			health += 1;
-			SoundFX.play(Type.WIN);
+			game.play(Type.WIN);
 		}
 		if (bonus == 200) {
 			health += 1;
-			SoundFX.play(Type.WIN);
+			game.play(Type.WIN);
 		}
 
 	}
 
 	public void hurt() {
-		SoundFX.play(Type.HURT);
+		game.play(Type.HURT);
 		health -= 1;
 		if (health < 1) {
-			SoundFX.play(Type.LOOSE);
+			game.play(Type.LOOSE);
 			SoundScreen.playSong(0);
 
 		}
