@@ -91,6 +91,7 @@ public class EnemyPlayer {
 		waveNo += 1;
 		if (waveNo >= maxLevel) {
 			SoundFX.play(Type.LEVEL2);
+			SoundFX.play(Type.WIN2);
 			levelFinishedListener.levelFinished();
 		}
 		mode = Mode.WAIT;

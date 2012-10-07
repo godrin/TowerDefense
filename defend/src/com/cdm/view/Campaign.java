@@ -31,7 +31,6 @@ public class Campaign {
 		level = new Level(game, new Grid(levels.get(plevel)), screen,
 				playerState);
 		levelNo += 1;
-		SoundFX.play(Type.LEVEL2);
 		if (levelNo >= 11)
 			levelNo = 0;
 		level.setLevelNo(levelNo);
