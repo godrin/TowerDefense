@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cdm.Game;
+import com.cdm.gui.effects.SoundFX;
+import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.elements.Grid;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.PlayerState;
@@ -29,6 +31,7 @@ public class Campaign {
 		level = new Level(game, new Grid(levels.get(plevel)), screen,
 				playerState);
 		levelNo += 1;
+		SoundFX.play(Type.LEVEL2);
 		if (levelNo >= 11)
 			levelNo = 0;
 		level.setLevelNo(levelNo);

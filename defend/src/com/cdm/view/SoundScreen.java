@@ -16,7 +16,7 @@ public class SoundScreen extends Screen implements IButtonPressed {
 	private WidgetContainer gui = new WidgetContainer();
 	private Renderer renderer = new Renderer();
 	private Game game;
-	private static Music music, music0, music1, music2;
+	private static Music music, music0, music1, music2, music3;
 	private static int song = 2;
 	private static boolean stop = false;
 	private Color white = new Color(1, 1, 1, 1);
@@ -29,7 +29,8 @@ public class SoundScreen extends Screen implements IButtonPressed {
 		music0 = Gdx.audio.newMusic(Gdx.files.internal("data/level01.ogg"));
 		music1 = Gdx.audio.newMusic(Gdx.files.internal("data/level02.ogg"));
 		music2 = Gdx.audio.newMusic(Gdx.files.internal("data/level03.ogg"));
-		music = music1;
+		music3 = Gdx.audio.newMusic(Gdx.files.internal("data/intro.ogg"));
+		music = music3;
 		music.setLooping(true);
 		game = pgame;
 		gui.add(new BigButton(Gdx.graphics.getWidth() / 3 + 50, 300,
@@ -96,7 +97,7 @@ public class SoundScreen extends Screen implements IButtonPressed {
 			stop=true;
 			if (music.isPlaying())
 				music.stop();
-			if (song <= 2) {
+			if (song <= 3) {
 				song += 1;
 			} else
 				song = 1;
@@ -106,6 +107,10 @@ public class SoundScreen extends Screen implements IButtonPressed {
 				music = music1;
 			if (song == 3)
 				music = music2;
+			if (song == 4)
+				music = music3;
+			
+			
 
 		} else if (buttonName.equals("FXup")) {
 			if (music != null) {
@@ -146,13 +151,16 @@ public class SoundScreen extends Screen implements IButtonPressed {
 			return;
 		if(music!=null)
 			music.stop();
-		song=(id%3)+1;
+		song=(id%3);
 		if (song == 1)
 			music = music0;
 		if (song == 2)
 			music = music1;
 		if (song == 3)
 			music = music2;
+		if (song == 4)
+			music = music3;
+		
 		music.setVolume(vol);
 		music.setLooping(true);
 		music.play();

@@ -10,6 +10,8 @@ import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.IUnitTypeSelected;
 import com.cdm.gui.UnitTypeButton;
 import com.cdm.gui.WidgetContainer;
+import com.cdm.gui.effects.SoundFX;
+import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.elements.Elements;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.LevelFinishedListener;
@@ -315,10 +317,12 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	// FIXME move this function in a "Campaign" or game-control class, maybe
 	// "towergame"
 	public void restart() {
-		if (campaign.playerState.getPoints() >= 100) {
+		if (campaign.playerState.getPoints() >= 1000) {
+			SoundScreen.playSong(0);
 			game.setScreen(Screen.INPUT_SCREEN);
 		} else {
 			game.setScreen(Screen.HIGHSCORE_SCREEN);
+			SoundScreen.playSong(0);
 			campaign.restart(game);
 			setLevel(campaign.getNextLevel(game, this));
 		}
