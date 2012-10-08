@@ -11,7 +11,7 @@ import com.cdm.view.SoundScreen;
 public class SoundFX {
 
 	public enum Type {
-		KLICK, SHOT, SHOT2, HIT, HIT2, HURT, STUNRAY, LOOSE, WIN
+		KLICK, SHOT, SHOT2, HIT, HIT2, HURT, STUNRAY, LOOSE, WIN, WIN2, LEVEL1, LEVEL2
 	};
 
 	private static Map<Type, Sound> sounds = new TreeMap<Type, Sound>();
@@ -31,11 +31,16 @@ public class SoundFX {
 				Gdx.audio.newSound(Gdx.files.internal("data/punch.ogg")));
 		sounds.put(Type.STUNRAY,
 				Gdx.audio.newSound(Gdx.files.internal("data/stunray01.ogg")));
-
+		sounds.put(Type.LEVEL1,
+				Gdx.audio.newSound(Gdx.files.internal("data/level_completed.ogg")));
+		sounds.put(Type.LEVEL2,
+				Gdx.audio.newSound(Gdx.files.internal("data/next_level.ogg")));
 		sounds.put(Type.LOOSE,
 				Gdx.audio.newSound(Gdx.files.internal("data/loose.ogg")));
 		sounds.put(Type.WIN,
 				Gdx.audio.newSound(Gdx.files.internal("data/bonus.ogg")));
+		sounds.put(Type.WIN2,
+				Gdx.audio.newSound(Gdx.files.internal("data/win02.ogg")));
 
 	}
 
@@ -46,7 +51,7 @@ public class SoundFX {
 		sounds.clear();
 	}
 
-	public void play(Type type) {
+	public static void play(Type type) {
 		Sound s = sounds.get(type);
 		if (s != null)
 			s.play(SoundScreen.FXvol);

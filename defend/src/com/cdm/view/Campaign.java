@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.cdm.Game;
+import com.cdm.gui.effects.SoundFX;
+import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.elements.Grid;
 import com.cdm.view.elements.Level;
 import com.cdm.view.elements.PlayerState;

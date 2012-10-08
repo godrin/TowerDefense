@@ -43,7 +43,7 @@ public class DefendGame implements ApplicationListener, Game {
 		demoScreen = new LevelScreen(demoGame, demoCampaign, true);
 
 		optionsScreen = new SoundScreen(this);
-		SoundScreen.playSong(1);
+		SoundScreen.playSong(0);
 		setScreen(menuScreen = new MenuScreen(this, demoScreen));
 		highscoreScreen = new HighScoreScreen(this);
 		inputScreen = new InputScreen(this, c);

@@ -5,6 +5,8 @@ import java.util.Random;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.cdm.gui.effects.SoundFX;
+import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.Position;
 import com.cdm.view.elements.EnemyUnits;
 import com.cdm.view.elements.Level;
@@ -87,8 +89,11 @@ public class EnemyPlayer {
 
 	private void startWait() {
 		waveNo += 1;
-		if (waveNo >= maxLevel)
+		if (waveNo >= maxLevel) {
+			SoundFX.play(Type.LEVEL2);
+			SoundFX.play(Type.WIN2);
 			levelFinishedListener.levelFinished();
+		}
 		mode = Mode.WAIT;
 		timeToNextWave = WAITING_TIME;
 	}
