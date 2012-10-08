@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Json;
 import com.cdm.Game;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.IUnitTypeSelected;
@@ -95,8 +96,6 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	private void draw() {
-		// drawBackground();
-
 		if (gettingReady && !readonly)
 			drawGetReady();
 		else {
@@ -115,25 +114,11 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		renderer.drawText(Gdx.graphics.getWidth() / 2,
 				Gdx.graphics.getHeight() / 2 - 30, "GET READY", Color.WHITE,
 				1.5f + (float) Math.sin(textPhase * 3) * 0.2f, true, true);
-
-		if (true)
-			return;
-		if (Gdx.gl10 != null)
-			Gdx.gl10.glPushMatrix();
-		else {
-			Renderer.pushMatrix();
-		}
-		Position.LEVEL_REF.apply();
-
-		level.drawBox(unitRenderer);
-		if (Gdx.gl10 != null) {
-			Gdx.gl10.glPopMatrix();
-		} else {
-			Renderer.popMatrix();
-		}
 	}
 
 	public void move(float delta) {
+		if (delta > 0)
+			level.setFps((int) (1.0f / delta));
 		if (gettingReady && !readonly) {
 			textPhase += delta;
 			return;
@@ -230,6 +215,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 						upgradeView.setTargetUnit(selectedUnit);
 
 						selectedUnit.selected(true);
+						vibrateShort();
 					}
 				}
 
@@ -249,6 +235,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 		if (gettingReady) {
 			gettingReady = false;
+			vibrateShort();
 			return false;
 		}
 
@@ -258,6 +245,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 				selectedUprade.doAction(selectedUnit);
 				int price = selectedUprade.getCostForNext();
 				level.setMoney(level.getMoney() - price);
+				vibrateShort();
 			}
 
 			selectedUnit.selected(false);
@@ -291,9 +279,14 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (level.gameover())
 			return;
 		if (dragElement != null) {
+			vibrateShort();
 			level.add(dragElement);
 		}
 		dragElement = null;
+	}
+
+	private void vibrateShort() {
+		Gdx.input.vibrate(10);
 	}
 
 	public boolean touchDragged(int x, int y, int pointer) {
@@ -397,6 +390,16 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		}
 		if (keycode == 44) {
 			paused = !paused;
+		}
+		if (keycode == 47) {
+
+			Json json = new Json();
+			String text = json.toJson(level);
+			System.out.println("JSON " + text);
+
+			level = json.fromJson(Level.class, text);
+			level.init(game, this);
+
 		}
 		System.out.println("KEYCODE " + keycode);
 		return false;

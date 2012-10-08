@@ -42,6 +42,8 @@ public class LevelDisplays {
 				Gdx.graphics.getHeight(), getLevelText(), moneyColor);
 		renderer.drawText(Gdx.graphics.getWidth() - 140,
 				Gdx.graphics.getHeight() - 30, getEnergyText(), moneyColor);
+		renderer.drawText(Gdx.graphics.getWidth() - 140,
+				Gdx.graphics.getHeight() - 80, getFPSText(), moneyColor);
 		if (up) {
 			if (color.a >= 0.01f) {
 				color.a -= 0.01f;
@@ -88,15 +90,20 @@ public class LevelDisplays {
 	private CharSequence getGameoverText() {
 		textBuffer.setLength(0);
 		textBuffer.append("You've got ").append(level.getPoints())
-		.append( " Points \nand ")
-		.append(level.getBonus())
-		.append(" Bonus POiNts");
+				.append(" Points \nand ").append(level.getBonus())
+				.append(" Bonus POiNts");
 		return textBuffer;
 	}
 
 	private CharSequence getEnergyText() {
 		textBuffer.setLength(0);
 		textBuffer.append("Energy ").append(level.getHealth());
+		return textBuffer;
+	}
+
+	private CharSequence getFPSText() {
+		textBuffer.setLength(0);
+		textBuffer.append("FPS ").append(level.getFps());
 		return textBuffer;
 	}
 

@@ -144,11 +144,13 @@ public class BackgroundElement implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		renderer.drawPoly(pos, boxes, 0, c0, size);
+		if (false) {
+			renderer.drawPoly(pos, boxes, 0, c0, size);
 
-		renderer.drawPoly(pos, boxes0, 0, c1, size);
+			renderer.drawPoly(pos, boxes0, 0, c1, size);
 
-		renderer.drawLines(pos, lines, 0, c0, size);
+			renderer.drawLines(pos, lines, 0, c0, size);
+		}
 	}
 
 	@Override
