@@ -106,7 +106,7 @@ public class EnemyPlayer {
 		defs.clear();
 
 		// strength-based randomized enemy creation
-		enemyStrength += (4 + 1.7f * (float) getWaveNo());
+		enemyStrength += (4 *(float) level.getLevelNo() + 1.7f * (float) getWaveNo());
 		System.out
 				.println("Strength " + enemyStrength + " wave:" + getWaveNo());
 		Float currentStrength = enemyStrength;
