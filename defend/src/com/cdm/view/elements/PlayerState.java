@@ -8,7 +8,7 @@ import com.cdm.view.enemy.EnemyUnit;
 public class PlayerState {
 
 	private int health = 3;
-	private int money = 100;
+	private int money = 25;
 	private int points = 0;
 	private int bonus = 0;
 	private Game game;
