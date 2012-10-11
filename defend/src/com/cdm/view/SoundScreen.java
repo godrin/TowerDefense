@@ -29,7 +29,7 @@ public class SoundScreen extends Screen implements IButtonPressed {
 		music0 = Gdx.audio.newMusic(Gdx.files.internal("data/level01.ogg"));
 		music1 = Gdx.audio.newMusic(Gdx.files.internal("data/level02.ogg"));
 		music2 = Gdx.audio.newMusic(Gdx.files.internal("data/level03.ogg"));
-		music3 = Gdx.audio.newMusic(Gdx.files.internal("data/intro.ogg"));
+		music3 = Gdx.audio.newMusic(Gdx.files.internal("data/intro2a.ogg"));
 		music = music3;
 		music.setLooping(true);
 		game = pgame;
