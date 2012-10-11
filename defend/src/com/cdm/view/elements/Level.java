@@ -7,8 +7,10 @@ import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.Json.Serializable;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.cdm.Game;
-import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.LevelScreen;
@@ -29,7 +31,7 @@ import com.cdm.view.elements.units.Unit.UnitType;
 import com.cdm.view.enemy.EnemyPlayer;
 import com.cdm.view.enemy.EnemyUnit;
 
-public class Level {
+public class Level implements Serializable {
 	private Grid grid;
 	private Selector selector = null;
 	private EnemyPlayer player;
@@ -48,12 +50,27 @@ public class Level {
 	private List<DisplayEffect> shotsToAdd = new ArrayList<DisplayEffect>();
 	private List<Decal> decals = new ArrayList<Decal>();
 	private Game game;
+	private int fps;
+
+	public Level() {
+
+	}
 
 	public Level(Game pGame, Grid pGrid, LevelScreen pfinishedListener,
 			PlayerState pState) {
-		game = pGame;
-		playerState = pState;
 		grid = pGrid;
+		playerState = pState;
+
+		init(pGame, pfinishedListener);
+		for (PlayerUnitDef def : grid.getDefs()) {
+			add(def.pos, def.type);
+		}
+		displayEffects.add(new ZoomInEffect(this));
+
+	}
+
+	public void init(Game pGame, LevelScreen pfinishedListener) {
+		game = pGame;
 		Position.LEVEL_REF.setWidth(grid.getW());
 		Position.LEVEL_REF.setHeight(grid.getH());
 
@@ -64,10 +81,7 @@ public class Level {
 
 		PathFinder.breadthSearch(grid, PathFinder.GOAL_ACCESSOR,
 				getEnemyStartPosition(), getEnemyEndPosition(), null, false);
-		displayEffects.add(new ZoomInEffect(this));
-		for (PlayerUnitDef def : pGrid.getDefs()) {
-			add(def.pos, def.type);
-		}
+
 	}
 
 	public void add(Position pos, UnitType type) {
@@ -110,20 +124,25 @@ public class Level {
 		for (Decal decal : decals) {
 			decal.move(time);
 		}
-		displayEffects.addAll(shotsToAdd);
-		shotsToAdd.clear();
+		cleanup();
+		gridDrawing.move(time);
+	}
+
+	private void cleanup() {
 		for (Unit unit : unitsToRemove) {
 			units.remove(unit);
 			removeMeFromGrid(unit.getPosition(), unit);
 		}
 		unitsToRemove.clear();
+		displayEffects.addAll(shotsToAdd);
+		shotsToAdd.clear();
 		for (DisplayEffect shot : displayEffectsToRemove) {
 			displayEffects.remove(shot);
 		}
 		displayEffectsToRemove.clear();
 		displayEffects.addAll(displayEffectsToAdd);
 		displayEffectsToAdd.clear();
-		gridDrawing.move(time);
+
 	}
 
 	public void draw(IRenderer renderer) {
@@ -156,7 +175,7 @@ public class Level {
 
 	}
 
-	private void drawBox(IRenderer renderer) {
+	public void drawBox(IRenderer renderer) {
 		gridDrawing.draw(renderer);
 	}
 
@@ -458,6 +477,34 @@ public class Level {
 
 	public void play(Type hit2) {
 		game.play(hit2);
+	}
+
+	@Override
+	public void write(Json json) {
+		cleanup();
+
+		json.writeValue("grid", grid);
+		if (false) {
+			json.writeValue("enemy", player);
+			json.writeValue("speedFactor", speedFactor);
+			json.writeValue("units", units);
+			json.writeValue("playerState", playerState);
+			json.writeValue("displayEffects", displayEffects);
+			json.writeValue("decals", decals);
+		}
+	}
+
+	@Override
+	public void read(Json json, OrderedMap<String, Object> jsonData) {
+		grid = json.readValue("grid", Grid.class, jsonData);
+	}
+
+	public int getFps() {
+		return fps;
+	}
+
+	public void setFps(int fps) {
+		this.fps = fps;
 	}
 
 }

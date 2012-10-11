@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
+import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Grid.GridElement;
 
@@ -27,6 +30,7 @@ public class BackgroundElement implements Element {
 	private Position pos;
 	private final Color c0 = new Color(0.5f, 0.5f, 0.8f, 0.2f);
 	private final Color c1 = new Color(0.5f, 0.5f, 0.8f, 0.2f);
+	private final Color c2 = new Color(0.0f, 0.0f, 0.0f, 0.0f);
 	private static final float OUTER = 1.0f;
 	private static final float INNER = 0.8f;
 	private static final float ROT_WIDTH = 0.2f;
@@ -37,6 +41,7 @@ public class BackgroundElement implements Element {
 	private float lightness = 0.0f;
 	private GridElement gridElement;
 	private float rotatingSpeed = 0.8f;
+	private static PolySprite sprite = null;
 
 	public BackgroundElement(Position p, GridElement e) {
 		pos = p;
@@ -68,6 +73,16 @@ public class BackgroundElement implements Element {
 
 		setVecs();
 
+		if (sprite == null) {
+			sprite = new PolySprite();
+			sprite.fillRectangle(-OUTER, -OUTER, OUTER * 2, OUTER * 2, c0);
+			sprite.fillRectangle(-INNER, -INNER, INNER * 2, INNER * 2, c1);
+			sprite.fillRectangle(-0.7f, -0.7f, 1.4f, 0.1f, c0);
+			sprite.makeNiceRectangle(0.15f, -INNER, -INNER, INNER*2, INNER*2, c0, c2);
+
+			sprite.init();
+		}
+
 	}
 
 	public void move(float t) {
@@ -77,9 +92,11 @@ public class BackgroundElement implements Element {
 				rotateAngle = 0;
 				rotating = false;
 			}
-			setVecs();
+			if (Gdx.gl20 == null)
+				setVecs();
 		}
-		setColor(t);
+		if (Gdx.gl20 == null)
+			setColor(t);
 	}
 
 	private void setColor(float t) {
@@ -144,11 +161,15 @@ public class BackgroundElement implements Element {
 
 	@Override
 	public void draw(IRenderer renderer) {
-		renderer.drawPoly(pos, boxes, 0, c0, size);
+		if (Gdx.gl20 == null) {
+			renderer.drawPoly(pos, boxes, 0, c0, size);
 
-		renderer.drawPoly(pos, boxes0, 0, c1, size);
+			renderer.drawPoly(pos, boxes0, 0, c1, size);
 
-		renderer.drawLines(pos, lines, 0, c0, size);
+			renderer.drawLines(pos, lines, 0, c0, size);
+		} else {
+			renderer.render(sprite, pos, size, 0, GL20.GL_TRIANGLES);
+		}
 	}
 
 	@Override

@@ -82,4 +82,10 @@ public class UnitRenderer implements IRenderer {
 		r.render(callback, pos, size, angle);
 	}
 
+	@Override
+	public void drawText(float i, float j, CharSequence string, Color c,
+			float scale, boolean positionCenter, boolean positionMiddle) {
+		r.drawText(i, j, string, c, scale, positionCenter, positionMiddle);
+	}
+
 }

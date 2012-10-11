@@ -1,5 +1,6 @@
 package com.cdm.gui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.cdm.view.IRenderer;
 import com.cdm.view.LevelScreen;
@@ -45,9 +46,11 @@ public class UnitTypeButton extends Button {
 			return;
 
 		super.touchDown(x, y, pointer, button);
-		if (listener != null && isEnabled())
+		if (listener != null && isEnabled())  {
 			listener.unitTypeSelected(type, new Position(x, y,
 					Position.SCREEN_REF), cost);
+			Gdx.input.vibrate(10);
+		}
 	}
 
 	public IUnitTypeSelected getListener() {

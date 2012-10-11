@@ -1,5 +1,6 @@
 package com.cdm.gui;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.cdm.gui.anim.Animation;
 import com.cdm.gui.anim.AnimationList;
@@ -66,6 +67,7 @@ public class BigButton extends Widget {
 
 	@Override
 	public void clicked(int x, int y, int pointer, int button) {
+		Gdx.input.vibrate(10);
 		if (buttonPressedListener != null)
 			buttonPressedListener.buttonPressed(name);
 	}

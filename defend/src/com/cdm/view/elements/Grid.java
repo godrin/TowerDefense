@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.Json.Serializable;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.cdm.view.Position;
 import com.cdm.view.elements.paths.PathPos;
 import com.cdm.view.elements.units.PlayerUnit;
@@ -12,12 +15,12 @@ import com.cdm.view.elements.units.Unit;
 import com.cdm.view.enemy.EnemyUnit;
 
 // review1
-public class Grid {
+public class Grid implements Serializable {
 	public enum CellType {
 		FREE, BLOCK, EMPTY
 	};
 
-	public class GridElement {
+	public static class GridElement implements Serializable {
 
 		private Set<Element> currentElements;
 		private int distanceToEnd;
@@ -26,6 +29,10 @@ public class Grid {
 
 		private CellType cellType = CellType.EMPTY;
 		int x, y;
+
+		public GridElement() {
+
+		}
 
 		public GridElement(int x, int y) {
 			this.x = x;
@@ -152,6 +159,27 @@ public class Grid {
 			return null;
 		}
 
+		@Override
+		public void write(Json json) {
+			json.writeValue("distanceToEnd", distanceToEnd);
+			json.writeValue("computationValue", computationValue);
+			json.writeValue("distanceToEnd", distanceToEnd);
+			json.writeValue("cellType", cellType);
+			json.writeValue("x", x);
+			json.writeValue("y", y);
+
+		}
+
+		@Override
+		public void read(Json json, OrderedMap<String, Object> jsonData) {
+			json.readValue("distanceToEnd", Integer.class, jsonData);
+			json.readValue("computationValue", Integer.class, jsonData);
+			json.readValue("distanceToEnd", Integer.class, jsonData);
+			json.readValue("cellType", CellType.class, jsonData);
+			json.readValue("x", Integer.class, jsonData);
+			json.readValue("y", Integer.class, jsonData);
+		}
+
 	}
 
 	private GridElement[] cells;
@@ -159,6 +187,10 @@ public class Grid {
 	private List<PathPos> startPositions;
 	private List<PathPos> endPositions;
 	private List<PlayerUnitDef> playerUnitDef = new ArrayList<PlayerUnitDef>();
+
+	public Grid() {
+
+	}
 
 	public Grid(int w2, int h2) {
 		w = w2;
@@ -260,6 +292,25 @@ public class Grid {
 
 	public List<PlayerUnitDef> getDefs() {
 		return playerUnitDef;
+	}
+
+	@Override
+	public void write(Json json) {
+		json.writeValue("width", w);
+		json.writeValue("height", h);
+		json.writeValue("start", startPositions);
+		json.writeValue("end", endPositions);
+		json.writeValue("cells", cells);
+
+	}
+
+	@Override
+	public void read(Json json, OrderedMap<String, Object> jsonData) {
+		w = json.readValue("width", Integer.class, jsonData);
+		h = json.readValue("height", Integer.class, jsonData);
+		startPositions = json.readValue("start", List.class, jsonData);
+		endPositions = json.readValue("end", List.class, jsonData);
+		cells = json.readValue("cells", GridElement[].class, jsonData);
 	}
 
 }

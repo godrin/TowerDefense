@@ -1,10 +1,12 @@
 package com.cdm.view;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.utils.Json;
 import com.cdm.Game;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.IUnitTypeSelected;
@@ -78,6 +80,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	private boolean dragging = false;
 	private int dragDisplacement = 32;
 	private boolean paused = false;
+	private boolean gettingReady = true;
 
 	@Override
 	public synchronized void render() {
@@ -95,14 +98,33 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	private void draw() {
-		// drawBackground();
+		if (gettingReady && !readonly)
+			drawGetReady();
+		else {
+			drawLineBased();
+			if (!readonly)
+				hud.draw(renderer);
+		}
+	}
 
-		drawLineBased();
-		if (!readonly)
-			hud.draw(renderer);
+	float textPhase = 0;
+
+	public void drawGetReady() {
+		renderer.drawText(Gdx.graphics.getWidth() / 2,
+				Gdx.graphics.getHeight() / 2, "LEVEL " + campaign.getLevelNo(),
+				Color.WHITE, 1, true, true);
+		renderer.drawText(Gdx.graphics.getWidth() / 2,
+				Gdx.graphics.getHeight() / 2 - 30, "GET READY", Color.WHITE,
+				1.5f + (float) Math.sin(textPhase * 3) * 0.2f, true, true);
 	}
 
 	public void move(float delta) {
+		if (delta > 0)
+			level.setFps((int) (1.0f / delta));
+		if (gettingReady && !readonly) {
+			textPhase += delta;
+			return;
+		}
 		if (delta > 0 && !paused) {
 			level.move(delta);
 		}
@@ -163,6 +185,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchDown(int x, int y, int pointer, int button) {
+		if (gettingReady)
+			return false;
 		synchronized (this) {
 
 			if (level.gameover()) {
@@ -193,6 +217,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 						upgradeView.setTargetUnit(selectedUnit);
 
 						selectedUnit.selected(true);
+						vibrateShort();
 					}
 				}
 
@@ -209,12 +234,20 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	}
 
 	public boolean touchUp(int x, int y, int pointer, int button) {
+
+		if (gettingReady) {
+			gettingReady = false;
+			vibrateShort();
+			return false;
+		}
+
 		if (selectedUnit != null) {
 			UnitAction selectedUprade = upgradeView.getSelectedUpgrade();
 			if (selectedUprade != null && selectedUnit != null) {
 				selectedUprade.doAction(selectedUnit);
 				int price = selectedUprade.getCostForNext();
 				level.setMoney(level.getMoney() - price);
+				vibrateShort();
 			}
 
 			selectedUnit.selected(false);
@@ -248,12 +281,19 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		if (level.gameover())
 			return;
 		if (dragElement != null) {
+			vibrateShort();
 			level.add(dragElement);
 		}
 		dragElement = null;
 	}
 
+	private void vibrateShort() {
+		Gdx.input.vibrate(10);
+	}
+
 	public boolean touchDragged(int x, int y, int pointer) {
+		if (gettingReady)
+			return false;
 		synchronized (this) {
 
 			if (level.gameover())
@@ -292,6 +332,8 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 
 	@Override
 	public boolean scrolled(int amount) {
+		if (gettingReady)
+			return false;
 		synchronized (this) {
 
 			int nu = (int) (Position.LEVEL_REF.getScale() + amount);
@@ -332,6 +374,7 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 	public void levelFinished() {
 		setLevel(campaign.getNextLevel(game, this));
 		level.setMoney(level.getMoney() + 10);
+		gettingReady = true;
 	}
 
 	private void setLevel(Level nextLevel) {
@@ -351,6 +394,16 @@ public class LevelScreen extends Screen implements IUnitTypeSelected,
 		}
 		if (keycode == 44) {
 			paused = !paused;
+		}
+		if (keycode == 47) {
+
+			Json json = new Json();
+			String text = json.toJson(level);
+			System.out.println("JSON " + text);
+
+			level = json.fromJson(Level.class, text);
+			level.init(game, this);
+
 		}
 		System.out.println("KEYCODE " + keycode);
 		return false;

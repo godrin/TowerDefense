@@ -36,6 +36,8 @@ public class GridDrawing {
 	}
 
 	public void draw(IRenderer renderer) {
+		if (false)
+			return;
 		for (int i = 0; i < es.size(); i++) {
 			Element e = es.get(i);
 			if (e.getPosition().onScreen())

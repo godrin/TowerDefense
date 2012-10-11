@@ -48,7 +48,8 @@ public class DefendGame implements ApplicationListener, Game {
 		highscoreScreen = new HighScoreScreen(this);
 		inputScreen = new InputScreen(this, c);
 		SoundFX.Initialize();
-		Gdx.graphics.setVSync(true);
+		if (false)
+			Gdx.graphics.setVSync(true);
 
 	}
 
@@ -87,7 +88,7 @@ public class DefendGame implements ApplicationListener, Game {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		move();
-		
+
 		screen.render();
 
 	}
@@ -108,7 +109,7 @@ public class DefendGame implements ApplicationListener, Game {
 	}
 
 	private void mywait(float delta) {
-		if (false)
+		if (true)
 			return;
 		try {
 			int ms = (int) (delta * 1000);

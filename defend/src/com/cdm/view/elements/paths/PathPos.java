@@ -3,12 +3,15 @@ package com.cdm.view.elements.paths;
 import java.util.Arrays;
 import java.util.List;
 
+import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.Json.Serializable;
+import com.badlogic.gdx.utils.OrderedMap;
 import com.cdm.view.Position;
 
-public class PathPos implements Comparable<PathPos> {
+public class PathPos implements Comparable<PathPos>, Serializable {
 	public int x, y;
 	public int value;
-	private static Position tmp=new Position(0,0,Position.LEVEL_REF);
+	private static Position tmp = new Position(0, 0, Position.LEVEL_REF);
 
 	public PathPos(Position pos) {
 		x = (int) pos.x;
@@ -21,24 +24,25 @@ public class PathPos implements Comparable<PathPos> {
 		y = _y;
 		value = _v;
 	}
-	
 
 	public PathPos() {
 		x = y = value = -1;
 	}
+
 	public Position tmp() {
-		tmp.x=x;
-		tmp.y=y;
+		tmp.x = x;
+		tmp.y = y;
 		return tmp;
 	}
 
 	public String toString() {
-		//return "[" + value + "]";
+		// return "[" + value + "]";
 		return "[" + x + "," + y + ";" + value + "]";
 	}
+
 	public boolean equals(Object p) {
-		if(p instanceof PathPos) {
-			return equals((PathPos)p);
+		if (p instanceof PathPos) {
+			return equals((PathPos) p);
 		}
 		return false;
 	}
@@ -80,6 +84,22 @@ public class PathPos implements Comparable<PathPos> {
 		x = t.x;
 		y = t.y;
 		value = t.value;
+
+	}
+
+	@Override
+	public void write(Json json) {
+		json.writeValue("x", x);
+		json.writeValue("y", y);
+		json.writeValue("value", value);
+
+	}
+
+	@Override
+	public void read(Json json, OrderedMap<String, Object> jsonData) {
+		x = json.readValue("x", Integer.class,jsonData);
+		y = json.readValue("y", Integer.class,jsonData);
+		value = json.readValue("value", Integer.class,jsonData);
 
 	}
 
