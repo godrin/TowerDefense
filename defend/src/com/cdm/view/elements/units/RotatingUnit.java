@@ -11,14 +11,12 @@ public abstract class RotatingUnit extends PlayerUnit {
 	private RotatingThing rotation = new RotatingThing();
 	protected boolean ableToShoot = false;
 	private Vector3 delta = new Vector3();
-	private Vector3 result = new Vector3();
 
 	public RotatingUnit(Position p) {
 		super(p);
 	}
 
 	protected abstract EnemyUnit getEnemy();
-
 
 	@Override
 	public void move(float time) {
@@ -48,14 +46,10 @@ public abstract class RotatingUnit extends PlayerUnit {
 		rotation.setTurningSpeed(s);
 	}
 
-	protected Position anticipatePosition(Position startingPos, EnemyUnit enemy, float speed) {
-		float enemyDistance = startingPos.distance(enemy.getPosition());
-		float timeToTarget = (enemyDistance / speed);
-		float enemyMoveDistance = timeToTarget * enemy.getSpeed();
 
-		result.set(enemy.getPosition().toVector());
-		result.add(enemy.getMovingDirection().mul(enemyMoveDistance));
-		return new Position(result.x, result.y, Position.LEVEL_REF);
+	@Override
+	public Vector3 getMovingDirection() {
+		return new Vector3(0, 0, 0);
 	}
 
 }

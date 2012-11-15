@@ -3,10 +3,11 @@ package com.cdm.view.elements;
 import java.util.Comparator;
 
 import com.cdm.view.Position;
+import com.cdm.view.elements.units.Unit;
 import com.cdm.view.enemy.EnemyUnit;
 
 // review1
-public class DistanceComparator implements Comparator<EnemyUnit> {
+public class DistanceComparator implements Comparator<Unit> {
 
 	private Position base;
 
@@ -18,7 +19,7 @@ public class DistanceComparator implements Comparator<EnemyUnit> {
 	}
 
 	@Override
-	public int compare(EnemyUnit arg0, EnemyUnit arg1) {
+	public int compare(Unit arg0, Unit arg1) {
 		Position a = arg0.getPosition();
 		Position b = arg1.getPosition();
 		if (a.getSystem().equals(b.getSystem())

@@ -6,7 +6,6 @@ import java.util.List;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.math.Vector3;
-import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.PolySprite;
@@ -162,5 +161,6 @@ public class Cannon extends RotatingUnit implements Element {
 		else if ("power".equals(key))
 			impact = value;
 	}
+
 
 }

@@ -7,7 +7,6 @@ import com.cdm.Game;
 import com.cdm.gui.BigButton;
 import com.cdm.gui.IButtonPressed;
 import com.cdm.gui.WidgetContainer;
-import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 
 // review1
@@ -20,7 +19,6 @@ public class SoundScreen extends Screen implements IButtonPressed {
 	private static int song = 2;
 	private static boolean stop = false;
 	private Color white = new Color(1, 1, 1, 1);
-	private String Smusic = "Not Playing...";
 	private static float vol = 0.5f;
 	public static float FXvol = 0.6f;
 

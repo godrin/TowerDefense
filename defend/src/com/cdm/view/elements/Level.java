@@ -355,22 +355,26 @@ public class Level implements Serializable {
 	}
 
 	private static DistanceComparator nextEnemyComparator = new DistanceComparator();
-	private static SortedSet<EnemyUnit> nextEnemySet = new TreeSet<EnemyUnit>(
+	private static SortedSet<Unit> nextEnemySet = new TreeSet<Unit>(
 			nextEnemyComparator);
 
 	public EnemyUnit getNextEnemy(Position position) {
+		return getNext(position, EnemyUnit.class);
+	}
+
+	public <T> T getNext(Position position, Class<T> klass) {
 		nextEnemySet.clear();
 		nextEnemyComparator.setPosition(position);
 		for (int i = 0; i < units.size(); i++) {
 			Unit u = units.get(i);
 
-			if (u instanceof EnemyUnit && !u.destroyed()) {
-				nextEnemySet.add((EnemyUnit) u);
+			if (klass.isInstance(u) && !u.destroyed()) {
+				nextEnemySet.add(u);
 			}
 		}
 
 		if (nextEnemySet.size() > 0)
-			return nextEnemySet.first();
+			return (T)nextEnemySet.first();
 		return null;
 	}
 

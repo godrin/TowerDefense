@@ -1,13 +1,15 @@
 package com.cdm.view.elements.units;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.Level;
+import com.cdm.view.elements.shots.ShotTarget;
 import com.cdm.view.enemy.EnemyUnit;
 
-public abstract class Unit implements Element {
+public abstract class Unit implements Element , ShotTarget {
 
 	public enum UnitType {
 		CANNON, ROCKET_THROWER, STUNNER, PHAZER;
@@ -147,4 +149,18 @@ public abstract class Unit implements Element {
 		if (getZLayer() == zLayer)
 			draw(renderer);
 	}
+	
+	private Vector3 result = new Vector3();
+
+	protected Position anticipatePosition(Position startingPos,
+			ShotTarget enemy, float speed) {
+		float enemyDistance = startingPos.distance(enemy.getPosition());
+		float timeToTarget = (enemyDistance / speed);
+		float enemyMoveDistance = timeToTarget * enemy.getSpeed();
+
+		result.set(enemy.getPosition().toVector());
+		result.add(enemy.getMovingDirection().mul(enemyMoveDistance));
+		return new Position(result.x, result.y, Position.LEVEL_REF);
+	}
+
 }

@@ -30,8 +30,6 @@ public class DefendGame implements ApplicationListener, Game {
 	private InputScreen inputScreen;
 	private long oldMicros = 0;
 
-	private SoundFX soundFx = new SoundFX();
-
 	public void create() {
 		running = true;
 
@@ -152,6 +150,6 @@ public class DefendGame implements ApplicationListener, Game {
 
 	@Override
 	public void play(Type soundType) {
-		soundFx.play(soundType);
+		SoundFX.play(soundType);
 	}
 }

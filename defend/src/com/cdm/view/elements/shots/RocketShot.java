@@ -15,7 +15,7 @@ public class RocketShot extends MovingShot {
 	private PolySprite sprite = null;
 
 	public RocketShot(Position from, Position to, Level plevel, int pImpact,
-			EnemyUnit enemy) {
+			ShotTarget enemy) {
 		super(from, to, plevel, pImpact, enemy);
 		if (sprite == null) {
 			sprite = new PolySprite();

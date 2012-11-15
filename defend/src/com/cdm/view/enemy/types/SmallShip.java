@@ -11,6 +11,9 @@ import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Element;
 import com.cdm.view.elements.MathTools;
+import com.cdm.view.elements.shots.ShotTarget;
+import com.cdm.view.elements.shots.SimpleShot;
+import com.cdm.view.elements.units.PlayerUnit;
 import com.cdm.view.enemy.EnemyUnit;
 
 public class SmallShip extends EnemyUnit implements Element {
@@ -155,4 +158,17 @@ public class SmallShip extends EnemyUnit implements Element {
 					GL10.GL_TRIANGLES, new Color(0, 0, 0, 0));
 		}
 	}
+
+	protected void shoot() {
+		System.out.println("SHOOT");
+		Position startingPos = getPosition();
+		ShotTarget enemy = getLevel().getNext(startingPos, PlayerUnit.class);
+
+		float impact = 1;
+		getLevel().addShot(
+				new SimpleShot(startingPos, anticipatePosition(startingPos,
+						enemy, SimpleShot.SPEED), getLevel(), impact, enemy));
+
+	}
+
 }

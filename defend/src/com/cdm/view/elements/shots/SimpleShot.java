@@ -10,7 +10,6 @@ import com.cdm.view.IRenderer;
 import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
 import com.cdm.view.elements.Level;
-import com.cdm.view.enemy.EnemyUnit;
 
 public class SimpleShot extends MovingShot {
 	public static final float SPEED = 1.5f;// 1.5f;
@@ -24,7 +23,7 @@ public class SimpleShot extends MovingShot {
 	private static final Color FRAME_COLOR = new Color(0.5f, 0.4f, 0, 0.7f);
 
 	public SimpleShot(Position from, Position to, Level plevel, float impact,
-			EnemyUnit penemy) {
+			ShotTarget penemy) {
 		super(from, to, plevel, impact, penemy);
 		Vector3 a = new Vector3(-0.75f, 0.4f, 0);
 		Vector3 b = new Vector3(0.75f, 0.0f, 0);

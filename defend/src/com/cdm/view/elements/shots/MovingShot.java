@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.PolySprite;
@@ -33,7 +32,7 @@ public abstract class MovingShot extends PositionedDisplayEffect implements
 	private float impact;
 	private float allTime = -1;
 	private float curTime = 0;
-	private EnemyUnit enemy;
+	private ShotTarget enemy;
 
 	private final static Vector3 a = new Vector3();
 	private final static Vector3 b = new Vector3();
@@ -43,7 +42,7 @@ public abstract class MovingShot extends PositionedDisplayEffect implements
 	PolySprite s = new PolySprite();
 
 	public MovingShot(Position pfrom, Position to, Level plevel, float pImpact,
-			EnemyUnit penemy) {
+			ShotTarget penemy) {
 		enemy = penemy;
 		from = new Position(pfrom);
 		pos = new Position(pfrom);
@@ -61,21 +60,6 @@ public abstract class MovingShot extends PositionedDisplayEffect implements
 		impact = pImpact;
 
 		angle = MathTools.angle(from.to(to));
-		if (false) {
-			Vector3 x0 = new Vector3(from.toVector());
-			Vector3 x1 = new Vector3(from.toVector());
-			Vector3 x2 = new Vector3(target.toVector());
-			Vector3 x3 = new Vector3(target.toVector());
-
-			Vector3 n = new Vector3(x2);
-			n.sub(x0);
-			x0.sub(n);
-			x1.add(n);
-			x2.sub(n);
-			x3.add(n);
-			s.fillPoly(new Vector3[] { x0, x1, x2, x3 }, Color.WHITE);
-			s.init();
-		}
 	}
 
 	protected float getSize() {

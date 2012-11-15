@@ -2,7 +2,6 @@ package com.cdm.view.enemy;
 
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector3;
-import com.cdm.gui.effects.SoundFX;
 import com.cdm.gui.effects.SoundFX.Type;
 import com.cdm.view.IRenderer;
 import com.cdm.view.Position;
@@ -23,13 +22,16 @@ public abstract class EnemyUnit extends Unit {
 	private float speed = -10.0f;
 	private ShakingLines shaking = new ShakingLines();
 	private boolean destroyed = false;
+	
+	private float shootFrequency=0.3f;
+	private float shootTime=0;
+	
 
 	public EnemyUnit(Position pos) {
 		super(pos);
 	}
 
 	public void setEnergy(float e) {
-
 		if (energy < 0) {
 			orignalEnergy = e;
 
@@ -132,12 +134,21 @@ public abstract class EnemyUnit extends Unit {
 
 	@Override
 	public void move(float time) {
+		shootTime+=shootFrequency*time;
+		while(shootTime>1)  {
+			shootTime-=1;
+			shoot();
+		}
 		shaking.move(time);
 		if (frozenTime > 0.0f) {
 			setSpeed(getOriginalSpeed() * FREEZE_FACTOR);
 			frozenTime -= time;
 		} else
 			setSpeed(getOriginalSpeed());
+	}
+
+	protected void shoot() {
+		
 	}
 
 	public final float getSpeed() {
