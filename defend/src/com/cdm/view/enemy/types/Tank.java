@@ -9,6 +9,9 @@ import com.badlogic.gdx.math.Vector3;
 import com.cdm.view.IRenderer;
 import com.cdm.view.PolySprite;
 import com.cdm.view.Position;
+import com.cdm.view.elements.MathTools;
+import com.cdm.view.elements.RotatingThing;
+import com.cdm.view.elements.units.PlayerUnit;
 import com.cdm.view.enemy.Chain;
 import com.cdm.view.enemy.GroundMovingEnemy;
 
@@ -40,6 +43,7 @@ public class Tank extends GroundMovingEnemy {
 	private static final Color innerColor = new Color(0.8f, 0.8f, 0.0f, 0.8f);
 	private static final Color outerColor = new Color(0.8f, 0f, 0.1f, 1.0f);
 	private final Chain chains = new Chain();
+	private RotatingThing torretRotation = new RotatingThing();
 
 	public Tank(Position pos) {
 		super(pos);
@@ -51,6 +55,16 @@ public class Tank extends GroundMovingEnemy {
 	public void move(float time) {
 		super.move(time);
 		chains.move(time);
+		moveTorretAndShoot(time);
+
+	}
+
+	private void moveTorretAndShoot(float time) {
+		PlayerUnit nextPlayer = getLevel().getNext(getPosition(),
+				PlayerUnit.class);
+		Vector3 v = getPosition().to(nextPlayer.getPosition());
+		torretRotation.setTargetAngle(MathTools.angle(v));
+		torretRotation.move(time);
 
 	}
 
@@ -59,8 +73,8 @@ public class Tank extends GroundMovingEnemy {
 
 		if (sprite == null) {
 			sprite = new PolySprite();
-			sprite.makeNiceRectangle(1f, -1, -1, 2, 2, outerColor, new Color(
-					0, 0, 0, 0));
+			sprite.makeNiceRectangle(1f, -1, -1, 2, 2, outerColor, new Color(0,
+					0, 0, 0));
 			sprite.init();
 		}
 

@@ -164,11 +164,13 @@ public class SmallShip extends EnemyUnit implements Element {
 		Position startingPos = getPosition();
 		ShotTarget enemy = getLevel().getNext(startingPos, PlayerUnit.class);
 
-		float impact = 1;
-		getLevel().addShot(
-				new SimpleShot(startingPos, anticipatePosition(startingPos,
-						enemy, SimpleShot.SPEED), getLevel(), impact, enemy));
-
+		if (enemy != null) {
+			float impact = 1;
+			getLevel()
+					.addShot(
+							new SimpleShot(startingPos, anticipatePosition(
+									startingPos, enemy, SimpleShot.SPEED),
+									getLevel(), impact, enemy));
+		}
 	}
-
 }

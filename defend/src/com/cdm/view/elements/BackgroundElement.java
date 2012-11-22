@@ -39,6 +39,7 @@ public class BackgroundElement implements Element {
 	private boolean rotating = true;
 	private float rotateAngle = 0;
 	private float lightness = 0.0f;
+	private float targetLightness = 0.0f;
 	private GridElement gridElement;
 	private float rotatingSpeed = 0.8f;
 	private static PolySprite sprite = null;
@@ -78,7 +79,8 @@ public class BackgroundElement implements Element {
 			sprite.fillRectangle(-OUTER, -OUTER, OUTER * 2, OUTER * 2, c0);
 			sprite.fillRectangle(-INNER, -INNER, INNER * 2, INNER * 2, c1);
 			sprite.fillRectangle(-0.7f, -0.7f, 1.4f, 0.1f, c0);
-			sprite.makeNiceRectangle(0.15f, -INNER, -INNER, INNER*2, INNER*2, c0, c2);
+			sprite.makeNiceRectangle(0.15f, -INNER, -INNER, INNER * 2,
+					INNER * 2, c0, c2);
 
 			sprite.init();
 		}
@@ -105,14 +107,24 @@ public class BackgroundElement implements Element {
 
 		if (gridElement != null) {
 			if (gridElement.getList().size() > 0) {
-				lightness += t * LIGHTING_SPEED;
-				if (lightness > 1)
-					lightness = 1;
+				targetLightness = 1;
 
+			} else if (gridElement.getDistToUnit() < 5) {
+				targetLightness = 1 - gridElement.getDistToUnit() / 8.0f;
 			} else {
-				lightness -= t * LIGHTING_SPEED;
-				if (lightness < 0)
-					lightness = 0;
+				targetLightness = 0;
+
+			}
+			if (targetLightness != lightness) {
+				if (targetLightness < lightness) {
+					lightness -= t * LIGHTING_SPEED;
+					if (targetLightness > lightness)
+						lightness = targetLightness;
+				} else {
+					lightness += t * LIGHTING_SPEED;
+					if (targetLightness < lightness)
+						lightness = targetLightness;
+				}
 
 			}
 
